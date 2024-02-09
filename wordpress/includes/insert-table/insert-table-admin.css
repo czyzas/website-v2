@@ -1,0 +1,19 @@
+.insert-table-popup {
+    position: fixed;
+    background: white;
+    z-index: 9999;
+    padding: 20px;
+    border: 1px solid #333;
+
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.insert-table-popup .buttonsContainer{
+    padding-top: 20px;
+}

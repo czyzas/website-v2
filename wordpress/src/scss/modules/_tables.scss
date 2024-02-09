@@ -1,0 +1,198 @@
+.table-container {
+	position: relative;
+
+	&.scrollable {
+		overflow: hidden;
+
+		.table-wrapper {
+			position: relative;
+
+			&::after {
+				content: '';
+				position: absolute;
+				display: block;
+				top: 0;
+				right: 0;
+				height: 100%;
+				width: 9px;
+				box-shadow: inset -8px 0 9px -7px rgba(0, 0, 0, 0.5);
+			}
+		}
+	}
+
+	table {
+		color: $text-color;
+		width: 100%;
+
+		td, th {
+			padding: 15px;
+			position: relative;
+
+			&::before {
+				border-left: 1px solid $gray-light;
+				bottom: 0;
+				content: "";
+				display: block;
+				height: 6px;
+				left: 0;
+				padding: 0;
+				position: absolute;
+				width: 100%;
+				white-space: nowrap;
+			}
+
+			&:last-child::after,
+			&[colspan]::after {
+				border-right: 1px solid $gray-light;
+				bottom: 0;
+				content: "";
+				display: block;
+				height: 6px;
+				right: 0;
+				padding: 0;
+				position: absolute;
+				width: 100%;
+				white-space: nowrap;
+			}
+
+			&:first-child:empty:before, &:last-child:empty:after {
+				display: none;
+			}
+		}
+
+		tr {
+			border-bottom: 1px solid $gray-light;
+
+			&.table-row-head {
+				&, :where(td,th) {
+					&, &:before, &:after {
+						border-color: $brand;
+						border-width: 2px;
+					}
+				}
+
+				:where(td, th) {
+					font-weight: bold;
+				}
+			}
+
+			&.custom-row-underline {
+				border-bottom: 1px solid $gray-dark;
+
+				td, th {
+					&::before {
+						border-left: 1px solid $gray-dark;
+					}
+
+					&:last-child::after {
+						border-right: 1px solid $gray-dark;
+					}
+
+					&[colspan]::after {
+						border-right: 1px solid $gray-dark;
+					}
+				}
+			}
+
+			&.custom-row-underline-color {
+				border-bottom: 1px solid $brand;
+
+				td, th {
+					&::before {
+						border-left: 1px solid $brand;
+					}
+
+					&:last-child::after,
+					&[colspan]::after {
+						border-right: 1px solid $brand;
+					}
+				}
+			}
+
+			&.custom-row-grey-bg {
+				background: $gray-bg;
+			}
+
+		}
+
+		:where(td,th) {
+			&.custom-cell-underline {
+				border-bottom: 1px solid $gray-dark;
+			}
+
+			&.custom-cell-grey-bg {
+				background: $gray-bg;
+			}
+
+			&.custom-cell-indent {
+				padding-left: 20px;
+			}
+		}
+	}
+
+	.title {
+		margin-bottom: 0;
+	}
+
+	.caption {
+		color: $text-color;
+		font-size: 1.4rem;
+		font-style: italic;
+		margin-top: 20px;
+	}
+}
+
+.table-tools {
+	margin-bottom: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 25px;
+
+	a {
+		color: $gray;
+		font-size: 1.6rem;
+		text-decoration: none;
+		display: flex;
+		gap: 8px;
+		align-items: center;
+
+		&:hover {
+			color: $brand;
+		}
+
+		svg {
+			height: 1em;
+			width: auto;
+		}
+	}
+}
+
+.table-popup {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 10;
+	height: 100vh;
+	width: 100%;
+	background: rgba(0, 0, 0, 0.7);
+
+	.table-container {
+		height: 84vh;
+		margin: 8vh 0;
+		padding: 25px;
+		overflow: auto;
+		background-color: $white;
+	}
+
+	.close-popup {
+		cursor: pointer;
+		position: absolute;
+		right: 15px;
+		top: 15px;
+		width: 15px;
+		height: 15px;
+		@include setBackgroundIcon('../images/table-close.svg');
+	}
+}

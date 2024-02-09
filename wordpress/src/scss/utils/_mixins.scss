@@ -1,0 +1,40 @@
+// Create darker background
+@mixin opacityBackground($color: black, $opacity: .25) {
+	position: relative;
+	opacity: 1;
+	
+	&::before {
+		content: '';
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		opacity: $opacity;
+		background-color: $color;
+		
+	}
+}
+
+// Set icon as a background (mostly for pseudoelments, such as ::before/::after)
+@mixin setBackgroundIcon($url) {
+	background: url($url) center / contain no-repeat;
+}
+
+@mixin contrast {
+	body.contrast & {
+		@content;
+	}
+}
+
+@mixin font-family-sans {
+	font-family: var(--font-family-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+@mixin font-family-serif {
+	font-family: var(--font-family-serif), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+@mixin font-family-mono {
+	font-family: var(--font-family-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace
+}

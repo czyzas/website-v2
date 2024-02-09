@@ -1,0 +1,43 @@
+.subpage .top {
+    margin-bottom: 50px;
+	
+    @include tablet {
+        margin-bottom: 60px;
+    }
+
+    .top-items {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 25px;
+    }
+
+    .top-image {
+        background-color: $gray-dark;
+        min-height: 450px;
+        @include tablet {
+            min-height: 340px;
+        }
+    }
+	
+	.introduction {
+		margin-top: 24px;
+	}
+
+    .sharing-container {
+        ul.sharing {
+            font-size: 2rem;
+            display: flex;
+            li {
+                margin: 0 15px;
+            }
+        }
+    }
+	
+	&.no-image {
+		h1 {
+			margin-bottom: 0;
+		}
+	}
+}

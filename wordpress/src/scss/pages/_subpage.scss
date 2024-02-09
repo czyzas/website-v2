@@ -1,0 +1,11 @@
+.subpage {
+	.modules {
+	}
+	
+	.module {
+		margin-bottom: 30px;
+		@include tablet {
+			margin-bottom: 15px;
+		}
+	}
+}

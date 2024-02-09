@@ -1,0 +1,88 @@
+button {
+	background: none;
+	border: none;
+	border-radius: 0;
+	cursor: pointer;
+	margin: 0;
+	outline: none;
+	padding: 0;
+	color: inherit;
+	
+	&:focus {
+		outline: none;
+	}
+}
+
+.button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 12px;
+	background: none;
+	border: 0;
+	border-radius: 4px;
+	outline: none;
+	cursor: pointer;
+	margin: 0;
+	padding: 15px 20px;
+	font-size: 1.6rem;
+	font-weight: bold;
+	line-height: 1;
+	text-align: center;
+	letter-spacing: 0.32px;
+	text-decoration: none;
+	transition: $trans-fast;
+	@include tablet-middle {
+		padding: 12px 18px;
+	}
+	@include mobile-xs {
+		font-size: 1.4rem;
+		padding: 10px 16px;
+	}
+	
+	&:focus {
+		box-shadow: none;
+		outline: 3px solid $text-color;
+	}
+	
+	&-brand {
+		background-color: $brand;
+		color: $white;
+		
+		&:focus {
+			outline-color: rgba($brand, 0.35);
+		}
+		
+		&:hover {
+			background-color: $brand-dark;
+			color: $white;
+		}
+	}
+	
+	&-delete {
+		background-color: transparent;
+		color: $red;
+		
+		&:focus {
+			outline-color: rgba($red, 0.35);
+		}
+		
+		&:hover {
+			background-color: $gray-light;
+		}
+	}
+	
+	:is(svg, img) {
+		transition: transform 250ms ease;
+		width: 1em;
+		height: auto;
+		
+		path {
+			fill: currentColor;
+		}
+	}
+	
+	&:hover :is(svg, img) {
+		transform: translateX(2px);
+	}
+}

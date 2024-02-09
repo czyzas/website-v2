@@ -1,0 +1,22 @@
+{
+    "key": "ui_options_page_650411da2071c",
+    "title": "Opcje",
+    "active": true,
+    "menu_order": 0,
+    "page_title": "Opcje",
+    "menu_slug": "options",
+    "parent_slug": "none",
+    "advanced_configuration": 1,
+    "icon_url": "",
+    "menu_title": "",
+    "position": "",
+    "redirect": 1,
+    "description": "",
+    "update_button": "Aktualizuj",
+    "updated_message": "Ustawienia zostały zaktualizowane",
+    "capability": "edit_posts",
+    "data_storage": "options",
+    "post_id": "",
+    "autoload": 0,
+    "modified": 1701786351
+}

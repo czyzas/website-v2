@@ -1,0 +1,77 @@
+.previous-reports {
+	position: relative;
+	--offset: 5px;
+	
+	&.side-top {
+		.previous-reports-list {
+			bottom: calc(100% + 4px);
+			transform: translate(-50%, var(--offset));
+		}
+	}
+	
+	&.side-bottom {
+		.previous-reports-list {
+			top: 100%;
+			transform: translate(-50%, -4px);
+		}
+	}
+	
+	button.previous-reports-trigger {
+		display: inline-flex;
+		align-items: center;
+		gap: 4px;
+		
+		&:focus-visible {
+			outline: 1px solid currentColor;
+			outline-offset: 2px;
+		}
+		
+		svg {
+			transition: transform 150ms ease;
+		}
+		
+		&.open {
+			svg {
+				transform: rotate(180deg);
+			}
+		}
+	}
+	
+	.previous-reports-list {
+		position: absolute;
+		left: 50%;
+		background-color: $white;
+		border-radius: 6px;
+		box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+		color: $black;
+		padding: 4px;
+		opacity: 0;
+		visibility: hidden;
+		min-width: max(100%, 180px);
+		transition: 150ms ease;
+		z-index: 1;
+		
+		&.open {
+			visibility: visible;
+			opacity: 1;
+			transform: translateX(-50%) translateY(0);
+		}
+		
+		a {
+			color: inherit;
+			display: block;
+			border-radius: 6px;
+			padding: 8px;
+			text-align: center;
+			
+			&:hover {
+				background: $gray-light;
+			}
+			
+			&:focus {
+				outline: 3px solid $gray-light;
+				outline-offset: -2px;
+			}
+		}
+	}
+}

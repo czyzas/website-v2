@@ -1,0 +1,13 @@
+{
+  "name": "flyhigh/sweep",
+  "type": "wordpress-theme",
+  "version": "dev-main",
+  "license": "MIT",
+  "require": {
+    "php": ">=8.0",
+    "composer/installers": ">=2.2",
+    "wpengine/advanced-custom-fields-pro": ">=6.1",
+    "wpackagist-plugin/duplicate-post": ">=4.5",
+    "wpackagist-plugin/wp-api-swaggerui": ">=1.1.2"
+  }
+}

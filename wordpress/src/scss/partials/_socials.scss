@@ -1,0 +1,10 @@
+ul.socials {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+	
+	svg {
+		width: auto;
+		height: 24px;
+	}
+}

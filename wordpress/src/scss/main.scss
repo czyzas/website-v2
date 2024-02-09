@@ -1,0 +1,61 @@
+@charset "UTF-8";
+
+// IMPORT UTILITIES
+@import "utils/animations";
+@import "utils/fonts";
+@import "utils/media-queries";
+@import "utils/mixins";
+@import "utils/variables";
+@import "utils/utility-classes";
+
+// IMPORT PARTIALS
+@import "partials/global";
+@import "partials/overrides";
+@import "partials/buttons";
+@import "partials/breadcrumbs";
+@import "partials/cookies";
+@import "partials/previous-reports";
+@import "partials/tools";
+@import "partials/tools-a11y";
+@import "partials/tools-reports";
+@import "partials/scrollbar";
+@import "partials/socials";
+@import "partials/top";
+//@import "partials/sharing";
+
+// IMPORT COMPONENTS
+@import "components/Quotation";
+@import "components/Number";
+
+// IMPORT PAGES
+@import "pages/homepage";
+@import "pages/subpage";
+@import "pages/reports";
+@import "pages/calendars";
+@import "pages/error-404";
+
+// IMPORT SECTIONS
+@import "pages/sections/menu";
+@import "pages/sections/header";
+@import "pages/sections/footer";
+@import "pages/sections/sidebar";
+
+// IMPORT MODULES
+@import "modules/gri_text";
+@import "modules/pages";
+
+@import 'modules/notes';
+@import "modules/break";
+@import "modules/headline";
+@import "modules/columns";
+@import "modules/quotation";
+@import "modules/big-numbers";
+@import "modules/accordion";
+@import "modules/tabs";
+@import "modules/column-with-image";
+@import "modules/responsive-image";
+@import "modules/tables";
+@import "modules/quarterly-data-table";
+
+// IMPORT BASE
+@import 'base';

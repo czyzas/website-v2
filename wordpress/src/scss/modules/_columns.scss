@@ -1,0 +1,16 @@
+.module.columns {
+
+    @include mobile {
+        div[class*="col-"] {
+
+            &:not(:last-child) {
+                margin-bottom: 15px;
+            }
+        }
+    }
+
+    img {
+        margin: 0 auto;
+    }
+
+}

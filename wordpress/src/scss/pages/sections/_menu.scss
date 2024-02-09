@@ -1,0 +1,37 @@
+.menu-overlay {
+  display: none;
+  background-color: $white;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-height: 400px;
+  height: calc(100vh - 100%);
+  width: 100%;
+  z-index: -1;
+  overflow: auto;
+
+  nav {
+    height: 100%;
+    width: 100%;
+  }
+
+  ul.header-main-menu {
+
+    li.dropdown {
+      & > a{
+        color: blue;
+      }
+      & > .submenu {
+        padding-left: 25px;
+      }
+    }
+
+    & > li {
+
+      ul[data-level] {
+        display: none;
+      }
+    }
+  }
+
+}

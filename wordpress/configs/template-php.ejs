@@ -1,0 +1,16 @@
+<?php
+<% if(data.subfields) { data.subfields.forEach((subfield) => { %>
+<%- `$${subfield.variableName} = get_sub_field( '${subfield.name}' );` -%>
+<% })} %>
+
+$classes = classNames( [
+	'module',
+	'<%= data.className %>',
+] );
+?>
+
+<section class="<?= $classes ?>">
+    <div class="container-fluid">
+        <%= data.name %>
+    </div>
+</section>

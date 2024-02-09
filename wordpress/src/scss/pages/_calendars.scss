@@ -1,0 +1,304 @@
+.subpage .filter-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    .filter-title {
+        color: $black;
+        font-size: 2.4rem;
+        font-weight: 700;
+        margin-bottom: 30px;
+    }
+}
+
+.subpage .filter {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+
+    a {
+        color: $text-color;
+        display: flex;
+        align-items: center;
+        font-size: 2.5rem;
+        height: 64px;
+        padding: 0 15px;
+        position: relative;
+        transition: $trans-fast;
+
+        @include mobile {
+            margin: 0 15px;
+        }
+
+        &:hover,
+        &:focus {
+            background-color: $brand;
+            color: $white;
+            text-decoration: none;
+        }
+
+        &.active {
+            background-color: $brand;
+            color: $white;
+        }
+    }
+}
+
+.subpage.gatherings {
+    h1 {
+        margin-bottom: 0;
+    }
+}
+
+.gatherings-container {
+
+    .gatherings {
+        display: none;
+
+        &.active {
+            display: block;
+        }
+
+        .single-gathering {
+            margin-top: 30px;
+            margin-bottom: 30px;
+            padding: 15px;
+            transition: $trans-fast;
+
+            &:hover {
+                background-color: #f0f0f0;
+            }
+
+            &:last-child, &:only-child {
+                margin-bottom: 0;
+            }
+
+            .title {
+                color: $black;
+                font-size: 1.8rem;
+                font-weight: 700;
+                margin-bottom: 30px;
+            }
+
+            .detailed-info {
+
+                >div {
+                    font-size: 1.5rem;
+
+                    &+div {
+                        margin-top: 30px;
+                    }
+
+                    :first-child {
+                        color: $black;
+                        font-weight: 500;
+                    }
+                }
+            }
+
+            .description {
+                font-size: 1.5rem;
+                margin-top: 30px;
+            }
+
+            .download {
+                display: flex;
+                font-size: 1.5rem;
+
+                @media (max-width: 991px) {
+                    margin-top: 30px;
+                }
+
+                .files-to-download-title {
+                    color: $black;
+                    font-weight: 500;
+                }
+
+                .files-to-download {
+                    margin-left: 30px;
+
+                    ul {
+
+                        li {
+
+                            &+li {
+                                margin-top: 25px;
+                            }
+
+                            a {
+                                background-image: url('../images/download.svg');
+                                background-repeat: no-repeat;
+                                background-position: center left;
+                                color: $text-color;
+                                display: flex;
+                                align-items: center;
+                                padding-left: 30px;
+                                text-decoration: underline;
+                                transition: $trans-fast;
+
+                                &:hover {
+                                    color: $brand;
+
+                                    svg {
+
+                                        path {
+                                            fill: $brand;
+                                        }
+                                    }
+                                }
+
+                                .image {
+                                    display: flex;
+                                }
+
+                                svg {
+                                    margin-right: 20px;
+
+                                    path {
+                                        transition: $trans-fast;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .description {
+
+                p, ul, ol {
+                    margin-bottom: 10px;
+
+                    &:last-child, &:only-child {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+
+            &+.single-gathering {
+                margin-top: 0;
+            }
+        }
+    }
+}
+
+.subpage.calendars {
+    h1 {
+        margin-bottom: 0;
+    }
+}
+
+.calendar {
+
+    .year-container {
+        display: none;
+        margin-top: 15px;
+
+        &.active {
+            display: block;
+        }
+
+    }
+
+    .col-single-event {
+        display: flex;
+
+        &+.col-single-event {
+
+            @media (max-width: 991px) {
+                .single-event {
+                    margin-top: 0;
+                }
+            }
+        }
+    }
+
+    .single-event {
+        border-right: 1px solid #dddddd;
+        display: flex;
+        flex-direction: column;
+        padding: 30px;
+        width: 100%;
+        transition: $trans-fast;
+
+        &:hover {
+            background-color: #f0f0f0;
+        }
+
+        .date {
+            color: #858585;
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .title {
+            color: $black;
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            line-height: 1.25;
+        }
+
+        .description {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+
+            p+p {
+                margin-top: 15px;
+            }
+        }
+
+        .buttons {
+            margin-top: auto;
+
+            .button {
+                background: none;
+                border: none;
+                margin: 0;
+                padding: 0;
+
+                &:focus {
+                    outline: none;
+                }
+            }
+
+            .more {
+                color: #9c9e9f;
+                display: inline-block;
+                font-weight: 600;
+                margin-bottom: 15px;
+            }
+
+            .save-in-outlook {
+                border: 1px solid $black;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                padding: 10px;
+
+                svg {
+                    margin-right: 15px;
+                }
+
+                .label {
+                    display: block;
+                    color: $black;
+                    font-size: 1.6rem;
+                    font-weight: 700;
+                }
+            }
+        }
+
+        .hidable {
+            max-height: 0;
+            overflow: hidden;
+            transition: $trans-slow;
+
+            @include mobile-xs {
+                max-height: none;
+            }
+        }
+    }
+}

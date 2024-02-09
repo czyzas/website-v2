@@ -1,0 +1,15 @@
+.module.break {
+    position: relative;
+
+    &.with-line {
+        .col::before {
+            content: "";
+            left: 15px;
+            right: 15px;
+            height: 1px;
+            background: $gray;
+            position: absolute;
+            top: 50%;
+        }
+    }
+}

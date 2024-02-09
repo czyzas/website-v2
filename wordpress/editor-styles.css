@@ -1,0 +1,34 @@
+table tr td {
+  padding: 5px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+table tr.table-row-head td,
+table tr.table-row-head th {
+    color: #ff0000!important;
+    font-weight: bold;
+}
+
+table tr.custom-row-underline {
+    border-bottom: 1px solid #666666;
+}
+
+table tr.custom-row-underline-color {
+  border-bottom: 1px solid #ff0000;
+}
+
+table tr.custom-row-grey-bg{
+    background: #999999;
+}
+
+table tr td.custom-cell-underline {
+  border-bottom: 1px solid #666666;
+}
+
+table tr td.custom-cell-grey-bg {
+     background: #999999;
+ }
+
+table tr td.custom-cell-indent {
+     padding-left: 20px;
+ }

@@ -1,0 +1,90 @@
+footer.footer {
+	margin-top: 60px;
+	padding: 32px 0;
+	
+	.container-fluid {
+		display: flex;
+		justify-content: space-between;
+		gap: 32px;
+		@include laptop-middle {
+			flex-wrap: wrap;
+		}
+	}
+	
+	section.footer-top {
+		.column-content {
+			flex: 1 1 33.33333%;
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			@include laptop-middle {
+				flex: 0 0 100%;
+				max-width: 100%;
+			}
+		}
+		
+		.column-menu {
+			flex: 1 1 66.66666667%;
+			max-width: 66.66666667%;
+			@include laptop-middle {
+				flex: 0 0 100%;
+				max-width: 100%;
+			}
+		}
+	}
+	
+	.site-logo {
+		display: inline-block;
+		margin-bottom: 32px;
+	}
+	
+	.previous-reports {
+		margin-top: 16px;
+	}
+	
+	ul.footer-menu {
+		display: flex;
+		gap: 48px 24px;
+		@include mobile {
+			flex-wrap: wrap;
+		}
+		
+		a {
+			display: block;
+		}
+		
+		& > li {
+			flex: 1;
+			@include mobile {
+				flex: 1 1 calc(50% - 12px);
+				max-width: calc(50% - 12px);
+			}
+			@include mobile-xs {
+				flex: 0 0 100%;
+				max-width: 100%;
+			}
+			
+			&.menu-item-has-children > a {
+				margin-bottom: 24px;
+			}
+		}
+		
+		ul.submenu {
+			display: flex;
+			flex-direction: column;
+			gap: 16px;
+		}
+	}
+	
+	section.footer-bottom {
+		margin-top: 32px;
+		padding-top: 32px;
+	}
+	
+	ul.additional-links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 16px;
+	}
+	
+}

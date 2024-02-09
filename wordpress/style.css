@@ -1,0 +1,13 @@
+/*
+Theme Name: FlyHigh.PRO Theme
+Theme URI: https://gitlab.com/flyhigh.pro/wp-bootstrap-gulp
+Author: FlyHigh.PRO
+Author URI: https://flyhigh.pro/
+Description: Our theme focuses on creating modular, customizable boilerplate, which cooperates with Advanced Custom Fields plugin. As a CSS Framework we use Bootstrap in version 4. Sliders are created with Swiper, part of our theme core. Everything is handled by gulp toolkit, it helps to automate preprocessing our assets, styles and scripts.
+Tags: bootstrap, gulp, babel, SCSS, ES6, acf, advanced-custom-fields
+Version: 1.6.0
+Requires at least: 5.0
+Tested up to: 5.7
+Requires PHP: 7.0
+Text Domain: wp-bootstrap-gulp
+*/

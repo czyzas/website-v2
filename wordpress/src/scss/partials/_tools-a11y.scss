@@ -1,0 +1,71 @@
+body.contrast {
+    background: #000000 !important;
+    color: #ffff00 !important;
+
+    * {
+        &:not(.image-column):not(.image):not(.swiper-slide):not(.bar):not(.menu-hamburger .icon-inner):not(.dropdown) {
+            background: #000000 !important;
+            color: #ffff00 !important;
+            border-color: #ffff00 !important;
+
+            &::before,
+            &::after {
+                background: #000000 !important;
+                border-color: #ffff00 !important;
+                color: #ffff00 !important;
+            }
+        }
+    }
+
+    .bar {
+        background: #ffff00 !important;
+
+        &::before,
+        &::after {
+            background: #ffff00 !important;
+        }
+    }
+
+    .active .bar:nth-child(2) {
+        background: transparent !important;
+    }
+
+    .collapsible-row-parent {
+        td:first-child::before {
+            filter: invert(1) sepia(100%) saturate(100000%);
+        }
+    }
+
+    svg:not(.no-contrast) {
+
+        path:not(.circle-pie):not(.circle-logo),
+        rect,
+        polygon,
+        circle {
+            fill: #ffff00 !important;
+            stroke: #ffff00 !important;
+        }
+
+        line,
+        polyline {
+            stroke: #ffff00 !important;
+        }
+
+        text {
+            fill: #ffff00 !important;
+        }
+
+        .circle-pie {
+            fill: #000 !important;
+            stroke: #ffff00 !important;
+        }
+
+        .circle-logo {
+            fill: #000 !important;
+        }
+    }
+
+    ul#mbank-menu li.dropdown::after {
+        background-image: url(../images/dropdown-arrow-contrast.svg) !important;
+    }
+}
