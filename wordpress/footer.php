@@ -15,7 +15,6 @@ $legal_note = get_options_field( 'footer_legal_note' );
 				<?php if ( $content ): ?>
 					<div class="content"><?php echo $content; ?></div>
 				<?php endif; ?>
-				<?php get_template_part( 'partials/previous-reports' ); ?>
 			</div>
 
 			<div class="column-menu">
@@ -61,9 +60,7 @@ $legal_note = get_options_field( 'footer_legal_note' );
 	</section>
 </footer>
 
-<?php get_template_part( 'partials/search-modal' ); ?>
 
-<?php get_template_part( 'partials/cookies' ); ?>
 
 <?php get_template_part( 'partials/admin-bar' ); ?>
 

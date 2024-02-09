@@ -13,11 +13,7 @@
 @import "partials/overrides";
 @import "partials/buttons";
 @import "partials/breadcrumbs";
-@import "partials/cookies";
-@import "partials/previous-reports";
 @import "partials/tools";
-@import "partials/tools-a11y";
-@import "partials/tools-reports";
 @import "partials/scrollbar";
 @import "partials/socials";
 @import "partials/top";
@@ -30,21 +26,16 @@
 // IMPORT PAGES
 @import "pages/homepage";
 @import "pages/subpage";
-@import "pages/reports";
-@import "pages/calendars";
 @import "pages/error-404";
 
 // IMPORT SECTIONS
 @import "pages/sections/menu";
 @import "pages/sections/header";
 @import "pages/sections/footer";
-@import "pages/sections/sidebar";
 
 // IMPORT MODULES
-@import "modules/gri_text";
 @import "modules/pages";
 
-@import 'modules/notes';
 @import "modules/break";
 @import "modules/headline";
 @import "modules/columns";
@@ -54,8 +45,6 @@
 @import "modules/tabs";
 @import "modules/column-with-image";
 @import "modules/responsive-image";
-@import "modules/tables";
-@import "modules/quarterly-data-table";
 
 // IMPORT BASE
 @import 'base';

@@ -1,7 +1,28 @@
 {
     "key": "group_611faf5bc157d",
     "title": "Strona główna",
-    "fields": [],
+    "fields": [
+        {
+            "key": "field_65c6298610ca0",
+            "label": "",
+            "name": "",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        }
+    ],
     "location": [
         [
             {
@@ -21,6 +42,6 @@
     ],
     "active": true,
     "description": "",
-    "show_in_rest": 0,
-    "modified": 1668757207
+    "show_in_rest": 1,
+    "modified": 1707485579
 }

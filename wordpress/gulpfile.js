@@ -23,7 +23,7 @@ const svgo = require('gulp-svgo');
 const gulpext = require('gulp-ext');
 
 // CONST
-const browserSyncHost = 'bootstrap.flyhigh.pro';
+const browserSyncHost = 'sweep.flyhigh.pro';
 const isSwiperVersion4 = false;
 const config = {
 	nodeModulesDir: './node_modules',
@@ -78,7 +78,6 @@ function stylesDeps() {
         `${swiperDeps('css')}`, // swiper version 4 or latest
         '/modal-video/css/modal-video.min.css',
         '/tooltipster/dist/css/tooltipster.bundle.min.css',
-        '/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
     ]))
         .pipe(cssnano({
             discardComments: {
@@ -130,8 +129,6 @@ function jsDeps() {
         `${swiperDeps('js')}`, // swiper version 4 or latest
         '/modal-video/js/jquery-modal-video.min.js',
         '/tooltipster/dist/js/tooltipster.bundle.min.js',
-        '/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
-        '/moment/min/moment.min.js',
         // '/sharer.js/sharer.min.js',
         // '/gsap/dist/gsap.min.js',
         // '/gsap/dist/ScrollTrigger.min.js',

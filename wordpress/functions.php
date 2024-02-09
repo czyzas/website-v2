@@ -10,14 +10,10 @@
     require_once "includes/functions/editor-formats.php";
     require_once "includes/functions/register-menus.php";
     require_once "includes/functions/tracking-codes.php";
-    require_once "includes/functions/cookies.php";
 	require_once "includes/svg-optimize/svg-optimize.php";
 
     // Includes
     require_once "includes/functions/enqueue-assets.php";
-    require_once "includes/dictionary/dictionary-admin.php";
-    require_once "includes/gri-admin/gri-admin.php";
-    require_once "includes/insert-table/insert-table-admin.php";
     require_once "includes/numbers-converter/numbers-converter-admin.php";
     require_once "includes/translations/translations.php";
 

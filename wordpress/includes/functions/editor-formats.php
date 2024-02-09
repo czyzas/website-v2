@@ -7,7 +7,6 @@
  */
 
 add_filter( 'tiny_mce_before_init', function ( $settings ) {
-	include "editor-formats/table-formats.php";
 
 	$style_formats = [
 		$table_formats ?? [],

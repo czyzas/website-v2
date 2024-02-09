@@ -20,7 +20,6 @@ $classes = classNames( [
 		<div class="top-items">
 			<?php include(locate_template('partials/breadcrumbs.php')); ?>
 		</div>
-		<?php include( locate_template( 'partials/gri_indexes.php' ) ); ?>
 		<h1 class="<?php echo get_field( 'smaller_title' ) ? 'smaller' : '' ?>">
 			<?php echo $title; ?>
 		</h1>
