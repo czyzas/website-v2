@@ -1,0 +1,10 @@
+query Estates($LOCALE: I18NLocaleCode) {
+  estates(locale: $LOCALE, pagination: { limit: -1 }) {
+    data {
+      id
+      attributes {
+        slug
+      }
+    }
+  }
+}

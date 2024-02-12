@@ -1,0 +1,122 @@
+fragment AdditionalInfo on Query {
+  header(locale: $LOCALE) {
+    data {
+      attributes {
+        menu_links {
+          title
+          url
+          target_blank
+        }
+      }
+    }
+  }
+  footer(locale: $LOCALE) {
+    data {
+      attributes {
+        photo {
+          ...Photo
+        }
+      }
+    }
+  }
+  options: option(locale: $LOCALE) {
+    data {
+      attributes {
+        email
+        phone_number
+        main_address
+        additional_emails {
+          email
+        }
+      }
+    }
+  }
+  translation(locale: $LOCALE) {
+    data {
+      attributes {
+        room_page_offer_text
+        room_page_see_also_title
+        room_page_back_to_homepage
+        address_label
+        phone_label
+        email_label
+        price_label
+        estate_type_label
+        year_of_construction_label
+        estate_rooms_label
+        in_room_amenities_label
+        public_facilities_label
+      }
+    }
+  }
+  i18NLocales {
+    data {
+      attributes {
+        name
+        code
+      }
+    }
+  }
+  cta {
+    data {
+      attributes {
+        content
+        link {
+          title
+          url
+          target_blank
+        }
+      }
+    }
+  }
+  seo {
+    data {
+      attributes {
+        site_title
+        site_description
+        site_og_image {
+          ...Photo
+        }
+        founding_date
+        founder_name
+        site_url
+      }
+    }
+  }
+}
+
+fragment EstateCard on EstateRelationResponseCollection {
+  data {
+    attributes {
+      featured_photo {
+        ...Photo
+      }
+      city
+      size
+      title
+      slug
+    }
+  }
+}
+
+fragment PhotoCollection on UploadFileRelationResponseCollection {
+  data {
+    attributes {
+      width
+      height
+      url
+      alternativeText
+    }
+  }
+}
+
+fragment Photo on UploadFileEntityResponse {
+  data {
+    attributes {
+      width
+      height
+      url
+      alternativeText
+    }
+  }
+}
