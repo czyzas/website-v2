@@ -8,6 +8,8 @@
     "composer/installers": ">=2.2",
     "wpengine/advanced-custom-fields-pro": ">=6.1",
     "wpackagist-plugin/duplicate-post": ">=4.5",
-    "wpackagist-plugin/wp-api-swaggerui": ">=1.1.2"
+    "wpackagist-plugin/wp-graphql": ">=1.21",
+    "wpackagist-plugin/wpgraphql-acf": ">=2.1.1",
+    "wpackagist-plugin/add-wpgraphql-seo": ">=4.22.5"
   }
 }

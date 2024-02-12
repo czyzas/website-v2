@@ -144,28 +144,28 @@
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "templates\/template-notes.php"
+                "value": "default"
             }
         ],
         [
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "templates\/template-print-basket.php"
+                "value": "default"
             }
         ],
         [
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "templates\/template-noty_objasniajace.php"
+                "value": "default"
             }
         ],
         [
             {
                 "param": "post_type",
                 "operator": "==",
-                "value": "noty_objasniajace"
+                "value": "post"
             }
         ],
         [
@@ -179,21 +179,21 @@
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "templates\/template-calendar.php"
+                "value": "default"
             }
         ],
         [
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "templates\/template-gathering.php"
+                "value": "default"
             }
         ],
         [
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "templates\/template-reports.php"
+                "value": "default"
             }
         ]
     ],
@@ -208,5 +208,9 @@
     "active": true,
     "description": "",
     "show_in_rest": 1,
-    "modified": 1707485590
+    "show_in_graphql": 1,
+    "graphql_field_name": "ustawieniaPodstrony",
+    "map_graphql_types_from_location_rules": 0,
+    "graphql_types": "",
+    "modified": 1707487293
 }
