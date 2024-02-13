@@ -1,4 +1,3 @@
-import type { UploadFileEntityResponse } from '@/__generated__/cms';
 import { env } from '@/environment';
 import type { PhotoProps } from '@/types';
 
@@ -49,15 +48,15 @@ export const parsePhoto = (
   };
 };
 
-export const parsePhotoEntityResponse = (
-  uploadFileEntity: UploadFileEntityResponse,
-  resizeWidth?: number,
-) => {
-  const photo = uploadFileEntity?.data?.attributes;
-
-  if (!photo) {
-    throw new Error('No photo');
-  }
-
-  return parsePhoto(photo, resizeWidth);
-};
+// export const parsePhotoEntityResponse = (
+//   uploadFileEntity: UploadFileEntityResponse,
+//   resizeWidth?: number,
+// ) => {
+//   const photo = uploadFileEntity?.data?.attributes;
+//
+//   if (!photo) {
+//     throw new Error('No photo');
+//   }
+//
+//   return parsePhoto(photo, resizeWidth);
+// };
