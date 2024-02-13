@@ -1,17 +1,30 @@
 {
-  "name": "",
+  "name": "sweep",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "prebuild": "npm run codegen",
+    "build": "npm run prebuild && astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "codegen": "graphql-codegen --require dotenv/config --config ./src/codegen.ts"
   },
   "dependencies": {
     "astro": "^4.3.5",
     "@astrojs/check": "^0.5.2",
     "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.0",
+    "@graphql-codegen/client-preset": "^4.1.0",
+    "@graphql-codegen/typed-document-node": "^5.0.1",
+    "@graphql-codegen/typescript": "^4.0.1",
+    "@graphql-codegen/typescript-operations": "^4.0.1",
+    "@graphql-typed-document-node/core": "^3.2.0",
+    "graphql": "^16.8.1",
+    "graphql-request": "^6.1.0",
+    "@t3-oss/env-core": "^0.7.0"
   }
 }

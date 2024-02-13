@@ -1,0 +1,9 @@
+query Homepage {
+  pages {
+    nodes {
+      homepage {
+        test
+      }
+    }
+  }
+}
