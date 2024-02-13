@@ -1,11 +1,11 @@
 {
     "key": "group_611faf5bc157d",
-    "title": "Strona główna",
+    "title": "Homepage",
     "fields": [
         {
             "key": "field_65c6298610ca0",
-            "label": "",
-            "name": "",
+            "label": "Test",
+            "name": "test",
             "aria-label": "",
             "type": "text",
             "instructions": "",
@@ -20,7 +20,11 @@
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": ""
+            "append": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "test",
+            "graphql_non_null": 0
         }
     ],
     "location": [
@@ -29,6 +33,13 @@
                 "param": "page_template",
                 "operator": "==",
                 "value": "templates\/template-homepage.php"
+            }
+        ],
+        [
+            {
+                "param": "page",
+                "operator": "==",
+                "value": "6"
             }
         ]
     ],
@@ -43,5 +54,9 @@
     "active": true,
     "description": "",
     "show_in_rest": 1,
-    "modified": 1707485579
+    "show_in_graphql": 1,
+    "graphql_field_name": "homepage",
+    "map_graphql_types_from_location_rules": 0,
+    "graphql_types": "",
+    "modified": 1707748236
 }

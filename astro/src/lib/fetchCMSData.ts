@@ -1,17 +1,11 @@
 import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import type { Variables } from 'graphql-request';
 import {
-  EstateDocument,
-  EstatesDocument,
   HomepageDocument,
 } from '@/__generated__/cms';
 import type {
-  EstateQuery,
-  EstateQueryVariables,
-  EstatesQuery,
-  EstatesQueryVariables,
   HomepageQuery,
-  HomepageQueryVariables,
+  HomepageQueryVariables
 } from '@/__generated__/cms';
 import { gqlClient } from './graphqlClient';
 
@@ -35,31 +29,6 @@ const fetchData = async <Query, QueryVariables extends Variables = Variables>(
   return data;
 };
 
-export const getHomepage = (lang: string) =>
-  fetchData<HomepageQuery, HomepageQueryVariables>(HomepageDocument, {
-    LOCALE: lang,
-  });
+export const getHomepage = () =>
+    fetchData<HomepageQuery, HomepageQueryVariables>(HomepageDocument);
 
-export const getEstates = (lang: string) =>
-  fetchData<EstatesQuery, EstatesQueryVariables>(EstatesDocument, {
-    LOCALE: lang,
-  });
-
-export const getEstatePage = (id: string, lang: string) =>
-  fetchData<EstateQuery, EstateQueryVariables>(EstateDocument, {
-    ESTATE_ID: id,
-    LOCALE: lang,
-  });
-
-// export const getTextPages = () =>
-//   fetchData<TextPagesQuery, TextPagesQueryVariables>(
-//     { key: CACHE_KEYS.TEXT_PAGE },
-//     TextPagesDocument,
-//   );
-
-// export const getTextPage = (id: string) =>
-//   fetchData<TextPageQuery, TextPageQueryVariables>(
-//     { key: CACHE_KEYS.TEXT_PAGE, id },
-//     TextPageDocument,
-//     { TEXT_PAGE_ID: id },
-//   );

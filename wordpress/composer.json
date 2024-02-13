@@ -10,6 +10,7 @@
     "wpackagist-plugin/duplicate-post": ">=4.5",
     "wpackagist-plugin/wp-graphql": ">=1.21",
     "wpackagist-plugin/wpgraphql-acf": ">=2.1.1",
-    "wpackagist-plugin/add-wpgraphql-seo": ">=4.22.5"
+    "wpackagist-plugin/add-wpgraphql-seo": ">=4.22.5",
+    "wpackagist-plugin/wordpress-seo": ">=21.0"
   }
 }

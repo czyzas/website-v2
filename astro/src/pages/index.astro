@@ -1,6 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
+import { getHomepage } from '@/lib/fetchCMSData';
+
+const data = await getHomepage();
+
 ---
 
 <Layout title="Welcome to Astro.">
@@ -34,6 +38,7 @@ import Card from '../components/Card.astro';
 			</defs>
 		</svg>
 		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
+		<span>{data.pages.nodes[0].homepage.test}</span>
 		<p class="instructions">
 			To get started, open the directory <code>src/pages</code> in your project.<br />
 			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
