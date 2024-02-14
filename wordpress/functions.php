@@ -16,6 +16,7 @@
     require_once "includes/functions/enqueue-assets.php";
     require_once "includes/numbers-converter/numbers-converter-admin.php";
     require_once "includes/translations/translations.php";
+	require_once "includes/functions/register-admin-bar-menu.php";
 
 	// Components
 	require_once "components/Quotation.php";
