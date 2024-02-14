@@ -12,6 +12,7 @@ export const env = createEnv({
     PUBLIC_CMS_BASE_URL: z.string().url(),
     PUBLIC_CMS_ENDPOINT: z.string().url(),
     PUBLIC_CMS_API_TOKEN: z.string().min(1),
+    PUBLIC_APP_ENV: z.enum(['development', 'staging', 'production']),
   },
   /**
    * What object holds the environment variables at runtime.
