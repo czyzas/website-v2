@@ -7,8 +7,6 @@
     "start": "astro dev",
     "prebuild": "npm run codegen",
     "build": "npm run prebuild && astro check && astro build",
-    "vercel build": "npm run prebuild && astro check && astro build",
-    "vercel-build": "npm run prebuild && astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "codegen": "graphql-codegen --require dotenv/config --config ./src/codegen.ts"

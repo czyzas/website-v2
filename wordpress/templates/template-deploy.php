@@ -9,7 +9,7 @@ get_header(); ?>
 		<?php
 		include( locate_template( 'partials/top.php' ) );
 
-		$cache = '?buildCache=false';
+		$cache = '?buildCache=true';
 		$url = "https://api.vercel.com/v1/integrations/deploy/prj_aYdxE68FQViKIajOyeHvioXtgNPF/UD2ZpNTmV5$cache";
 		$headers = array(
 			'Content-Type' => 'application/json',
