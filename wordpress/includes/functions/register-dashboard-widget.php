@@ -56,12 +56,16 @@ function deploy_page_callback() {
 add_action( 'wp_ajax_deploy_action', 'deploy_via_ajax' );
 function deploy_via_ajax() {
 	date_default_timezone_set( 'Europe/Warsaw' );
-	$deploy_by_hook = deploy_by_hook();
 
+	$deploy_by_hook = deploy_by_hook();
 	if ( $deploy_by_hook ) {
+		sleep( 5 );
 		$list = get_deployments_list_by_timestamp( $deploy_by_hook['job']['createdAt'] - 2 * 60 * 1000 );
 		$status = check_deploy_status( $list['deployments'][0]['uid'] );
-		wp_send_json( "<br>Deployment status: $status", 200 );
+
+		$date = date( 'd-m-Y H:i', $deploy_by_hook['job']['createdAt'] / 1000 );
+		$response = "Created at: $date <br> Deployment status: $status";
+		wp_send_json( $response, 200 );
 	} else {
 		wp_send_json( "Something went wrong. Please try again.", 500 );
 	}
@@ -70,11 +74,11 @@ function deploy_via_ajax() {
 }
 
 function check_deploy_status( $deployment_id ) {
-	$status = 'ERROR';
+	$status = 'NO PARAM';
 	if ( !$deployment_id ) return $status;
 
 	$i = 0;
-	while ( $status !== 'READY' || $i > 4 ) {
+	while ( $i < 48 ) {
 		$response = call_wp_remote_get( "https://api.vercel.com/v13/deployments/$deployment_id" );
 
 		$data = wp_remote_retrieve_body( $response );
@@ -82,6 +86,9 @@ function check_deploy_status( $deployment_id ) {
 
 		if ( $data ) {
 			$status = $data['readyState'];
+			if ( $status === 'READY' || $status === 'ERROR' ) {
+				return $status;
+			}
 		} else {
 			break;
 		}
@@ -102,10 +109,8 @@ function deploy_by_hook() {
 	}
 
 	$body = wp_remote_retrieve_body( $response );
-	$responseData = json_decode( $body, true );
-	wp_send_json("Created at: " . date( 'd-m-Y H:i', $responseData['job']['createdAt'] / 1000 ));
 
-	return $responseData;
+	return json_decode( $body, true );
 }
 
 function get_deployments_list_by_timestamp( $deploy_timestamp ) {
