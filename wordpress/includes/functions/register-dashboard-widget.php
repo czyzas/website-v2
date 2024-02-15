@@ -26,13 +26,17 @@ function deploy_page_callback() {
 	<div id="deployResult"></div>
 	<script type="text/javascript">
 		jQuery(document).ready(function ($) {
-			$('#deployButton').click(function () {
+			const deployButton = $('#deployButton');
+			deployButton.click(function () {
 				let seconds = 0;
-				$("#deployResult").html(`Deploying, please wait... ${seconds}s`);
+				const deployResult = $('#deployResult');
+
+				deployResult.html(`Deploying, please wait... ${seconds}s`);
+				deployButton.prop('disabled', true);
 
 				const interval = setInterval(function () {
 					seconds++;
-					$("#deployResult").html(`Deploying, please wait... ${seconds}s`);
+					deployResult.html(`Deploying, please wait... ${seconds}s`);
 				}, 1000);
 
 				const data = {
@@ -40,12 +44,13 @@ function deploy_page_callback() {
 				};
 
 				$.post(ajaxurl, data, function (response) {
-					console.log(response)
 					clearInterval(interval);
-					$("#deployResult").html(response);
+					deployResult.html(response);
+					deployButton.prop('disabled', false);
 				}).fail(function () {
 					clearInterval(interval);
-					$("#deployResult").html("Deployment failed. Please try again.");
+					deployResult.html("Deployment failed. Please try again.");
+					deployButton.prop('disabled', false);
 				});
 			});
 		});
