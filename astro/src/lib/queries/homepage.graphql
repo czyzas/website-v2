@@ -2,7 +2,60 @@ query Homepage {
   pages {
     nodes {
       homepage {
-        test
+        fieldGroupName
+      }
+      modules {
+        modules {
+          fieldGroupName
+          ... on ModulesModulesBreakLayout {
+            fieldGroupName
+            height
+          }
+          ... on ModulesModulesHeadlineLayout {
+            id
+          }
+          ... on ModulesModulesGriTextLayout {
+            fieldGroupName
+          }
+          ... on ModulesModulesColumnsLayout {
+            columnWidth
+            columnsCounter
+            content {
+              fieldGroupName
+              first
+              second
+              third
+            }
+            fieldGroupName
+          }
+          ... on ModulesModulesResponsiveImageLayout {
+            desktopWidth
+            fieldGroupName
+          }
+          ... on ModulesModulesAccordionLayout {
+            fieldGroupName
+            openFirst
+          }
+          ... on ModulesModulesTabsLayout {
+            fieldGroupName
+            orientation
+          }
+          ... on ModulesModulesBigNumbersLayout {
+            alignment
+            fieldGroupName
+          }
+          ... on ModulesModulesQuotationLayout {
+            authorName
+            authorOccupation
+          }
+          ... on ModulesModulesColumnWithImageLayout {
+            fieldGroupName
+            imagePosition
+          }
+          ... on ModulesModulesQuarterlyDataTableLayout {
+            fieldGroupName
+          }
+        }
       }
     }
   }

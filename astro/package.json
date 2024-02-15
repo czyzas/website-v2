@@ -30,6 +30,7 @@
     "cssnano": "^6.0.1",
     "@types/postcss-flexbugs-fixes": "^5.0.1",
     "@tysian/eslint-config-typescript": "^0.1.1",
+    "@total-typescript/ts-reset": "^0.5.1",
     "eslint": "^8.47.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-astro": "^0.28.0",
