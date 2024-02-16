@@ -1,3 +1,7 @@
-import Columns from '@/modules/columns.astro';
+import ModulesModulesFieldsColumnsLayout from '@/modules/Columns.astro';
+import ModulesModulesFieldsQuotationLayout from '@/modules/Quotation.astro';
 
-export { Columns };
+export {
+  ModulesModulesFieldsColumnsLayout,
+  ModulesModulesFieldsQuotationLayout,
+};

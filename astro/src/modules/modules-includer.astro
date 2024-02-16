@@ -1,0 +1,17 @@
+---
+import * as Modules from '.';
+
+const { modulesProps } = Astro.props;
+---
+
+<div>
+  {
+    modulesProps.map((module) => {
+      console.log(module);
+      const Component = Modules[module.fieldGroupName];
+      if (Component) {
+        return <Component {...module} />;
+      }
+    })
+  }
+</div>

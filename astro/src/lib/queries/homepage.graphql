@@ -5,19 +5,19 @@ query Homepage {
         fieldGroupName
       }
       modules {
-        modules {
+        modulesFields {
           fieldGroupName
-          ... on ModulesModulesBreakLayout {
+          ... on ModulesModulesFieldsBreakLayout {
             fieldGroupName
             height
           }
-          ... on ModulesModulesHeadlineLayout {
+          ... on ModulesModulesFieldsHeadlineLayout {
             id
           }
-          ... on ModulesModulesGriTextLayout {
+          ... on ModulesModulesFieldsGriTextLayout {
             fieldGroupName
           }
-          ... on ModulesModulesColumnsLayout {
+          ... on ModulesModulesFieldsColumnsLayout {
             columnWidth
             columnsCounter
             content {
@@ -28,31 +28,31 @@ query Homepage {
             }
             fieldGroupName
           }
-          ... on ModulesModulesResponsiveImageLayout {
+          ... on ModulesModulesFieldsResponsiveImageLayout {
             desktopWidth
             fieldGroupName
           }
-          ... on ModulesModulesAccordionLayout {
+          ... on ModulesModulesFieldsAccordionLayout {
             fieldGroupName
             openFirst
           }
-          ... on ModulesModulesTabsLayout {
+          ... on ModulesModulesFieldsTabsLayout {
             fieldGroupName
             orientation
           }
-          ... on ModulesModulesBigNumbersLayout {
+          ... on ModulesModulesFieldsBigNumbersLayout {
             alignment
             fieldGroupName
           }
-          ... on ModulesModulesQuotationLayout {
+          ... on ModulesModulesFieldsQuotationLayout {
             authorName
             authorOccupation
           }
-          ... on ModulesModulesColumnWithImageLayout {
+          ... on ModulesModulesFieldsColumnWithImageLayout {
             fieldGroupName
             imagePosition
           }
-          ... on ModulesModulesQuarterlyDataTableLayout {
+          ... on ModulesModulesFieldsQuarterlyDataTableLayout {
             fieldGroupName
           }
         }

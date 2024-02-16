@@ -1,10 +1,10 @@
 {
     "key": "group_5d380bc6e0ae8",
-    "title": "Moduły podstrony",
+    "title": "Modules",
     "fields": [
         {
             "key": "field_5d380cd69121e",
-            "label": "Moduły",
+            "label": "Modules",
             "name": "modules",
             "aria-label": "",
             "type": "flexible_content",
@@ -1874,7 +1874,11 @@
             },
             "min": "",
             "max": "",
-            "button_label": "Dodaj wiersz"
+            "button_label": "Dodaj wiersz",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "modulesFields",
+            "graphql_non_null": 0
         }
     ],
     "location": [
@@ -1954,14 +1958,26 @@
     "description": "",
     "show_in_rest": 1,
     "show_in_graphql": 1,
-    "graphql_field_name": "modułYPodstrony",
+    "graphql_field_name": "modules",
     "map_graphql_types_from_location_rules": 1,
     "graphql_types": [
         "ContentNode",
         "MediaItem",
         "Page",
         "Post",
-        "RaportBie____cy"
+        "RaportBie____cy",
+        "TermNode",
+        "Category",
+        "KategoriaNoty",
+        "PostFormat",
+        "Tag",
+        "ContentTemplate",
+        "DefaultTemplate",
+        "Template_Homepage",
+        "Comment",
+        "Menu",
+        "MenuItem",
+        "User"
     ],
-    "modified": 1707488785
+    "modified": 1708074765
 }
