@@ -1,11 +1,11 @@
 import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import type { Variables } from 'graphql-request';
-import {
-  HomepageDocument,
-} from '@/__generated__/cms';
+import { HomepageDocument, ModulesDocument } from '@/__generated__/cms';
 import type {
   HomepageQuery,
-  HomepageQueryVariables
+  HomepageQueryVariables,
+  ModulesQuery,
+  ModulesQueryVariables,
 } from '@/__generated__/cms';
 import { gqlClient } from './graphqlClient';
 
@@ -30,5 +30,7 @@ const fetchData = async <Query, QueryVariables extends Variables = Variables>(
 };
 
 export const getHomepage = () =>
-    fetchData<HomepageQuery, HomepageQueryVariables>(HomepageDocument);
+  fetchData<HomepageQuery, HomepageQueryVariables>(HomepageDocument);
 
+export const getModules = () =>
+  fetchData<ModulesQuery, ModulesQueryVariables>(ModulesDocument);
