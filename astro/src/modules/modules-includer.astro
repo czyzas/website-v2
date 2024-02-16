@@ -1,17 +1,19 @@
 ---
-import * as Modules from '.';
+import type { Modules } from '@/__generated__/cms';
+import * as allModules from '.';
 
 const { modulesProps } = Astro.props;
 ---
 
 <div>
   {
-    modulesProps.map((module) => {
-      console.log(module);
-      const Component = Modules[module.fieldGroupName];
+    modulesProps.map((module: Modules) => {
+      const Component =
+        allModules[module.fieldGroupName as keyof typeof allModules];
       if (Component) {
         return <Component {...module} />;
       }
+      return null;
     })
   }
 </div>
