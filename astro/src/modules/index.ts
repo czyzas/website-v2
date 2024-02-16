@@ -1,5 +1,5 @@
-import ModulesModulesFieldsColumnsLayout from '@/modules/Columns.astro';
-import ModulesModulesFieldsQuotationLayout from '@/modules/Quotation.astro';
+import ModulesModulesFieldsColumnsLayout from '@/modules/column.astro';
+import ModulesModulesFieldsQuotationLayout from '@/modules/quote.astro';
 
 export {
   ModulesModulesFieldsColumnsLayout,
