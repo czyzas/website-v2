@@ -15,15 +15,31 @@ add_action( 'wp_dashboard_setup', function () {
 } );
 
 function deploy_page_callback() {
+	global $wpdb;
+	$table_name = "{$wpdb->prefix}deploy_logs";
+	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $table_name ORDER BY id DESC LIMIT %d", 1), ARRAY_A);
+	$result = $results[0] ?? [];
 	?>
-	<style>
-		#deployButton {
-			margin-bottom: 20px;
-		}
-	</style>
 	<p>Click button below to start deploy action! <strong>It may take a while.</strong></p>
-	<button id="deployButton" class="button button-primary">Deploy Now</button>
-	<div id="deployResult"></div>
+	<button id="deployButton"
+	        class="button button-primary"
+	        style="margin-bottom: 20px;"
+	>Deploy Now
+	</button>
+	<div id="deployResult">
+		<strong>Last deploy:</strong><br>
+		<?php if ( $result ): ?>
+			UID: <?php echo $result['uid']; ?><br>
+			Status: <?php echo $result['status']; ?><br>
+			Created at: <?php echo $result['created_at']; ?><br>
+			User: <?php echo $result['user']; ?><br>
+		<?php endif; ?>
+	</div>
+	<?php
+}
+
+function deploy_page_js_script() {
+	?>
 	<script type="text/javascript">
 		jQuery(document).ready(function ($) {
 			const deployButton = $('#deployButton');
@@ -57,9 +73,12 @@ function deploy_page_callback() {
 	</script>
 	<?php
 }
+add_action( 'admin_footer', 'deploy_page_js_script' );
+
 
 add_action( 'wp_ajax_deploy_action', 'deploy_via_ajax' );
 function deploy_via_ajax() {
+	global $wpdb;
 	date_default_timezone_set( 'Europe/Warsaw' );
 
 	$deploy_by_hook = deploy_by_hook();
@@ -68,8 +87,18 @@ function deploy_via_ajax() {
 		$list = get_deployments_list_by_timestamp( $deploy_by_hook['job']['createdAt'] - 2 * 60 * 1000 );
 		$status = check_deploy_status( $list['deployments'][0]['uid'] );
 
-		$date = date( 'd-m-Y H:i', $deploy_by_hook['job']['createdAt'] / 1000 );
-		$response = "Created at: $date <br> Deployment status: $status";
+		$date = date( 'Y-m-d H:i:s', $deploy_by_hook['job']['createdAt'] / 1000 );
+		$response = "<strong>Current deploy:</strong><br> UID: {$list['deployments'][0]['uid']} <br> Created at: $date <br> Deployment status: $status";
+
+		$table_name = "{$wpdb->prefix}deploy_logs";
+		$data = array(
+			'uid'        => $list['deployments'][0]['uid'],
+			'status'     => $status,
+			'created_at' => $date,
+			'user'       => get_the_author_meta( 'nickname', get_current_user_id() ),
+		);
+		create_db_table( $table_name );
+		$wpdb->insert( $table_name, $data );
 		wp_send_json( $response, 200 );
 	} else {
 		wp_send_json( "Something went wrong. Please try again.", 500 );
@@ -142,4 +171,24 @@ function call_wp_remote_get( $url ): WP_Error|array {
 	return wp_remote_get( $url, array(
 		'headers' => $headers,
 	) );
+}
+
+function create_db_table( $table_name ) {
+	global $wpdb;
+
+	//$wpdb->query("DROP TABLE IF EXISTS $table_name");
+
+	if ( $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) != $table_name ) {
+		$charset_collate = $wpdb->get_charset_collate();
+		$sql = "CREATE TABLE $table_name (
+            id mediumint(9) NOT NULL AUTO_INCREMENT,
+            uid varchar(100) NOT NULL,
+            status varchar(100) NOT NULL,
+            created_at datetime NOT NULL,
+            user varchar(100) NOT NULL,
+            PRIMARY KEY  (id)
+        ) $charset_collate;";
+		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+		dbDelta( $sql );
+	}
 }
