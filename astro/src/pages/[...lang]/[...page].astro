@@ -1,0 +1,29 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { fixOptionalLanguageParams, withLangParams } from '@/i18n/utils';
+
+export const getStaticPaths = () =>
+  withLangParams([
+    {
+      params: {
+        page: 'about',
+      },
+    },
+    {
+      params: {
+        page: 'business/strategy',
+      },
+    },
+    {
+      params: {
+        page: 'lorem/ipsum/dolor',
+      },
+    },
+  ]);
+
+const { lang = 'en', page } = fixOptionalLanguageParams(Astro.params, 'page');
+---
+
+<Layout>
+  <h1>[{lang}] Dynamic Page - {`/${page}`}</h1>
+</Layout>

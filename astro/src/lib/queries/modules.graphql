@@ -2,13 +2,13 @@ query Modules {
   pages {
     nodes {
       modules {
-        modulesFields {
-          ... on ModulesModulesFieldsBreakLayout {
+        modulesContent {
+          ... on ModulesModulesContentBreakLayout {
             fieldGroupName
             height
             isLine
           }
-          ... on ModulesModulesFieldsHeadlineLayout {
+          ... on ModulesModulesContentHeadlineLayout {
             id
             customColor
             customColorToggle
@@ -16,7 +16,7 @@ query Modules {
             fieldGroupName
             type
           }
-          ... on ModulesModulesFieldsGriTextLayout {
+          ... on ModulesModulesContentGriTextLayout {
             fieldGroupName
             griList {
               description
@@ -24,7 +24,7 @@ query Modules {
               index
             }
           }
-          ... on ModulesModulesFieldsColumnsLayout {
+          ... on ModulesModulesContentColumnsLayout {
             columnWidth
             columnsCounter
             fieldGroupName
@@ -35,13 +35,13 @@ query Modules {
               third
             }
           }
-          ... on ModulesModulesFieldsResponsiveImageLayout {
+          ... on ModulesModulesContentResponsiveImageLayout {
             desktopWidth
             fieldGroupName
             mobileWidth
             zoomable
           }
-          ... on ModulesModulesFieldsAccordionLayout {
+          ... on ModulesModulesContentAccordionLayout {
             fieldGroupName
             openFirst
             rows {
@@ -53,7 +53,7 @@ query Modules {
               title
             }
           }
-          ... on ModulesModulesFieldsTabsLayout {
+          ... on ModulesModulesContentTabsLayout {
             fieldGroupName
             orientation
             tabs {
@@ -66,14 +66,14 @@ query Modules {
               title
             }
           }
-          ... on ModulesModulesFieldsBigNumbersLayout {
+          ... on ModulesModulesContentBigNumbersLayout {
             alignment
             fieldGroupName
             row
             textSmaller
             theme
           }
-          ... on ModulesModulesFieldsQuotationLayout {
+          ... on ModulesModulesContentQuotationLayout {
             authorName
             authorOccupation
             contentAlignment
@@ -82,12 +82,12 @@ query Modules {
             quotationContent
             theme
           }
-          ... on ModulesModulesFieldsColumnWithImageLayout {
+          ... on ModulesModulesContentColumnWithImageLayout {
             fieldGroupName
             imagePosition
             textColumn
           }
-          ... on ModulesModulesFieldsQuarterlyDataTableLayout {
+          ... on ModulesModulesContentQuarterlyDataTableLayout {
             fieldGroupName
           }
         }

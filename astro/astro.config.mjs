@@ -1,16 +1,23 @@
 import { defineConfig } from 'astro/config';
 import vercel from '@astrojs/vercel/serverless';
-// https://astro.build/config
+import { defaultLocale, locales } from './src/i18n/config';
 
 const serverConfig = {
-	output: 'server',
-	adapter: vercel(),
+  output: 'server',
+  adapter: vercel(),
 };
 
 const staticConfig = {
-	output: 'static',
+  output: 'static',
 };
 
-export default defineConfig(
-	process.env.PUBLIC_APP_ENV === 'development' ? serverConfig : staticConfig,
-);
+export default defineConfig({
+  ...(process.env.PUBLIC_APP_ENV === 'development'
+    ? serverConfig
+    : staticConfig),
+
+  i18n: {
+    defaultLocale,
+    locales,
+  },
+});

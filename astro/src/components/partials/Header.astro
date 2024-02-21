@@ -1,0 +1,45 @@
+---
+import { locales, defaultLocale } from '@/i18n/config';
+
+const pages: { url: string; title: string }[] = [
+  { url: '/', title: 'Homepage' },
+  { url: '/about', title: 'Dynamic page - /about' },
+  {
+    url: '/business/strategy',
+    title: 'Nested dynamic page - /business/strategy',
+  },
+  {
+    url: '/lorem/ipsum/dolor',
+    title: 'Nested dynamic page - /lorem/ipsum/dolor',
+  },
+  { url: '/blog', title: 'Blog' },
+  { url: '/blog/chlebek', title: 'Blog/chlebek' },
+  { url: '/blog/bred', title: 'Blog/bred' },
+];
+---
+
+<header>
+  <nav>
+    <ul>
+      {
+        pages.map((page) => (
+          <li>
+            {page.title}
+            {locales.map((lang) => (
+              <Fragment>
+                <a
+                  href={`${lang === defaultLocale ? '/' : `/${lang}`}${page.url}`.replaceAll(
+                    '//',
+                    '/',
+                  )}
+                >
+                  [{lang}]
+                </a>
+              </Fragment>
+            ))}
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</header>

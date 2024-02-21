@@ -26,10 +26,10 @@ module.exports = {
   overrides: [
     {
       files: ['*.{js,jsx,ts,tsx}'],
-      parserOptions: {
-        ecmaVersion: 12,
-        project: './tsconfig.eslint.json',
-      },
+      // parserOptions: {
+      //   ecmaVersion: 12,
+      //   project: './tsconfig.eslint.json',
+      // },
       rules: {},
       settings: {
         'import/extensions': ['.js', '.ts'],
