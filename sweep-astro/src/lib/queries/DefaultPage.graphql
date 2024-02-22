@@ -1,0 +1,8 @@
+query DefaultPage($SLUG: String, $LANG: String) {
+  pages(where: { name: $SLUG, language: $LANG }, first: 1) {
+    nodes {
+      title
+      languageCode
+    }
+  }
+}

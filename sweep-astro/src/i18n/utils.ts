@@ -3,8 +3,32 @@ import type {
   GetStaticPathsItem,
   GetStaticPathsResult,
 } from 'astro';
-import { merge } from 'lodash-es';
+import { merge, trim } from 'lodash-es';
 import { locales, defaultLocale } from './config';
+
+export const getLangParam = (l: string) =>
+  l === defaultLocale ? undefined : l;
+
+export const getUrlWithoutLang = (
+  url: string,
+  options?: { trimSlashes?: boolean },
+) => {
+  const { trimSlashes = true } = options ?? {};
+  const startsWithSlash = url.startsWith('/');
+  let paramPath = startsWithSlash ? url.slice(1) : url;
+  const chunks = paramPath.split('/');
+
+  if (locales.includes(chunks.at(0) ?? '')) {
+    chunks.shift();
+    paramPath = chunks.join('/');
+  }
+
+  if (trimSlashes) {
+    paramPath = trim(paramPath, '/');
+  }
+
+  return paramPath;
+};
 
 /**
  * Propagate locales to provided params
@@ -18,7 +42,7 @@ export const withLangParams = (
     for (const pagePath of paths) {
       const raw = {
         params: {
-          lang: lang === defaultLocale ? undefined : lang,
+          lang: getLangParam(lang),
         },
       };
       finalPaths.push(merge(raw, pagePath));
@@ -39,7 +63,7 @@ export const getStaticPathsWithLangs = (() =>
  *
  * This function fixes the optional default lang problem, when using nested pages , such as `pages/[...lang]/[...page].astro`
  */
-export const fixOptionalLanguageParams = (
+export const fixLangParams = (
   params: GetStaticPathsItem['params'],
   notLangParam: string,
 ) => {

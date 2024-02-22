@@ -1,5 +1,5 @@
-query DefaultPagesStaticPathsQuery {
-  pages(where: { status: PUBLISH }) {
+query DefaultPagesStaticPaths {
+  pages(where: { status: PUBLISH, language: "all" }) {
     nodes {
       template {
         templateName
@@ -7,6 +7,7 @@ query DefaultPagesStaticPathsQuery {
       databaseId
       slug
       uri
+      languageCode
     }
   }
 }

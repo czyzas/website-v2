@@ -1,12 +1,22 @@
 import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import type { Variables } from 'graphql-request';
-import { HomepageDocument, ModulesDocument } from '@/__generated__/cms';
+import {
+  DefaultPageDocument,
+  DefaultPagesStaticPathsDocument,
+  HomepageDocument,
+  ModulesDocument,
+} from '@/__generated__/cms';
 import type {
+  DefaultPageQuery,
+  DefaultPageQueryVariables,
+  DefaultPagesStaticPathsQuery,
+  DefaultPagesStaticPathsQueryVariables,
   HomepageQuery,
   HomepageQueryVariables,
   ModulesQuery,
   ModulesQueryVariables,
 } from '@/__generated__/cms';
+import { defaultLocale } from '@/i18n/config';
 import { gqlClient } from './graphqlClient';
 
 const fetchData = async <Query, QueryVariables extends Variables = Variables>(
@@ -34,3 +44,40 @@ export const getHomepage = () =>
 
 export const getModules = () =>
   fetchData<ModulesQuery, ModulesQueryVariables>(ModulesDocument);
+
+export const getDefaultPagesStaticPaths = async () => {
+  try {
+    const data = await fetchData<
+      DefaultPagesStaticPathsQuery,
+      DefaultPagesStaticPathsQueryVariables
+    >(DefaultPagesStaticPathsDocument);
+
+    return data.pages?.nodes ?? [];
+  } catch (err) {
+    console.error(
+      'DefaultPagesStaticPaths error',
+      err instanceof Error && err.message,
+    );
+    return [];
+  }
+};
+
+export const getDefaultPage = async (
+  slug: string,
+  lang: string = defaultLocale,
+) => {
+  try {
+    const data = await fetchData<DefaultPageQuery, DefaultPageQueryVariables>(
+      DefaultPageDocument,
+      {
+        SLUG: slug,
+        LANG: lang,
+      },
+    );
+
+    return data.pages?.nodes?.at(0) ?? {};
+  } catch (err) {
+    console.error('DefaultPage error', err instanceof Error && err.message);
+    return {};
+  }
+};
