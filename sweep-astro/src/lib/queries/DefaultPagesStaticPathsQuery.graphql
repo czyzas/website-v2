@@ -1,0 +1,12 @@
+query DefaultPagesStaticPathsQuery {
+  pages(where: { status: PUBLISH }) {
+    nodes {
+      template {
+        templateName
+      }
+      databaseId
+      slug
+      uri
+    }
+  }
+}
