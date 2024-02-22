@@ -2,10 +2,13 @@
 import type { InferGetStaticParamsType, InferGetStaticPropsType } from 'astro';
 import Layout from '@/layouts/Layout.astro';
 import { fixLangParams, getLangParam, getUrlWithoutLang } from '@/i18n/utils';
-import { getDefaultPage, getDefaultPagesStaticPaths } from '@/lib/fetchCMSData';
+import {
+  fetchDefaultPage,
+  fetchDefaultPagesStaticPaths,
+} from '@/lib/fetchCMSData';
 
 export const getStaticPaths = async () => {
-  const paths = await getDefaultPagesStaticPaths();
+  const paths = await fetchDefaultPagesStaticPaths();
   const returnPaths = [];
   for (const staticPath of paths) {
     if (
@@ -36,10 +39,11 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 const { lang = 'en', page } = fixLangParams(Astro.params, 'page') as Params;
 
 const { slug = '' } = Astro.props;
-const data = await getDefaultPage(slug, lang);
+const data = (await fetchDefaultPage(slug, lang)) ?? {};
 ---
 
 <Layout>
-  <h1>[{lang}] Dynamic Page - {`/${page}`}</h1>
-  <p>{data.title}</p>
+  <h1>{data.title}</h1>
+  <p>Lang: {lang}</p>
+  <p>URL: {`/${page}`}</p>
 </Layout>
