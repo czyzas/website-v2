@@ -18,6 +18,7 @@ module.exports = {
   },
   rules: {
     '@typescript-eslint/triple-slash-reference': 'off',
+    '@typescript-eslint/no-non-null-assertion': 'off',
     'unused-imports/no-unused-imports': 'off',
   },
   settings: {

@@ -1,0 +1,7 @@
+fragment Languages on Language {
+  url
+  code
+  language_code
+  native_name
+  translated_name
+}

@@ -1,6 +1,106 @@
-query Homepage {
-  page(id: "6", idType: DATABASE_ID) {
-    id
+query Homepage($PAGE_ID: ID!) {
+  page(id: $PAGE_ID, idType: DATABASE_ID) {
     title
+    slug
+    homepage {
+      hero {
+        title
+        content
+        button {
+          ...Link
+        }
+        image {
+          ...Image
+        }
+      }
+      goals {
+        sectionTitle {
+          title
+          overline
+        }
+        tabs {
+          tabTitle
+          overline
+          title
+          content
+          button {
+            ...Link
+          }
+          image {
+            ...Image
+          }
+        }
+      }
+      customers1 {
+        sectionTitle {
+          title
+          overline
+        }
+        customersList {
+          nodes {
+            ... on Customer {
+              title
+              customerAcf {
+                websiteUrl
+                logo {
+                  ...Image
+                }
+              }
+            }
+          }
+        }
+        button {
+          ...Link
+        }
+      }
+      platform {
+        sectionTitle {
+          overline
+          title
+        }
+        content
+        image {
+          ...Image
+        }
+        button {
+          ...Link
+        }
+      }
+      whoweworkwith {
+        sectionTitle {
+          overline
+          title
+        }
+        cards {
+          imageBackgroundColor
+          image {
+            ...Image
+          }
+          title
+          content
+          button {
+            ...Link
+          }
+        }
+      }
+      industries {
+        sectionTitle {
+          overline
+          title
+        }
+        show
+        selectedIndustries {
+          nodes {
+            databaseId
+            ... on Industry {
+              id
+            }
+          }
+        }
+      }
+    }
+  }
+  languages {
+    ...Languages
   }
 }

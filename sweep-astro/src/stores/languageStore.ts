@@ -1,6 +1,6 @@
 import { createStore } from '@/scripts/store';
 
-export const languageStore = createStore({
+export const store = createStore({
   currentLanguage: '',
-  defaultLanguage: '',
+  slug: '',
 });

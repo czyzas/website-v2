@@ -1,12 +1,18 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-
 import { getStaticPathsWithLangs } from '@/i18n/utils';
+import { fetchHomepage } from '@/lib/fetchCMSData';
+import type { Locales } from '@/i18n/config';
 
 export const getStaticPaths = getStaticPathsWithLangs;
 const { lang = 'en' } = Astro.params;
+
+const data = await fetchHomepage(lang as Locales);
+
+console.log({ data });
 ---
 
 <Layout>
-  <h1>[{lang}] Homepage</h1>
+  <h1>[{lang}] {data.title}</h1>
+  <pre>{JSON.stringify(data, null, 2)}</pre>
 </Layout>

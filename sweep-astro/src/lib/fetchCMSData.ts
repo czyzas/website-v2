@@ -6,6 +6,7 @@ import {
   HomepageDocument,
 } from '@/__generated__/cms';
 
+import type { Locales } from '@/i18n/config';
 import { defaultLocale } from '@/i18n/config';
 import { gqlClient } from './graphqlClient';
 
@@ -29,8 +30,15 @@ const fetchData = async <Query, QueryVariables extends Variables = Variables>(
   return data;
 };
 
-export function fetchHomepage() {
-  return fetchData(HomepageDocument);
+export function fetchHomepage(lang: Locales) {
+  const HOMEPAGE_IDS: Record<Locales, string> = {
+    en: '6',
+    fr: '506',
+    pl: '163',
+  };
+  return fetchData(HomepageDocument, {
+    PAGE_ID: HOMEPAGE_IDS[lang],
+  }).then((data) => data.page!);
 }
 
 export function fetchDefaultPagesStaticPaths() {
