@@ -1,10 +1,10 @@
 {
     "key": "group_5d3809475c2c2",
-    "title": "Opcje",
+    "title": "Theme Options",
     "fields": [
         {
             "key": "field_5d380954f84f0",
-            "label": "Ogólne",
+            "label": "General",
             "name": "",
             "aria-label": "",
             "type": "tab",
@@ -16,200 +16,14 @@
                 "class": "",
                 "id": ""
             },
+            "graphql_field_name": "general",
+            "wpml_cf_preferences": 1,
             "placement": "top",
             "endpoint": 0
         },
         {
-            "key": "field_5d38095ef84f1",
-            "label": "Język",
-            "name": "language",
-            "aria-label": "",
-            "type": "radio",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "pl": "Polski",
-                "en": "Angielski"
-            },
-            "allow_null": 0,
-            "other_choice": 0,
-            "default_value": "",
-            "layout": "vertical",
-            "return_format": "value",
-            "save_other_choice": 0
-        },
-        {
-            "key": "field_650412a3ae373",
-            "label": "Ukryj wyszukiwarkę",
-            "name": "hide_search",
-            "aria-label": "",
-            "type": "true_false",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "default_value": 0,
-            "ui_on_text": "",
-            "ui_off_text": "",
-            "ui": 1
-        },
-        {
-            "key": "field_634d2dd5fead2",
-            "label": "Paleta kolorów",
-            "name": "color_palette",
-            "aria-label": "",
-            "type": "repeater",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "collapsed": "",
-            "min": 0,
-            "max": 0,
-            "layout": "table",
-            "button_label": "Dodaj wiersz",
-            "rows_per_page": 20,
-            "sub_fields": [
-                {
-                    "key": "field_634d2df6fead3",
-                    "label": "Kolor HEX",
-                    "name": "color_hex",
-                    "aria-label": "",
-                    "type": "color_picker",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "enable_opacity": false,
-                    "return_format": "string",
-                    "parent_repeater": "field_634d2dd5fead2"
-                },
-                {
-                    "key": "field_634d2e71fead4",
-                    "label": "Kolor - nazwa",
-                    "name": "color_name",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "maxlength": "",
-                    "parent_repeater": "field_634d2dd5fead2"
-                }
-            ]
-        },
-        {
-            "key": "field_5d38099f902fa",
-            "label": "Tytuł raportu",
-            "name": "site_title",
-            "aria-label": "",
-            "type": "textarea",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "maxlength": "",
-            "rows": 3,
-            "new_lines": "br"
-        },
-        {
-            "key": "field_63528d5bdb56b",
-            "label": "Poprzednie raporty",
-            "name": "previous_reports",
-            "aria-label": "",
-            "type": "repeater",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "collapsed": "",
-            "min": 0,
-            "max": 0,
-            "layout": "table",
-            "button_label": "Dodaj poprzedni raport",
-            "rows_per_page": 20,
-            "sub_fields": [
-                {
-                    "key": "field_63528d73db56c",
-                    "label": "Link",
-                    "name": "link",
-                    "aria-label": "",
-                    "type": "link",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "return_format": "array",
-                    "parent_repeater": "field_63528d5bdb56b"
-                }
-            ]
-        },
-        {
-            "key": "field_5d3809ba7b9d7",
-            "label": "Nazwa strony głównej w okruszkach (breadcrumbs)",
-            "name": "breadcrumbs_text",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
             "key": "field_61261a4b150e9",
-            "label": "Zdjęcie domyślne podstrony",
+            "label": "Subpage default image",
             "name": "subpage_default_image",
             "aria-label": "",
             "type": "image",
@@ -221,8 +35,8 @@
                 "class": "",
                 "id": ""
             },
+            "wpml_cf_preferences": 1,
             "return_format": "array",
-            "preview_size": "medium",
             "library": "all",
             "min_width": "",
             "min_height": "",
@@ -230,11 +44,15 @@
             "max_width": "",
             "max_height": "",
             "max_size": "",
-            "mime_types": ""
+            "mime_types": "",
+            "preview_size": "medium",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "subpageDefaultImage"
         },
         {
             "key": "field_635b6e690ccf4",
-            "label": "Wpisy i listy",
+            "label": "Posts lists",
             "name": "",
             "aria-label": "",
             "type": "accordion",
@@ -246,6 +64,8 @@
                 "class": "",
                 "id": ""
             },
+            "graphql_field_name": "postsLists",
+            "wpml_cf_preferences": 1,
             "open": 1,
             "multi_expand": 0,
             "endpoint": 0
@@ -272,11 +92,12 @@
             "multiple": 0,
             "allow_null": 1,
             "ui": 1,
-            "bidirectional_target": []
+            "bidirectional_target": [],
+            "wpml_cf_preferences": 1
         },
         {
             "key": "field_635b6f3d0ccf6",
-            "label": "Wpisy i listy (koniec)",
+            "label": "Posts list (end)",
             "name": "",
             "aria-label": "",
             "type": "accordion",
@@ -288,71 +109,11 @@
                 "class": "",
                 "id": ""
             },
+            "graphql_field_name": "postsListEnd",
+            "wpml_cf_preferences": 1,
             "open": 0,
             "multi_expand": 0,
             "endpoint": 1
-        },
-        {
-            "key": "field_5d383c9be4518",
-            "label": "Strona notatek",
-            "name": "tools_notes_page",
-            "aria-label": "",
-            "type": "page_link",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "33",
-                "class": "",
-                "id": ""
-            },
-            "post_type": "",
-            "taxonomy": "",
-            "allow_null": 0,
-            "allow_archives": 1,
-            "multiple": 0
-        },
-        {
-            "key": "field_5d383cc3d5733",
-            "label": "Strona wydruków",
-            "name": "tools_print_basket_page",
-            "aria-label": "",
-            "type": "page_link",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "33",
-                "class": "",
-                "id": ""
-            },
-            "post_type": "",
-            "taxonomy": "",
-            "allow_null": 0,
-            "allow_archives": 1,
-            "multiple": 0
-        },
-        {
-            "key": "field_6168054ea6347",
-            "label": "Strona not objasniajacych",
-            "name": "tools_explanatory_notes_page",
-            "aria-label": "",
-            "type": "post_object",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "33",
-                "class": "",
-                "id": ""
-            },
-            "post_type": "",
-            "taxonomy": "",
-            "allow_null": 0,
-            "multiple": 0,
-            "return_format": "id",
-            "ui": 1,
-            "bidirectional_target": []
         },
         {
             "key": "field_6571b3eecc4a8",
@@ -369,11 +130,12 @@
                 "id": ""
             },
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "wpml_cf_preferences": 1
         },
         {
             "key": "field_6571b461eaf9a",
-            "label": "Tytuł strony",
+            "label": "Title",
             "name": "error404_title",
             "aria-label": "",
             "type": "text",
@@ -385,15 +147,20 @@
                 "class": "",
                 "id": ""
             },
+            "wpml_cf_preferences": 2,
             "default_value": "",
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": ""
+            "append": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "error404Title",
+            "graphql_non_null": 0
         },
         {
             "key": "field_654cb55bfb069",
-            "label": "Nagłówek",
+            "label": "Headline",
             "name": "error404_headline",
             "aria-label": "",
             "type": "text",
@@ -405,15 +172,20 @@
                 "class": "",
                 "id": ""
             },
+            "wpml_cf_preferences": 2,
             "default_value": "",
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": ""
+            "append": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "error404Headline",
+            "graphql_non_null": 0
         },
         {
             "key": "field_5d3809daa15af",
-            "label": "Treść pod tytułem",
+            "label": "Text under title",
             "name": "error404_text",
             "aria-label": "",
             "type": "textarea",
@@ -425,15 +197,20 @@
                 "class": "",
                 "id": ""
             },
+            "wpml_cf_preferences": 2,
             "default_value": "",
             "maxlength": "",
             "rows": 2,
             "placeholder": "",
-            "new_lines": "br"
+            "new_lines": "br",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "error404Text",
+            "graphql_non_null": 0
         },
         {
             "key": "field_654cb16af1d6a",
-            "label": "Link do powrotu",
+            "label": "Go back link",
             "name": "error404_link",
             "aria-label": "",
             "type": "link",
@@ -445,11 +222,16 @@
                 "class": "",
                 "id": ""
             },
-            "return_format": "array"
+            "wpml_cf_preferences": 1,
+            "return_format": "array",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "error404Link",
+            "graphql_non_null": 0
         },
         {
             "key": "field_656f34e4ff8cb",
-            "label": "Linki społecznościowe",
+            "label": "Socials",
             "name": "",
             "aria-label": "",
             "type": "tab",
@@ -461,12 +243,14 @@
                 "class": "",
                 "id": ""
             },
+            "graphql_field_name": "socials",
+            "wpml_cf_preferences": 1,
             "placement": "top",
             "endpoint": 0
         },
         {
             "key": "field_654cdb7164eb0",
-            "label": "Linki społecznościowe",
+            "label": "Socials links",
             "name": "socials",
             "aria-label": "",
             "type": "repeater",
@@ -478,12 +262,17 @@
                 "class": "",
                 "id": ""
             },
+            "wpml_cf_preferences": 1,
             "layout": "table",
             "pagination": 0,
             "min": 0,
             "max": 0,
             "collapsed": "",
-            "button_label": "Dodaj link",
+            "button_label": "Add link",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "socials",
+            "graphql_non_null": 0,
             "rows_per_page": 20,
             "sub_fields": [
                 {
@@ -501,7 +290,8 @@
                         "id": ""
                     },
                     "return_format": "array",
-                    "parent_repeater": "field_654cdb7164eb0"
+                    "parent_repeater": "field_654cdb7164eb0",
+                    "wpml_cf_preferences": 1
                 }
             ]
         },
@@ -520,11 +310,12 @@
                 "id": ""
             },
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "wpml_cf_preferences": 1
         },
         {
             "key": "field_656f3a1b3dc02",
-            "label": "Treść",
+            "label": "Content",
             "name": "footer_content",
             "aria-label": "",
             "type": "wysiwyg",
@@ -536,15 +327,20 @@
                 "class": "",
                 "id": ""
             },
+            "wpml_cf_preferences": 2,
             "default_value": "",
             "tabs": "all",
             "toolbar": "basic",
             "media_upload": 0,
-            "delay": 0
+            "delay": 0,
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "footerContent",
+            "graphql_non_null": 0
         },
         {
             "key": "field_650d8beae51c6",
-            "label": "Nota prawna",
+            "label": "Legal note",
             "name": "footer_legal_note",
             "aria-label": "",
             "type": "wysiwyg",
@@ -556,15 +352,20 @@
                 "class": "",
                 "id": ""
             },
+            "wpml_cf_preferences": 2,
             "default_value": "",
             "tabs": "all",
             "toolbar": "basic",
             "media_upload": 0,
-            "delay": 0
+            "delay": 0,
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "footerLegalNote",
+            "graphql_non_null": 0
         },
         {
             "key": "field_650d8c4ae51c9",
-            "label": "Dodatkowe linki",
+            "label": "Additional links",
             "name": "footer_links",
             "aria-label": "",
             "type": "repeater",
@@ -576,12 +377,17 @@
                 "class": "",
                 "id": ""
             },
+            "wpml_cf_preferences": 1,
             "layout": "table",
             "pagination": 0,
             "min": 0,
             "max": 0,
             "collapsed": "",
-            "button_label": "Dodaj link",
+            "button_label": "Add link",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "footerLinks",
+            "graphql_non_null": 0,
             "rows_per_page": 20,
             "sub_fields": [
                 {
@@ -599,7 +405,8 @@
                         "id": ""
                     },
                     "return_format": "array",
-                    "parent_repeater": "field_650d8c4ae51c9"
+                    "parent_repeater": "field_650d8c4ae51c9",
+                    "wpml_cf_preferences": 1
                 }
             ]
         }
@@ -624,8 +431,8 @@
     "show_in_rest": 1,
     "acfml_field_group_mode": "translation",
     "show_in_graphql": 1,
-    "graphql_field_name": "opcje",
+    "graphql_field_name": "themeOptions",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1709547666
+    "modified": 1709640685
 }

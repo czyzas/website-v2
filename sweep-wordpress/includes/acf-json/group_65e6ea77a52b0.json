@@ -1,0 +1,61 @@
+{
+    "key": "group_65e6ea77a52b0",
+    "title": "Case Study",
+    "fields": [
+        {
+            "key": "field_65e6ea8b829cd",
+            "label": "Related customer",
+            "name": "related_customer",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 0,
+            "post_type": [
+                "customer"
+            ],
+            "post_status": "",
+            "taxonomy": "",
+            "return_format": "id",
+            "multiple": 0,
+            "allow_null": 0,
+            "bidirectional": 0,
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "relatedCustomer",
+            "graphql_connection_type": "one_to_many",
+            "ui": 1,
+            "bidirectional_target": []
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "case-study"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "acfml_field_group_mode": "translation",
+    "show_in_graphql": 1,
+    "graphql_field_name": "caseStudy",
+    "map_graphql_types_from_location_rules": 0,
+    "graphql_types": "",
+    "modified": 1709632185
+}
