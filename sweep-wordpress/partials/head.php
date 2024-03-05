@@ -23,8 +23,10 @@ if ( is_front_page() ) {
 		<meta name="description" content="<?php bloginfo( 'description' ); ?>" />
 	<?php endif; ?>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="simple-title" content="<?php echo is_front_page() ? $site_name : fh_get_current_page_title(); ?>">
+	<meta name="simple-title"
+	      content="<?php echo is_front_page() ? $site_name : fh_get_current_page_title(); ?>"
+	>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<?php wp_head(); ?>
+
 	<?php insert_tracking_code( TrackingCodePositions::HEAD_BOTTOM ); ?>
 </head>

@@ -18,7 +18,6 @@
     "data_storage": "options",
     "post_id": "",
     "autoload": 0,
-    "show_in_graphql": 1,
-    "graphql_type_name": "ThemeOptions",
-    "modified": 1709632547
+    "show_in_graphql": 0,
+    "modified": 1709648878
 }

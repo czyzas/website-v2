@@ -117,7 +117,7 @@
         },
         {
             "key": "field_6571b3eecc4a8",
-            "label": "404 page",
+            "label": "Error 404 page",
             "name": "",
             "aria-label": "",
             "type": "tab",
@@ -129,9 +129,10 @@
                 "class": "",
                 "id": ""
             },
+            "graphql_field_name": "error404Page",
+            "wpml_cf_preferences": 1,
             "placement": "top",
-            "endpoint": 0,
-            "wpml_cf_preferences": 1
+            "endpoint": 0
         },
         {
             "key": "field_6571b461eaf9a",
@@ -434,5 +435,5 @@
     "graphql_field_name": "themeOptions",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1709640685
+    "modified": 1709653443
 }

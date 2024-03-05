@@ -16,7 +16,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 0,
+            "wpml_cf_preferences": 1,
             "post_type": [
                 "customer"
             ],
@@ -54,8 +54,8 @@
     "show_in_rest": 0,
     "acfml_field_group_mode": "translation",
     "show_in_graphql": 1,
-    "graphql_field_name": "caseStudy",
+    "graphql_field_name": "caseStudyAcf",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1709632185
+    "modified": 1709649078
 }
