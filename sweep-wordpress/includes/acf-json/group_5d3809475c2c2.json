@@ -622,5 +622,10 @@
     "active": true,
     "description": "",
     "show_in_rest": 1,
-    "modified": 1707485567
+    "acfml_field_group_mode": "translation",
+    "show_in_graphql": 1,
+    "graphql_field_name": "opcje",
+    "map_graphql_types_from_location_rules": 0,
+    "graphql_types": "",
+    "modified": 1709547666
 }

@@ -41,6 +41,7 @@
             "max": 0,
             "layout": "block",
             "button_label": "Dodaj kod śledzący",
+            "rows_per_page": 20,
             "sub_fields": [
                 {
                     "key": "field_61d846056b0e0",
@@ -126,8 +127,7 @@
                     "new_lines": "",
                     "parent_repeater": "field_61d845d76b0df"
                 }
-            ],
-            "rows_per_page": 20
+            ]
         }
     ],
     "location": [
@@ -148,5 +148,6 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1694765363
+    "modified": 1709561649,
+    "acfml_field_group_mode": "advanced"
 }
