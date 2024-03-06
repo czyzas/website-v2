@@ -17,11 +17,7 @@ export const updateStore = <T extends object>(
   val: T[keyof T],
 ) => {
   if (!(property in ctx.value)) {
-    throw new Error(
-      `Property ${
-        typeof property === 'string' ? property : ''
-      } doesn't exist in this store`,
-    );
+    throw new Error(`Property ${String(property)} doesn't exist in this store`);
   }
 
   ctx.value[property] = val;

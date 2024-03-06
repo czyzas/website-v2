@@ -1,0 +1,38 @@
+---
+import type { VariantProps } from 'class-variance-authority';
+import type { HTMLAttributes } from 'astro/types';
+import { Icon } from 'astro-icon/components';
+import { cn } from '@/scripts/cn';
+import { buttonVariants } from './ButtonStyles';
+
+type ButtonProps =
+  | {
+      icon?: never;
+      iconPosition?: never;
+    }
+  | {
+      icon: string;
+      iconPosition?: 'start' | 'end';
+    };
+
+type AttributesButton = HTMLAttributes<'button'>;
+
+type Props = AttributesButton &
+  ButtonProps &
+  VariantProps<typeof buttonVariants>;
+
+const {
+  class: className,
+  variant = 'primary',
+  icon = '',
+  // iconPosition = 'end',
+  ...props
+} = Astro.props;
+
+const classes = cn(buttonVariants({ variant }), className);
+---
+
+<button {...props} class={classes}>
+  <slot />
+  {!!icon && <Icon name={icon} />}
+</button>

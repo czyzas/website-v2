@@ -5,6 +5,7 @@ import {
   DefaultPagesStaticPathsDocument,
   HomepageDocument,
 } from '@/__generated__/cms';
+import type { Homepage } from '@/__generated__/cms';
 
 import type { Locales } from '@/i18n/config';
 import { defaultLocale } from '@/i18n/config';
@@ -49,7 +50,7 @@ export function fetchHomepage(lang: Locales) {
   const HOMEPAGE_IDS: Record<Locales, string> = {
     en: '6',
     fr: '506',
-    pl: '163',
+    de: '163',
   };
   return fetchData(
     HomepageDocument,
@@ -57,7 +58,7 @@ export function fetchHomepage(lang: Locales) {
       PAGE_ID: HOMEPAGE_IDS[lang],
     },
     [lang, CACHE_KEYS.HOMEPAGE],
-  ).then((data) => data.page!);
+  );
 }
 
 export function fetchDefaultPagesStaticPaths() {

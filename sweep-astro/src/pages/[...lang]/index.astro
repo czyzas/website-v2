@@ -3,6 +3,8 @@ import Layout from '@/layouts/Layout.astro';
 import { getStaticPathsWithLangs } from '@/i18n/utils';
 import { fetchHomepage } from '@/lib/fetchCMSData';
 import type { Locales } from '@/i18n/config';
+import { cmsStore } from '@/stores/cms';
+import { updateStore } from '@/scripts/store';
 import Hero from '@/components/homepage-sections/Hero.astro';
 import CaseStudies from '@/components/homepage-sections/CaseStudies.astro';
 import Customers from '@/components/homepage-sections/Customers.astro';
@@ -18,6 +20,8 @@ export const getStaticPaths = getStaticPathsWithLangs;
 const { lang = 'en' } = Astro.params;
 
 const data = await fetchHomepage(lang as Locales);
+updateStore(cmsStore, 'languages', data.languages);
+updateStore(cmsStore, 'homepage', data.page!);
 ---
 
 <Layout>
