@@ -6,44 +6,15 @@ import { fileExists } from '../scripts/server/fileExists';
 
 export const CACHE_KEYS = {
   HOMEPAGE: 'homepage',
-  CONTACT: 'contact',
-  TEXT_PAGE: 'text-page',
-  WORK: 'work',
-  SLUGS: 'slugs',
+  PAGE: 'page',
 } as const;
 
-export type CacheKey = (typeof CACHE_KEYS)[keyof typeof CACHE_KEYS];
-export type CachePayload = {
-  key: CacheKey;
-  [key: string]: string | number | boolean;
-};
+export type CachePayload = string | string[];
 
 const CACHE_PATH = './.astro/cms-cache';
 
-const buildCacheFilename = (payload: CachePayload) => {
-  const { key, ...payloadData } = payload;
-
-  const payloadEntries = Object.entries(payloadData);
-  if (payloadEntries.length === 0) {
-    return key;
-  }
-
-  const parsedEntries = payloadEntries
-    .map(([payloadKey, payloadValue]) => {
-      let value = payloadValue;
-
-      if (typeof value === 'boolean') {
-        value = payloadValue ? 'true' : 'false';
-      } else if (typeof value === 'number') {
-        value = String(value);
-      }
-
-      return `${payloadKey}=${value}`;
-    })
-    .join(',');
-
-  return `${key}/[${parsedEntries}]`;
-};
+const buildCacheFilename = (payload: CachePayload) =>
+  Array.isArray(payload) ? payload.join('/') : payload;
 
 export const getCachedCMSData = async <T = unknown>(payload: CachePayload) => {
   try {

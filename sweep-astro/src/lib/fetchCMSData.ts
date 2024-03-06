@@ -9,23 +9,38 @@ import {
 import type { Locales } from '@/i18n/config';
 import { defaultLocale } from '@/i18n/config';
 import { gqlClient } from './graphqlClient';
+import { getCachedCMSData, cacheCMSData, CACHE_KEYS } from './cacheCMSData';
 
 const fetchData = async <Query, QueryVariables extends Variables = Variables>(
   document: TypedDocumentNode<Query, QueryVariables>,
   variables?: QueryVariables,
+  cacheKey?: string[],
 ) => {
-  // // In dev mode its good to cache actual data to prevent fetching it from cms over and over again
-  // const cache = await getCachedCMSData<Query>(payload);
-  // if (cache) {
-  //   console.log('🎯 Cache hit for key:', payload.key);
-  //   return cache;
-  // }
+  if (cacheKey) {
+    // In dev mode its good to cache actual data to prevent fetching it from cms over and over again
+    const cache = await getCachedCMSData<Query>(cacheKey);
+    if (cache) {
+      console.log(
+        new Date().toLocaleTimeString(),
+        `\x1B[33m[cache]\x1B[0m`,
+        `Cache hit (${cacheKey.join('/')})`,
+      );
+      return cache;
+    }
+  }
 
   // Fetch data if cache was not found or its prod mode
   const data = await gqlClient.request<Query>(document, variables);
 
-  // // set cache in dev mode
-  // await cacheCMSData(payload, data);
+  // set cache in dev mode
+  if (cacheKey) {
+    console.log(
+      new Date().toLocaleTimeString(),
+      `\x1B[35m[cache]\x1B[0m`,
+      `Caching data (${cacheKey.join('/')})`,
+    );
+    await cacheCMSData(cacheKey, data);
+  }
 
   return data;
 };
@@ -36,9 +51,13 @@ export function fetchHomepage(lang: Locales) {
     fr: '506',
     pl: '163',
   };
-  return fetchData(HomepageDocument, {
-    PAGE_ID: HOMEPAGE_IDS[lang],
-  }).then((data) => data.page!);
+  return fetchData(
+    HomepageDocument,
+    {
+      PAGE_ID: HOMEPAGE_IDS[lang],
+    },
+    [lang, CACHE_KEYS.HOMEPAGE],
+  ).then((data) => data.page!);
 }
 
 export function fetchDefaultPagesStaticPaths() {
@@ -47,9 +66,13 @@ export function fetchDefaultPagesStaticPaths() {
   );
 }
 
-export function fetchDefaultPage(slug: string, lang: string = defaultLocale) {
-  return fetchData(DefaultPageDocument, {
-    SLUG: slug,
-    LANG: lang,
-  }).then((data) => data.pages?.nodes?.[0]);
+export function fetchDefaultPage(slug: string, lang: Locales = defaultLocale) {
+  return fetchData(
+    DefaultPageDocument,
+    {
+      SLUG: slug,
+      LANG: lang,
+    },
+    [lang, CACHE_KEYS.PAGE, slug],
+  ).then((data) => data.pages?.nodes?.[0]);
 }
