@@ -1297,7 +1297,7 @@
             "layout": "block",
             "show_in_graphql": 1,
             "graphql_description": "",
-            "graphql_field_name": "stories",
+            "graphql_field_name": "caseStudies",
             "graphql_non_null": 0,
             "sub_fields": [
                 {
@@ -2090,5 +2090,5 @@
     "graphql_field_name": "homepage",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1709654469
+    "modified": 1709716862
 }

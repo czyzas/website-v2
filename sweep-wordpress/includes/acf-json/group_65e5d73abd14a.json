@@ -52,6 +52,31 @@
             "graphql_description": "",
             "graphql_field_name": "websiteUrl",
             "graphql_non_null": 0
+        },
+        {
+            "key": "field_65e836d80f595",
+            "label": "Category",
+            "name": "category",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 0,
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "category",
+            "graphql_non_null": 0
         }
     ],
     "location": [
@@ -77,5 +102,5 @@
     "graphql_field_name": "customerAcf",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1709652950
+    "modified": 1709717227
 }
