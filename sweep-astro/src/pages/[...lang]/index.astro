@@ -3,16 +3,33 @@ import Layout from '@/layouts/Layout.astro';
 import { getStaticPathsWithLangs } from '@/i18n/utils';
 import { fetchHomepage } from '@/lib/fetchCMSData';
 import type { Locales } from '@/i18n/config';
+import Hero from '@/components/homepage-sections/Hero.astro';
+import CaseStudies from '@/components/homepage-sections/CaseStudies.astro';
+import Customers from '@/components/homepage-sections/Customers.astro';
+import Demo from '@/components/homepage-sections/Demo.astro';
+import Goals from '@/components/homepage-sections/Goals.astro';
+import Industries from '@/components/homepage-sections/Industries.astro';
+import Partners from '@/components/homepage-sections/Partners.astro';
+import Platform from '@/components/homepage-sections/Platform.astro';
+import Resources from '@/components/homepage-sections/Resources.astro';
+import WhoWeWorkWith from '@/components/homepage-sections/WhoWeWorkWith.astro';
 
 export const getStaticPaths = getStaticPathsWithLangs;
 const { lang = 'en' } = Astro.params;
 
 const data = await fetchHomepage(lang as Locales);
-
-console.log({ data });
 ---
 
 <Layout>
-  <h1>[{lang}] {data.title}</h1>
-  <pre>{JSON.stringify(data, null, 2)}</pre>
+  <Hero />
+  <Goals />
+  <Customers />
+  <Platform />
+  <WhoWeWorkWith />
+  <Industries />
+  <CaseStudies />
+  <Resources />
+  <Partners />
+  <Customers />
+  <Demo />
 </Layout>

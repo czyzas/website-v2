@@ -98,6 +98,117 @@ query Homepage($PAGE_ID: ID!) {
           }
         }
       }
+      caseStudies {
+        sectionTitle {
+          overline
+          title
+        }
+        caseStudies {
+          nodes {
+            ... on CaseStudy {
+              title
+              uri
+              caseStudyAcf {
+                relatedCustomer {
+                  nodes {
+                    ... on Customer {
+                      title
+                      customerAcf {
+                        category
+                        logo {
+                          ...Image
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              subpageSettings {
+                image {
+                  ...Image
+                }
+              }
+            }
+          }
+        }
+        button {
+          ...Link
+        }
+      }
+      resources {
+        sectionTitle {
+          overline
+          title
+        }
+        resources {
+          nodes {
+            ... on LibraryItem {
+              uri
+              title
+              subpageSettings {
+                introduction
+                image {
+                  ...Image
+                }
+              }
+            }
+          }
+        }
+        button {
+          ...Link
+        }
+      }
+      partners {
+        sectionTitle {
+          overline
+          title
+        }
+        partners {
+          nodes {
+            ... on Partner {
+              title
+              partnerAcf {
+                logo {
+                  ...Image
+                }
+                categoryColor
+                category
+              }
+            }
+          }
+        }
+        button {
+          ...Link
+        }
+      }
+      customers2 {
+        sectionTitle {
+          title
+          overline
+        }
+        customersList {
+          nodes {
+            ... on Customer {
+              title
+              customerAcf {
+                websiteUrl
+                logo {
+                  ...Image
+                }
+              }
+            }
+          }
+        }
+      }
+      demo {
+        title
+        button {
+          ...Link
+        }
+        image {
+          ...Image
+        }
+      }
     }
   }
   languages {
