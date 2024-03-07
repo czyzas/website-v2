@@ -5,7 +5,6 @@ import {
   DefaultPagesStaticPathsDocument,
   HomepageDocument,
 } from '@/__generated__/cms';
-import type { Homepage } from '@/__generated__/cms';
 
 import type { Locales } from '@/i18n/config';
 import { defaultLocale } from '@/i18n/config';
@@ -28,6 +27,12 @@ const fetchData = async <Query, QueryVariables extends Variables = Variables>(
       );
       return cache;
     }
+
+    console.log(
+      new Date().toLocaleTimeString(),
+      `\x1B[35m[cache]\x1B[0m`,
+      `Cache missed, fetching... (${cacheKey.join('/')})`,
+    );
   }
 
   // Fetch data if cache was not found or its prod mode
@@ -35,11 +40,6 @@ const fetchData = async <Query, QueryVariables extends Variables = Variables>(
 
   // set cache in dev mode
   if (cacheKey) {
-    console.log(
-      new Date().toLocaleTimeString(),
-      `\x1B[35m[cache]\x1B[0m`,
-      `Caching data (${cacheKey.join('/')})`,
-    );
     await cacheCMSData(cacheKey, data);
   }
 
