@@ -23,6 +23,9 @@ export default defineConfig({
     defaultLocale,
     locales: [...locales],
   },
+  image: {
+    domains: ['sweep.flyhigh.pro'],
+  },
   integrations: [
     icon({
       iconDir: 'src/assets/icons',

@@ -20,6 +20,7 @@ module.exports = {
     '@typescript-eslint/triple-slash-reference': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
     'unused-imports/no-unused-imports': 'off',
+    'no-underscore-dangle': ['error', { allow: ['__typename'] }],
   },
   settings: {
     'import/core-modules': ['astro:assets', 'astro:content'],
