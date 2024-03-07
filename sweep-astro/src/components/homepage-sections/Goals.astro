@@ -1,3 +1,88 @@
-<section class="goals">
-  <h2>goals</h2>
+---
+import { Image } from 'astro:assets';
+import { kebabCase } from 'lodash-es';
+import { cmsStore } from '@/stores/cms';
+import { getStore } from '@/scripts/store';
+import { cn } from '@/scripts/cn';
+import { parseSectionTitle } from '@/scripts/parseSectionTitle';
+import Tabs from '../ui/Tabs/Tabs.astro';
+import TabList from '../ui/Tabs/TabList.astro';
+import Container from '../ui/Container.astro';
+import { typographyVariant } from '../ui/TypographyStyles';
+import Button from '../ui/Button.astro';
+import TabListItem from '../ui/Tabs/TabListItem.astro';
+import TabPane from '../ui/Tabs/TabPane.astro';
+import SectionTitle from '../partials/SectionTitle.astro';
+import Grid from '../ui/Grid.astro';
+import Prose from '../ui/Prose.astro';
+
+const store = getStore(cmsStore);
+const data = store.homepage!;
+const acf = data.homepage!.goals!;
+---
+
+<section class="goals pt-20">
+  <Container>
+    <SectionTitle {...parseSectionTitle(acf.sectionTitle)} />
+    <Tabs>
+      <TabList>
+        {
+          acf.tabs!.map((tab, index) => (
+            <TabListItem
+              id={['goal', kebabCase(tab!.tabTitle), index].join('-')}
+              isActive={index === 0}
+              set:html={tab!.tabTitle}
+            />
+          ))
+        }
+      </TabList>
+      <div class="tab-content">
+        {
+          acf.tabs!.map((tab, index) => (
+            <TabPane
+              id={['goal', kebabCase(tab!.tabTitle), index].join('-')}
+              isActive={index === 0}
+            >
+              <Grid class="mt-12">
+                <div class="content-column flex flex-col col-start-1 col-end-6 row-span-full p-6 rounded-lg bg-white border border-sw-text-disabled relative z-[1] my-24">
+                  <p class={cn(typographyVariant({ size: 'subHead' }), 'mb-2')}>
+                    {tab?.overline}
+                  </p>
+                  <h3 class={cn(typographyVariant({ size: 'h3' }), 'mb-8')}>
+                    {tab?.title}
+                  </h3>
+                  <Prose>
+                    <Fragment set:html={tab?.content} />
+                  </Prose>
+                  {!!tab?.button?.url && !!tab.button?.title && (
+                    <div class="mt-8">
+                      <Button
+                        asLink
+                        href={tab?.button?.url}
+                        target={tab?.button?.target ?? '_self'}
+                        trailingIcon="arrow-right"
+                      >
+                        {tab?.button?.title}
+                      </Button>
+                    </div>
+                  )}
+                </div>
+                <div class="image-column col-start-5 col-end-13 row-span-full">
+                  {!!tab?.image?.node?.sourceUrl && (
+                    <Image
+                      src={tab?.image?.node.sourceUrl}
+                      alt={tab.image?.node?.altText ?? ''}
+                      width={tab!.image!.node.mediaDetails!.width!}
+                      height={tab!.image!.node.mediaDetails!.height!}
+                      class="w-full h-full object-cover rounded-lg"
+                    />
+                  )}
+                </div>
+              </Grid>
+            </TabPane>
+          ))
+        }
+      </div>
+    </Tabs>
+  </Container>
 </section>
