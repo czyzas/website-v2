@@ -11,7 +11,7 @@ const { class: className, ...props } = Astro.props;
 <style>
   .prose-content {
     :global(:where(p, ol, ul, blockquote, img, video, iframe)) {
-      margin-top: 24px;
+      @apply mt-6;
     }
 
     :global(:where(a, a:hover)) {
@@ -23,45 +23,44 @@ const { class: className, ...props } = Astro.props;
     }
 
     :global(:where(strong)) {
-      font-weight: 600;
+      @apply font-semibold;
     }
 
     :global(:where(ol, ul)) {
-      margin-left: 24px;
+      @apply ml-6;
     }
 
     :global(:where(ol)) {
-      list-style-type: decimal;
+      @apply list-decimal;
     }
 
     :global(:where(ul)) {
-      list-style-type: disc;
+      @apply list-disc;
     }
 
     :global(:where(li)) {
-      margin-top: 8px;
+      @apply mt-2;
     }
 
     :global(:where(ol > li::marker)) {
       color: currentColor;
-      font-weight: 400;
+      @apply font-normal;
     }
 
     :global(:where(ul > li::marker)) {
-      color: currentColor;
+      @apply text-current;
     }
 
     :global(:where(ol ol)) {
-      list-style: lower-latin;
+      @apply list-[lower-latin];
     }
 
     :global(:where(ol ol ol)) {
-      list-style: lower-roman;
+      @apply list-[lower-roman];
     }
 
     :global(:where(h2, h3, h4, h5, h6)) {
-      margin-top: 32px;
-      margin-bottom: 16px;
+      @apply mt-8 mb-3;
     }
 
     :global(:where(h2 + *, h3 + *, h4 + *, h5 + *, h6 + *)) {
