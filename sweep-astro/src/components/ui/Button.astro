@@ -18,14 +18,19 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: ['bg-sw-sky-400', 'text-slate-50', 'hover:bg-sw-sky-500'],
-        bordered: [
-          'bg-transparent',
-          'border-slate-200',
-          'text-slate-700',
-          'hover:bg-slate-800/5',
+        primary: [
+          'bg-sw-sky-400',
+          'text-white',
+          'hover:bg-sw-sky-500',
+          'shadow-button',
         ],
-        ghost: ['bg-transparent', 'text-slate-700', 'hover:bg-slate-800/5'],
+        secondary: [
+          'bg-white',
+          'border-sw-border',
+          'shadow-button-secondary',
+          'text-black',
+          'hover:bg-sw-surface-subdued',
+        ],
       },
     },
   },
