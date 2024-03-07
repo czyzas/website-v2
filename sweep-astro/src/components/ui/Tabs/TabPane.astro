@@ -1,0 +1,31 @@
+---
+import { cn } from '@/scripts/cn';
+
+type TabListItemProps = {
+  id: string;
+  isActive?: boolean;
+  activeClassName?: string;
+};
+export type Props = TabListItemProps & astroHTML.JSX.HTMLAttributes;
+
+const {
+  id,
+  class: className,
+  isActive = false,
+  activeClassName = '',
+} = Astro.props;
+---
+
+<div
+  class={cn([
+    'tab-pane fade',
+    { show: isActive, active: isActive },
+    className,
+    isActive ? activeClassName : '',
+  ])}
+  id={id}
+  role="tabpanel"
+  aria-labelledby={`${id}-tab-list-item`}
+>
+  <slot />
+</div>

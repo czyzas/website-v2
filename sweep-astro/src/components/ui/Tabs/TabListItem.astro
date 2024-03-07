@@ -1,0 +1,36 @@
+---
+import { cn } from '@/scripts/cn';
+import { typographyVariant } from '../TypographyStyles';
+
+type TabListItemProps = {
+  id: string;
+  isActive?: boolean;
+  activeClassName?: string;
+  secondary?: boolean;
+};
+export type Props = TabListItemProps & astroHTML.JSX.HTMLAttributes;
+
+const { id, class: className, isActive = false } = Astro.props;
+---
+
+<li role="presentation" class="flex-1">
+  <button
+    type="button"
+    class={cn(
+      'tab-list-item',
+      { active: isActive },
+      typographyVariant({ size: 'body2' }),
+      'w-full border border-sw-text-disabled px-4 py-3 rounded-lg',
+      'aria-selected:bg-sw-sky-400 aria-selected:text-white aria-selected:cursor-default aria-selected:border-transparent',
+      className,
+    )}
+    id={`${id}-tab-list-item`}
+    role="tab"
+    data-bs-toggle="tab"
+    data-bs-target={`#${id}`}
+    aria-controls={id}
+    aria-selected={isActive ? 'true' : 'false'}
+  >
+    <slot />
+  </button>
+</li>

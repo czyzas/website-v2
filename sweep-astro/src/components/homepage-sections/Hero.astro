@@ -3,9 +3,10 @@ import { Image } from 'astro:assets';
 import { cmsStore } from '@/stores/cms';
 import { getStore } from '@/scripts/store';
 import { cn } from '@/scripts/cn';
-import Container from '../Container.astro';
+import Container from '../ui/Container.astro';
 import { typographyVariant } from '../ui/TypographyStyles';
 import Button from '../ui/Button.astro';
+import Grid from '../ui/Grid.astro';
 
 const store = getStore(cmsStore);
 const data = store.homepage!;
@@ -14,23 +15,21 @@ const acf = data.homepage!.hero!;
 
 <section class="hero pt-[6.4375rem] pb-8">
   <Container>
-    <div class="grid grid-cols-12 gap-5">
-      <div class="col-span-4 flex flex-col items-start">
+    <Grid>
+      <div class="col-span-4 flex flex-col items-start justify-center gap-4">
         <h1
           class={typographyVariant({ size: 'h1' })}
           set:html={acf.title ?? 'Sweep'}
         />
         <div
-          class={cn(typographyVariant({ size: 'body' }), 'mt-4')}
+          class={cn(typographyVariant({ size: 'body' }))}
           set:html={acf?.content ?? ''}
         />
         {
           !!acf.button?.title && !!acf.button?.url && (
-            <div class="mt-4">
-              <Button asLink href={acf.button.url!} target={acf.button?.target}>
-                {acf.button.title}
-              </Button>
-            </div>
+            <Button asLink href={acf.button.url!} target={acf.button?.target}>
+              {acf.button.title}
+            </Button>
           )
         }
       </div>
@@ -46,6 +45,6 @@ const acf = data.homepage!.hero!;
           )
         }
       </div>
-    </div>
+    </Grid>
   </Container>
 </section>

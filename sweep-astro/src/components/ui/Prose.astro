@@ -1,0 +1,92 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/scripts/cn';
+import { typographyVariant } from './TypographyStyles';
+
+type Props = HTMLAttributes<'div'>;
+
+const { class: className, ...props } = Astro.props;
+---
+
+<style>
+  .prose-content {
+    :global(:where(p, ol, ul, blockquote, img, video, iframe)) {
+      margin-top: 24px;
+    }
+
+    :global(:where(a, a:hover)) {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-skip-ink: none;
+      text-underline-offset: 0.25rem;
+      text-decoration-color: currentColor;
+    }
+
+    :global(:where(strong)) {
+      font-weight: 600;
+    }
+
+    :global(:where(ol, ul)) {
+      margin-left: 24px;
+    }
+
+    :global(:where(ol)) {
+      list-style-type: decimal;
+    }
+
+    :global(:where(ul)) {
+      list-style-type: disc;
+    }
+
+    :global(:where(li)) {
+      margin-top: 8px;
+    }
+
+    :global(:where(ol > li::marker)) {
+      color: currentColor;
+      font-weight: 400;
+    }
+
+    :global(:where(ul > li::marker)) {
+      color: currentColor;
+    }
+
+    :global(:where(ol ol)) {
+      list-style: lower-latin;
+    }
+
+    :global(:where(ol ol ol)) {
+      list-style: lower-roman;
+    }
+
+    :global(:where(h2, h3, h4, h5, h6)) {
+      margin-top: 32px;
+      margin-bottom: 16px;
+    }
+
+    :global(:where(h2 + *, h3 + *, h4 + *, h5 + *, h6 + *)) {
+      @apply mt-0;
+    }
+    /* TODO: Unify with TypographyStyles */
+    :global(:where(h2)) {
+      @apply text-[2.5rem] leading-snug font-bold text-black text-balance;
+    }
+    :global(:where(h3)) {
+      @apply text-[2rem] leading-tight font-bold text-black text-balance;
+    }
+    :global(:where(h4)) {
+      @apply text-2xl font-bold text-black text-balance;
+    }
+
+    :global(:where(:first-child)) {
+      @apply mt-0;
+    }
+  }
+</style>
+
+<div
+  {...props}
+  class={cn('prose-content', typographyVariant({ size: 'body' }), className)}
+>
+  <slot />
+</div>

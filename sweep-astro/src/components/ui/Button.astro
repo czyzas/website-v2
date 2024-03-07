@@ -1,15 +1,35 @@
 ---
+import { cva } from 'class-variance-authority';
 import type { VariantProps } from 'class-variance-authority';
 import type { HTMLAttributes } from 'astro/types';
 import { Icon } from 'astro-icon/components';
 import { cn } from '@/scripts/cn';
-import { buttonVariants } from './ButtonStyles';
 
 type ButtonProps = {
   leadingIcon?: string;
   trailingIcon?: string;
   asLink?: boolean;
 };
+
+const buttonVariants = cva(
+  [
+    'button inline-flex items-center justify-center gap-x-1 rounded-lg text-base font-medium whitespace-nowrap px-3 py-2 border border-transparent',
+  ],
+  {
+    variants: {
+      variant: {
+        primary: ['bg-sw-sky-400', 'text-slate-50', 'hover:bg-sw-sky-500'],
+        bordered: [
+          'bg-transparent',
+          'border-slate-200',
+          'text-slate-700',
+          'hover:bg-slate-800/5',
+        ],
+        ghost: ['bg-transparent', 'text-slate-700', 'hover:bg-slate-800/5'],
+      },
+    },
+  },
+);
 
 type AttributesLink = HTMLAttributes<'a'>;
 type AttributesButton = HTMLAttributes<'button'>;
@@ -26,15 +46,21 @@ const {
   ...props
 } = Astro.props;
 
-const classes = cn(buttonVariants({ variant }), className);
-
 // TODO: Fix types
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Tag: any = asLink ? 'a' : 'button';
 ---
 
-<Tag {...props} class={classes}>
-  {!!leadingIcon && <Icon name={leadingIcon} />}
+<Tag {...props} class={cn(buttonVariants({ variant }), className)}>
+  {
+    !!leadingIcon && (
+      <Icon name={leadingIcon} class={cn('w-[1.125em] h-[1.125em]')} />
+    )
+  }
   <slot />
-  {!!trailingIcon && <Icon name={trailingIcon} />}
+  {
+    !!trailingIcon && (
+      <Icon name={trailingIcon} class={cn('w-[1.125em] h-[1.125em]')} />
+    )
+  }
 </Tag>
