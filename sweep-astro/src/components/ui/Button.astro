@@ -5,34 +5,36 @@ import { Icon } from 'astro-icon/components';
 import { cn } from '@/scripts/cn';
 import { buttonVariants } from './ButtonStyles';
 
-type ButtonProps =
-  | {
-      icon?: never;
-      iconPosition?: never;
-    }
-  | {
-      icon: string;
-      iconPosition?: 'start' | 'end';
-    };
+type ButtonProps = {
+  leadingIcon?: string;
+  trailingIcon?: string;
+  asLink?: boolean;
+};
 
+type AttributesLink = HTMLAttributes<'a'>;
 type AttributesButton = HTMLAttributes<'button'>;
+type Attributes = AttributesButton & AttributesLink;
 
-type Props = AttributesButton &
-  ButtonProps &
-  VariantProps<typeof buttonVariants>;
+type Props = Attributes & ButtonProps & VariantProps<typeof buttonVariants>;
 
 const {
   class: className,
+  asLink = false,
   variant = 'primary',
-  icon = '',
-  // iconPosition = 'end',
+  leadingIcon = '',
+  trailingIcon = '',
   ...props
 } = Astro.props;
 
 const classes = cn(buttonVariants({ variant }), className);
+
+// TODO: Fix types
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const Tag: any = asLink ? 'a' : 'button';
 ---
 
-<button {...props} class={classes}>
+<Tag {...props} class={classes}>
+  {!!leadingIcon && <Icon name={leadingIcon} />}
   <slot />
-  {!!icon && <Icon name={icon} />}
-</button>
+  {!!trailingIcon && <Icon name={trailingIcon} />}
+</Tag>

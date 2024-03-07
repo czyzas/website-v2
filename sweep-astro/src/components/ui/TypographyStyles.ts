@@ -8,7 +8,7 @@ export const typographyVariant = cva([], {
       h3: 'text-[2rem] leading-tight font-bold text-black text-balance',
       h4: 'text-2xl font-bold text-black text-balance',
       subHead: 'text-base font-semibold text-sw-text-subdued',
-      body: 'text-lg text-sw-surface-subdued',
+      body: 'text-lg text-sw-text-subdued',
       body2: 'text-base font-semibold text-black',
       bodyLarge: 'text-xl leading-8 text-black',
       cardsBoldLarge: 'text-2xl font-bold text-black',

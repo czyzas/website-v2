@@ -1,10 +1,51 @@
 ---
-// import { cmsStore } from '@/stores/cms';
-// import { getStore } from '@/scripts/store';
+import { Image } from 'astro:assets';
+import { cmsStore } from '@/stores/cms';
+import { getStore } from '@/scripts/store';
+import { cn } from '@/scripts/cn';
+import Container from '../Container.astro';
+import { typographyVariant } from '../ui/TypographyStyles';
+import Button from '../ui/Button.astro';
 
-// const data = getStore(cmsStore);
+const store = getStore(cmsStore);
+const data = store.homepage!;
+const acf = data.homepage!.hero!;
 ---
 
-<section class="hero">
-  <h2>Hero</h2>
+<section class="hero pt-[6.4375rem] pb-8">
+  <Container>
+    <div class="grid grid-cols-12 gap-5">
+      <div class="col-span-4 flex flex-col items-start">
+        <h1
+          class={typographyVariant({ size: 'h1' })}
+          set:html={acf.title ?? 'Sweep'}
+        />
+        <div
+          class={cn(typographyVariant({ size: 'body' }), 'mt-4')}
+          set:html={acf?.content ?? ''}
+        />
+        {
+          !!acf.button?.title && !!acf.button?.url && (
+            <div class="mt-4">
+              <Button asLink href={acf.button.url!} target={acf.button?.target}>
+                {acf.button.title}
+              </Button>
+            </div>
+          )
+        }
+      </div>
+      <div class="col-start-6 col-end-13">
+        {
+          !!acf.image?.node.sourceUrl && (
+            <Image
+              src={acf.image.node.sourceUrl}
+              alt={acf.image.node.altText ?? ''}
+              width={acf.image.node.mediaDetails?.width ?? 800}
+              height={acf.image.node.mediaDetails?.height ?? 600}
+            />
+          )
+        }
+      </div>
+    </div>
+  </Container>
 </section>
