@@ -1,6 +1,6 @@
 ---
 import { cn } from '@/scripts/cn';
-import type { ParsedSectionTitle } from '@/scripts/parseSectionTitle';
+import type { ParsedSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
 import { typographyVariant } from '../ui/TypographyStyles';
 
 type Props = Partial<ParsedSectionTitle>;
@@ -15,10 +15,11 @@ const alignClasses = {
 ---
 
 {
-  !!title.length && (
+  (!!title.length || !!overline.length) && (
     <div
       class={cn(
-        'section-title flex flex-col gap-2 mb-[3.75rem]',
+        'section-title flex flex-col gap-2',
+        title.length > 0 ? 'mb-[3.75rem]' : 'mb-8',
         alignClasses.center,
       )}
     >
@@ -31,7 +32,7 @@ const alignClasses = {
             ? typographyVariant({ size: 'h2' })
             : typographyVariant({ size: 'subHead' }),
         )}
-        set:html={title}
+        set:html={title || overline}
       />
     </div>
   )
