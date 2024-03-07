@@ -36,8 +36,9 @@ query Homepage($PAGE_ID: ID!) {
           title
           overline
         }
-        customersList {
+        customersList(first: 100) {
           nodes {
+            __typename
             ... on Customer {
               title
               customerAcf {
@@ -89,11 +90,16 @@ query Homepage($PAGE_ID: ID!) {
           title
         }
         show
-        selectedIndustries {
+        selectedIndustries(first: 100) {
           nodes {
-            databaseId
+            __typename
             ... on Industry {
-              id
+              title
+              industryAcf {
+                icon {
+                  ...Image
+                }
+              }
             }
           }
         }
@@ -103,14 +109,16 @@ query Homepage($PAGE_ID: ID!) {
           overline
           title
         }
-        caseStudies {
+        caseStudies(first: 100) {
           nodes {
+            __typename
             ... on CaseStudy {
               title
               uri
               caseStudyAcf {
-                relatedCustomer {
+                relatedCustomer(first: 100) {
                   nodes {
+                    __typename
                     ... on Customer {
                       title
                       customerAcf {
@@ -140,8 +148,9 @@ query Homepage($PAGE_ID: ID!) {
           overline
           title
         }
-        resources {
+        resources(first: 100) {
           nodes {
+            __typename
             ... on LibraryItem {
               uri
               title
@@ -163,8 +172,9 @@ query Homepage($PAGE_ID: ID!) {
           overline
           title
         }
-        partners {
+        partners(first: 100) {
           nodes {
+            __typename
             ... on Partner {
               title
               partnerAcf {
@@ -186,8 +196,9 @@ query Homepage($PAGE_ID: ID!) {
           title
           overline
         }
-        customersList {
+        customersList(first: 100) {
           nodes {
+            __typename
             ... on Customer {
               title
               customerAcf {
