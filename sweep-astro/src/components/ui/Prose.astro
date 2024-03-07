@@ -15,11 +15,8 @@ const { class: className, ...props } = Astro.props;
     }
 
     :global(:where(a, a:hover)) {
-      color: inherit;
-      text-decoration: underline;
+      @apply text-current underline underline-offset-4 decoration-current;
       text-decoration-skip-ink: none;
-      text-underline-offset: 0.25rem;
-      text-decoration-color: currentColor;
     }
 
     :global(:where(strong)) {
@@ -43,8 +40,7 @@ const { class: className, ...props } = Astro.props;
     }
 
     :global(:where(ol > li::marker)) {
-      color: currentColor;
-      @apply font-normal;
+      @apply text-current font-normal;
     }
 
     :global(:where(ul > li::marker)) {
