@@ -10,7 +10,13 @@ export default {
       },
       colors: {
         sw: {
-          primary: '#283FFF',
+          action: {
+            primary: '#283FFF',
+          },
+          sky: {
+            400: '#283FFF',
+            500: '#0010A3',
+          },
           surface: {
             subdued: '#F9F9F9',
             background: '#F2F2F2',

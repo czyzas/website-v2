@@ -6,14 +6,6 @@
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "prettier.documentSelectors": ["**/*.astro"],
-  "stylelint.enable": true,
-  "stylelint.validate": [
-    "css",
-    "scss",
-    "javascriptreact",
-    "typescriptreact",
-    "astro"
-  ],
   "eslint.validate": [
     "javascript",
     "javascriptreact",
