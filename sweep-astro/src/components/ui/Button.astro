@@ -57,15 +57,11 @@ const Tag: any = asLink ? 'a' : 'button';
 ---
 
 <Tag {...props} class={cn(buttonVariants({ variant }), className)}>
-  {
-    !!leadingIcon && (
-      <Icon name={leadingIcon} class={cn('w-[1.125em] h-[1.125em]')} />
-    )
-  }
+  {!!leadingIcon && <Icon name={leadingIcon} class="w-[1.125em] h-[1.125em]" />}
   <slot />
   {
     !!trailingIcon && (
-      <Icon name={trailingIcon} class={cn('w-[1.125em] h-[1.125em]')} />
+      <Icon name={trailingIcon} class="w-[1.125em] h-[1.125em]" />
     )
   }
 </Tag>

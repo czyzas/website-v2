@@ -2,9 +2,7 @@
 import { Image } from 'astro:assets';
 import { cmsStore } from '@/stores/cms';
 import { getStore } from '@/scripts/store';
-import { cn } from '@/scripts/cn';
 import Container from '../ui/Container.astro';
-import { typographyVariant } from '../ui/TypographyStyles';
 import Button from '../ui/Button.astro';
 import Grid from '../ui/Grid.astro';
 
@@ -17,14 +15,8 @@ const acf = data.homepage!.hero!;
   <Container>
     <Grid>
       <div class="col-span-4 flex flex-col items-start justify-center gap-4">
-        <h1
-          class={typographyVariant({ size: 'h1' })}
-          set:html={acf.title ?? 'Sweep'}
-        />
-        <div
-          class={cn(typographyVariant({ size: 'body' }))}
-          set:html={acf?.content ?? ''}
-        />
+        <h1 class="typography-h1" set:html={acf.title ?? 'Sweep'} />
+        <div class="typography-body" set:html={acf?.content ?? ''} />
         {
           !!acf.button?.title && !!acf.button?.url && (
             <Button asLink href={acf.button.url!} target={acf.button?.target}>

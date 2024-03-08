@@ -1,7 +1,6 @@
 ---
 import { cn } from '@/scripts/cn';
 import type { ParsedSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
-import { typographyVariant } from '../ui/TypographyStyles';
 
 type Props = Partial<ParsedSectionTitle>;
 
@@ -24,14 +23,10 @@ const alignClasses = {
       )}
     >
       {!!overline && !!title && (
-        <p class={typographyVariant({ size: 'subHead' })} set:html={overline} />
+        <p class="typography-subhead" set:html={overline} />
       )}
       <h2
-        class={cn(
-          title
-            ? typographyVariant({ size: 'h2' })
-            : typographyVariant({ size: 'subHead' }),
-        )}
+        class={title ? 'typography-h2' : 'typography-subhead'}
         set:html={title || overline}
       />
     </div>

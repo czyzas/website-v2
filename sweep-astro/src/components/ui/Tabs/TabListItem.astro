@@ -1,6 +1,5 @@
 ---
 import { cn } from '@/scripts/cn';
-import { typographyVariant } from '../TypographyStyles';
 
 type TabListItemProps = {
   id: string;
@@ -19,7 +18,7 @@ const { id, class: className, isActive = false } = Astro.props;
     class={cn(
       'tab-list-item',
       { active: isActive },
-      typographyVariant({ size: 'body2' }),
+      'typography-body-2',
       'w-full border border-sw-text-disabled px-4 py-3 rounded-lg',
       'aria-selected:bg-sw-sky-400 aria-selected:text-white aria-selected:cursor-default aria-selected:border-transparent',
       className,

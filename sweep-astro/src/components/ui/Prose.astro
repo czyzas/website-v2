@@ -1,7 +1,6 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
 import { cn } from '@/scripts/cn';
-import { typographyVariant } from './TypographyStyles';
 
 type Props = HTMLAttributes<'div'>;
 
@@ -55,22 +54,24 @@ const { class: className, ...props } = Astro.props;
       @apply list-[lower-roman];
     }
 
-    :global(:where(h2, h3, h4, h5, h6)) {
+    :global(:where(h2, h3, h4)) {
       @apply mt-8 mb-3;
     }
 
-    :global(:where(h2 + *, h3 + *, h4 + *, h5 + *, h6 + *)) {
+    :global(:where(h2 + *, h3 + *, h4 + *)) {
       @apply mt-0;
     }
-    /* TODO: Unify with TypographyStyles */
+
     :global(:where(h2)) {
-      @apply text-[2.5rem] leading-snug font-bold text-black text-balance;
+      @apply typography-h2;
     }
+
     :global(:where(h3)) {
-      @apply text-[2rem] leading-tight font-bold text-black text-balance;
+      @apply typography-h3;
     }
+
     :global(:where(h4)) {
-      @apply text-2xl font-bold text-black text-balance;
+      @apply typography-h4;
     }
 
     :global(:where(:first-child)) {
@@ -79,9 +80,6 @@ const { class: className, ...props } = Astro.props;
   }
 </style>
 
-<div
-  {...props}
-  class={cn('prose-content', typographyVariant({ size: 'body' }), className)}
->
+<div {...props} class={cn('prose-content typography-body', className)}>
   <slot />
 </div>

@@ -3,12 +3,10 @@ import { Image } from 'astro:assets';
 import { kebabCase } from 'lodash-es';
 import { cmsStore } from '@/stores/cms';
 import { getStore } from '@/scripts/store';
-import { cn } from '@/scripts/cn';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
 import Tabs from '../ui/Tabs/Tabs.astro';
 import TabList from '../ui/Tabs/TabList.astro';
 import Container from '../ui/Container.astro';
-import { typographyVariant } from '../ui/TypographyStyles';
 import Button from '../ui/Button.astro';
 import TabListItem from '../ui/Tabs/TabListItem.astro';
 import TabPane from '../ui/Tabs/TabPane.astro';
@@ -45,12 +43,8 @@ const acf = data.homepage!.goals!;
             >
               <Grid class="mt-12">
                 <div class="content-column flex flex-col col-start-1 col-end-6 row-span-full p-6 rounded-lg bg-white border border-sw-text-disabled relative z-[1] my-24">
-                  <p class={cn(typographyVariant({ size: 'subHead' }), 'mb-2')}>
-                    {tab?.overline}
-                  </p>
-                  <h3 class={cn(typographyVariant({ size: 'h3' }), 'mb-8')}>
-                    {tab?.title}
-                  </h3>
+                  <p class="typography-subhead mb-2">{tab?.overline}</p>
+                  <h3 class="typography-h3 mb-8">{tab?.title}</h3>
                   <Prose>
                     <Fragment set:html={tab?.content} />
                   </Prose>
