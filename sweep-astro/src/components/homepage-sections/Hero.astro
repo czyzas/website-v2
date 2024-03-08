@@ -33,6 +33,7 @@ const acf = data.homepage!.hero!;
               alt={acf.image.node.altText ?? ''}
               width={acf.image.node.mediaDetails?.width ?? 800}
               height={acf.image.node.mediaDetails?.height ?? 600}
+              loading="eager"
             />
           )
         }

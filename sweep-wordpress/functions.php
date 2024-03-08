@@ -1,7 +1,7 @@
 <?php
 
 // Config
-//    require_once "includes/functions/utils-functions.php";
+require_once "includes/functions/utils-functions.php";
 require_once "includes/functions/config.php";
 require_once "includes/functions/acf.php";
 //require_once "includes/functions/language.php";

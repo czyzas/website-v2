@@ -1,0 +1,58 @@
+---
+import Image from 'astro/components/Image.astro';
+import type { ParsedImage } from '@/scripts/data-parsers/parseImage';
+import type { ParsedLink } from '@/scripts/data-parsers/parseLink';
+import Card from './ui/Card.astro';
+import Button from './ui/Button.astro';
+
+interface CardWithImageProps {
+  image: ParsedImage;
+  imageBackgroundColor?: string;
+  title: string;
+  button?: ParsedLink;
+}
+
+type Props = CardWithImageProps;
+
+const { image, imageBackgroundColor = '#FFF', title, button } = Astro.props;
+---
+
+<Card class={'card-with-image p-0 flex flex-col overflow-hidden'}>
+  <div
+    class="image-container bg-[--bg-color]"
+    style={{
+      '--bg-color': imageBackgroundColor,
+    }}
+  >
+    {
+      // TODO: fix widths
+      image.shouldRender && (
+        <Image
+          src={image.url}
+          alt={image.alt}
+          width={image.width}
+          height={image.height}
+          widths={[400]}
+        />
+      )
+    }
+  </div>
+  <div class="content-container p-6 flex-1 flex flex-col gap-3">
+    <h3 class="typography-h4" set:html={title} />
+    <slot />
+    {
+      button && button.shouldRender && (
+        <div class="mt-auto">
+          <Button
+            asLink
+            trailingIcon="arrow-right"
+            href={button.url}
+            target={button.target}
+          >
+            {button.title}
+          </Button>
+        </div>
+      )
+    }
+  </div>
+</Card>

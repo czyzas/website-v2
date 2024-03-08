@@ -1,3 +1,41 @@
-<section class="who-we-work-with">
-  <h2>who-we-work-with</h2>
+---
+import { cmsStore } from '@/stores/cms';
+import { getStore } from '@/scripts/store';
+import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
+import { parseImage } from '@/scripts/data-parsers/parseImage';
+import { parseLink } from '@/scripts/data-parsers/parseLink';
+import Container from '../ui/Container.astro';
+import Grid from '../ui/Grid.astro';
+import SectionTitle from '../partials/SectionTitle.astro';
+import Prose from '../ui/Prose.astro';
+import CardWithImage from '../CardWithImage.astro';
+
+const store = getStore(cmsStore);
+const data = store.homepage!;
+const acf = data.homepage!.whoweworkwith!;
+
+const cards = acf.cards ?? [];
+---
+
+<section class="who-we-work-with py-20">
+  <Container>
+    <SectionTitle {...parseSectionTitle(acf.sectionTitle)} />
+
+    <Grid>
+      {
+        cards.map((card) => (
+          <div class="col-span-4 flex items-stretch">
+            <CardWithImage
+              image={parseImage(card?.image)}
+              imageBackgroundColor={card?.imageBackgroundColor}
+              title={card?.title ?? ''}
+              button={parseLink(card?.button)}
+            >
+              <Prose set:html={card?.content} />
+            </CardWithImage>
+          </div>
+        ))
+      }
+    </Grid>
+  </Container>
 </section>
