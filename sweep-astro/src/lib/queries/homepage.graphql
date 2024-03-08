@@ -1,4 +1,4 @@
-query Homepage($PAGE_ID: ID!) {
+query Homepage($PAGE_ID: ID!, $LANGUAGE: String) {
   page(id: $PAGE_ID, idType: DATABASE_ID) {
     title
     slug
@@ -94,12 +94,7 @@ query Homepage($PAGE_ID: ID!) {
           nodes {
             __typename
             ... on Industry {
-              title
-              industryAcf {
-                icon {
-                  ...Image
-                }
-              }
+              ...HomepageIndustry
             }
           }
         }
@@ -222,7 +217,22 @@ query Homepage($PAGE_ID: ID!) {
       }
     }
   }
+  industries(first: 100, where: { status: PUBLISH, language: $LANGUAGE }) {
+    nodes {
+      ...HomepageIndustry
+    }
+  }
   languages {
     ...Languages
+  }
+}
+
+fragment HomepageIndustry on Industry {
+  title
+  uri
+  industryAcf {
+    icon {
+      ...Image
+    }
   }
 }

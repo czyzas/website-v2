@@ -56,6 +56,7 @@ export function fetchHomepage(lang: Locales) {
     HomepageDocument,
     {
       PAGE_ID: HOMEPAGE_IDS[lang],
+      LANGUAGE: lang,
     },
     [lang, CACHE_KEYS.HOMEPAGE],
   );
