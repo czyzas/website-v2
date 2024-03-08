@@ -1,11 +1,12 @@
 ---
+import Footer from '@/components/partials/Footer.astro';
 import Header from '@/components/partials/Header.astro';
 
 const title = 'Sweep';
 const description = 'Astro description';
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -26,5 +27,6 @@ const description = 'Astro description';
   <body class="">
     <Header />
     <slot />
+    <Footer />
   </body>
 </html>
