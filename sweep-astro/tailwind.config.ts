@@ -81,7 +81,7 @@ export default {
         '.typography-body-2': {
           fontSize: theme('fontSize.base'),
           lineHeight: theme('lineHeight.6'),
-          fontWeight: theme('fontWeight.semibold'),
+          fontWeight: theme('fontWeight.medium'),
           color: theme('colors.black'),
         },
         '.typography-body-large': {
@@ -98,7 +98,7 @@ export default {
         '.typography-card-title': {
           fontSize: theme('fontSize.base'),
           lineHeight: theme('lineHeight.6'),
-          fontWeight: theme('fontWeight.semibold'),
+          fontWeight: theme('fontWeight.medium'),
           color: theme('colors.black'),
           textTransform: 'uppercase',
         },

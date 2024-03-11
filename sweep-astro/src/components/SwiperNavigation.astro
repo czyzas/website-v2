@@ -1,0 +1,32 @@
+---
+import { Icon } from 'astro-icon/components';
+import { cn } from '@/scripts/cn';
+---
+
+<div
+  class={cn(
+    'swiper-navigation',
+    'flex bg-white divide-x border border-sw-border rounded-lg shadow-button-secondary text-black overflow-hidden'
+  )}
+>
+  <button
+    type="button"
+    class={cn(
+      'swiper-navigation-prev',
+      'flex items-center justify-center p-2.5 hover:bg-sw-surface-subdued',
+      'disabled:bg-sw-surface-background disabled:text-sw-text-disabled'
+    )}
+  >
+    <Icon name="caret-left" />
+  </button>
+  <button
+    type="button"
+    class={cn(
+      'swiper-navigation-next',
+      'flex items-center justify-center p-2.5 hover:bg-sw-surface-subdued',
+      'disabled:bg-sw-surface-background disabled:text-sw-text-disabled'
+    )}
+  >
+    <Icon name="caret-right" />
+  </button>
+</div>
