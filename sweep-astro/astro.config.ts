@@ -6,7 +6,7 @@ import icon from 'astro-icon';
 import { defaultLocale, locales } from './src/i18n/config';
 
 const serverConfig = {
-  output: 'server',
+  output: 'hybrid',
   adapter: vercel(),
 } satisfies AstroUserConfig;
 
