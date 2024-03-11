@@ -4,9 +4,8 @@ import { createStore } from '@/scripts/store';
 export const cmsStore = createStore<{
   languages?: (LanguagesFragment | undefined)[];
   homepage?: HomepageQuery['page'];
-  homepageIndustries: HomepageQuery['industries'];
+  homepageIndustries?: HomepageQuery['industries'];
 }>({
-  languages: [],
   homepage: undefined,
   homepageIndustries: undefined,
 });
