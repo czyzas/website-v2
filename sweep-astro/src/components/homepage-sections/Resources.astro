@@ -1,3 +1,120 @@
-<section class="resources">
-  <h2>resources</h2>
+---
+import { Image } from 'astro:assets';
+import { cmsStore } from '@/stores/cmsStore';
+import { getStore } from '@/scripts/store';
+import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
+import { parseLink } from '@/scripts/data-parsers/parseLink';
+import { parseImage } from '@/scripts/data-parsers/parseImage';
+import { buildPath } from '@/scripts/buildPath';
+import Container from '../ui/Container.astro';
+import Button from '../ui/Button.astro';
+import SectionTitle from '../partials/SectionTitle.astro';
+import SwiperNavigation from '../SwiperNavigation.astro';
+import Prose from '../ui/Prose.astro';
+
+const store = getStore(cmsStore);
+const data = store.homepage!;
+const acf = data.homepage!.resources!;
+const button = parseLink(acf.button);
+
+const resources = acf.resources?.nodes ?? [];
+---
+
+<script>
+  import Swiper from 'swiper';
+  import { Navigation } from 'swiper/modules';
+
+  const resourceSwiperContainers =
+    document.querySelectorAll<HTMLElement>('.resources-swiper');
+  console.log(resourceSwiperContainers);
+  for (const swiperContainer of resourceSwiperContainers) {
+    const prevButton = swiperContainer
+      .closest('section.resources')
+      ?.querySelector<HTMLButtonElement>('.swiper-navigation-prev');
+    const nextButton = swiperContainer
+      .closest('section.resources')
+      ?.querySelector<HTMLButtonElement>('.swiper-navigation-next');
+
+    new Swiper(swiperContainer, {
+      modules: [Navigation],
+      slidesPerView: 3,
+      spaceBetween: 16,
+      navigation: {
+        prevEl: prevButton,
+        nextEl: nextButton,
+      },
+    });
+  }
+</script>
+
+<section class="resources py-20 bg-sw-surface-subdued overflow-hidden">
+  <Container>
+    <SectionTitle {...parseSectionTitle(acf.sectionTitle)} />
+
+    <div class="swiper resources-swiper">
+      <div class="swiper-wrapper">
+        {
+          resources.map((resource) => {
+            if (resource.__typename !== 'LibraryItem') return null;
+            const image = parseImage(resource.subpageSettings?.image);
+
+            return (
+              <div class="swiper-slide">
+                <a
+                  href={buildPath(resource.uri)}
+                  class="h-full border border-sw-border rounded-lg overflow-hidden shadow-button-secondary"
+                >
+                  <div class="image-container aspect-[28/19]">
+                    {image.shouldRender && (
+                      <Image
+                        src={image.url}
+                        alt={image.alt}
+                        width={image.width}
+                        height={image.height}
+                        class="w-full h-full object-cover"
+                      />
+                    )}
+                  </div>
+                  <div class="content-container p-6 flex flex-col gap-4">
+                    <h3
+                      class="typography-card-title"
+                      set:html={resource.title}
+                    />
+                    <Prose set:html={resource.subpageSettings?.introduction} />
+                  </div>
+                </a>
+              </div>
+            );
+          })
+        }
+      </div>
+    </div>
+
+    <div class="mt-[3.75rem] flex justify-center items-center gap-2">
+      <SwiperNavigation />
+      {
+        button.shouldRender && (
+          <Button
+            asLink
+            trailingIcon="arrow-right"
+            href={button.url}
+            target={button.target}
+          >
+            {button.title}
+          </Button>
+        )
+      }
+    </div>
+  </Container>
 </section>
+
+<style>
+  @import 'swiper/swiper-bundle.css';
+  .swiper {
+    @apply overflow-visible;
+  }
+
+  .swiper-slide {
+    @apply self-stretch h-auto flex;
+  }
+</style>

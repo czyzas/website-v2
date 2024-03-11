@@ -1,0 +1,15 @@
+fragment Menu on Menu {
+  menuItems(first: 100) {
+    nodes {
+      title
+      target
+      parentDatabaseId
+      label
+      databaseId
+      cssClasses
+      url
+      uri
+      path
+    }
+  }
+}

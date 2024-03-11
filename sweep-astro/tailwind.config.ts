@@ -18,6 +18,9 @@ export default {
             400: '#283FFF',
             500: '#0010A3',
           },
+          sea: {
+            500: '#052561',
+          },
           surface: {
             subdued: '#F9F9F9',
             background: '#F2F2F2',
@@ -81,7 +84,7 @@ export default {
         '.typography-body-2': {
           fontSize: theme('fontSize.base'),
           lineHeight: theme('lineHeight.6'),
-          fontWeight: theme('fontWeight.semibold'),
+          fontWeight: theme('fontWeight.medium'),
           color: theme('colors.black'),
         },
         '.typography-body-large': {
@@ -93,11 +96,12 @@ export default {
           fontSize: theme('fontSize.2xl'),
           lineHeight: theme('lineHeight.8'),
           color: theme('colors.black'),
+          fontWeight: theme('fontWeight.bold'),
         },
         '.typography-card-title': {
           fontSize: theme('fontSize.base'),
           lineHeight: theme('lineHeight.6'),
-          fontWeight: theme('fontWeight.semibold'),
+          fontWeight: theme('fontWeight.medium'),
           color: theme('colors.black'),
           textTransform: 'uppercase',
         },

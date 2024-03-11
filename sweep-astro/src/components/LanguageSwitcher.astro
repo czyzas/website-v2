@@ -1,0 +1,15 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<div class="language-switcher-container relative">
+  <button type="button" class="switcher flex items-center gap-1 font-medium">
+    <span>EN</span>
+    <Icon name="caret-down" />
+  </button>
+  <ul class="list absolute invisible">
+    <li><a href="/en">English</a></li>
+    <li><a href="/fr">French</a></li>
+    <li><a href="/de">German</a></li>
+  </ul>
+</div>

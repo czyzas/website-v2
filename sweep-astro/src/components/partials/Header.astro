@@ -1,3 +1,34 @@
-<header>
-  <div class="logo">Sweep</div>
+---
+import { Icon } from 'astro-icon/components';
+import { getStore } from '@/scripts/store';
+import { buildPath } from '@/scripts/buildPath';
+import { languageStore } from '@/stores/languageStore';
+import Container from '../ui/Container.astro';
+import LanguageSwitcher from '../LanguageSwitcher.astro';
+import Button from '../ui/Button.astro';
+import Menu from './Menu.astro';
+
+const { currentLanguage } = getStore(languageStore);
+---
+
+<header class="py-4">
+  <Container class="flex items-center justify-between">
+    <div class="logo-container">
+      <a href={buildPath('/', currentLanguage.code)}>
+        <Icon
+          name="logo"
+          aria-label="Sweep logo"
+          class="w-36 h-12 text-sw-action-primary"
+        />
+      </a>
+    </div>
+    <Menu />
+    <div class="controls-container flex items-center gap-3.5">
+      <LanguageSwitcher />
+      <a href="https://flyhigh.pro" class="font-medium">Login</a>
+      <Button asLink href="https://flyhigh.pro" target="_blank">
+        Book a demo
+      </Button>
+    </div>
+  </Container>
 </header>

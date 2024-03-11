@@ -7,6 +7,8 @@
     "start": "astro dev",
     "prebuild": "npm run codegen",
     "build": "astro build",
+    "prebuild:ssr": "npm run codegen",
+    "build:ssr": "cross-env APP_MODE=ssr astro build",
     "preview": "astro preview",
     "astro": "astro",
     "precodegen": "rimraf ./.astro/cms-cache",
@@ -14,6 +16,7 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.5.6",
+    "@astrojs/node": "^8.2.3",
     "@astrojs/tailwind": "^5.1.0",
     "@astrojs/vercel": "^7.3.5",
     "astro": "^4.4.15",
@@ -21,7 +24,8 @@
     "bootstrap": "^5.3.3",
     "lodash-es": "^4.17.21",
     "swiper": "^11.0.7",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^3.4.1",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.2",
@@ -37,6 +41,7 @@
     "@tysian/eslint-config-typescript": "^0.2.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-astro": "^0.31.4",

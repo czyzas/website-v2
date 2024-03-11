@@ -1,12 +1,13 @@
 ---
 import { Image } from 'astro:assets';
-import { cmsStore } from '@/stores/cms';
+import { cmsStore } from '@/stores/cmsStore';
 import { getStore } from '@/scripts/store';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
 import { parseImage } from '@/scripts/data-parsers/parseImage';
+import type { ParsedImage } from '@/scripts/data-parsers/parseImage';
 import { parseLink } from '@/scripts/data-parsers/parseLink';
 import { cn } from '@/scripts/cn';
-import { ensureTypename } from '@/scripts/ensureTypename';
+import { buildPath } from '@/scripts/buildPath';
 import Container from '../ui/Container.astro';
 import Button from '../ui/Button.astro';
 import Grid from '../ui/Grid.astro';
@@ -30,17 +31,15 @@ const cases = acf.caseStudies?.nodes ?? [];
             if (caseStudy.__typename !== 'CaseStudy') return null;
             const isFeatured = index === 0;
             const image = parseImage(caseStudy.subpageSettings?.image);
-            // const customerLogo = parseImage(
-            //   caseStudy.caseStudyAcf?.relatedCustomer?.nodes[0].__typename ===
-            //     'Customer'
-            //     ? caseStudy.caseStudyAcf.relatedCustomer.nodes[0].customerAcf
-            //         ?.logo
-            //     : undefined,
-            // );
+            let customer = caseStudy.caseStudyAcf?.relatedCustomer?.nodes[0];
+            if (customer?.__typename !== 'Customer') customer = undefined;
+            let customerLogo: ParsedImage | undefined;
+            if (customer) {
+              customerLogo = parseImage(customer.customerAcf?.logo);
+            }
 
             return (
-              <a
-                href={caseStudy.uri}
+              <div
                 class={cn('case-study', {
                   'col-span-full': isFeatured,
                   'col-span-6': !isFeatured,
@@ -49,20 +48,57 @@ const cases = acf.caseStudies?.nodes ?? [];
                 <Card
                   class={cn(
                     'overflow-hidden h-full p-0 bg-sw-surface-subdued',
+                    'grid gap-5 min-h-[26.25rem]',
                     {
-                      'grid grid-cols-12 gap-5': isFeatured,
-                      'grid grid-cols-2 gap-5': !isFeatured,
+                      'grid-cols-12': isFeatured,
+                      'grid-cols-2': !isFeatured,
                     },
                   )}
                 >
                   <div
-                    class={cn('content-column p-6', {
+                    class={cn('content-column flex flex-col p-6', {
                       'col-span-4': isFeatured,
                       'col-span-1': !isFeatured,
                     })}
                   >
-                    <div class="customer-logo" />
-                    {caseStudy.title}
+                    {!!customer && (
+                      <Fragment>
+                        {customerLogo?.shouldRender && (
+                          <Card class="customer-logo p-3 w-36 h-20 max-w-full flex items-center justify-center mb-8">
+                            <Image
+                              src={customerLogo.url}
+                              alt={customerLogo.alt}
+                              width={customerLogo.width}
+                              height={customerLogo.height}
+                              class="max-h-full max-w-full object-contain"
+                            />
+                          </Card>
+                        )}
+                        <div class="customer-details typography-card-title flex flex-col mb-4">
+                          <span>{customer.title}</span>
+                          {!!customer.customerAcf?.category && (
+                            <span class="text-sw-text-subdued">
+                              {customer.customerAcf?.category}
+                            </span>
+                          )}
+                        </div>
+                      </Fragment>
+                    )}
+                    <h3
+                      set:html={caseStudy.title}
+                      class="typography-cards-bold-large"
+                    />
+
+                    <div class="mt-auto pt-8">
+                      <Button
+                        asLink
+                        trailingIcon="arrow-right"
+                        href={buildPath(caseStudy.uri)}
+                        variant="secondary"
+                      >
+                        {acf.caseStudyButtonLabel}
+                      </Button>
+                    </div>
                   </div>
                   <div
                     class={cn('image-column', {
@@ -81,7 +117,7 @@ const cases = acf.caseStudies?.nodes ?? [];
                     )}
                   </div>
                 </Card>
-              </a>
+              </div>
             );
           })
       }

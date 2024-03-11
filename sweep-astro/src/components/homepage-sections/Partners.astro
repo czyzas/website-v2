@@ -1,3 +1,66 @@
-<section class="partners">
-  <h2>partners</h2>
+---
+import { Image } from 'astro:assets';
+import { cmsStore } from '@/stores/cmsStore';
+import { getStore } from '@/scripts/store';
+import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
+import { parseLink } from '@/scripts/data-parsers/parseLink';
+import { parseImage } from '@/scripts/data-parsers/parseImage';
+import Container from '../ui/Container.astro';
+import Button from '../ui/Button.astro';
+import SectionTitle from '../partials/SectionTitle.astro';
+import Grid from '../ui/Grid.astro';
+import Card from '../ui/Card.astro';
+
+const store = getStore(cmsStore);
+const data = store.homepage!;
+const acf = data.homepage!.partners!;
+const button = parseLink(acf.button);
+const partners = acf.partners?.nodes ?? [];
+---
+
+<section class="partners pt-20">
+  <Container>
+    <SectionTitle {...parseSectionTitle(acf.sectionTitle)} />
+    <Grid>
+      {
+        partners.map((partner) => {
+          if (partner.__typename !== 'Partner') return null;
+          const image = parseImage(partner.partnerAcf?.logo);
+          return (
+            <Card class="col-span-4 gap-8 flex flex-col items-start">
+              {image.shouldRender && (
+                <Image
+                  src={image.url}
+                  alt={image.alt}
+                  width={image.width}
+                  height={image.height}
+                  class="h-20 w-48 object-contain object-left"
+                />
+              )}
+              <div class="flex flex-col typography-card-title">
+                <span>{partner.title}</span>
+                <span
+                  style={{
+                    '--fg': partner.partnerAcf?.categoryColor ?? 'currentColor',
+                  }}
+                  class="text-[--fg]"
+                >
+                  {partner.partnerAcf?.category}
+                </span>
+              </div>
+            </Card>
+          );
+        })
+      }
+    </Grid>
+    {
+      button.shouldRender && (
+        <div class="flex justify-center items-center mt-[3.75rem]">
+          <Button asLink href={button.url} target={button.target}>
+            {button.title}
+          </Button>
+        </div>
+      )
+    }
+  </Container>
 </section>
