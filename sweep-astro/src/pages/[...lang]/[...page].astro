@@ -39,6 +39,7 @@ const { lang = 'en', page } = fixLangParams(Astro.params, 'page') as Params;
 
 const { slug = '' } = Astro.props;
 const data = (await fetchDefaultPage(slug, lang)) ?? {};
+export const prerender = true;
 ---
 
 <Layout>
