@@ -1,0 +1,99 @@
+---
+import { Image } from 'astro:assets';
+import { cmsStore } from '@/stores/cms';
+import { getStore } from '@/scripts/store';
+import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
+import { parseImage } from '@/scripts/data-parsers/parseImage';
+import { parseLink } from '@/scripts/data-parsers/parseLink';
+import { cn } from '@/scripts/cn';
+import { ensureTypename } from '@/scripts/ensureTypename';
+import Container from '../ui/Container.astro';
+import Button from '../ui/Button.astro';
+import Grid from '../ui/Grid.astro';
+import SectionTitle from '../partials/SectionTitle.astro';
+import Card from '../ui/Card.astro';
+
+const store = getStore(cmsStore);
+const data = store.homepage!;
+const acf = data.homepage!.caseStudies!;
+const button = parseLink(acf.button);
+const cases = acf.caseStudies?.nodes ?? [];
+---
+
+<section class="case-studies py-20">
+  <Container>
+    <SectionTitle {...parseSectionTitle(acf.sectionTitle)} />
+    <Grid>
+      {
+        cases.length > 0 &&
+          cases.map((caseStudy, index) => {
+            if (caseStudy.__typename !== 'CaseStudy') return null;
+            const isFeatured = index === 0;
+            const image = parseImage(caseStudy.subpageSettings?.image);
+            // const customerLogo = parseImage(
+            //   caseStudy.caseStudyAcf?.relatedCustomer?.nodes[0].__typename ===
+            //     'Customer'
+            //     ? caseStudy.caseStudyAcf.relatedCustomer.nodes[0].customerAcf
+            //         ?.logo
+            //     : undefined,
+            // );
+
+            return (
+              <a
+                href={caseStudy.uri}
+                class={cn('case-study', {
+                  'col-span-full': isFeatured,
+                  'col-span-6': !isFeatured,
+                })}
+              >
+                <Card
+                  class={cn(
+                    'overflow-hidden h-full p-0 bg-sw-surface-subdued',
+                    {
+                      'grid grid-cols-12 gap-5': isFeatured,
+                      'grid grid-cols-2 gap-5': !isFeatured,
+                    },
+                  )}
+                >
+                  <div
+                    class={cn('content-column p-6', {
+                      'col-span-4': isFeatured,
+                      'col-span-1': !isFeatured,
+                    })}
+                  >
+                    <div class="customer-logo" />
+                    {caseStudy.title}
+                  </div>
+                  <div
+                    class={cn('image-column', {
+                      'col-span-8': isFeatured,
+                      'col-span-1': !isFeatured,
+                    })}
+                  >
+                    {image.shouldRender && (
+                      <Image
+                        src={image.url}
+                        alt={image.alt}
+                        width={image.width}
+                        height={image.height}
+                        class="object-cover w-full h-full"
+                      />
+                    )}
+                  </div>
+                </Card>
+              </a>
+            );
+          })
+      }
+    </Grid>
+    {
+      button.shouldRender && (
+        <div class="flex justify-center items-center mt-[3.75rem]">
+          <Button asLink href={button.url} target={button.target}>
+            {button.title}
+          </Button>
+        </div>
+      )
+    }
+  </Container>
+</section>

@@ -1,0 +1,43 @@
+---
+import { Image } from 'astro:assets';
+import { cmsStore } from '@/stores/cms';
+import { getStore } from '@/scripts/store';
+import Container from '../ui/Container.astro';
+import Button from '../ui/Button.astro';
+import Grid from '../ui/Grid.astro';
+
+const store = getStore(cmsStore);
+const data = store.homepage!;
+const acf = data.homepage!.hero!;
+---
+
+<section class="hero pt-[6.4375rem] pb-8">
+  <Container>
+    <Grid>
+      <div class="col-span-4 flex flex-col items-start justify-center gap-4">
+        <h1 class="typography-h1" set:html={acf.title ?? 'Sweep'} />
+        <div class="typography-body" set:html={acf?.content ?? ''} />
+        {
+          !!acf.button?.title && !!acf.button?.url && (
+            <Button asLink href={acf.button.url!} target={acf.button?.target}>
+              {acf.button.title}
+            </Button>
+          )
+        }
+      </div>
+      <div class="col-start-6 col-end-13">
+        {
+          !!acf.image?.node.sourceUrl && (
+            <Image
+              src={acf.image.node.sourceUrl}
+              alt={acf.image.node.altText ?? ''}
+              width={acf.image.node.mediaDetails?.width ?? 800}
+              height={acf.image.node.mediaDetails?.height ?? 600}
+              loading="eager"
+            />
+          )
+        }
+      </div>
+    </Grid>
+  </Container>
+</section>

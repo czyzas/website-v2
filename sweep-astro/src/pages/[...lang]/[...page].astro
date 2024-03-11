@@ -1,0 +1,48 @@
+---
+import type { InferGetStaticParamsType } from 'astro';
+import Layout from '@/layouts/Layout.astro';
+import { fixLangParams, getLangParam, getUrlWithoutLang } from '@/i18n/utils';
+import {
+  fetchDefaultPage,
+  fetchDefaultPagesStaticPaths,
+} from '@/lib/fetchCMSData';
+
+export const getStaticPaths = async () => {
+  const paths = await fetchDefaultPagesStaticPaths();
+  const returnPaths = [];
+  for (const staticPath of paths) {
+    if (
+      staticPath.template?.templateName !== 'Default' ||
+      !staticPath?.languageCode ||
+      !staticPath?.uri
+    ) {
+      continue;
+    }
+
+    const paramPath = getUrlWithoutLang(staticPath.uri);
+
+    returnPaths.push({
+      params: {
+        lang: getLangParam(staticPath.languageCode),
+        page: paramPath,
+      },
+      props: staticPath,
+    });
+  }
+
+  return returnPaths;
+};
+
+type Params = InferGetStaticParamsType<typeof getStaticPaths>;
+
+const { lang = 'en', page } = fixLangParams(Astro.params, 'page') as Params;
+
+const { slug = '' } = Astro.props;
+const data = (await fetchDefaultPage(slug, lang)) ?? {};
+---
+
+<Layout>
+  <h1>{data.title}</h1>
+  <p>Lang: {lang}</p>
+  <p>URL: {`/${page}`}</p>
+</Layout>

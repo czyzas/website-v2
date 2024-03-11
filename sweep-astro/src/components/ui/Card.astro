@@ -1,0 +1,19 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/scripts/cn';
+
+type Props = HTMLAttributes<'div'>;
+
+const { class: className, ...props } = Astro.props;
+---
+
+<div
+  {...props}
+  class={cn(
+    'card',
+    'p-6 rounded-lg bg-white border border-sw-text-disabled',
+    className,
+  )}
+>
+  <slot />
+</div>

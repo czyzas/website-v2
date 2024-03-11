@@ -1,0 +1,12 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/scripts/cn';
+
+export type Props = HTMLAttributes<'ul'>;
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<ul class={cn('tab-list', 'flex gap-2', className)} role="tablist" {...rest}>
+  <slot />
+</ul>

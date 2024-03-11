@@ -1,0 +1,8 @@
+---
+const { props } = Astro;
+---
+
+<div class="flex flex-wrap">
+  <div class="w-1/2" set:html={props.content.first} />
+  <div class="w-1/2" set:html={props.content.second} />
+</div>

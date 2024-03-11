@@ -1,0 +1,106 @@
+{
+    "key": "group_65e5d73abd14a",
+    "title": "Customer",
+    "fields": [
+        {
+            "key": "field_65e5d73a7cfff",
+            "label": "Logo",
+            "name": "logo",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 1,
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "logo"
+        },
+        {
+            "key": "field_65e5d74c7d000",
+            "label": "Website URL",
+            "name": "website_url",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 1,
+            "default_value": "",
+            "placeholder": "https:\/\/example.com\/",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "websiteUrl",
+            "graphql_non_null": 0
+        },
+        {
+            "key": "field_65e836d80f595",
+            "label": "Category",
+            "name": "category",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 0,
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "category",
+            "graphql_non_null": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "customer"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "acfml_field_group_mode": "translation",
+    "show_in_graphql": 1,
+    "graphql_field_name": "customerAcf",
+    "map_graphql_types_from_location_rules": 0,
+    "graphql_types": "",
+    "modified": 1709717227
+}

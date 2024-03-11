@@ -1,0 +1,34 @@
+---
+import { cn } from '@/scripts/cn';
+import type { ParsedSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
+
+type Props = Partial<ParsedSectionTitle>;
+
+const { title = '', overline = '' } = Astro.props;
+
+const alignClasses = {
+  left: 'text-left items-start',
+  center: 'text-left md:text-center items-start md:items-center',
+  right: 'text-left md:text-right items-start md:items-end',
+};
+---
+
+{
+  (!!title.length || !!overline.length) && (
+    <div
+      class={cn(
+        'section-title flex flex-col gap-2',
+        title.length > 0 ? 'mb-[3.75rem]' : 'mb-8',
+        alignClasses.center,
+      )}
+    >
+      {!!overline && !!title && (
+        <p class="typography-subhead" set:html={overline} />
+      )}
+      <h2
+        class={title ? 'typography-h2' : 'typography-subhead'}
+        set:html={title || overline}
+      />
+    </div>
+  )
+}

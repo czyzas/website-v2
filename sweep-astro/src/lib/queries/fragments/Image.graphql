@@ -1,0 +1,17 @@
+fragment Image on AcfMediaItemConnectionEdge {
+  node {
+    altText
+    sourceUrl
+    sizes
+    mediaDetails {
+      width
+      height
+      sizes(exclude: [THUMBNAIL]) {
+        width
+        height
+        name
+        sourceUrl
+      }
+    }
+  }
+}

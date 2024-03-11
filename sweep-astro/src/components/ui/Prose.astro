@@ -1,0 +1,85 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/scripts/cn';
+
+type Props = HTMLAttributes<'div'>;
+
+const { class: className, ...props } = Astro.props;
+---
+
+<style>
+  .prose-content {
+    :global(:where(p, ol, ul, blockquote, img, video, iframe)) {
+      @apply mt-6;
+    }
+
+    :global(:where(a, a:hover)) {
+      @apply text-current underline underline-offset-4 decoration-current;
+      text-decoration-skip-ink: none;
+    }
+
+    :global(:where(strong)) {
+      @apply font-semibold;
+    }
+
+    :global(:where(ol, ul)) {
+      @apply ml-6;
+    }
+
+    :global(:where(ol)) {
+      @apply list-decimal;
+    }
+
+    :global(:where(ul)) {
+      @apply list-disc;
+    }
+
+    :global(:where(li)) {
+      @apply mt-2;
+    }
+
+    :global(:where(ol > li::marker)) {
+      @apply text-current font-normal;
+    }
+
+    :global(:where(ul > li::marker)) {
+      @apply text-current;
+    }
+
+    :global(:where(ol ol)) {
+      @apply list-[lower-latin];
+    }
+
+    :global(:where(ol ol ol)) {
+      @apply list-[lower-roman];
+    }
+
+    :global(:where(h2, h3, h4)) {
+      @apply mt-8 mb-3;
+    }
+
+    :global(:where(h2 + *, h3 + *, h4 + *)) {
+      @apply mt-0;
+    }
+
+    :global(:where(h2)) {
+      @apply typography-h2;
+    }
+
+    :global(:where(h3)) {
+      @apply typography-h3;
+    }
+
+    :global(:where(h4)) {
+      @apply typography-h4;
+    }
+
+    :global(:where(:first-child)) {
+      @apply mt-0;
+    }
+  }
+</style>
+
+<div {...props} class={cn('prose-content typography-body', className)}>
+  <slot />
+</div>

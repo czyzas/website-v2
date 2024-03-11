@@ -1,0 +1,32 @@
+---
+import Footer from '@/components/partials/Footer.astro';
+import Header from '@/components/partials/Header.astro';
+
+const title = 'Sweep';
+const description = 'Astro description';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href={import.meta.env.PROD ? '/favicon.svg' : '/favicon-dev.svg'}
+    />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <style is:global>
+      @import '@/styles/font.css';
+    </style>
+  </head>
+  <body class="">
+    <Header />
+    <slot />
+    <Footer />
+  </body>
+</html>

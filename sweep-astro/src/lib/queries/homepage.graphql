@@ -1,0 +1,238 @@
+query Homepage($PAGE_ID: ID!, $LANGUAGE: String) {
+  page(id: $PAGE_ID, idType: DATABASE_ID) {
+    title
+    slug
+    homepage {
+      hero {
+        title
+        content
+        button {
+          ...Link
+        }
+        image {
+          ...Image
+        }
+      }
+      goals {
+        sectionTitle {
+          title
+          overline
+        }
+        tabs {
+          tabTitle
+          overline
+          title
+          content
+          button {
+            ...Link
+          }
+          image {
+            ...Image
+          }
+        }
+      }
+      customers1 {
+        sectionTitle {
+          title
+          overline
+        }
+        customersList(first: 100) {
+          nodes {
+            __typename
+            ... on Customer {
+              title
+              customerAcf {
+                websiteUrl
+                logo {
+                  ...Image
+                }
+              }
+            }
+          }
+        }
+        button {
+          ...Link
+        }
+      }
+      platform {
+        sectionTitle {
+          overline
+          title
+        }
+        content
+        image {
+          ...Image
+        }
+        button {
+          ...Link
+        }
+      }
+      whoweworkwith {
+        sectionTitle {
+          overline
+          title
+        }
+        cards {
+          imageBackgroundColor
+          image {
+            ...Image
+          }
+          title
+          content
+          button {
+            ...Link
+          }
+        }
+      }
+      industries {
+        sectionTitle {
+          overline
+          title
+        }
+        show
+        selectedIndustries(first: 100) {
+          nodes {
+            __typename
+            ... on Industry {
+              ...HomepageIndustry
+            }
+          }
+        }
+      }
+      caseStudies {
+        sectionTitle {
+          overline
+          title
+        }
+        caseStudies(first: 100) {
+          nodes {
+            __typename
+            ... on CaseStudy {
+              title
+              uri
+              caseStudyAcf {
+                relatedCustomer(first: 100) {
+                  nodes {
+                    __typename
+                    ... on Customer {
+                      title
+                      customerAcf {
+                        category
+                        logo {
+                          ...Image
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              subpageSettings {
+                image {
+                  ...Image
+                }
+              }
+            }
+          }
+        }
+        button {
+          ...Link
+        }
+      }
+      resources {
+        sectionTitle {
+          overline
+          title
+        }
+        resources(first: 100) {
+          nodes {
+            __typename
+            ... on LibraryItem {
+              uri
+              title
+              subpageSettings {
+                introduction
+                image {
+                  ...Image
+                }
+              }
+            }
+          }
+        }
+        button {
+          ...Link
+        }
+      }
+      partners {
+        sectionTitle {
+          overline
+          title
+        }
+        partners(first: 100) {
+          nodes {
+            __typename
+            ... on Partner {
+              title
+              partnerAcf {
+                logo {
+                  ...Image
+                }
+                categoryColor
+                category
+              }
+            }
+          }
+        }
+        button {
+          ...Link
+        }
+      }
+      customers2 {
+        sectionTitle {
+          title
+          overline
+        }
+        customersList(first: 100) {
+          nodes {
+            __typename
+            ... on Customer {
+              title
+              customerAcf {
+                websiteUrl
+                logo {
+                  ...Image
+                }
+              }
+            }
+          }
+        }
+      }
+      demo {
+        title
+        button {
+          ...Link
+        }
+        image {
+          ...Image
+        }
+      }
+    }
+  }
+  industries(first: 100, where: { status: PUBLISH, language: $LANGUAGE }) {
+    nodes {
+      ...HomepageIndustry
+    }
+  }
+  languages {
+    ...Languages
+  }
+}
+
+fragment HomepageIndustry on Industry {
+  title
+  uri
+  industryAcf {
+    icon {
+      ...Image
+    }
+  }
+}

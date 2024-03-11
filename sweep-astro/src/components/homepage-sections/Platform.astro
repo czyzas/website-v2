@@ -1,0 +1,57 @@
+---
+import { Image } from 'astro:assets';
+import { cmsStore } from '@/stores/cms';
+import { getStore } from '@/scripts/store';
+import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
+import { parseImage } from '@/scripts/data-parsers/parseImage';
+import { parseLink } from '@/scripts/data-parsers/parseLink';
+import Container from '../ui/Container.astro';
+import Button from '../ui/Button.astro';
+import Grid from '../ui/Grid.astro';
+import SectionTitle from '../partials/SectionTitle.astro';
+import Card from '../ui/Card.astro';
+import Prose from '../ui/Prose.astro';
+
+const store = getStore(cmsStore);
+const data = store.homepage!;
+const acf = data.homepage!.platform!;
+const image = parseImage(acf.image);
+const button = parseLink(acf.button);
+---
+
+<section class="platform bg-sw-surface-subdued py-20">
+  <Container>
+    <SectionTitle {...parseSectionTitle(acf.sectionTitle)} />
+    <Grid>
+      <Card class="col-start-1 col-end-5">
+        <Prose set:html={acf.content} />
+      </Card>
+      <div class="col-start-6 col-end-12">
+        {
+          image.shouldRender && (
+            <Image
+              src={image.url}
+              alt={image.alt}
+              width={image.width}
+              height={image.height}
+            />
+          )
+        }
+      </div>
+    </Grid>
+    {
+      button.shouldRender && (
+        <div class="mt-[4.5rem] flex items-center justify-center">
+          <Button
+            asLink
+            trailingIcon="arrow-right"
+            href={button.url}
+            target={button.target}
+          >
+            {button.title}
+          </Button>
+        </div>
+      )
+    }
+  </Container>
+</section>

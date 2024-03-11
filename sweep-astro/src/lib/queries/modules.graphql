@@ -1,0 +1,97 @@
+# query Modules {
+#   pages {
+#     nodes {
+#       modules {
+#         modulesContent {
+#           ... on ModulesModulesContentBreakLayout {
+#             fieldGroupName
+#             height
+#             isLine
+#           }
+#           ... on ModulesModulesContentHeadlineLayout {
+#             id
+#             customColor
+#             customColorToggle
+#             displayAs
+#             fieldGroupName
+#             type
+#           }
+#           ... on ModulesModulesContentGriTextLayout {
+#             fieldGroupName
+#             griList {
+#               description
+#               fieldGroupName
+#               index
+#             }
+#           }
+#           ... on ModulesModulesContentColumnsLayout {
+#             columnWidth
+#             columnsCounter
+#             fieldGroupName
+#             content {
+#               fieldGroupName
+#               first
+#               second
+#               third
+#             }
+#           }
+#           ... on ModulesModulesContentResponsiveImageLayout {
+#             desktopWidth
+#             fieldGroupName
+#             mobileWidth
+#             zoomable
+#           }
+#           ... on ModulesModulesContentAccordionLayout {
+#             fieldGroupName
+#             openFirst
+#             rows {
+#               content
+#               fieldGroupName
+#               imageColumnPosition
+#               secondColumnContent
+#               secondColumnType
+#               title
+#             }
+#           }
+#           ... on ModulesModulesContentTabsLayout {
+#             fieldGroupName
+#             orientation
+#             tabs {
+#               content
+#               fieldGroupName
+#               imageColumnPosition
+#               imageVerticalPosition
+#               secondColumnContent
+#               secondColumnType
+#               title
+#             }
+#           }
+#           ... on ModulesModulesContentBigNumbersLayout {
+#             alignment
+#             fieldGroupName
+#             row
+#             textSmaller
+#             theme
+#           }
+#           ... on ModulesModulesContentQuotationLayout {
+#             authorName
+#             authorOccupation
+#             contentAlignment
+#             fieldGroupName
+#             hideQuotationMark
+#             quotationContent
+#             theme
+#           }
+#           ... on ModulesModulesContentColumnWithImageLayout {
+#             fieldGroupName
+#             imagePosition
+#             textColumn
+#           }
+#           ... on ModulesModulesContentQuarterlyDataTableLayout {
+#             fieldGroupName
+#           }
+#         }
+#       }
+#     }
+#   }
+# }

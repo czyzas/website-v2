@@ -1,0 +1,35 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/scripts/cn';
+
+export interface Props extends HTMLAttributes<'div'> {
+  size?: 'default' | 'full';
+}
+
+const { size = 'default', class: className, ...props } = Astro.props;
+---
+
+<style>
+  :where(.container) {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: min(
+      100% - (2 * var(--container-margin, 1rem)),
+      var(--container-max-width, 77.5rem)
+    );
+  }
+
+  :where(.container-full) {
+    --container-max-width: 100%;
+    --container-margin: 1rem;
+  }
+
+  .container .container:not(.nested-with-margin) {
+    --container-margin: 0px;
+  }
+</style>
+
+<div {...props} class={cn(['container', `container-${size}`, className])}>
+  <slot />
+</div>
