@@ -1,7 +1,8 @@
 /** @type {import("prettier").Options} */
-module.exports = {
+const config = {
   singleQuote: true,
-  plugins: [require.resolve('prettier-plugin-astro')],
+  trailingComma: 'es5',
+  plugins: ['prettier-plugin-astro'],
   overrides: [
     {
       files: '*.astro',
@@ -11,3 +12,5 @@ module.exports = {
     },
   ],
 };
+
+export default config;
