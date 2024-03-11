@@ -14,16 +14,16 @@ import { getCachedCMSData, cacheCMSData, CACHE_KEYS } from './cacheCMSData';
 const fetchData = async <Query, QueryVariables extends Variables = Variables>(
   document: TypedDocumentNode<Query, QueryVariables>,
   variables?: QueryVariables,
-  cacheKey?: string[],
+  cacheKey?: string[]
 ) => {
-  if (cacheKey) {
+  if (import.meta.env.DEV && cacheKey) {
     // In dev mode its good to cache actual data to prevent fetching it from cms over and over again
     const cache = await getCachedCMSData<Query>(cacheKey);
     if (cache) {
       console.log(
         new Date().toLocaleTimeString(),
         `\x1B[33m[cache]\x1B[0m`,
-        `Cache hit (${cacheKey.join('/')})`,
+        `Cache hit (${cacheKey.join('/')})`
       );
       return cache;
     }
@@ -31,7 +31,7 @@ const fetchData = async <Query, QueryVariables extends Variables = Variables>(
     console.log(
       new Date().toLocaleTimeString(),
       `\x1B[35m[cache]\x1B[0m`,
-      `Cache missed, fetching... (${cacheKey.join('/')})`,
+      `Cache missed, fetching... (${cacheKey.join('/')})`
     );
   }
 
@@ -39,7 +39,7 @@ const fetchData = async <Query, QueryVariables extends Variables = Variables>(
   const data = await gqlClient.request<Query>(document, variables);
 
   // set cache in dev mode
-  if (cacheKey) {
+  if (import.meta.env.DEV && cacheKey) {
     await cacheCMSData(cacheKey, data);
   }
 
@@ -58,13 +58,13 @@ export function fetchHomepage(lang: Locales) {
       PAGE_ID: HOMEPAGE_IDS[lang],
       LANGUAGE: lang,
     },
-    [lang, CACHE_KEYS.HOMEPAGE],
+    [lang, CACHE_KEYS.HOMEPAGE]
   );
 }
 
 export function fetchDefaultPagesStaticPaths() {
   return fetchData(DefaultPagesStaticPathsDocument).then(
-    (data) => data.pages?.nodes ?? [],
+    (data) => data.pages?.nodes ?? []
   );
 }
 
@@ -75,6 +75,6 @@ export function fetchDefaultPage(slug: string, lang: Locales = defaultLocale) {
       SLUG: slug,
       LANG: lang,
     },
-    [lang, CACHE_KEYS.PAGE, slug],
+    [lang, CACHE_KEYS.PAGE, slug]
   ).then((data) => data.pages?.nodes?.[0]);
 }

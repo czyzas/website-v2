@@ -7,7 +7,9 @@ export const env = createEnv({
    * This is enforced both on type-level and at runtime.
    */
   clientPrefix: 'PUBLIC_',
-  server: {},
+  server: {
+    APP_MODE: z.enum(['static', 'ssr']),
+  },
   client: {
     PUBLIC_CMS_BASE_URL: z.string().url(),
     PUBLIC_CMS_ENDPOINT: z.string().url(),
