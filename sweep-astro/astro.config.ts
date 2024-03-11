@@ -4,6 +4,8 @@ import tailwind from '@astrojs/tailwind';
 import icon from 'astro-icon';
 import { defaultLocale, locales } from './src/i18n/config';
 
+const appMode = process.env.APP_MODE;
+
 // https://astro.build/config
 export default defineConfig({
   output: appMode === 'ssr' ? 'server' : 'static',
