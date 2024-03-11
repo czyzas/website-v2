@@ -8,7 +8,7 @@ export const env = createEnv({
    */
   clientPrefix: 'PUBLIC_',
   server: {
-    APP_MODE: z.enum(['static', 'ssr']),
+    APP_MODE: z.enum(['static', 'ssr']).default('static'),
   },
   client: {
     PUBLIC_CMS_BASE_URL: z.string().url(),
