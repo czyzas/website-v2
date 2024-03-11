@@ -7,6 +7,7 @@
     "start": "astro dev",
     "prebuild": "npm run codegen",
     "build": "astro build",
+    "prebuild:ssr": "npm run codegen",
     "build:ssr": "cross-env APP_MODE=ssr astro build",
     "preview": "astro preview",
     "astro": "astro",
