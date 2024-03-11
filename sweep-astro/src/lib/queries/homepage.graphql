@@ -2,6 +2,10 @@ query Homepage($PAGE_ID: ID!, $LANGUAGE: String) {
   page(id: $PAGE_ID, idType: DATABASE_ID) {
     title
     slug
+    uri
+    language {
+      ...Languages
+    }
     homepage {
       hero {
         title
@@ -104,6 +108,7 @@ query Homepage($PAGE_ID: ID!, $LANGUAGE: String) {
           overline
           title
         }
+        caseStudyButtonLabel
         caseStudies(first: 100) {
           nodes {
             __typename

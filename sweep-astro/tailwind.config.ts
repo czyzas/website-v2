@@ -93,6 +93,7 @@ export default {
           fontSize: theme('fontSize.2xl'),
           lineHeight: theme('lineHeight.8'),
           color: theme('colors.black'),
+          fontWeight: theme('fontWeight.bold'),
         },
         '.typography-card-title': {
           fontSize: theme('fontSize.base'),
