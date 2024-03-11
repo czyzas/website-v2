@@ -18,6 +18,9 @@ export default {
             400: '#283FFF',
             500: '#0010A3',
           },
+          sea: {
+            500: '#052561',
+          },
           surface: {
             subdued: '#F9F9F9',
             background: '#F2F2F2',

@@ -1,3 +1,51 @@
-<section class="demo">
-  <h2>demo</h2>
+---
+import { Image } from 'astro:assets';
+import { cmsStore } from '@/stores/cmsStore';
+import { getStore } from '@/scripts/store';
+import { parseLink } from '@/scripts/data-parsers/parseLink';
+import { parseImage } from '@/scripts/data-parsers/parseImage';
+import Container from '../ui/Container.astro';
+import Button from '../ui/Button.astro';
+import Grid from '../ui/Grid.astro';
+
+const store = getStore(cmsStore);
+const data = store.homepage!;
+const acf = data.homepage!.demo!;
+
+const button = parseLink(acf.button);
+const image = parseImage(acf.image);
+---
+
+<section class="demo py-20 bg-sw-surface-subdued">
+  <Container>
+    <Grid class="bg-sw-sea-500 rounded-lg p-14">
+      <div class="col-span-full md:col-span-6">
+        <h2
+          class="text-white text-5xl leading-tight font-bold"
+          set:html={acf.title}
+        />
+        {
+          button.shouldRender && (
+            <div class="mt-2">
+              <Button asLink href={button.url} target={button.target}>
+                {button.title}
+              </Button>
+            </div>
+          )
+        }
+      </div>
+      <div class="col-span-full md:col-span-6">
+        {
+          image.shouldRender && (
+            <Image
+              src={image.url}
+              alt={image.alt}
+              width={image.width}
+              height={image.height}
+            />
+          )
+        }
+      </div>
+    </Grid>
+  </Container>
 </section>
