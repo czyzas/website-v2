@@ -1,0 +1,22 @@
+fragment ThemeOptions on ThemeOptions {
+  themeOptionsAcf {
+    bookDemoLink {
+      ...Link
+    }
+    loginLink {
+      ...Link
+    }
+    footerContent
+    footerLegalNote
+    footerLinks {
+      link {
+        ...Link
+      }
+    }
+    socials {
+      link {
+        ...Link
+      }
+    }
+  }
+}

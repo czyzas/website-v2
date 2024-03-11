@@ -22,11 +22,11 @@
             "endpoint": 0
         },
         {
-            "key": "field_61261a4b150e9",
-            "label": "Subpage default image",
-            "name": "subpage_default_image",
+            "key": "field_65ef10ed4ff0e",
+            "label": "Login link",
+            "name": "login_link",
             "aria-label": "",
-            "type": "image",
+            "type": "link",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -37,18 +37,31 @@
             },
             "wpml_cf_preferences": 1,
             "return_format": "array",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": "",
-            "preview_size": "medium",
             "show_in_graphql": 1,
             "graphql_description": "",
-            "graphql_field_name": "subpageDefaultImage"
+            "graphql_field_name": "loginLink",
+            "graphql_non_null": 0
+        },
+        {
+            "key": "field_65ef110a4ff0f",
+            "label": "Book a demo link",
+            "name": "book_demo_link",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 1,
+            "return_format": "array",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "bookDemoLink",
+            "graphql_non_null": 0
         },
         {
             "key": "field_635b6e690ccf4",
@@ -298,7 +311,7 @@
         },
         {
             "key": "field_650d8bcfe51c5",
-            "label": "Stopka",
+            "label": "Footer",
             "name": "",
             "aria-label": "",
             "type": "tab",
@@ -310,9 +323,10 @@
                 "class": "",
                 "id": ""
             },
+            "graphql_field_name": "footer",
+            "wpml_cf_preferences": 1,
             "placement": "top",
-            "endpoint": 0,
-            "wpml_cf_preferences": 1
+            "endpoint": 0
         },
         {
             "key": "field_656f3a1b3dc02",
@@ -432,8 +446,8 @@
     "show_in_rest": 1,
     "acfml_field_group_mode": "translation",
     "show_in_graphql": 1,
-    "graphql_field_name": "themeOptions",
+    "graphql_field_name": "themeOptionsAcf",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1709653443
+    "modified": 1710169310
 }
