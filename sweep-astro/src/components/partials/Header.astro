@@ -1,3 +1,21 @@
-<header>
-  <div class="logo">Sweep</div>
+---
+import { Icon } from 'astro-icon/components';
+import { getStore } from '@/scripts/store';
+import { buildPath } from '@/scripts/buildPath';
+import { languageStore } from '@/stores/languageStore';
+import Container from '../ui/Container.astro';
+
+const { currentLanguage } = getStore(languageStore);
+---
+
+<header class="py-4">
+  <Container>
+    <a href={buildPath('/', currentLanguage.code)}>
+      <Icon
+        name="logo"
+        aria-label="Sweep logo"
+        class="w-36 h-12 text-sw-action-primary"
+      />
+    </a>
+  </Container>
 </header>
