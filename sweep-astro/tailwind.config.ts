@@ -73,7 +73,7 @@ export default {
         '.typography-subhead': {
           fontSize: theme('fontSize.base'),
           lineHeight: theme('lineHeight.6'),
-          fontWeight: theme('fontWeight.semibold'),
+          fontWeight: theme('fontWeight.medium'),
           color: theme('colors.sw.text.subdued'),
         },
         '.typography-body': {

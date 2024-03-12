@@ -55,6 +55,16 @@ const resources = acf.resources?.nodes ?? [];
   }
 </script>
 
+<style>
+  .swiper {
+    @apply overflow-visible;
+  }
+
+  .swiper-slide {
+    @apply self-stretch h-auto flex;
+  }
+</style>
+
 <section class="resources py-20 bg-sw-surface-subdued overflow-hidden">
   <Container>
     <SectionTitle {...parseSectionTitle(acf.sectionTitle)} />
@@ -115,13 +125,3 @@ const resources = acf.resources?.nodes ?? [];
     </ButtonContainer>
   </Container>
 </section>
-
-<style>
-  .swiper {
-    @apply overflow-visible;
-  }
-
-  .swiper-slide {
-    @apply self-stretch h-auto flex;
-  }
-</style>
