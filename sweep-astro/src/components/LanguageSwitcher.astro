@@ -61,20 +61,20 @@ const { currentLanguage, languages } = getStore(languageStore);
         id={id}
       >
         {languages.map((lang) => (
-          <li>
+          <li class="mb-1 last:mb-0">
             <button
               type="button"
               aria-label={lang?.native_name}
               aria-pressed={
                 lang?.code === currentLanguage.code ? 'true' : 'false'
               }
-              class="w-full rounded mb-1 aria-pressed:bg-sw-surface-subdued hover:bg-sw-surface-subdued"
+              class="w-full rounded transition-colors aria-pressed:bg-sw-surface-subdued hover:bg-sw-surface-subdued"
             >
               <a
                 href={buildPath('/', lang?.code)}
                 target={'_self'}
                 set:text={lang?.translated_name}
-                class="py-1 px-3 font-medium"
+                class="block py-1 px-2.5 font-medium"
               />
             </button>
           </li>
