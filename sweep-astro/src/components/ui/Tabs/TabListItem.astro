@@ -19,7 +19,7 @@ const { id, class: className, isActive = false } = Astro.props;
       'tab-list-item',
       { active: isActive },
       'typography-body-2',
-      'w-full border border-sw-text-disabled px-4 py-3 rounded-lg min-w-fit whitespace-nowrap',
+      'w-full border border-sw-text-disabled px-4 py-3 rounded-lg min-w-fit whitespace-nowrap transition-colors hover:bg-sw-surface-subdued',
       'aria-selected:bg-sw-sky-400 aria-selected:text-white aria-selected:cursor-default aria-selected:border-transparent',
       className
     )}
