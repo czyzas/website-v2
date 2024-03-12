@@ -36,13 +36,11 @@ const customersList = acf?.customersList?.nodes ?? [];
     let swiper: Swiper;
 
     const initSwiper = () => {
-      if (!swiper) {
-        swiperContainer.classList.add('swiper');
-        swiper = new Swiper(swiperContainer, {
-          slidesPerView: 'auto',
-          spaceBetween: 16,
-        });
-      }
+      swiperContainer.classList.add('swiper');
+      swiper = new Swiper(swiperContainer, {
+        slidesPerView: 'auto',
+        spaceBetween: 16,
+      });
     };
 
     const destroySwiper = () => {
@@ -74,7 +72,7 @@ const customersList = acf?.customersList?.nodes ?? [];
   }
 </style>
 
-<section class="customers py-20">
+<section class="customers py-12 md:py-20">
   <Container>
     <SectionTitle {...parseSectionTitle(acf?.sectionTitle)} />
     {

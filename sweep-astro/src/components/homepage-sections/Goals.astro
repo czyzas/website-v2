@@ -24,7 +24,7 @@ const acf = data.homepage!.goals!;
 const tabs = acf.tabs ?? [];
 ---
 
-<section class="goals pt-20">
+<section class="goals pt-12 md:pt-20">
   <Container>
     <SectionTitle {...parseSectionTitle(acf.sectionTitle)} />
     <Tabs>
@@ -53,7 +53,7 @@ const tabs = acf.tabs ?? [];
                 <Grid class="mt-12">
                   <Card class="content-column flex flex-col col-start-2 col-end-12 md:col-start-1 md:col-end-8 lg:col-end-6 md:row-span-full relative z-[1] md:my-24">
                     <p class="typography-subhead mb-2">{tab?.overline}</p>
-                    <h3 class="typography-h3 mb-8">{tab?.title}</h3>
+                    <h3 class="typography-h3 mb-8" set:html={tab?.title} />
                     <Prose set:html={tab?.content} />
                     {button.shouldRender && (
                       <div class="mt-8">
@@ -68,7 +68,7 @@ const tabs = acf.tabs ?? [];
                       </div>
                     )}
                   </Card>
-                  <div class="image-column col-span-full md:col-start-5 md:col-end-13 md:row-span-full -mt-16 md:mt-0">
+                  <div class="image-column col-span-full md:col-start-4 lg:col-start-5 md:col-end-13 md:row-span-full -mt-16 md:mt-0">
                     {image.shouldRender && (
                       <Image
                         src={image.url}
