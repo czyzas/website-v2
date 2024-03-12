@@ -24,12 +24,13 @@ const cards = acf.cards ?? [];
     <Grid>
       {
         cards.map((card) => (
-          <div class="col-span-4 flex items-stretch">
+          <div class="col-span-full md:col-span-6 lg:col-span-4 flex items-stretch">
             <CardWithImage
               image={parseImage(card?.image)}
               imageBackgroundColor={card?.imageBackgroundColor}
               title={card?.title ?? ''}
               button={parseLink(card?.button)}
+              class="w-full"
             >
               <Prose set:html={card?.content} />
             </CardWithImage>

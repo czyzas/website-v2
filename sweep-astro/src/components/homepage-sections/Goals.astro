@@ -4,6 +4,8 @@ import { kebabCase } from 'lodash-es';
 import { cmsStore } from '@/stores/cmsStore';
 import { getStore } from '@/scripts/store';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
+import { parseLink } from '@/scripts/data-parsers/parseLink';
+import { parseImage } from '@/scripts/data-parsers/parseImage';
 import Tabs from '../ui/Tabs/Tabs.astro';
 import TabList from '../ui/Tabs/TabList.astro';
 import Container from '../ui/Container.astro';
@@ -18,6 +20,8 @@ import Card from '../ui/Card.astro';
 const store = getStore(cmsStore);
 const data = store.homepage!;
 const acf = data.homepage!.goals!;
+
+const tabs = acf.tabs ?? [];
 ---
 
 <section class="goals pt-20">
@@ -26,7 +30,7 @@ const acf = data.homepage!.goals!;
     <Tabs>
       <TabList>
         {
-          acf.tabs!.map((tab, index) => (
+          tabs.map((tab, index) => (
             <TabListItem
               id={['goal', kebabCase(tab!.tabTitle), index].join('-')}
               isActive={index === 0}
@@ -37,43 +41,48 @@ const acf = data.homepage!.goals!;
       </TabList>
       <div class="tab-content">
         {
-          acf.tabs!.map((tab, index) => (
-            <TabPane
-              id={['goal', kebabCase(tab!.tabTitle), index].join('-')}
-              isActive={index === 0}
-            >
-              <Grid class="mt-12">
-                <Card class="content-column flex flex-col col-start-1 col-end-6 row-span-full relative z-[1] my-24">
-                  <p class="typography-subhead mb-2">{tab?.overline}</p>
-                  <h3 class="typography-h3 mb-8">{tab?.title}</h3>
-                  <Prose set:html={tab?.content} />
-                  {!!tab?.button?.url && !!tab.button?.title && (
-                    <div class="mt-8">
-                      <Button
-                        asLink
-                        href={tab?.button?.url}
-                        target={tab?.button?.target ?? '_self'}
-                        trailingIcon="arrow-right"
-                      >
-                        {tab?.button?.title}
-                      </Button>
-                    </div>
-                  )}
-                </Card>
-                <div class="image-column col-start-5 col-end-13 row-span-full">
-                  {!!tab?.image?.node?.sourceUrl && (
-                    <Image
-                      src={tab?.image?.node.sourceUrl}
-                      alt={tab.image?.node?.altText ?? ''}
-                      width={tab!.image!.node.mediaDetails!.width!}
-                      height={tab!.image!.node.mediaDetails!.height!}
-                      class="w-full h-full object-cover rounded-lg"
-                    />
-                  )}
-                </div>
-              </Grid>
-            </TabPane>
-          ))
+          tabs.map((tab, index) => {
+            const button = parseLink(tab?.button);
+            const image = parseImage(tab?.image);
+
+            return (
+              <TabPane
+                id={['goal', kebabCase(tab!.tabTitle), index].join('-')}
+                isActive={index === 0}
+              >
+                <Grid class="mt-12">
+                  <Card class="content-column flex flex-col col-start-2 col-end-12 md:col-start-1 md:col-end-8 lg:col-end-6 md:row-span-full relative z-[1] md:my-24">
+                    <p class="typography-subhead mb-2">{tab?.overline}</p>
+                    <h3 class="typography-h3 mb-8">{tab?.title}</h3>
+                    <Prose set:html={tab?.content} />
+                    {button.shouldRender && (
+                      <div class="mt-8">
+                        <Button
+                          asLink
+                          href={button.url}
+                          target={button.target}
+                          trailingIcon="arrow-right"
+                        >
+                          {button.title}
+                        </Button>
+                      </div>
+                    )}
+                  </Card>
+                  <div class="image-column col-span-full md:col-start-5 md:col-end-13 md:row-span-full -mt-16 md:mt-0">
+                    {image.shouldRender && (
+                      <Image
+                        src={image.url}
+                        alt={image.alt}
+                        width={image.width}
+                        height={image.height}
+                        class="w-full h-full object-cover rounded-lg"
+                      />
+                    )}
+                  </div>
+                </Grid>
+              </TabPane>
+            );
+          })
         }
       </div>
     </Tabs>

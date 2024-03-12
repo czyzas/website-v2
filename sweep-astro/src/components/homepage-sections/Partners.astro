@@ -10,6 +10,7 @@ import Button from '../ui/Button.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
 import Grid from '../ui/Grid.astro';
 import Card from '../ui/Card.astro';
+import ButtonContainer from '../ButtonContainer.astro';
 
 const store = getStore(cmsStore);
 const data = store.homepage!;
@@ -27,7 +28,7 @@ const partners = acf.partners?.nodes ?? [];
           if (partner.__typename !== 'Partner') return null;
           const image = parseImage(partner.partnerAcf?.logo);
           return (
-            <Card class="col-span-4 gap-8 flex flex-col items-start">
+            <Card class="col-span-full sm:col-span-6 md:col-span-4 gap-8 flex flex-col items-start">
               {image.shouldRender && (
                 <Image
                   src={image.url}
@@ -55,11 +56,11 @@ const partners = acf.partners?.nodes ?? [];
     </Grid>
     {
       button.shouldRender && (
-        <div class="flex justify-center items-center mt-[3.75rem]">
+        <ButtonContainer class="mt-[3.75rem]">
           <Button asLink href={button.url} target={button.target}>
             {button.title}
           </Button>
-        </div>
+        </ButtonContainer>
       )
     }
   </Container>

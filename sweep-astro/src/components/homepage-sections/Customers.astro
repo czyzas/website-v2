@@ -8,6 +8,7 @@ import { parseLink } from '@/scripts/data-parsers/parseLink';
 import Container from '../ui/Container.astro';
 import Button from '../ui/Button.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
+import ButtonContainer from '../ButtonContainer.astro';
 
 interface Props {
   type: 1 | 2;
@@ -19,7 +20,7 @@ const store = getStore(cmsStore);
 const data = store.homepage!;
 const acf = type === 1 ? data.homepage!.customers1! : data.homepage!.customers2;
 const button = parseLink(
-  type === 1 ? data.homepage!.customers1?.button : undefined,
+  type === 1 ? data.homepage!.customers1?.button : undefined
 );
 
 const customersList = acf?.customersList?.nodes ?? [];
@@ -54,7 +55,7 @@ const customersList = acf?.customersList?.nodes ?? [];
     }
     {
       button.shouldRender && (
-        <div class="flex items-center justify-center mt-8">
+        <ButtonContainer class="mt-8">
           <Button
             asLink
             href={button.url}
@@ -63,7 +64,7 @@ const customersList = acf?.customersList?.nodes ?? [];
           >
             {button.title}
           </Button>
-        </div>
+        </ButtonContainer>
       )
     }
   </Container>

@@ -23,6 +23,18 @@ const { class: className, ...props } = Astro.props;
       event.preventDefault();
       tabTrigger.show();
     });
+    triggerEl.addEventListener('show.bs.tab', () => {
+      const list = triggerEl.closest('.tab-list');
+      if (!list) return;
+
+      const rect = triggerEl.getBoundingClientRect();
+      const listRect = list.getBoundingClientRect();
+
+      list.scroll({
+        left: rect.left - listRect.left,
+      });
+      // triggerEl.scrollIntoView();
+    });
   });
 </script>
 

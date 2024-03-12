@@ -1,11 +1,13 @@
 ---
 import Image from 'astro/components/Image.astro';
+import type { HTMLAttributes } from 'astro/types';
 import type { ParsedImage } from '@/scripts/data-parsers/parseImage';
 import type { ParsedLink } from '@/scripts/data-parsers/parseLink';
+import { cn } from '@/scripts/cn';
 import Card from './ui/Card.astro';
 import Button from './ui/Button.astro';
 
-interface CardWithImageProps {
+interface CardWithImageProps extends HTMLAttributes<'div'> {
   image: ParsedImage;
   imageBackgroundColor?: string;
   title: string;
@@ -14,10 +16,18 @@ interface CardWithImageProps {
 
 type Props = CardWithImageProps;
 
-const { image, imageBackgroundColor = '#FFF', title, button } = Astro.props;
+const {
+  image,
+  imageBackgroundColor = '#FFF',
+  title,
+  button,
+  class: className,
+} = Astro.props;
 ---
 
-<Card class={'card-with-image p-0 flex flex-col overflow-hidden'}>
+<Card
+  class={cn('card-with-image p-0 flex flex-col overflow-hidden', className)}
+>
   <div
     class="image-container bg-[--bg-color] p-8"
     style={{
@@ -33,6 +43,7 @@ const { image, imageBackgroundColor = '#FFF', title, button } = Astro.props;
           width={image.width}
           height={image.height}
           widths={[400]}
+          class="mx-auto w-full max-w-[25rem]"
         />
       )
     }
