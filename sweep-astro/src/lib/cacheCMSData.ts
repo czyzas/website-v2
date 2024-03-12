@@ -13,8 +13,11 @@ export type CachePayload = string | string[];
 
 const CACHE_PATH = './.astro/cms-cache';
 
-const buildCacheFilename = (payload: CachePayload) =>
-  Array.isArray(payload) ? payload.join('/') : payload;
+const buildCacheFilename = (payload: CachePayload) => {
+  let filename = Array.isArray(payload) ? payload.join('/') : payload;
+  if (filename.endsWith('/')) filename += 'index';
+  return filename;
+};
 
 export const getCachedCMSData = async <T = unknown>(payload: CachePayload) => {
   try {
@@ -38,7 +41,7 @@ export const getCachedCMSData = async <T = unknown>(payload: CachePayload) => {
 
 export const cacheCMSData = async <T = unknown>(
   payload: CachePayload,
-  data: T,
+  data: T
 ) => {
   try {
     const isDev = import.meta.env.MODE === 'development';

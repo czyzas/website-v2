@@ -1,16 +1,20 @@
 ---
 import type { InferGetStaticParamsType } from 'astro';
-import Layout from '@/layouts/Layout.astro';
-import { fixLangParams, getLangParam, getUrlWithoutLang } from '@/i18n/utils';
 import {
-  fetchDefaultPage,
-  fetchDefaultPagesStaticPaths,
-} from '@/lib/fetchCMSData';
-import type { Locales } from '@/i18n/config';
+  fixLangParams,
+  getLangParam,
+  getStaticPathsWithLangs,
+  getUrlWithoutLang,
+} from '@/i18n/utils';
+import { fetchDefaultPagesStaticPaths } from '@/lib/fetchCMSData';
+import Homepage from './_index.astro';
+import Page from './_page.astro';
 
 export const getStaticPaths = async () => {
+  // At the beginning we need to add homepages in all available languages
+  const returnPaths = getStaticPathsWithLangs();
   const paths = await fetchDefaultPagesStaticPaths();
-  const returnPaths = [];
+
   for (const staticPath of paths) {
     if (
       staticPath.template?.templateName !== 'Default' ||
@@ -36,18 +40,8 @@ export const getStaticPaths = async () => {
 
 type Params = InferGetStaticParamsType<typeof getStaticPaths>;
 
-const { lang = 'en', page = '' } = fixLangParams(
-  Astro.params,
-  'page'
-) as Params;
-
-const { slug = '' } = Astro.props;
-const data = (await fetchDefaultPage(slug, lang as Locales)) ?? {};
+const { page = '' } = fixLangParams(Astro.params, 'page') as Params;
+const uri = getUrlWithoutLang(page as string) || '/';
 ---
 
-<Layout>
-  <h1>Dynamic page on root level</h1>
-  <p>Title: {data.title}</p>
-  <p>Lang: {lang}</p>
-  <p>URL: {`/${page}`}</p>
-</Layout>
+{uri === '/' ? <Homepage {...Astro.props} /> : <Page {...Astro.props} />}

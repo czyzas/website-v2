@@ -1,0 +1,22 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/scripts/cn';
+
+type Props = {
+  alwaysCentered?: boolean;
+} & HTMLAttributes<'div'>;
+
+const { alwaysCentered = true, class: className, ...props } = Astro.props;
+---
+
+<div
+  {...props}
+  class={cn(
+    'button-container',
+    'flex justify-start md:justify-center items-center gap-2',
+    { 'justify-center': alwaysCentered },
+    className
+  )}
+>
+  <slot />
+</div>

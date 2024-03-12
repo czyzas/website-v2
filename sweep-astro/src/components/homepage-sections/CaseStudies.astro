@@ -13,6 +13,7 @@ import Button from '../ui/Button.astro';
 import Grid from '../ui/Grid.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
 import Card from '../ui/Card.astro';
+import ButtonContainer from '../ButtonContainer.astro';
 
 const store = getStore(cmsStore);
 const data = store.homepage!;
@@ -21,7 +22,7 @@ const button = parseLink(acf.button);
 const cases = acf.caseStudies?.nodes ?? [];
 ---
 
-<section class="case-studies py-20">
+<section class="case-studies py-12 md:py-20">
   <Container>
     <SectionTitle {...parseSectionTitle(acf.sectionTitle)} />
     <Grid>
@@ -40,26 +41,26 @@ const cases = acf.caseStudies?.nodes ?? [];
 
             return (
               <div
-                class={cn('case-study', {
-                  'col-span-full': isFeatured,
-                  'col-span-6': !isFeatured,
+                class={cn('case-study', 'col-span-full lg:col-span-6', {
+                  'lg:col-span-full': isFeatured,
                 })}
               >
                 <Card
                   class={cn(
                     'overflow-hidden h-full p-0 bg-sw-surface-subdued',
-                    'grid gap-5 min-h-[26.25rem]',
+                    'grid gap-5 lg:min-h-[26.25rem] grid-cols-2',
                     {
-                      'grid-cols-12': isFeatured,
-                      'grid-cols-2': !isFeatured,
-                    },
+                      'lg:grid-cols-12': isFeatured,
+                    }
                   )}
                 >
                   <div
-                    class={cn('content-column flex flex-col p-6', {
-                      'col-span-4': isFeatured,
-                      'col-span-1': !isFeatured,
-                    })}
+                    class={cn(
+                      'content-column flex flex-col p-6 col-span-full md:col-span-1',
+                      {
+                        'lg:col-span-4': isFeatured,
+                      }
+                    )}
                   >
                     {!!customer && (
                       <Fragment>
@@ -101,10 +102,12 @@ const cases = acf.caseStudies?.nodes ?? [];
                     </div>
                   </div>
                   <div
-                    class={cn('image-column', {
-                      'col-span-8': isFeatured,
-                      'col-span-1': !isFeatured,
-                    })}
+                    class={cn(
+                      'image-column aspect-[16/9] col-span-full md:aspect-auto md:col-span-1',
+                      {
+                        'lg:col-span-8': isFeatured,
+                      }
+                    )}
                   >
                     {image.shouldRender && (
                       <Image
@@ -124,11 +127,11 @@ const cases = acf.caseStudies?.nodes ?? [];
     </Grid>
     {
       button.shouldRender && (
-        <div class="flex justify-center items-center mt-[3.75rem]">
+        <ButtonContainer class="mt-8 md:mt-15">
           <Button asLink href={button.url} target={button.target}>
             {button.title}
           </Button>
-        </div>
+        </ButtonContainer>
       )
     }
   </Container>

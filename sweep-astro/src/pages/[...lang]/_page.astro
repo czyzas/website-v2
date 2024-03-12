@@ -1,0 +1,18 @@
+---
+import type { Locales } from '@/i18n/config';
+import { fixLangParams } from '@/i18n/utils';
+import Layout from '@/layouts/Layout.astro';
+import { fetchDefaultPage } from '@/lib/fetchCMSData';
+
+const { lang = 'en', page = '' } = fixLangParams(Astro.params, 'page');
+
+const { slug = '' } = Astro.props;
+const data = (await fetchDefaultPage(slug, lang as Locales)) ?? {};
+---
+
+<Layout>
+  <h1>Dynamic page on root level</h1>
+  <p>Title: {data.title}</p>
+  <p>Lang: {lang}</p>
+  <p>URL: {`/${page}`}</p>
+</Layout>

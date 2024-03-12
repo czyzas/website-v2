@@ -11,7 +11,7 @@ export const getLangParam = (l: string) =>
 
 export const getUrlWithoutLang = (
   url: string,
-  options?: { trimSlashes?: boolean },
+  options?: { trimSlashes?: boolean }
 ) => {
   const { trimSlashes = true } = options ?? {};
   const startsWithSlash = url.startsWith('/');
@@ -34,7 +34,7 @@ export const getUrlWithoutLang = (
  * Propagate locales to provided params
  */
 export const withLangParams = (
-  paths: GetStaticPathsResult,
+  paths: GetStaticPathsResult
 ): GetStaticPathsResult => {
   const finalPaths = [];
 
@@ -59,13 +59,16 @@ export const getStaticPathsWithLangs = (() =>
   withLangParams([{ params: {} }])) satisfies GetStaticPaths;
 
 /**
- * Determine if provided `lang` param is valid, if not, pass it to another param
+ *  * Determine if provided `lang` param is valid, if not, pass it to another param
  *
  * This function fixes the optional default lang problem, when using nested pages , such as `pages/[...lang]/[...page].astro`
+ * @param params Static Paths
+ * @param notLangParam Name of the other param that is not language
+ * @returns
  */
 export const fixLangParams = (
   params: GetStaticPathsItem['params'],
-  notLangParam: string,
+  notLangParam: string
 ) => {
   const lang = params?.lang ? String(params.lang) : null;
 

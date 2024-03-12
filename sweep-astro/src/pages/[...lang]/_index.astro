@@ -1,6 +1,5 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import { getStaticPathsWithLangs } from '@/i18n/utils';
 import { fetchHomepage } from '@/lib/fetchCMSData';
 import type { Locales } from '@/i18n/config';
 import { cmsStore } from '@/stores/cmsStore';
@@ -17,7 +16,6 @@ import Resources from '@/components/homepage-sections/Resources.astro';
 import WhoWeWorkWith from '@/components/homepage-sections/WhoWeWorkWith.astro';
 import { languageStore } from '@/stores/languageStore';
 
-export const getStaticPaths = getStaticPathsWithLangs;
 const { lang = 'en' } = Astro.params;
 const data = await fetchHomepage(lang as Locales);
 

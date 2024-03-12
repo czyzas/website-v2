@@ -32,6 +32,9 @@ export default {
           },
         },
       },
+      spacing: {
+        15: '3.75rem',
+      },
       boxShadow: {
         button:
           '0px -1px 0px 0px rgb(0 0 0 / 0.2) inset, 0px 1px 0px 0px rgb(0 0 0 / 0.08)',
@@ -73,12 +76,13 @@ export default {
         '.typography-subhead': {
           fontSize: theme('fontSize.base'),
           lineHeight: theme('lineHeight.6'),
-          fontWeight: theme('fontWeight.semibold'),
+          fontWeight: theme('fontWeight.medium'),
           color: theme('colors.sw.text.subdued'),
         },
         '.typography-body': {
           fontSize: theme('fontSize.lg'),
           lineHeight: theme('lineHeight.7'),
+          fontWeight: theme('fontWeight.normal'),
           color: theme('colors.sw.text.subdued'),
         },
         '.typography-body-2': {
@@ -95,8 +99,8 @@ export default {
         '.typography-cards-bold-large': {
           fontSize: theme('fontSize.2xl'),
           lineHeight: theme('lineHeight.8'),
-          color: theme('colors.black'),
           fontWeight: theme('fontWeight.bold'),
+          color: theme('colors.black'),
         },
         '.typography-card-title': {
           fontSize: theme('fontSize.base'),

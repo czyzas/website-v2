@@ -7,6 +7,10 @@ export type Props = HTMLAttributes<'ul'>;
 const { class: className, ...rest } = Astro.props;
 ---
 
-<ul class={cn('tab-list', 'flex gap-2', className)} role="tablist" {...rest}>
+<ul
+  class={cn('tab-list custom-scrollbar', 'flex gap-2 overflow-auto', className)}
+  role="tablist"
+  {...rest}
+>
   <slot />
 </ul>

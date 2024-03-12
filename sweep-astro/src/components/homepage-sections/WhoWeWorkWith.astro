@@ -17,19 +17,20 @@ const acf = data.homepage!.whoweworkwith!;
 const cards = acf.cards ?? [];
 ---
 
-<section class="who-we-work-with py-20">
+<section class="who-we-work-with py-12 md:py-20">
   <Container>
     <SectionTitle {...parseSectionTitle(acf.sectionTitle)} />
 
     <Grid>
       {
         cards.map((card) => (
-          <div class="col-span-4 flex items-stretch">
+          <div class="col-span-full md:col-span-6 lg:col-span-4 flex items-stretch">
             <CardWithImage
               image={parseImage(card?.image)}
               imageBackgroundColor={card?.imageBackgroundColor}
               title={card?.title ?? ''}
               button={parseLink(card?.button)}
+              class="w-full"
             >
               <Prose set:html={card?.content} />
             </CardWithImage>

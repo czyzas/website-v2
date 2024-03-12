@@ -11,6 +11,7 @@ import Grid from '../ui/Grid.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
 import Card from '../ui/Card.astro';
 import Prose from '../ui/Prose.astro';
+import ButtonContainer from '../ButtonContainer.astro';
 
 const store = getStore(cmsStore);
 const data = store.homepage!;
@@ -19,14 +20,16 @@ const image = parseImage(acf.image);
 const button = parseLink(acf.button);
 ---
 
-<section class="platform bg-sw-surface-subdued py-20">
+<section class="platform bg-sw-surface-subdued py-12 md:py-20">
   <Container>
     <SectionTitle {...parseSectionTitle(acf.sectionTitle)} />
     <Grid>
-      <Card class="col-start-1 col-end-5">
+      <Card class="col-span-full md:col-span-6 lg:col-start-1 lg:col-end-5">
         <Prose set:html={acf.content} />
       </Card>
-      <div class="col-start-6 col-end-12">
+      <div
+        class="col-span-full md:col-start-7 md:col-end-13 lg:col-start-6 lg:col-end-12"
+      >
         {
           image.shouldRender && (
             <Image
@@ -34,6 +37,7 @@ const button = parseLink(acf.button);
               alt={image.alt}
               width={image.width}
               height={image.height}
+              class="mx-auto"
             />
           )
         }
@@ -41,7 +45,7 @@ const button = parseLink(acf.button);
     </Grid>
     {
       button.shouldRender && (
-        <div class="mt-[4.5rem] flex items-center justify-center">
+        <ButtonContainer class="mt-[4.5rem]">
           <Button
             asLink
             trailingIcon="arrow-right"
@@ -50,7 +54,7 @@ const button = parseLink(acf.button);
           >
             {button.title}
           </Button>
-        </div>
+        </ButtonContainer>
       )
     }
   </Container>
