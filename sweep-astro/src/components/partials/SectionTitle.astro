@@ -18,15 +18,15 @@ const alignClasses = {
     <div
       class={cn(
         'section-title flex flex-col gap-2',
-        title.length > 0 ? 'mb-[3.75rem]' : 'mb-8',
-        alignClasses.center,
+        title.length > 0 ? 'mb-8 md:mb-15' : 'mb-8',
+        alignClasses.center
       )}
     >
       {!!overline && !!title && (
         <p class="typography-subhead" set:html={overline} />
       )}
       <h2
-        class={title ? 'typography-h2' : 'typography-subhead'}
+        class={title ? 'typography-h3 md:typography-h2' : 'typography-subhead'}
         set:html={title || overline}
       />
     </div>

@@ -26,30 +26,81 @@ const button = parseLink(
 const customersList = acf?.customersList?.nodes ?? [];
 ---
 
-<section class="customers py-20">
+<script>
+  import Swiper from 'swiper';
+
+  const swiperContainers =
+    document.querySelectorAll<HTMLDivElement>('.customers-swiper');
+
+  for (const swiperContainer of swiperContainers) {
+    let swiper: Swiper;
+
+    const initSwiper = () => {
+      swiperContainer.classList.add('swiper');
+      swiper = new Swiper(swiperContainer, {
+        slidesPerView: 'auto',
+        spaceBetween: 16,
+      });
+    };
+
+    const destroySwiper = () => {
+      if (swiper) {
+        swiperContainer.classList.remove('swiper');
+        swiper.destroy();
+      }
+    };
+
+    const media = window.matchMedia('(min-width: 768px)');
+    if (!media.matches) initSwiper();
+
+    media.addEventListener('change', (event) => {
+      event.matches ? destroySwiper() : initSwiper();
+    });
+  }
+</script>
+
+<style>
+  .swiper-slide {
+    @apply self-stretch h-auto flex w-auto;
+  }
+
+  .swiper-wrapper,
+  .swiper-slide {
+    @screen md {
+      @apply contents;
+    }
+  }
+</style>
+
+<section class="customers py-12 md:py-20">
   <Container>
     <SectionTitle {...parseSectionTitle(acf?.sectionTitle)} />
     {
-      // TODO: Swiper on mobile
       customersList.length > 0 && (
-        <div class="flex flex-wrap gap-2 items-center">
-          {customersList.map((customer) => {
-            if (customer.__typename !== 'Customer') return null;
-            const logo = parseImage(customer.customerAcf?.logo);
-            return (
-              <div class="customer p-3 flex-1 basis-40 flex items-center justify-center">
-                {logo.shouldRender && (
-                  <Image
-                    src={logo.url}
-                    alt={logo.alt}
-                    width={logo.width}
-                    height={logo.height}
-                    class="max-h-12 object-contain"
-                  />
-                )}
-              </div>
-            );
-          })}
+        <div class="customers-swiper md:flex md:flex-wrap md:gap-2 md:items-center">
+          <div class="swiper-wrapper">
+            {customersList.map((customer) => {
+              if (customer.__typename !== 'Customer') return null;
+
+              const logo = parseImage(customer.customerAcf?.logo);
+
+              return (
+                <div class="swiper-slide">
+                  <div class="customer p-3 flex items-center justify-center md:flex-1 md:basis-40">
+                    {logo.shouldRender && (
+                      <Image
+                        src={logo.url}
+                        alt={logo.alt}
+                        width={logo.width}
+                        height={logo.height}
+                        class="max-h-12 object-contain"
+                      />
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       )
     }

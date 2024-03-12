@@ -16,12 +16,14 @@ const button = parseLink(acf.button);
 const image = parseImage(acf.image);
 ---
 
-<section class="demo py-20 bg-sw-surface-subdued">
+<section class="demo py-12 md:py-20 bg-sw-surface-subdued">
   <Container>
-    <Grid class="bg-sw-sea-500 rounded-lg p-14">
-      <div class="col-span-full md:col-span-6">
+    <Grid
+      class="bg-sw-sea-500 rounded-lg p-6 md:p-14 grid-cols-1 md:grid-cols-12"
+    >
+      <div class="col-span-full lg:col-span-6">
         <h2
-          class="text-white text-5xl leading-tight font-bold"
+          class="text-white typography-h3 md:text-5xl md:leading-tight md:font-bold"
           set:html={acf.title}
         />
         {
@@ -34,7 +36,7 @@ const image = parseImage(acf.image);
           )
         }
       </div>
-      <div class="col-span-full md:col-span-6">
+      <div class="col-span-full lg:col-span-6 flex items-center justify-center">
         {
           image.shouldRender && (
             <Image

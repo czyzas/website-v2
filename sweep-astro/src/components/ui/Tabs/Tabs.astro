@@ -23,17 +23,32 @@ const { class: className, ...props } = Astro.props;
       event.preventDefault();
       tabTrigger.show();
     });
+
     triggerEl.addEventListener('show.bs.tab', () => {
       const list = triggerEl.closest('.tab-list');
       if (!list) return;
 
       const rect = triggerEl.getBoundingClientRect();
       const listRect = list.getBoundingClientRect();
+      const { scrollLeft } = list;
 
-      list.scroll({
-        left: rect.left - listRect.left,
-      });
-      // triggerEl.scrollIntoView();
+      if (
+        rect.left + rect.width > listRect.width + listRect.left ||
+        rect.left < listRect.left
+      ) {
+        const right = rect.left + rect.width - (listRect.width + listRect.left);
+        const left = listRect.left - rect.left;
+        // const targetLeft = rect.left + scrollLeft - listRect.left;
+
+        let offset = 0;
+        const padding = 25;
+        if (left > 0) offset = -(left + padding);
+        else if (right > 0) offset = right + padding;
+
+        list.scroll({
+          left: /* targetLeft */ scrollLeft + offset,
+        });
+      }
     });
   });
 </script>
