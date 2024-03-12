@@ -1,5 +1,6 @@
 ---
 import type { InferGetStaticParamsType } from 'astro';
+import Homepage from '@/pages/[...lang]/_index.astro';
 import Layout from '@/layouts/Layout.astro';
 import { fixLangParams, getLangParam, getUrlWithoutLang } from '@/i18n/utils';
 import {
@@ -45,9 +46,15 @@ const { slug = '' } = Astro.props;
 const data = (await fetchDefaultPage(slug, lang as Locales)) ?? {};
 ---
 
-<Layout>
-  <h1>Dynamic page on root level</h1>
-  <p>Title: {data.title}</p>
-  <p>Lang: {lang}</p>
-  <p>URL: {`/${page}`}</p>
-</Layout>
+{
+  page === '' || page === 'fr' || page === 'de' ? (
+    <Homepage />
+  ) : (
+    <Layout>
+      <h1>Dynamic page on root level</h1>
+      <p>Title: {data.title}</p>
+      <p>Lang: {lang}</p>
+      <p>URL: {`/${page}`}</p>
+    </Layout>
+  )
+}
