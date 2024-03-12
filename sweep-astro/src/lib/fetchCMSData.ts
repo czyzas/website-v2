@@ -20,7 +20,7 @@ const fetchData = async <Query, QueryVariables extends Variables = Variables>(
     // In dev mode its good to cache actual data to prevent fetching it from cms over and over again
     const cache = await getCachedCMSData<Query>(cacheKey);
     if (cache) {
-      console.log(
+      console.info(
         new Date().toLocaleTimeString(),
         `\x1B[33m[cache]\x1B[0m`,
         `Cache hit (${cacheKey.join('/')})`
@@ -28,7 +28,7 @@ const fetchData = async <Query, QueryVariables extends Variables = Variables>(
       return cache;
     }
 
-    console.log(
+    console.info(
       new Date().toLocaleTimeString(),
       `\x1B[35m[cache]\x1B[0m`,
       `Cache missed, fetching... (${cacheKey.join('/')})`
@@ -50,7 +50,7 @@ export function fetchHomepage(lang: Locales) {
   const HOMEPAGE_IDS: Record<Locales, string> = {
     en: '6',
     fr: '506',
-    de: '163',
+    de: '580',
   };
   return fetchData(
     HomepageDocument,
