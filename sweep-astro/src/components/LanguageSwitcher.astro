@@ -64,7 +64,7 @@ const { currentLanguage, languages } = getStore(languageStore);
           <li class="mb-1 last:mb-0">
             <button
               type="button"
-              aria-label={lang?.native_name}
+              aria-label={lang?.translated_name}
               aria-pressed={
                 lang?.code === currentLanguage.code ? 'true' : 'false'
               }
