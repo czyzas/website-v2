@@ -26,7 +26,6 @@ const resources = acf.resources?.nodes ?? [];
 
   const resourceSwiperContainers =
     document.querySelectorAll<HTMLElement>('.resources-swiper');
-  console.log(resourceSwiperContainers);
   for (const swiperContainer of resourceSwiperContainers) {
     const prevButton = swiperContainer
       .closest('section.resources')
