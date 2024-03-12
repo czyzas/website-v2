@@ -36,6 +36,7 @@ export default {
         button:
           '0px -1px 0px 0px rgb(0 0 0 / 0.2) inset, 0px 1px 0px 0px rgb(0 0 0 / 0.08)',
         'button-secondary': '0px 1px 0px 0px rgb(0 0 0 / 0.03)',
+        'language-switcher': '0px 0px 7px 0px rgba(0, 0, 0, 0.1)',
       },
     },
   },

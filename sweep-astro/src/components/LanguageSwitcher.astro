@@ -1,15 +1,85 @@
 ---
 import { Icon } from 'astro-icon/components';
+import { getStore } from '@/scripts/store';
+import { languageStore } from '@/stores/languageStore';
+import { buildPath } from '@/scripts/buildPath';
+
+const id = `dropdown-${crypto.randomUUID().substring(16)}`;
+const { currentLanguage, languages } = getStore(languageStore);
 ---
 
+<script>
+  import { computePosition, flip, shift, autoUpdate } from '@floating-ui/dom';
+
+  const buttons = Array.from(
+    document.querySelectorAll<HTMLButtonElement>(
+      'button[data-action="toggle-language-switcher"]'
+    )
+  );
+
+  for (const button of buttons) {
+    const relatedDropdown = button.nextElementSibling as HTMLElement;
+    if (relatedDropdown) {
+      const updatePosition = () => {
+        computePosition(button, relatedDropdown, {
+          placement: 'bottom',
+          middleware: [flip(), shift()],
+        }).then(({ x, y }) => {
+          relatedDropdown.style.setProperty('left', `${x}px`);
+          relatedDropdown.style.setProperty('top', `${y}px`);
+        });
+      };
+
+      autoUpdate(button, relatedDropdown, updatePosition);
+
+      button.addEventListener('click', () => {
+        const state = button.ariaPressed === 'true';
+        const nextState = !state ? 'true' : 'false';
+        button.ariaPressed = nextState;
+        relatedDropdown.ariaHidden = state ? 'true' : 'false';
+      });
+    }
+  }
+</script>
+
 <div class="language-switcher-container relative">
-  <button type="button" class="switcher flex items-center gap-1 font-medium">
-    <span>EN</span>
+  <button
+    type="button"
+    class="switcher flex items-center gap-1 font-medium py-1.5 px-2.5 toggle"
+    data-action="toggle-language-switcher"
+    aria-controls={id}
+    aria-pressed="false"
+  >
+    <span>{currentLanguage.code.toUpperCase()}</span>
     <Icon name="caret-down" />
   </button>
-  <ul class="list absolute invisible">
-    <li><a href="/en">English</a></li>
-    <li><a href="/fr">French</a></li>
-    <li><a href="/de">German</a></li>
-  </ul>
+  {
+    languages && (
+      <ul
+        aria-hidden="true"
+        class="list absolute visible shadow-language-switcher rounded-lg p-2 aria-hidden:invisible"
+        id={id}
+      >
+        {languages.map((lang) => (
+          <li>
+            <button
+              type="button"
+              aria-label={lang?.native_name}
+              aria-pressed={
+                lang?.code === currentLanguage.code ? 'true' : 'false'
+              }
+              class="w-full rounded mb-1 aria-pressed:bg-sw-surface-subdued hover:bg-sw-surface-subdued"
+            >
+              <a
+                href={buildPath('/', lang?.code)}
+                target={'_self'}
+                set:text={lang?.translated_name}
+                class="py-1 px-3 font-medium"
+              />
+            </button>
+          </li>
+        ))}
+      </ul>
+    )
+  }
 </div>
