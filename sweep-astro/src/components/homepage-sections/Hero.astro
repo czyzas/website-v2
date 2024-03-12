@@ -16,13 +16,16 @@ const button = parseLink(acf.button);
 const image = parseImage(acf.image);
 ---
 
-<section class="hero pt-[6.4375rem] pb-8">
+<section class="hero py-8 md:pt-[6.4375rem]">
   <Container>
     <Grid>
       <div
         class="col-span-12 md:col-span-4 flex flex-col items-start justify-center gap-4"
       >
-        <h1 class="typography-h1" set:html={acf.title ?? 'Sweep'} />
+        <h1
+          class="typography-h3 sm:typography-h1"
+          set:html={acf.title ?? 'Sweep'}
+        />
         <div class="typography-body" set:html={acf?.content ?? ''} />
         {
           button.shouldRender && (

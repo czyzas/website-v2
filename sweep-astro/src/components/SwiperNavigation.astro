@@ -1,12 +1,18 @@
 ---
 import { Icon } from 'astro-icon/components';
+import type { HTMLAttributes } from 'astro/types';
 import { cn } from '@/scripts/cn';
+
+type Props = HTMLAttributes<'div'>;
+
+const { class: className } = Astro.props;
 ---
 
 <div
   class={cn(
     'swiper-navigation',
-    'flex bg-white divide-x border border-sw-border rounded-lg shadow-button-secondary text-black overflow-hidden'
+    'flex bg-white divide-x border border-sw-border rounded-lg shadow-button-secondary text-black overflow-hidden',
+    className
   )}
 >
   <button
