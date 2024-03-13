@@ -54,27 +54,35 @@ const avatar3Processed = await getImage({ src: avatar3, format: 'jpg' });
 <style>
   :global(.box) {
     --nth: 1;
-    --delay: 150ms;
+    --delay: 250ms;
+    --speed: 750ms;
     opacity: 0;
-    animation: fade-in 500ms ease forwards calc(var(--nth) * var(--delay));
+    animation: fade-in var(--speed) ease forwards
+      calc(var(--nth) * var(--delay));
 
     &:nth-child(2) {
-      --nth: 2;
+      --nth: 5;
+      --speed: 660ms;
     }
     &:nth-child(3) {
-      --nth: 3;
+      --nth: 4;
+      --speed: 595ms;
     }
     &:nth-child(4) {
-      --nth: 4;
+      --nth: 7;
+      --speed: 820ms;
     }
     &:nth-child(5) {
-      --nth: 5;
+      --nth: 2;
+      --speed: 700ms;
     }
     &:nth-child(6) {
       --nth: 6;
+      --speed: 725ms;
     }
     &:nth-child(7) {
-      --nth: 7;
+      --speed: 680ms;
+      --nth: 3;
     }
   }
   @keyframes fade-in {
