@@ -1,9 +1,12 @@
 ---
-import { Image } from 'astro:assets';
+import { getImage } from 'astro:assets';
 import { cmsStore } from '@/stores/cmsStore';
 import { getStore } from '@/scripts/store';
 import { parseLink } from '@/scripts/data-parsers/parseLink';
-import { parseImage } from '@/scripts/data-parsers/parseImage';
+import heroImage from '@/assets/images/hero-image.svg?raw';
+import avatar1 from '@/assets/images/avatar1.jpg';
+import avatar2 from '@/assets/images/avatar2.jpg';
+import avatar3 from '@/assets/images/avatar3.jpg';
 import Container from '../ui/Container.astro';
 import Button from '../ui/Button.astro';
 import Grid from '../ui/Grid.astro';
@@ -13,16 +16,21 @@ const data = store.homepage!;
 const acf = data.homepage!.hero!;
 
 const button = parseLink(acf.button);
-const image = parseImage(acf.image);
+const avatar1Processed = await getImage({ src: avatar1, format: 'jpg' });
+const avatar2Processed = await getImage({ src: avatar2, format: 'jpg' });
+const avatar3Processed = await getImage({ src: avatar3, format: 'jpg' });
 ---
 
-<section class="hero pt-[6.4375rem] pb-8">
+<section class="hero py-8 md:pt-[6.4375rem]">
   <Container>
     <Grid>
       <div
         class="col-span-12 md:col-span-4 flex flex-col items-start justify-center gap-4"
       >
-        <h1 class="typography-h1" set:html={acf.title ?? 'Sweep'} />
+        <h1
+          class="typography-h3 sm:typography-h1"
+          set:html={acf.title ?? 'Sweep'}
+        />
         <div class="typography-body" set:html={acf?.content ?? ''} />
         {
           button.shouldRender && (
@@ -32,19 +40,51 @@ const image = parseImage(acf.image);
           )
         }
       </div>
-      <div class="col-span-12 md:col-start-6 md:col-end-13">
-        {
-          image.shouldRender && (
-            <Image
-              src={image.url}
-              alt={image.alt}
-              width={image.width}
-              height={image.height}
-              loading="eager"
-            />
-          )
-        }
-      </div>
+      <div
+        class="col-span-12 md:col-start-6 md:col-end-13"
+        set:html={heroImage
+          .replace('@avatar1', avatar1Processed.src)
+          .replace('@avatar2', avatar2Processed.src)
+          .replace('@avatar3', avatar3Processed.src)}
+      />
     </Grid>
   </Container>
 </section>
+
+<style>
+  :global(.box) {
+    --nth: 1;
+    --delay: 150ms;
+    opacity: 0;
+    animation: fade-in 500ms ease forwards calc(var(--nth) * var(--delay));
+
+    &:nth-child(2) {
+      --nth: 2;
+    }
+    &:nth-child(3) {
+      --nth: 3;
+    }
+    &:nth-child(4) {
+      --nth: 4;
+    }
+    &:nth-child(5) {
+      --nth: 5;
+    }
+    &:nth-child(6) {
+      --nth: 6;
+    }
+    &:nth-child(7) {
+      --nth: 7;
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 100%;
+      transform: translateY(0px);
+    }
+  }
+</style>

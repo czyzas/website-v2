@@ -1,12 +1,18 @@
 ---
 import { Icon } from 'astro-icon/components';
+import type { HTMLAttributes } from 'astro/types';
 import { cn } from '@/scripts/cn';
+
+type Props = HTMLAttributes<'div'>;
+
+const { class: className } = Astro.props;
 ---
 
 <div
   class={cn(
     'swiper-navigation',
-    'flex bg-white divide-x border border-sw-border rounded-lg shadow-button-secondary text-black overflow-hidden'
+    'flex bg-white divide-x border border-sw-border rounded-lg shadow-button-secondary text-black overflow-hidden',
+    className
   )}
 >
   <button
@@ -14,7 +20,7 @@ import { cn } from '@/scripts/cn';
     class={cn(
       'swiper-navigation-prev',
       'flex items-center justify-center p-2.5 hover:bg-sw-surface-subdued',
-      'disabled:bg-sw-surface-background disabled:text-sw-text-disabled'
+      'disabled:bg-sw-surface-background disabled:text-sw-text-disabled transition-colors'
     )}
   >
     <Icon name="caret-left" />
@@ -24,7 +30,7 @@ import { cn } from '@/scripts/cn';
     class={cn(
       'swiper-navigation-next',
       'flex items-center justify-center p-2.5 hover:bg-sw-surface-subdued',
-      'disabled:bg-sw-surface-background disabled:text-sw-text-disabled'
+      'disabled:bg-sw-surface-background disabled:text-sw-text-disabled transition-colors'
     )}
   >
     <Icon name="caret-right" />

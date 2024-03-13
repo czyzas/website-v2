@@ -13,7 +13,7 @@ type ButtonProps = {
 
 const buttonVariants = cva(
   [
-    'button inline-flex items-center justify-center gap-x-1 rounded-lg text-base font-medium whitespace-nowrap px-3 py-2 border border-transparent',
+    'button inline-flex items-center justify-center gap-x-1 rounded-lg text-base font-medium whitespace-nowrap px-3 py-2 border border-transparent transition-colors',
   ],
   {
     variants: {
@@ -33,7 +33,7 @@ const buttonVariants = cva(
         ],
       },
     },
-  },
+  }
 );
 
 type AttributesLink = HTMLAttributes<'a'>;
