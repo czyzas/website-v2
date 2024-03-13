@@ -23,12 +23,12 @@ const avatar3Processed = await getImage({ src: avatar3, format: 'jpg' });
 
 <section class="hero py-8 md:pt-[6.4375rem]">
   <Container>
-    <Grid>
+    <Grid class="gap-y-8">
       <div
         class="col-span-12 md:col-span-4 flex flex-col items-start justify-center gap-4"
       >
         <h1
-          class="typography-h3 sm:typography-h1"
+          class="typography-h2 xs:typography-h1"
           set:html={acf.title ?? 'Sweep'}
         />
         <div class="typography-body" set:html={acf?.content ?? ''} />
