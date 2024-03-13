@@ -57,26 +57,20 @@ const { currentLanguage, languages } = getStore(languageStore);
     languages && (
       <ul
         aria-hidden="true"
-        class="list absolute visible shadow-language-switcher rounded-lg p-2 aria-hidden:invisible"
+        class="list absolute visible shadow-language-switcher rounded-lg p-2 transition-all duration-100 aria-hidden:-translate-y-1 aria-hidden:opacity-0 aria-hidden:invisible space-y-1"
         id={id}
       >
         {languages.map((lang) => (
-          <li class="mb-1 last:mb-0">
-            <button
-              type="button"
+          <li class="flex flex-col">
+            <a
+              href={buildPath('/', lang?.code)}
+              set:text={lang?.translated_name}
               aria-label={lang?.translated_name}
-              aria-pressed={
+              data-current={
                 lang?.code === currentLanguage.code ? 'true' : 'false'
               }
-              class="w-full rounded transition-colors aria-pressed:bg-sw-surface-subdued hover:bg-sw-surface-subdued"
-            >
-              <a
-                href={buildPath('/', lang?.code)}
-                target={'_self'}
-                set:text={lang?.translated_name}
-                class="block py-1 px-2.5 font-medium"
-              />
-            </button>
+              class="w-full text-center rounded transition-colors data-[current=true]:bg-sw-surface-subdued hover:bg-sw-surface-subdued py-1 px-2.5 font-medium"
+            />
           </li>
         ))}
       </ul>
