@@ -13,9 +13,6 @@ query Homepage($PAGE_ID: ID!, $LANGUAGE: String) {
         button {
           ...Link
         }
-        image {
-          ...Image
-        }
       }
       goals {
         sectionTitle {
