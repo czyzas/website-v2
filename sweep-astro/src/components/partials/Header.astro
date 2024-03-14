@@ -11,7 +11,7 @@ import Menu from './Menu.astro';
 const { currentLanguage } = getStore(languageStore);
 ---
 
-<header class="py-4">
+<header class="py-4 bg-white">
   <Container class="flex items-center justify-between">
     <div class="logo-container">
       <a href={buildPath('/', currentLanguage.code)}>
@@ -25,7 +25,9 @@ const { currentLanguage } = getStore(languageStore);
     <Menu />
     <div class="controls-container flex items-center gap-3.5">
       <LanguageSwitcher />
-      <a href="https://flyhigh.pro" class="font-medium py-1.5 px-2.5">Login</a>
+      <a href="https://flyhigh.pro" class="font-medium py-1.5 px-2.5 hidden">
+        Login
+      </a>
       <Button asLink href="https://flyhigh.pro" target="_blank">
         Book a demo
       </Button>
