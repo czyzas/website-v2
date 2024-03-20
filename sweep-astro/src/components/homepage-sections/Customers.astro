@@ -66,7 +66,7 @@ const customersList = acf?.customersList?.nodes ?? [];
 
   .swiper-wrapper,
   .swiper-slide {
-    @screen md {
+    @media screen(md) {
       @apply contents;
     }
   }
@@ -94,6 +94,7 @@ const customersList = acf?.customersList?.nodes ?? [];
                         width={logo.width}
                         height={logo.height}
                         class="max-h-12 object-contain"
+                        format={logo.isSvg ? 'svg' : undefined}
                       />
                     )}
                   </div>
@@ -112,6 +113,7 @@ const customersList = acf?.customersList?.nodes ?? [];
             href={button.url}
             target={button.target}
             trailingIcon="arrow-right"
+            class="w-full md:w-auto"
           >
             {button.title}
           </Button>

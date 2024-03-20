@@ -38,6 +38,7 @@ const button = parseLink(acf.button);
               width={image.width}
               height={image.height}
               class="mx-auto"
+              format={image.isSvg ? 'svg' : undefined}
             />
           )
         }
@@ -51,6 +52,7 @@ const button = parseLink(acf.button);
             trailingIcon="arrow-right"
             href={button.url}
             target={button.target}
+            class="w-full md:w-auto"
           >
             {button.title}
           </Button>

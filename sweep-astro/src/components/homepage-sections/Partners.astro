@@ -36,6 +36,7 @@ const partners = acf.partners?.nodes ?? [];
                   width={image.width}
                   height={image.height}
                   class="h-20 w-48 object-contain object-left"
+                  format={image.isSvg ? 'svg' : undefined}
                 />
               )}
               <div class="flex flex-col typography-card-title">
@@ -57,7 +58,12 @@ const partners = acf.partners?.nodes ?? [];
     {
       button.shouldRender && (
         <ButtonContainer class="mt-8 md:mt-15">
-          <Button asLink href={button.url} target={button.target}>
+          <Button
+            asLink
+            href={button.url}
+            target={button.target}
+            class="w-full md:w-auto"
+          >
             {button.title}
           </Button>
         </ButtonContainer>
