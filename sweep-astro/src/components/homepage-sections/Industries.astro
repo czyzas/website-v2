@@ -41,9 +41,9 @@ if (showSelected) {
             return (
               <a
                 href={industry.uri}
-                class="industry col-span-full sm:col-span-6 md:col-span-4 lg:col-span-3 group"
+                class="industry col-span-full xs:col-span-6 md:col-span-4 lg:col-span-3 group"
               >
-                <Card class="py-[2.1875rem] px-[1.375rem] flex flex-col gap-[0.8125rem] h-full transition-colors group-hover:bg-sw-sky-400 hover:border-transparent">
+                <Card class="py-[2.1875rem] px-[1.375rem] xs:max-md:p-4 flex flex-col gap-[0.8125rem] h-full transition-colors group-hover:bg-sw-sky-400 hover:border-transparent">
                   {icon.shouldRender && (
                     <Image
                       src={icon.url}
@@ -51,9 +51,10 @@ if (showSelected) {
                       width={icon.width}
                       height={icon.height}
                       class="transition-all group-hover:brightness-0 group-hover:invert"
+                      format={icon.isSvg ? 'svg' : undefined}
                     />
                   )}
-                  <span class="transition-colors typography-h4 group-hover:text-white">
+                  <span class="transition-colors typography-h4 xs:max-md:text-lg group-hover:text-white">
                     {industry.title}
                   </span>
                 </Card>

@@ -90,6 +90,7 @@ const resources = acf.resources?.nodes ?? [];
                         width={image.width}
                         height={image.height}
                         class="w-full h-full object-cover"
+                        format={image.isSvg ? 'svg' : undefined}
                       />
                     )}
                   </div>
@@ -109,7 +110,7 @@ const resources = acf.resources?.nodes ?? [];
     </div>
 
     <ButtonContainer class="mt-8 md:mt-15 flex-col sm:flex-row">
-      <SwiperNavigation />
+      <SwiperNavigation class="shrink-0" />
       {
         button.shouldRender && (
           <Button
@@ -117,6 +118,7 @@ const resources = acf.resources?.nodes ?? [];
             trailingIcon="arrow-right"
             href={button.url}
             target={button.target}
+            class="w-full md:w-auto"
           >
             {button.title}
           </Button>

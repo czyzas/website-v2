@@ -72,6 +72,7 @@ const cases = acf.caseStudies?.nodes ?? [];
                               width={customerLogo.width}
                               height={customerLogo.height}
                               class="max-h-full max-w-full object-contain"
+                              format={customerLogo.isSvg ? 'svg' : undefined}
                             />
                           </Card>
                         )}
@@ -96,6 +97,7 @@ const cases = acf.caseStudies?.nodes ?? [];
                         trailingIcon="arrow-right"
                         href={buildPath(caseStudy.uri)}
                         variant="secondary"
+                        class="w-full md:w-auto"
                       >
                         {acf.caseStudyButtonLabel}
                       </Button>
@@ -116,6 +118,7 @@ const cases = acf.caseStudies?.nodes ?? [];
                         width={image.width}
                         height={image.height}
                         class="object-cover w-full h-full"
+                        format={image.isSvg ? 'svg' : undefined}
                       />
                     )}
                   </div>
@@ -128,7 +131,12 @@ const cases = acf.caseStudies?.nodes ?? [];
     {
       button.shouldRender && (
         <ButtonContainer class="mt-8 md:mt-15">
-          <Button asLink href={button.url} target={button.target}>
+          <Button
+            asLink
+            href={button.url}
+            target={button.target}
+            class="w-full md:w-auto"
+          >
             {button.title}
           </Button>
         </ButtonContainer>

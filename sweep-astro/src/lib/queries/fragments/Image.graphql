@@ -3,6 +3,7 @@ fragment Image on AcfMediaItemConnectionEdge {
     altText
     sourceUrl
     sizes
+    mimeType
     mediaDetails {
       width
       height

@@ -1,31 +1,35 @@
+/** Duplicate ImageFragment and replace literal typenames with `string` */
 export type UnparsedImage =
   | {
       __typename?: string;
-      node: {
-        __typename?: string;
-        altText?: string | undefined;
-        sourceUrl?: string | undefined;
-        sizes?: string | undefined;
-        mediaDetails?:
-          | {
-              __typename?: string;
-              width?: number | undefined;
-              height?: number | undefined;
-              sizes?:
-                | Array<
-                    | {
-                        __typename?: string;
-                        width?: string | undefined;
-                        height?: string | undefined;
-                        name?: string | undefined;
-                        sourceUrl?: string | undefined;
-                      }
-                    | undefined
-                  >
-                | undefined;
-            }
-          | undefined;
-      };
+      node:
+        | {
+            __typename?: string;
+            altText?: string | undefined;
+            sourceUrl?: string | undefined;
+            sizes?: string | undefined;
+            mimeType?: string | undefined;
+            mediaDetails?:
+              | {
+                  __typename?: string;
+                  width?: number | undefined;
+                  height?: number | undefined;
+                  sizes?:
+                    | Array<
+                        | {
+                            __typename?: string;
+                            width?: string | undefined;
+                            height?: string | undefined;
+                            name?: string | undefined;
+                            sourceUrl?: string | undefined;
+                          }
+                        | undefined
+                      >
+                    | undefined;
+                }
+              | undefined;
+          }
+        | undefined;
     }
   | undefined;
 
@@ -36,17 +40,20 @@ export type ParsedImage = {
   width: number;
   height: number;
   sizes: string;
+  isSvg: boolean;
 };
 
 export const parseImage = (unparsed: UnparsedImage): ParsedImage => {
   // TODO: handle different image sizes
-  const imageSizes = unparsed?.node.mediaDetails?.sizes ?? [];
+  // const imageSizes = unparsed?.node.mediaDetails?.sizes ?? [];
+  const isSvg = unparsed?.node?.mimeType === 'image/svg+xml';
   return {
     shouldRender: !!unparsed?.node?.sourceUrl,
     url: unparsed?.node?.sourceUrl ?? '',
-    alt: unparsed?.node.altText ?? '',
-    width: unparsed?.node.mediaDetails?.width ?? 0,
-    height: unparsed?.node.mediaDetails?.height ?? 0,
-    sizes: unparsed?.node.sizes ?? '',
+    alt: unparsed?.node?.altText ?? '',
+    width: unparsed?.node?.mediaDetails?.width ?? 0,
+    height: unparsed?.node?.mediaDetails?.height ?? 0,
+    sizes: unparsed?.node?.sizes ?? '',
+    isSvg,
   };
 };

@@ -12,7 +12,7 @@ class FH_SVG
 		$this->file_id = $id;
 		$file_raw = get_attached_file( $this->file_id );
 
-		if ( !$file_raw || mime_content_type( $file_raw ) !== 'image/svg+xml' ) {
+		if ( !$file_raw || !file_exists( $file_raw ) || mime_content_type( $file_raw ) !== 'image/svg+xml' ) {
 			throw new Exception( 'The file was not found or has the wrong extension' );
 		}
 	}
@@ -55,12 +55,18 @@ add_action( 'admin_print_footer_scripts', function () {
 				const svgo_settings = {
 					multipass: true,
 					plugins: [
-						'preset-default',
+						{
+							name: 'preset-default',
+							params: {
+								overrides: {
+									removeDimensions: false,
+									removeViewBox: false,
+									cleanupIds: false,
+								},
+							},
+						},
 						'convertStyleToAttrs',
 						'removeScriptElement',
-						{ name: 'removeDimensions', active: false },
-						{ name: 'removeViewBox', active: false },
-						{ name: 'cleanupIds', active: false },
 					],
 				};
 
@@ -72,7 +78,7 @@ add_action( 'admin_print_footer_scripts', function () {
 					method: 'PUT',
 					headers: {
 						'Content-Type': 'application/json',
-						'X-WP-Nonce': nonce
+						'X-WP-Nonce': nonce,
 					},
 					body: JSON.stringify({
 						attachment_id: id,
@@ -81,13 +87,12 @@ add_action( 'admin_print_footer_scripts', function () {
 				});
 
 				const json = await response.json();
-				if (!response.ok || !json.data.success) {
+				if (!response.ok || !json.success) {
 					throw new Error(json.data?.error || `${response.status} ${response.statusText}`);
 				}
 
 				return true;
 			}
-
 
 			$(document).on('click', 'button[data-action="fh-optimize-svg"]', async function () {
 				const id = +this.dataset.id;
@@ -118,7 +123,10 @@ add_action( 'admin_print_footer_scripts', function () {
 				$.extend(wp.Uploader.prototype, {
 					success: async function (file_attachment) {
 						const { id } = file_attachment;
-						const { subtype, url } = file_attachment.attributes;
+						const {
+							subtype,
+							url,
+						} = file_attachment.attributes;
 						if (subtype === 'svg+xml') {
 							try {
 								const src = await fetch(url).then(res => res.text());
@@ -131,7 +139,7 @@ add_action( 'admin_print_footer_scripts', function () {
 							} catch (error) {
 								console.error('SVG can\'t be optimised', {
 									file_attachment,
-									error
+									error,
 								});
 							}
 						}
@@ -142,6 +150,27 @@ add_action( 'admin_print_footer_scripts', function () {
 	</script>
 	<?php
 }, 100 );
+
+add_action( 'graphql_register_types', function () {
+	try {
+		register_graphql_fields( 'MediaItem', [
+			'svgSourceCode' => [
+				'type'        => 'String',
+				'description' => 'Return svg source if image was optimized inside WP',
+				'resolve'     => function ( \WPGraphQL\Model\Post $page ) {
+					try {
+						$file = new FH_SVG( $page->databaseId );
+
+						return $file->get_source_code();
+					} catch ( Exception ) {
+						return null;
+					}
+				}
+			],
+		] );
+	} catch ( Exception ) {
+	}
+} );
 
 // Add hidden inputs and optimize button
 add_filter( 'attachment_fields_to_edit', function ( $form_fields, $post ) {
@@ -169,11 +198,10 @@ add_action( 'rest_api_init', function () {
 	register_rest_route( 'wp-bootstrap-gulp/v1', '/update-svg-postmeta', array(
 		'methods'             => 'PUT',
 		'permission_callback' => function ( WP_REST_Request $request ) {
-			return current_user_can( 'edit-post' );
+			return current_user_can( 'edit_posts' );
 		},
 		'callback'            => function ( WP_REST_Request $request ) {
 			$result = false;
-
 
 			try {
 				if ( empty( $request->get_param( 'source' ) ) ) {

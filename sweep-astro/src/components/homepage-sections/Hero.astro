@@ -27,7 +27,7 @@ const avatar3Processed = await getImage({ src: avatar3, format: 'jpg' });
   <Container>
     <Grid class="gap-y-8">
       <div
-        class="col-span-12 md:col-span-4 flex flex-col items-start justify-center gap-4"
+        class="col-span-full md:col-span-4 flex flex-col items-start justify-center gap-4"
       >
         <h1
           class="typography-h2 xs:typography-h1"
@@ -36,7 +36,12 @@ const avatar3Processed = await getImage({ src: avatar3, format: 'jpg' });
         <div class="typography-body" set:html={acf?.content ?? ''} />
         {
           button.shouldRender && (
-            <Button asLink href={button.url} target={button.target}>
+            <Button
+              asLink
+              href={button.url}
+              target={button.target}
+              class="w-full md:w-auto hidden md:inline-flex"
+            >
               {button.title}
             </Button>
           )
@@ -49,6 +54,18 @@ const avatar3Processed = await getImage({ src: avatar3, format: 'jpg' });
           .replace('@avatar2', avatar2Processed.src)
           .replace('@avatar3', avatar3Processed.src)}
       />
+      {
+        button.shouldRender && (
+          <Button
+            asLink
+            href={button.url}
+            target={button.target}
+            class="col-span-full inline-flex md:hidden w-full"
+          >
+            {button.title}
+          </Button>
+        )
+      }
     </Grid>
   </Container>
 </section>
