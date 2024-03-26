@@ -1,0 +1,11 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/scripts/cn';
+
+type Props = HTMLAttributes<'ul'>;
+const { class: className, ...props } = Astro.props;
+---
+
+<ul role="tablist" {...props} class={cn('tab-list', className)}>
+  <slot />
+</ul>

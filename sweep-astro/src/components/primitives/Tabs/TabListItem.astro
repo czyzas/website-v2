@@ -1,0 +1,32 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/scripts/cn';
+
+type Props = {
+  id: string;
+  isActive?: boolean;
+  liClassName?: string;
+} & HTMLAttributes<'button'>;
+
+const {
+  id,
+  class: className,
+  liClassName = '',
+  isActive = false,
+} = Astro.props;
+---
+
+<li role="presentation" class={liClassName}>
+  <button
+    type="button"
+    class={cn('tab-list-item', { active: isActive }, className)}
+    id={`${id}-tab-list-item`}
+    role="tab"
+    data-bs-toggle="tab"
+    data-bs-target={`#${id}`}
+    aria-controls={id}
+    aria-selected={isActive ? 'true' : 'false'}
+  >
+    <slot />
+  </button>
+</li>

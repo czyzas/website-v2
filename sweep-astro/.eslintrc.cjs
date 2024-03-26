@@ -12,7 +12,7 @@ module.exports = {
     'prettier',
   ],
   parser: '@typescript-eslint/parser',
-  ignorePatterns: ['**/generated/*'],
+  ignorePatterns: ['**/__generated__/*'],
   globals: {
     astroHTML: true,
   },

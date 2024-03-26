@@ -1,0 +1,78 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/scripts/cn';
+
+type Props = HTMLAttributes<'div'>;
+
+const { class: className, ...props } = Astro.props;
+---
+
+<div {...props} class={cn('tabs', className)}>
+  <slot />
+</div>
+
+<script>
+  import { Tab } from 'bootstrap';
+
+  const triggerTabListItem = document.querySelectorAll('button.tab-list-item');
+
+  triggerTabListItem.forEach((triggerEl) => {
+    const tabTrigger = new Tab(triggerEl);
+
+    triggerEl.addEventListener('click', (event) => {
+      event.preventDefault();
+      tabTrigger.show();
+    });
+
+    triggerEl.addEventListener('show.bs.tab', () => {
+      const list = triggerEl.closest('.tab-list');
+      if (!list) return;
+
+      const rect = triggerEl.getBoundingClientRect();
+      const listRect = list.getBoundingClientRect();
+      const { scrollLeft } = list;
+
+      if (
+        rect.left + rect.width > listRect.width + listRect.left ||
+        rect.left < listRect.left
+      ) {
+        const right = rect.left + rect.width - (listRect.width + listRect.left);
+        const left = listRect.left - rect.left;
+        // const targetLeft = rect.left + scrollLeft - listRect.left;
+
+        let offset = 0;
+        const padding = 25;
+        if (left > 0) offset = -(left + padding);
+        else if (right > 0) offset = right + padding;
+
+        list.scroll({
+          left: /* targetLeft */ scrollLeft + offset,
+        });
+      }
+    });
+  });
+</script>
+
+<style>
+  :global(.tab-content > .tab-pane) {
+    @apply hidden;
+  }
+  :global(.tab-content > .active) {
+    @apply block;
+  }
+
+  :global(.fade) {
+    transition: 150ms linear;
+    transition-property: opacity, transform;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.fade) {
+      @apply transition-none;
+    }
+  }
+
+  :global(.fade:not(.show)) {
+    opacity: 0;
+  }
+</style>

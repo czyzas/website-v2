@@ -1,16 +1,17 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
+import PrimitiveTabList from '@/components/primitives/Tabs/TabList.astro';
 import { cn } from '@/scripts/cn';
+import type { WithAttributes } from '@/types';
 
-export type Props = HTMLAttributes<'ul'>;
+type Props = WithAttributes<HTMLAttributes<'ul'>>;
 
-const { class: className, ...rest } = Astro.props;
+const { class: className, ...props } = Astro.props;
 ---
 
-<ul
-  class={cn('tab-list custom-scrollbar', 'flex gap-2 overflow-auto', className)}
-  role="tablist"
-  {...rest}
+<PrimitiveTabList
+  {...props}
+  class={cn('custom-scrollbar flex gap-2 overflow-auto', className)}
 >
   <slot />
-</ul>
+</PrimitiveTabList>

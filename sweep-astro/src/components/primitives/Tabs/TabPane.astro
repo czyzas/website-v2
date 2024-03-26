@@ -1,0 +1,20 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/scripts/cn';
+
+type Props = {
+  id: string;
+  isActive?: boolean;
+} & HTMLAttributes<'div'>;
+
+const { id, class: className, isActive = false } = Astro.props;
+---
+
+<div
+  id={id}
+  role="tabpanel"
+  aria-labelledby={`${id}-tab-list-item`}
+  class={cn(['tab-pane fade', { show: isActive, active: isActive }, className])}
+>
+  <slot />
+</div>
