@@ -1,14 +1,17 @@
 ---
+import { Image } from 'astro:assets';
 import { cmsStore } from '@/stores/cmsStore';
 import { getStore } from '@/scripts/store';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
 import { parseImage } from '@/scripts/data-parsers/parseImage';
 import { parseLink } from '@/scripts/data-parsers/parseLink';
+import { cn } from '@/scripts/cn';
 import Container from '../ui/Container.astro';
 import Grid from '../ui/Grid.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
 import Prose from '../ui/Prose.astro';
-import CardWithImage from '../CardWithImage.astro';
+import Card from '../ui/Card.astro';
+import Button from '../ui/Button.astro';
 
 const store = getStore(cmsStore);
 const data = store.homepage!;
@@ -23,19 +26,64 @@ const cards = acf.cards ?? [];
 
     <Grid>
       {
-        cards.map((card) => (
-          <div class="col-span-full md:col-span-6 lg:col-span-4 flex items-stretch">
-            <CardWithImage
-              image={parseImage(card?.image)}
-              imageBackgroundColor={card?.imageBackgroundColor}
-              title={card?.title ?? ''}
-              button={parseLink(card?.button)}
-              class="w-full"
-            >
-              <Prose set:html={card?.content} />
-            </CardWithImage>
-          </div>
-        ))
+        cards.map((card) => {
+          const image = parseImage(card?.image);
+          const imageBackgroundColor =
+            card?.imageBackgroundColor ?? 'transparent';
+          const title = card?.title ?? '';
+          const button = parseLink(card?.button);
+
+          return (
+            <div class="col-span-full md:col-span-6 lg:col-span-4 flex items-stretch">
+              <Card
+                class={cn(
+                  'card-with-image p-0 flex flex-col overflow-hidden w-full'
+                )}
+              >
+                <div
+                  style={{
+                    '--bg-color': imageBackgroundColor,
+                  }}
+                  class="image-container bg-[--bg-color] p-8"
+                >
+                  {
+                    // TODO: fix widths
+                    image.shouldRender && (
+                      <Image
+                        src={image.url}
+                        alt={image.alt}
+                        width={image.width}
+                        height={image.height}
+                        widths={[400]}
+                        class="mx-auto w-full max-w-[25rem]"
+                        format={image.isSvg ? 'svg' : undefined}
+                      />
+                    )
+                  }
+                </div>
+                <div class="content-container p-6 flex-1 flex flex-col gap-3">
+                  <h3 class="typography-h4" set:html={title} />
+
+                  <Prose set:html={card?.content} />
+
+                  {button.shouldRender && (
+                    <div class="mt-auto">
+                      <Button
+                        asLink
+                        trailingIcon="arrow-right"
+                        href={button.url}
+                        target={button.target}
+                        class="w-full md:w-auto"
+                      >
+                        {button.title}
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              </Card>
+            </div>
+          );
+        })
       }
     </Grid>
   </Container>
