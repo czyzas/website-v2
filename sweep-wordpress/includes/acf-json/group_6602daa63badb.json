@@ -1,0 +1,66 @@
+{
+    "key": "group_6602daa63badb",
+    "title": "Reusable fields",
+    "fields": [
+        {
+            "key": "field_6602daa862d57",
+            "label": "Select background color",
+            "name": "select_background_color",
+            "aria-label": "",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 1,
+            "choices": {
+                "white": "<span class=\"color-box\" style=\"--box-color: #FFFFFF;\"><\/span> White",
+                "surface-subdued": "<span class=\"color-box\" style=\"--box-color: #F9F9F9;\"><\/span> Surface subdued",
+                "surface-background": "<span class=\"color-box\" style=\"--box-color: #F2F2F2;\"><\/span> Surface background"
+            },
+            "default_value": "",
+            "return_format": "value",
+            "allow_null": 0,
+            "other_choice": 0,
+            "layout": "vertical",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "selectBackgroundColor",
+            "graphql_non_null": 0,
+            "save_other_choice": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "widget",
+                "operator": "==",
+                "value": "rss"
+            },
+            {
+                "param": "widget",
+                "operator": "!=",
+                "value": "rss"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "acfml_field_group_mode": "translation",
+    "show_in_graphql": 1,
+    "graphql_field_name": "reusableF",
+    "map_graphql_types_from_location_rules": 0,
+    "graphql_types": "",
+    "modified": 1711463650
+}
