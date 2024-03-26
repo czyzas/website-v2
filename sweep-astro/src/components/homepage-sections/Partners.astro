@@ -1,16 +1,15 @@
 ---
-import { Image } from 'astro:assets';
 import { cmsStore } from '@/stores/cmsStore';
 import { getStore } from '@/scripts/store';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
 import { parseLink } from '@/scripts/data-parsers/parseLink';
-import { parseImage } from '@/scripts/data-parsers/parseImage';
 import Container from '../ui/Container.astro';
 import Button from '../ui/Button.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
 import Grid from '../ui/Grid.astro';
 import Card from '../ui/Card.astro';
 import ButtonContainer from '../ButtonContainer.astro';
+import WordpressImage from '../ui/WordpressImage.astro';
 
 const store = getStore(cmsStore);
 const data = store.homepage!;
@@ -26,19 +25,12 @@ const partners = acf.partners?.nodes ?? [];
       {
         partners.map((partner) => {
           if (partner.__typename !== 'Partner') return null;
-          const image = parseImage(partner.partnerAcf?.logo);
           return (
             <Card class="col-span-full sm:col-span-6 md:col-span-4 gap-8 flex flex-col items-start">
-              {image.shouldRender && (
-                <Image
-                  src={image.url}
-                  alt={image.alt}
-                  width={image.width}
-                  height={image.height}
-                  class="h-20 w-48 object-contain object-left"
-                  format={image.isSvg ? 'svg' : undefined}
-                />
-              )}
+              <WordpressImage
+                data={partner?.partnerAcf?.logo}
+                class="h-20 w-48 object-contain object-left"
+              />
               <div class="flex flex-col typography-card-title">
                 <span>{partner.title}</span>
                 <span

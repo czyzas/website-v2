@@ -1,10 +1,8 @@
 ---
-import { Image } from 'astro:assets';
 import { cmsStore } from '@/stores/cmsStore';
 import { getStore } from '@/scripts/store';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
 import { parseLink } from '@/scripts/data-parsers/parseLink';
-import { parseImage } from '@/scripts/data-parsers/parseImage';
 import { buildPath } from '@/scripts/buildPath';
 import Container from '../ui/Container.astro';
 import Button from '../ui/Button.astro';
@@ -12,6 +10,7 @@ import SectionTitle from '../partials/SectionTitle.astro';
 import SwiperNavigation from '../SwiperNavigation.astro';
 import Prose from '../ui/Prose.astro';
 import ButtonContainer from '../ButtonContainer.astro';
+import WordpressImage from '../ui/WordpressImage.astro';
 
 const store = getStore(cmsStore);
 const data = store.homepage!;
@@ -74,7 +73,6 @@ const resources = acf.resources?.nodes ?? [];
         {
           resources.map((resource) => {
             if (resource.__typename !== 'LibraryItem') return null;
-            const image = parseImage(resource.subpageSettings?.image);
 
             return (
               <div class="swiper-slide">
@@ -83,16 +81,10 @@ const resources = acf.resources?.nodes ?? [];
                   class="h-full border border-sw-border rounded-lg overflow-hidden shadow-button-secondary"
                 >
                   <div class="image-container aspect-[16/9] sm:aspect-[28/19]">
-                    {image.shouldRender && (
-                      <Image
-                        src={image.url}
-                        alt={image.alt}
-                        width={image.width}
-                        height={image.height}
-                        class="w-full h-full object-cover"
-                        format={image.isSvg ? 'svg' : undefined}
-                      />
-                    )}
+                    <WordpressImage
+                      data={resource.subpageSettings?.image}
+                      class="w-full h-full object-cover"
+                    />
                   </div>
                   <div class="content-container p-6 flex flex-col gap-4">
                     <h3

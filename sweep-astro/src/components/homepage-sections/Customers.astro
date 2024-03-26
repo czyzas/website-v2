@@ -1,14 +1,13 @@
 ---
-import { Image } from 'astro:assets';
 import { cmsStore } from '@/stores/cmsStore';
 import { getStore } from '@/scripts/store';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
-import { parseImage } from '@/scripts/data-parsers/parseImage';
 import { parseLink } from '@/scripts/data-parsers/parseLink';
 import Container from '../ui/Container.astro';
 import Button from '../ui/Button.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
 import ButtonContainer from '../ButtonContainer.astro';
+import WordpressImage from '../ui/WordpressImage.astro';
 
 interface Props {
   type: 1 | 2;
@@ -82,21 +81,13 @@ const customersList = acf?.customersList?.nodes ?? [];
             {customersList.map((customer) => {
               if (customer.__typename !== 'Customer') return null;
 
-              const logo = parseImage(customer.customerAcf?.logo);
-
               return (
                 <div class="swiper-slide">
                   <div class="customer p-3 flex items-center justify-center md:flex-1 md:basis-40">
-                    {logo.shouldRender && (
-                      <Image
-                        src={logo.url}
-                        alt={logo.alt}
-                        width={logo.width}
-                        height={logo.height}
-                        class="max-h-12 object-contain"
-                        format={logo.isSvg ? 'svg' : undefined}
-                      />
-                    )}
+                    <WordpressImage
+                      data={customer.customerAcf?.logo}
+                      class="max-h-12 object-contain"
+                    />
                   </div>
                 </div>
               );

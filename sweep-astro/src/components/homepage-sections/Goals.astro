@@ -1,11 +1,9 @@
 ---
-import { Image } from 'astro:assets';
 import { kebabCase } from 'lodash-es';
 import { cmsStore } from '@/stores/cmsStore';
 import { getStore } from '@/scripts/store';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
 import { parseLink } from '@/scripts/data-parsers/parseLink';
-import { parseImage } from '@/scripts/data-parsers/parseImage';
 import Tabs from '../ui/Tabs/Tabs.astro';
 import TabList from '../ui/Tabs/TabList.astro';
 import TabListItem from '../ui/Tabs/TabListItem.astro';
@@ -16,6 +14,7 @@ import SectionTitle from '../partials/SectionTitle.astro';
 import Grid from '../ui/Grid.astro';
 import Prose from '../ui/Prose.astro';
 import Card from '../ui/Card.astro';
+import WordpressImage from '../ui/WordpressImage.astro';
 
 const store = getStore(cmsStore);
 const data = store.homepage!;
@@ -43,7 +42,6 @@ const tabs = acf.tabs ?? [];
         {
           tabs.map((tab, index) => {
             const button = parseLink(tab?.button);
-            const image = parseImage(tab?.image);
 
             return (
               <TabPane
@@ -70,16 +68,10 @@ const tabs = acf.tabs ?? [];
                     )}
                   </Card>
                   <div class="image-column col-start-2 col-end-12 md:col-start-4 lg:col-start-5 md:col-end-13 md:row-span-full hidden md:block">
-                    {image.shouldRender && (
-                      <Image
-                        src={image.url}
-                        alt={image.alt}
-                        width={image.width}
-                        height={image.height}
-                        class="w-full h-full object-cover rounded-lg"
-                        format={image.isSvg ? 'svg' : undefined}
-                      />
-                    )}
+                    <WordpressImage
+                      data={tab?.image}
+                      class="w-full h-full object-cover rounded-lg"
+                    />
                   </div>
                 </Grid>
               </TabPane>

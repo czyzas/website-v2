@@ -1,10 +1,8 @@
 ---
-import { Image } from 'astro:assets';
 import { cmsStore } from '@/stores/cmsStore';
 import { getStore } from '@/scripts/store';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
-import { parseImage } from '@/scripts/data-parsers/parseImage';
-import type { ParsedImage } from '@/scripts/data-parsers/parseImage';
+import { imageShouldRender } from '@/scripts/data-parsers/parseImage';
 import { parseLink } from '@/scripts/data-parsers/parseLink';
 import { cn } from '@/scripts/cn';
 import { buildPath } from '@/scripts/buildPath';
@@ -14,6 +12,7 @@ import Grid from '../ui/Grid.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
 import Card from '../ui/Card.astro';
 import ButtonContainer from '../ButtonContainer.astro';
+import WordpressImage from '../ui/WordpressImage.astro';
 
 const store = getStore(cmsStore);
 const data = store.homepage!;
@@ -31,13 +30,13 @@ const cases = acf.caseStudies?.nodes ?? [];
           cases.map((caseStudy, index) => {
             if (caseStudy.__typename !== 'CaseStudy') return null;
             const isFeatured = index === 0;
-            const image = parseImage(caseStudy.subpageSettings?.image);
-            let customer = caseStudy.caseStudyAcf?.relatedCustomer?.nodes[0];
-            if (customer?.__typename !== 'Customer') customer = undefined;
-            let customerLogo: ParsedImage | undefined;
-            if (customer) {
-              customerLogo = parseImage(customer.customerAcf?.logo);
-            }
+            const customerMaybe =
+              caseStudy.caseStudyAcf?.relatedCustomer?.nodes[0];
+            const customer =
+              customerMaybe?.__typename === 'Customer'
+                ? customerMaybe
+                : undefined;
+            const customerLogo = customer?.customerAcf?.logo;
 
             return (
               <div
@@ -64,15 +63,11 @@ const cases = acf.caseStudies?.nodes ?? [];
                   >
                     {!!customer && (
                       <Fragment>
-                        {customerLogo?.shouldRender && (
+                        {imageShouldRender(customerLogo) && (
                           <Card class="customer-logo p-3 w-36 h-20 max-w-full flex items-center justify-center mb-8">
-                            <Image
-                              src={customerLogo.url}
-                              alt={customerLogo.alt}
-                              width={customerLogo.width}
-                              height={customerLogo.height}
+                            <WordpressImage
+                              data={customerLogo}
                               class="max-h-full max-w-full object-contain"
-                              format={customerLogo.isSvg ? 'svg' : undefined}
                             />
                           </Card>
                         )}
@@ -111,16 +106,10 @@ const cases = acf.caseStudies?.nodes ?? [];
                       }
                     )}
                   >
-                    {image.shouldRender && (
-                      <Image
-                        src={image.url}
-                        alt={image.alt}
-                        width={image.width}
-                        height={image.height}
-                        class="object-cover w-full h-full"
-                        format={image.isSvg ? 'svg' : undefined}
-                      />
-                    )}
+                    <WordpressImage
+                      data={caseStudy.subpageSettings?.image}
+                      class="object-cover w-full h-full"
+                    />
                   </div>
                 </Card>
               </div>

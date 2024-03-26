@@ -1,0 +1,53 @@
+---
+import { Image } from 'astro:assets';
+import type { HTMLAttributes } from 'astro/types';
+import type { ImageFragment } from '@/__generated__/cms';
+import type { ReplaceTypenameLiteral, WithAttributes } from '@/types';
+import { parseImage } from '@/scripts/data-parsers/parseImage';
+import { IMAGE_WIDTHS } from '@/constants';
+import { cn } from '@/scripts/cn';
+
+type WordpressImageProps = {
+  data?: ReplaceTypenameLiteral<ImageFragment>;
+  preferredWidth?: number;
+  src?: never;
+  alt?: never;
+  width?: never;
+  height?: never;
+};
+
+type Props = WithAttributes<HTMLAttributes<'img'> & WordpressImageProps>;
+
+const { data, preferredWidth, class: className, ...props } = Astro.props;
+
+const { shouldRender, url, alt, width, height, isSvg } = parseImage(data);
+
+let sizes;
+let widths;
+
+if (!isSvg) {
+  const maxWidth = preferredWidth ? Math.min(preferredWidth, width) : width;
+  const availableWidths = IMAGE_WIDTHS.filter((w) => w <= maxWidth);
+  const sizesArray = availableWidths.map((w) => `(max-width: ${w}px) ${w}px`);
+  sizesArray.push(`${maxWidth}px`);
+  sizes = sizesArray.join(', ');
+  widths = availableWidths;
+  widths.push(maxWidth);
+}
+---
+
+{
+  shouldRender ? (
+    <Image
+      src={url}
+      alt={alt}
+      width={width}
+      height={height}
+      widths={widths}
+      sizes={sizes}
+      format={isSvg ? 'svg' : undefined}
+      {...props}
+      class={cn('wp-image', className)}
+    />
+  ) : null
+}

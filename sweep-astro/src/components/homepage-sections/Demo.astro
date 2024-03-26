@@ -1,19 +1,17 @@
 ---
-import { Image } from 'astro:assets';
 import { cmsStore } from '@/stores/cmsStore';
 import { getStore } from '@/scripts/store';
 import { parseLink } from '@/scripts/data-parsers/parseLink';
-import { parseImage } from '@/scripts/data-parsers/parseImage';
 import Container from '../ui/Container.astro';
 import Button from '../ui/Button.astro';
 import Grid from '../ui/Grid.astro';
+import WordpressImage from '../ui/WordpressImage.astro';
 
 const store = getStore(cmsStore);
 const data = store.homepage!;
 const acf = data.homepage!.demo!;
 
 const button = parseLink(acf.button);
-const image = parseImage(acf.image);
 ---
 
 <section class="demo py-12 md:py-20 bg-sw-surface-subdued">
@@ -44,17 +42,7 @@ const image = parseImage(acf.image);
       <div
         class="col-span-full lg:col-span-6 flex items-center justify-center order-2 lg:order-none"
       >
-        {
-          image.shouldRender && (
-            <Image
-              src={image.url}
-              alt={image.alt}
-              width={image.width}
-              height={image.height}
-              format={image.isSvg ? 'svg' : undefined}
-            />
-          )
-        }
+        <WordpressImage data={acf.image} />
       </div>
     </Grid>
   </Container>
