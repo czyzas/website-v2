@@ -1,0 +1,38 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/scripts/cn';
+import type { ReplaceTypenameLiteral, WithAttributes } from '@/types';
+import type { LinkFragment } from '@/__generated__/cms';
+import { parseLink } from '@/scripts/data-parsers/parseLink';
+import Button from './ui/Button.astro';
+
+interface WordpressButtonLinkProps {
+  data?: ReplaceTypenameLiteral<LinkFragment>;
+  hasArrow?: boolean;
+  href?: never;
+  target?: never;
+}
+
+type Props = WithAttributes<
+  HTMLAttributes<'a'> & HTMLAttributes<'button'> & WordpressButtonLinkProps
+>;
+
+const { data, hasArrow = false, class: className, ...props } = Astro.props;
+
+const { shouldRender, title, url, target } = parseLink(data);
+---
+
+{
+  shouldRender ? (
+    <Button
+      asLink
+      href={url}
+      target={target}
+      trailingIcon={hasArrow ? 'arrow-right' : undefined}
+      {...props}
+      class={cn('wp-btn-link', className)}
+    >
+      <slot>{title}</slot>
+    </Button>
+  ) : null
+}

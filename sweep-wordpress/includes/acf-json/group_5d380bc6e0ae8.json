@@ -149,7 +149,14 @@
                             "type": "text",
                             "instructions": "Text that appears above the title",
                             "required": 0,
-                            "conditional_logic": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_5d380dd5a8655",
+                                        "operator": "!=empty"
+                                    }
+                                ]
+                            ],
                             "wrapper": {
                                 "width": "",
                                 "class": "",
@@ -486,8 +493,8 @@
                             "layout": "block",
                             "min": 0,
                             "max": 0,
-                            "collapsed": "",
-                            "button_label": "Add Row",
+                            "collapsed": "field_6603f6abdc5e1",
+                            "button_label": "Add tab",
                             "show_in_graphql": 1,
                             "graphql_description": "",
                             "graphql_field_name": "tabs",
@@ -495,22 +502,14 @@
                             "rows_per_page": 20,
                             "sub_fields": [
                                 {
-                                    "key": "field_6602e4c4b5d58",
+                                    "key": "field_6603f6abdc5e1",
                                     "label": "Tab title",
                                     "name": "tab_title",
                                     "aria-label": "",
-                                    "type": "text",
+                                    "type": "textarea",
                                     "instructions": "",
                                     "required": 0,
-                                    "conditional_logic": [
-                                        [
-                                            {
-                                                "field": "field_6602e686682d4",
-                                                "operator": "!=",
-                                                "value": "logos"
-                                            }
-                                        ]
-                                    ],
+                                    "conditional_logic": 0,
                                     "wrapper": {
                                         "width": "",
                                         "class": "",
@@ -519,51 +518,13 @@
                                     "wpml_cf_preferences": 2,
                                     "default_value": "",
                                     "maxlength": "",
+                                    "rows": 2,
                                     "placeholder": "",
-                                    "prepend": "",
-                                    "append": "",
+                                    "new_lines": "br",
                                     "show_in_graphql": 1,
                                     "graphql_description": "",
                                     "graphql_field_name": "tabTitle",
                                     "graphql_non_null": 0,
-                                    "parent_repeater": "field_6602e3d4b5d53"
-                                },
-                                {
-                                    "key": "field_6602e490b5d57",
-                                    "label": "Tab logo",
-                                    "name": "tab_logo",
-                                    "aria-label": "",
-                                    "type": "image",
-                                    "instructions": "",
-                                    "required": 0,
-                                    "conditional_logic": [
-                                        [
-                                            {
-                                                "field": "field_6602e686682d4",
-                                                "operator": "==",
-                                                "value": "logos"
-                                            }
-                                        ]
-                                    ],
-                                    "wrapper": {
-                                        "width": "",
-                                        "class": "",
-                                        "id": ""
-                                    },
-                                    "wpml_cf_preferences": 1,
-                                    "return_format": "array",
-                                    "library": "all",
-                                    "min_width": "",
-                                    "min_height": "",
-                                    "min_size": "",
-                                    "max_width": "",
-                                    "max_height": "",
-                                    "max_size": "",
-                                    "mime_types": "",
-                                    "preview_size": "mobile-xs",
-                                    "show_in_graphql": 1,
-                                    "graphql_description": "",
-                                    "graphql_field_name": "tabLogo",
                                     "parent_repeater": "field_6602e3d4b5d53"
                                 },
                                 {
@@ -627,7 +588,7 @@
                                     "label": "Title",
                                     "name": "title",
                                     "aria-label": "",
-                                    "type": "text",
+                                    "type": "textarea",
                                     "instructions": "",
                                     "required": 0,
                                     "conditional_logic": 0,
@@ -639,9 +600,9 @@
                                     "wpml_cf_preferences": 2,
                                     "default_value": "",
                                     "maxlength": "",
+                                    "rows": 2,
                                     "placeholder": "",
-                                    "prepend": "",
-                                    "append": "",
+                                    "new_lines": "br",
                                     "show_in_graphql": 1,
                                     "graphql_description": "",
                                     "graphql_field_name": "title",
@@ -671,6 +632,28 @@
                                     "show_in_graphql": 1,
                                     "graphql_description": "",
                                     "graphql_field_name": "content",
+                                    "graphql_non_null": 0,
+                                    "parent_repeater": "field_6602e3d4b5d53"
+                                },
+                                {
+                                    "key": "field_6603f9f1c6f98",
+                                    "label": "CTA Button",
+                                    "name": "cta_button",
+                                    "aria-label": "",
+                                    "type": "link",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "graphql_field_name": "ctaButton",
+                                    "wpml_cf_preferences": 1,
+                                    "return_format": "array",
+                                    "show_in_graphql": 1,
+                                    "graphql_description": "",
                                     "graphql_non_null": 0,
                                     "parent_repeater": "field_6602e3d4b5d53"
                                 },
@@ -711,7 +694,7 @@
                             "label": "CTA Button",
                             "name": "cta_button",
                             "aria-label": "",
-                            "type": "clone",
+                            "type": "link",
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": 0,
@@ -721,14 +704,11 @@
                                 "id": ""
                             },
                             "graphql_field_name": "ctaButton",
-                            "wpml_cf_preferences": 0,
-                            "clone": [
-                                "field_6603ecca6adb8"
-                            ],
-                            "display": "group",
-                            "layout": "block",
-                            "prefix_label": 0,
-                            "prefix_name": 0
+                            "wpml_cf_preferences": 1,
+                            "return_format": "array",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_non_null": 0
                         }
                     ],
                     "min": "",
@@ -784,7 +764,7 @@
                                 "3": "3",
                                 "4": "4"
                             },
-                            "default_value": "",
+                            "default_value": 4,
                             "return_format": "value",
                             "allow_null": 0,
                             "layout": "horizontal",
@@ -830,7 +810,7 @@
                             "label": "CTA Button",
                             "name": "cta_button",
                             "aria-label": "",
-                            "type": "clone",
+                            "type": "link",
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": 0,
@@ -841,13 +821,10 @@
                             },
                             "graphql_field_name": "ctaButton",
                             "wpml_cf_preferences": 1,
-                            "clone": [
-                                "field_6603ecca6adb8"
-                            ],
-                            "display": "group",
-                            "layout": "block",
-                            "prefix_label": 0,
-                            "prefix_name": 0
+                            "return_format": "array",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_non_null": 0
                         }
                     ],
                     "min": "",
@@ -923,7 +900,7 @@
                                         "id": ""
                                     },
                                     "wpml_cf_preferences": 1,
-                                    "default_value": "",
+                                    "default_value": "#FFFFFF",
                                     "enable_opacity": 0,
                                     "return_format": "string",
                                     "show_in_graphql": 1,
@@ -1041,6 +1018,208 @@
                     ],
                     "min": "",
                     "max": ""
+                },
+                "layout_66040cee02b2c": {
+                    "key": "layout_66040cee02b2c",
+                    "name": "case-studies",
+                    "label": "Case Studies",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_66040cee02b2e",
+                            "label": "Background color",
+                            "name": "background_color",
+                            "aria-label": "",
+                            "type": "clone",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "clone": [
+                                "field_6602daa862d57"
+                            ],
+                            "display": "group",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 0
+                        },
+                        {
+                            "key": "field_66040e4202b36",
+                            "label": "Case studies",
+                            "name": "case_studies",
+                            "aria-label": "",
+                            "type": "relationship",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "post_type": [
+                                "case-study"
+                            ],
+                            "post_status": "",
+                            "taxonomy": "",
+                            "filters": [
+                                "search",
+                                "post_type",
+                                "taxonomy"
+                            ],
+                            "return_format": "id",
+                            "min": "",
+                            "max": "",
+                            "elements": "",
+                            "bidirectional": 0,
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "caseStudies",
+                            "graphql_connection_type": "one_to_many",
+                            "bidirectional_target": []
+                        },
+                        {
+                            "key": "field_660410856192c",
+                            "label": "Single case study link label",
+                            "name": "case_study_button_label",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 2,
+                            "default_value": "View Case Study",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "singleCaseStudyLinkLabel",
+                            "graphql_non_null": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
+                "layout_6603f448f8b17": {
+                    "key": "layout_6603f448f8b17",
+                    "name": "demo",
+                    "label": "Demo",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_6603f448f8b19",
+                            "label": "Background color",
+                            "name": "background_color",
+                            "aria-label": "",
+                            "type": "clone",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "clone": [
+                                "field_6602daa862d57"
+                            ],
+                            "display": "group",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 0
+                        },
+                        {
+                            "key": "field_6603f44ff8b20",
+                            "label": "Title",
+                            "name": "title",
+                            "aria-label": "",
+                            "type": "textarea",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 2,
+                            "default_value": "",
+                            "maxlength": "",
+                            "rows": 4,
+                            "placeholder": "",
+                            "new_lines": "br",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "title",
+                            "graphql_non_null": 0
+                        },
+                        {
+                            "key": "field_6603f461f8b21",
+                            "label": "Button",
+                            "name": "button",
+                            "aria-label": "",
+                            "type": "link",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "return_format": "array",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "button",
+                            "graphql_non_null": 0
+                        },
+                        {
+                            "key": "field_6603f468f8b22",
+                            "label": "Image",
+                            "name": "image",
+                            "aria-label": "",
+                            "type": "image",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "return_format": "array",
+                            "library": "all",
+                            "min_width": "",
+                            "min_height": "",
+                            "min_size": "",
+                            "max_width": "",
+                            "max_height": "",
+                            "max_size": "",
+                            "mime_types": "",
+                            "preview_size": "medium",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "image"
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
                 }
             },
             "min": "",
@@ -1084,5 +1263,5 @@
     "graphql_field_name": "modules",
     "map_graphql_types_from_location_rules": 1,
     "graphql_types": "",
-    "modified": 1711534267
+    "modified": 1711543280
 }

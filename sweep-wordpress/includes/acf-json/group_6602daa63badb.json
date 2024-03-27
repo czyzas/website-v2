@@ -47,7 +47,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 0,
+            "wpml_cf_preferences": 1,
             "layout": "block",
             "show_in_graphql": 1,
             "graphql_description": "",
@@ -68,7 +68,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 0,
+                    "wpml_cf_preferences": 1,
                     "choices": {
                         "primary": "Primary",
                         "secondary": "Secondary"
@@ -96,7 +96,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 0,
+                    "wpml_cf_preferences": 1,
                     "message": "",
                     "default_value": 0,
                     "ui_on_text": "",
@@ -121,7 +121,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 0,
+                    "wpml_cf_preferences": 1,
                     "return_format": "array",
                     "show_in_graphql": 1,
                     "graphql_description": "",
@@ -159,5 +159,5 @@
     "graphql_field_name": "reusableF",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1711533364
+    "modified": 1711535486
 }
