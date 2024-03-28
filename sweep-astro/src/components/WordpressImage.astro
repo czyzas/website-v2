@@ -1,14 +1,14 @@
 ---
 import { Image } from 'astro:assets';
 import type { HTMLAttributes } from 'astro/types';
-import type { ImageFragment } from '@/__generated__/cms';
-import type { ReplaceTypenameLiteral, WithAttributes } from '@/types';
+import type { WithAttributes } from '@/types';
 import { parseImage } from '@/scripts/data-parsers/parseImage';
+import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
 import { IMAGE_WIDTHS } from '@/constants';
 import { cn } from '@/scripts/cn';
 
 type WordpressImageProps = {
-  data?: ReplaceTypenameLiteral<ImageFragment>;
+  data?: UnparsedImage;
   preferredWidth?: number;
   src?: never;
   alt?: never;

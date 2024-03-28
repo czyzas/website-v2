@@ -37,6 +37,7 @@ export default {
       },
       spacing: {
         15: '3.75rem',
+        25: '6.25rem',
       },
       screens: {
         xs: '376px',
