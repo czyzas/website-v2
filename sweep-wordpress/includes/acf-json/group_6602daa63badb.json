@@ -156,8 +156,16 @@
     "show_in_rest": 0,
     "acfml_field_group_mode": "translation",
     "show_in_graphql": 1,
-    "graphql_field_name": "reusableF",
-    "map_graphql_types_from_location_rules": 0,
-    "graphql_types": "",
-    "modified": 1711535486
+    "graphql_field_name": "reusableFields",
+    "map_graphql_types_from_location_rules": 1,
+    "graphql_types": [
+        "CaseStudy",
+        "Customer",
+        "Industry",
+        "LibraryItem",
+        "Page",
+        "Partner",
+        "Post"
+    ],
+    "modified": 1711626505
 }

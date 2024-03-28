@@ -2,7 +2,9 @@ fragment ModulesCollection on Modules {
   modulesContent {
     __typename
     ... on ModulesModulesContentSectionTitleLayout {
-      selectBackgroundColor
+      backgroundColor {
+        selectBackgroundColor
+      }
       content
       customStyle
       displayAs
@@ -10,7 +12,9 @@ fragment ModulesCollection on Modules {
       type
     }
     ... on ModulesModulesContentContentColumnsLayout {
-      selectBackgroundColor
+      backgroundColor {
+        selectBackgroundColor
+      }
       layout
       columnContent: content {
         first
@@ -19,7 +23,9 @@ fragment ModulesCollection on Modules {
       }
     }
     ... on ModulesModulesContentTabsLayout {
-      selectBackgroundColor
+      backgroundColor {
+        selectBackgroundColor
+      }
       tabsLook
       ctaButton {
         ...Link
@@ -41,7 +47,9 @@ fragment ModulesCollection on Modules {
       }
     }
     ... on ModulesModulesContentLogosLayout {
-      selectBackgroundColor
+      backgroundColor {
+        selectBackgroundColor
+      }
       columns
       logos {
         edges {
@@ -53,7 +61,9 @@ fragment ModulesCollection on Modules {
       }
     }
     ... on ModulesModulesContentSegmentsLayout {
-      selectBackgroundColor
+      backgroundColor {
+        selectBackgroundColor
+      }
       cards {
         title
         imageBackgroundColor
@@ -67,16 +77,18 @@ fragment ModulesCollection on Modules {
       }
     }
     ... on ModulesModulesContentCaseStudiesLayout {
-      selectBackgroundColor
+      backgroundColor {
+        selectBackgroundColor
+      }
       singleCaseStudyLinkLabel
-      caseStudies(first: 10000) {
+      caseStudies(first: 100) {
         nodes {
           __typename
           ... on CaseStudy {
             title
             uri
             caseStudyAcf {
-              relatedCustomer(first: 10000) {
+              relatedCustomer(first: 100) {
                 nodes {
                   __typename
                   ... on Customer {
@@ -101,7 +113,9 @@ fragment ModulesCollection on Modules {
       }
     }
     ... on ModulesModulesContentDemoLayout {
-      selectBackgroundColor
+      backgroundColor {
+        selectBackgroundColor
+      }
       title
       image {
         ...Image

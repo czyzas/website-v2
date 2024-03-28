@@ -49,6 +49,18 @@ add_filter( 'acf/settings/load_json', function ( $paths ) {
 add_action( 'acf/input/admin_head', function () {
 	?>
 	<style>
+		.acf-fields > .acf-field.invisible-group {
+			padding: 0;
+		}
+
+		.acf-fields > .acf-field.invisible-group > .acf-label {
+			display: none;
+		}
+
+		.acf-fields > .acf-field.invisible-group > .acf-input > .acf-fields.-border {
+			border: none;
+		}
+
 		.color-box {
 			display: inline-block;
 			border: 1px solid #BDBDBD;

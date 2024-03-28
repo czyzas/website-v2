@@ -25,28 +25,51 @@
                     "display": "block",
                     "sub_fields": [
                         {
-                            "key": "field_6602dca8c02d7",
+                            "key": "field_660559bdd1385",
                             "label": "Background color",
                             "name": "background_color",
                             "aria-label": "",
-                            "type": "clone",
+                            "type": "group",
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
                                 "width": "",
-                                "class": "",
+                                "class": "invisible-group",
                                 "id": ""
                             },
-                            "graphql_field_name": "backgroundColor",
                             "wpml_cf_preferences": 1,
-                            "clone": [
-                                "field_6602daa862d57"
-                            ],
-                            "display": "group",
                             "layout": "block",
-                            "prefix_label": 0,
-                            "prefix_name": 0
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "backgroundColor",
+                            "graphql_non_null": 0,
+                            "sub_fields": [
+                                {
+                                    "key": "field_6602dca8c02d7",
+                                    "label": "Background color",
+                                    "name": "background_color",
+                                    "aria-label": "",
+                                    "type": "clone",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "graphql_field_name": "backgroundColor",
+                                    "wpml_cf_preferences": 1,
+                                    "clone": [
+                                        "field_6602daa862d57"
+                                    ],
+                                    "display": "seamless",
+                                    "layout": "block",
+                                    "prefix_label": 0,
+                                    "prefix_name": 0
+                                }
+                            ]
                         },
                         {
                             "key": "field_5d380dada3aa7",
@@ -58,7 +81,7 @@
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
-                                "width": "25",
+                                "width": "33",
                                 "class": "",
                                 "id": ""
                             },
@@ -88,7 +111,7 @@
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
-                                "width": "25",
+                                "width": "33",
                                 "class": "",
                                 "id": ""
                             },
@@ -121,7 +144,7 @@
                                 ]
                             ],
                             "wrapper": {
-                                "width": "25",
+                                "width": "33",
                                 "class": "",
                                 "id": ""
                             },
@@ -234,6 +257,52 @@
                     "display": "block",
                     "sub_fields": [
                         {
+                            "key": "field_66055ab5438ad",
+                            "label": "Background color",
+                            "name": "background_color",
+                            "aria-label": "",
+                            "type": "group",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "invisible-group",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "layout": "block",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "backgroundColor",
+                            "graphql_non_null": 0,
+                            "sub_fields": [
+                                {
+                                    "key": "field_66055ab5438af",
+                                    "label": "Background color",
+                                    "name": "background_color",
+                                    "aria-label": "",
+                                    "type": "clone",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 1,
+                                    "clone": [
+                                        "field_6602daa862d57"
+                                    ],
+                                    "display": "seamless",
+                                    "layout": "",
+                                    "prefix_label": 0,
+                                    "prefix_name": 0
+                                }
+                            ]
+                        },
+                        {
                             "key": "field_5d380ee15685e",
                             "label": "How many column?",
                             "name": "layout",
@@ -263,30 +332,6 @@
                             "graphql_non_null": 0
                         },
                         {
-                            "key": "field_6602e0cdb5d4a",
-                            "label": "Background color",
-                            "name": "background_color",
-                            "aria-label": "",
-                            "type": "clone",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "graphql_field_name": "backgroundColor",
-                            "wpml_cf_preferences": 1,
-                            "clone": [
-                                "field_6602daa862d57"
-                            ],
-                            "display": "group",
-                            "layout": "",
-                            "prefix_label": 0,
-                            "prefix_name": 0
-                        },
-                        {
                             "key": "field_5d380f32e2e77",
                             "label": "Zawartość",
                             "name": "content",
@@ -301,6 +346,7 @@
                                 "id": ""
                             },
                             "layout": "table",
+                            "wpml_cf_preferences": 1,
                             "sub_fields": [
                                 {
                                     "key": "field_5d380f43e2e78",
@@ -410,8 +456,7 @@
                                     "delay": 0,
                                     "wpml_cf_preferences": 2
                                 }
-                            ],
-                            "wpml_cf_preferences": 1
+                            ]
                         }
                     ],
                     "min": "",
@@ -424,28 +469,50 @@
                     "display": "block",
                     "sub_fields": [
                         {
-                            "key": "field_6602e0f3b5d4d",
+                            "key": "field_66055acf438b0",
                             "label": "Background color",
                             "name": "background_color",
                             "aria-label": "",
-                            "type": "clone",
+                            "type": "group",
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
                                 "width": "",
-                                "class": "",
+                                "class": "invisible-group",
                                 "id": ""
                             },
-                            "graphql_field_name": "backgroundColor",
                             "wpml_cf_preferences": 1,
-                            "clone": [
-                                "field_6602daa862d57"
-                            ],
-                            "display": "group",
                             "layout": "block",
-                            "prefix_label": 0,
-                            "prefix_name": 0
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "backgroundColor",
+                            "graphql_non_null": 0,
+                            "sub_fields": [
+                                {
+                                    "key": "field_66055acf438b2",
+                                    "label": "Background color",
+                                    "name": "background_color",
+                                    "aria-label": "",
+                                    "type": "clone",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 1,
+                                    "clone": [
+                                        "field_6602daa862d57"
+                                    ],
+                                    "display": "seamless",
+                                    "layout": "block",
+                                    "prefix_label": 0,
+                                    "prefix_name": 0
+                                }
+                            ]
                         },
                         {
                             "key": "field_6602e686682d4",
@@ -721,27 +788,50 @@
                     "display": "block",
                     "sub_fields": [
                         {
-                            "key": "field_6603e4150175a",
+                            "key": "field_66055b49b3691",
                             "label": "Background color",
                             "name": "background_color",
                             "aria-label": "",
-                            "type": "clone",
+                            "type": "group",
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
                                 "width": "",
-                                "class": "",
+                                "class": "invisible-group",
                                 "id": ""
                             },
                             "wpml_cf_preferences": 1,
-                            "clone": [
-                                "field_6602daa862d57"
-                            ],
-                            "display": "group",
                             "layout": "block",
-                            "prefix_label": 0,
-                            "prefix_name": 0
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "backgroundColor",
+                            "graphql_non_null": 0,
+                            "sub_fields": [
+                                {
+                                    "key": "field_66055b49b3693",
+                                    "label": "Background color",
+                                    "name": "background_color",
+                                    "aria-label": "",
+                                    "type": "clone",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 1,
+                                    "clone": [
+                                        "field_6602daa862d57"
+                                    ],
+                                    "display": "seamless",
+                                    "layout": "",
+                                    "prefix_label": 0,
+                                    "prefix_name": 0
+                                }
+                            ]
                         },
                         {
                             "key": "field_6603e4150175b",
@@ -837,27 +927,50 @@
                     "display": "block",
                     "sub_fields": [
                         {
-                            "key": "field_6603e5dc9075f",
+                            "key": "field_66055b59b3694",
                             "label": "Background color",
                             "name": "background_color",
                             "aria-label": "",
-                            "type": "clone",
+                            "type": "group",
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
                                 "width": "",
-                                "class": "",
+                                "class": "invisible-group",
                                 "id": ""
                             },
                             "wpml_cf_preferences": 1,
-                            "clone": [
-                                "field_6602daa862d57"
-                            ],
-                            "display": "group",
                             "layout": "block",
-                            "prefix_label": 0,
-                            "prefix_name": 0
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "backgroundColor",
+                            "graphql_non_null": 0,
+                            "sub_fields": [
+                                {
+                                    "key": "field_66055b59b3696",
+                                    "label": "Background color",
+                                    "name": "background_color",
+                                    "aria-label": "",
+                                    "type": "clone",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 1,
+                                    "clone": [
+                                        "field_6602daa862d57"
+                                    ],
+                                    "display": "seamless",
+                                    "layout": "",
+                                    "prefix_label": 0,
+                                    "prefix_name": 0
+                                }
+                            ]
                         },
                         {
                             "key": "field_6603e6ba90762",
@@ -1026,27 +1139,50 @@
                     "display": "block",
                     "sub_fields": [
                         {
-                            "key": "field_66040cee02b2e",
+                            "key": "field_66055b67b3697",
                             "label": "Background color",
                             "name": "background_color",
                             "aria-label": "",
-                            "type": "clone",
+                            "type": "group",
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
                                 "width": "",
-                                "class": "",
+                                "class": "invisible-group",
                                 "id": ""
                             },
                             "wpml_cf_preferences": 1,
-                            "clone": [
-                                "field_6602daa862d57"
-                            ],
-                            "display": "group",
                             "layout": "block",
-                            "prefix_label": 0,
-                            "prefix_name": 0
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "backgroundColor",
+                            "graphql_non_null": 0,
+                            "sub_fields": [
+                                {
+                                    "key": "field_66055b67b3699",
+                                    "label": "Background color",
+                                    "name": "background_color",
+                                    "aria-label": "",
+                                    "type": "clone",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 1,
+                                    "clone": [
+                                        "field_6602daa862d57"
+                                    ],
+                                    "display": "seamless",
+                                    "layout": "",
+                                    "prefix_label": 0,
+                                    "prefix_name": 0
+                                }
+                            ]
                         },
                         {
                             "key": "field_66040e4202b36",
@@ -1120,27 +1256,50 @@
                     "display": "block",
                     "sub_fields": [
                         {
-                            "key": "field_6603f448f8b19",
+                            "key": "field_66055b76b369a",
                             "label": "Background color",
                             "name": "background_color",
                             "aria-label": "",
-                            "type": "clone",
+                            "type": "group",
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
                                 "width": "",
-                                "class": "",
+                                "class": "invisible-group",
                                 "id": ""
                             },
                             "wpml_cf_preferences": 1,
-                            "clone": [
-                                "field_6602daa862d57"
-                            ],
-                            "display": "group",
                             "layout": "block",
-                            "prefix_label": 0,
-                            "prefix_name": 0
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "backgroundColor",
+                            "graphql_non_null": 0,
+                            "sub_fields": [
+                                {
+                                    "key": "field_66055b76b369c",
+                                    "label": "Background color",
+                                    "name": "background_color",
+                                    "aria-label": "",
+                                    "type": "clone",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 1,
+                                    "clone": [
+                                        "field_6602daa862d57"
+                                    ],
+                                    "display": "seamless",
+                                    "layout": "block",
+                                    "prefix_label": 0,
+                                    "prefix_name": 0
+                                }
+                            ]
                         },
                         {
                             "key": "field_6603f44ff8b20",
@@ -1266,5 +1425,5 @@
         "Page",
         "Post"
     ],
-    "modified": 1711617780
+    "modified": 1711627685
 }
