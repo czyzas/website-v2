@@ -14,7 +14,6 @@ export const parseImage = (unparsed: UnparsedImage) => {
     alt: unparsed?.node?.altText ?? '',
     width: unparsed?.node?.mediaDetails?.width ?? DEFAULT_SIZE,
     height: unparsed?.node?.mediaDetails?.height ?? DEFAULT_SIZE,
-    sizes: unparsed?.node?.sizes ?? '',
     isSvg: unparsed?.node?.mimeType === 'image/svg+xml',
   };
 };

@@ -2,17 +2,10 @@ fragment Image on AcfMediaItemConnectionEdge {
   node {
     altText
     sourceUrl
-    sizes
     mimeType
     mediaDetails {
       width
       height
-      sizes(exclude: [THUMBNAIL]) {
-        width
-        height
-        name
-        sourceUrl
-      }
     }
   }
 }
