@@ -20,8 +20,9 @@ add_action( 'graphql_register_types', function () {
 			],
 		] );
 
-		$group = acf_get_field_group( 1918 );
-		$group_fields = acf_get_fields( 1918 );
+		$MODULES_GROUP_ID = 1918;
+		$group = acf_get_field_group( $MODULES_GROUP_ID );
+		$group_fields = acf_get_fields( $MODULES_GROUP_ID );
 		$modules_content_field = $group_fields[0];
 		$layouts = $modules_content_field['layouts'];
 		foreach ( $layouts as $layout ) {
