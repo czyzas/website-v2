@@ -1,6 +1,12 @@
 query DefaultPage($SLUG: String, $LANG: String) {
   pages(first: 1, where: { name: $SLUG, language: $LANG }) {
     nodes {
+      title
+      slug
+      uri
+      language {
+        ...Languages
+      }
       subpageSettings {
         customTitle
         introduction

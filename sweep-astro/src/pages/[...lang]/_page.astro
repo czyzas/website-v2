@@ -1,18 +1,34 @@
 ---
+import ModulesIncluder from '@/components/ModulesIncluder.astro';
+import Top from '@/components/partials/Top.astro';
 import type { Locales } from '@/i18n/config';
 import { fixLangParams } from '@/i18n/utils';
 import Layout from '@/layouts/Layout.astro';
 import { fetchDefaultPage } from '@/lib/fetchCMSData';
+import { updateStore } from '@/scripts/store';
+import { cmsStore } from '@/stores/cmsStore';
+import { languageStore } from '@/stores/languageStore';
 
-const { lang = 'en', page = '' } = fixLangParams(Astro.params, 'page');
-
+const { lang = 'en' } = fixLangParams(Astro.params, 'page');
 const { slug = '' } = Astro.props;
-const data = (await fetchDefaultPage(slug, lang as Locales)) ?? {};
+
+const data = await fetchDefaultPage(slug, lang as Locales);
+const page = data.pages!.nodes[0]!;
+
+updateStore(cmsStore, 'defaultPage', page);
+updateStore(languageStore, 'currentLanguage', page.language!);
+updateStore(languageStore, 'languages', data.languages);
+updateStore(cmsStore, 'primaryMenu', data.primaryMenu!);
+updateStore(cmsStore, 'themeOptions', data.themeOptions!);
+
+const { subpageSettings } = page;
+const pageTitle = page?.title ?? '';
+const title = subpageSettings?.customTitle || pageTitle || '';
+const content = subpageSettings?.introduction ?? '';
+const image = subpageSettings?.image;
 ---
 
-<Layout>
-  <h1>Dynamic page on root level</h1>
-  <p>Title: {data.title}</p>
-  <p>Lang: {lang}</p>
-  <p>URL: {`/${page}`}</p>
+<Layout name="default" pageTitle={pageTitle}>
+  <Top title={title} content={content} image={image} class="py-25" />
+  <ModulesIncluder data={page?.modules} />
 </Layout>

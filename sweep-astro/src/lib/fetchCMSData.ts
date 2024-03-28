@@ -73,5 +73,5 @@ export function fetchDefaultPage(slug: string, lang: Locales = defaultLocale) {
       LANG: lang,
     },
     [lang, CACHE_KEYS.PAGE, slug]
-  ).then((data) => data.pages?.nodes?.[0]);
+  );
 }

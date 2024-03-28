@@ -2,6 +2,7 @@ fragment ModulesCollection on Modules {
   modulesContent {
     __typename
     ... on ModulesModulesContentSectionTitleLayout {
+      layoutName
       backgroundColor {
         selectBackgroundColor
       }
@@ -11,18 +12,8 @@ fragment ModulesCollection on Modules {
       overline
       type
     }
-    ... on ModulesModulesContentContentColumnsLayout {
-      backgroundColor {
-        selectBackgroundColor
-      }
-      layout
-      columnContent: content {
-        first
-        second
-        third
-      }
-    }
     ... on ModulesModulesContentTabsLayout {
+      layoutName
       backgroundColor {
         selectBackgroundColor
       }
@@ -47,6 +38,7 @@ fragment ModulesCollection on Modules {
       }
     }
     ... on ModulesModulesContentLogosLayout {
+      layoutName
       backgroundColor {
         selectBackgroundColor
       }
@@ -61,6 +53,7 @@ fragment ModulesCollection on Modules {
       }
     }
     ... on ModulesModulesContentSegmentsLayout {
+      layoutName
       backgroundColor {
         selectBackgroundColor
       }
@@ -77,6 +70,7 @@ fragment ModulesCollection on Modules {
       }
     }
     ... on ModulesModulesContentCaseStudiesLayout {
+      layoutName
       backgroundColor {
         selectBackgroundColor
       }
@@ -113,6 +107,7 @@ fragment ModulesCollection on Modules {
       }
     }
     ... on ModulesModulesContentDemoLayout {
+      layoutName
       backgroundColor {
         selectBackgroundColor
       }

@@ -1,0 +1,34 @@
+---
+import path from 'node:path';
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
+import type { ModulesCollectionFragment } from '@/__generated__/cms';
+
+type Props = {
+  data?: ModulesCollectionFragment;
+};
+const modulesComponents = await Astro.glob('../modules/*.astro');
+const { data } = Astro.props;
+const modulesContent = data?.modulesContent;
+
+const components: Record<string, AstroComponentFactory> = {};
+for (const component of modulesComponents) {
+  const componentBaseName = path.parse(component.file).name;
+
+  components[componentBaseName] = component.default;
+}
+---
+
+{
+  !!modulesContent && (
+    <div class="modules">
+      {modulesContent.map((module) => {
+        const layoutName = module?.layoutName ?? '';
+        if (!layoutName) return null;
+
+        const Component = components?.[layoutName];
+        if (!Component) return null;
+        return <Component {...module} />;
+      })}
+    </div>
+  )
+}
