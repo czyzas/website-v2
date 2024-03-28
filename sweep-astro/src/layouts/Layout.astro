@@ -4,9 +4,19 @@ import '@/assets/fonts/font.css';
 import 'swiper/swiper-bundle.css';
 import Footer from '@/components/partials/Footer.astro';
 import Header from '@/components/partials/Header.astro';
+import { cn } from '@/scripts/cn';
 
-const title = 'Sweep';
-const description = 'Astro description';
+type Props = {
+  home?: boolean;
+  name: string;
+  pageTitle: string;
+};
+const { home, name, pageTitle } = Astro.props;
+
+const siteTitle = 'Sweep';
+
+const title = !home && pageTitle ? `${pageTitle} - ${siteTitle}` : siteTitle;
+const description = 'Sweep description';
 ---
 
 <!doctype html>
@@ -24,9 +34,11 @@ const description = 'Astro description';
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body class="">
+  <body>
     <Header />
-    <slot />
+    <main class={cn({ subpage: !home }, name)}>
+      <slot />
+    </main>
     <Footer />
   </body>
 </html>
