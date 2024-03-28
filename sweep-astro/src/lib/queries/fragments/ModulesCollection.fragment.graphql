@@ -1,0 +1,114 @@
+fragment ModulesCollection on Modules {
+  modulesContent {
+    __typename
+    ... on ModulesModulesContentSectionTitleLayout {
+      selectBackgroundColor
+      content
+      customStyle
+      displayAs
+      overline
+      type
+    }
+    ... on ModulesModulesContentContentColumnsLayout {
+      selectBackgroundColor
+      layout
+      columnContent: content {
+        first
+        second
+        third
+      }
+    }
+    ... on ModulesModulesContentTabsLayout {
+      selectBackgroundColor
+      tabsLook
+      ctaButton {
+        ...Link
+      }
+      tabs {
+        content
+        ctaButton {
+          ...Link
+        }
+        image {
+          ...Image
+        }
+        overline
+        overlineIcon {
+          ...Image
+        }
+        tabTitle
+        title
+      }
+    }
+    ... on ModulesModulesContentLogosLayout {
+      selectBackgroundColor
+      columns
+      logos {
+        edges {
+          ...Image
+        }
+      }
+      ctaButton {
+        ...Link
+      }
+    }
+    ... on ModulesModulesContentSegmentsLayout {
+      selectBackgroundColor
+      cards {
+        title
+        imageBackgroundColor
+        image {
+          ...Image
+        }
+        content
+        button {
+          ...Link
+        }
+      }
+    }
+    ... on ModulesModulesContentCaseStudiesLayout {
+      selectBackgroundColor
+      singleCaseStudyLinkLabel
+      caseStudies(first: 10000) {
+        nodes {
+          __typename
+          ... on CaseStudy {
+            title
+            uri
+            caseStudyAcf {
+              relatedCustomer(first: 10000) {
+                nodes {
+                  __typename
+                  ... on Customer {
+                    title
+                    customerAcf {
+                      category
+                      logo {
+                        ...Image
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            subpageSettings {
+              image {
+                ...Image
+              }
+            }
+          }
+        }
+      }
+    }
+    ... on ModulesModulesContentDemoLayout {
+      selectBackgroundColor
+      title
+      image {
+        ...Image
+      }
+      button {
+        ...Link
+      }
+    }
+  }
+}

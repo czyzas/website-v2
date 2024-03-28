@@ -1262,6 +1262,9 @@
     "show_in_graphql": 1,
     "graphql_field_name": "modules",
     "map_graphql_types_from_location_rules": 1,
-    "graphql_types": "",
-    "modified": 1711543280
+    "graphql_types": [
+        "Page",
+        "Post"
+    ],
+    "modified": 1711617780
 }
