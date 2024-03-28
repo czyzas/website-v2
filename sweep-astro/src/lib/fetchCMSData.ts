@@ -59,6 +59,7 @@ export function fetchHomepage(lang: Locales) {
 }
 
 export function fetchDefaultPagesStaticPaths() {
+  // TODO: handle more than 100 pages
   return fetchData(DefaultPagesStaticPathsDocument).then(
     (data) => data.pages?.nodes ?? []
   );

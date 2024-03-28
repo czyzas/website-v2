@@ -1,8 +1,28 @@
 query DefaultPage($SLUG: String, $LANG: String) {
-  pages(where: { name: $SLUG, language: $LANG }, first: 1) {
+  pages(first: 1, where: { name: $SLUG, language: $LANG }) {
     nodes {
-      title
-      languageCode
+      subpageSettings {
+        customTitle
+        introduction
+        image {
+          ...Image
+        }
+      }
+      modules {
+        ...ModulesCollection
+      }
     }
+  }
+  defaultLanguage {
+    ...Languages
+  }
+  languages {
+    ...Languages
+  }
+  primaryMenu: menu(idType: LOCATION, id: "primary-menu") {
+    ...Menu
+  }
+  themeOptions {
+    ...ThemeOptions
   }
 }
