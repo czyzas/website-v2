@@ -151,27 +151,6 @@ add_action( 'admin_print_footer_scripts', function () {
 	<?php
 }, 100 );
 
-add_action( 'graphql_register_types', function () {
-	try {
-		register_graphql_fields( 'MediaItem', [
-			'svgSourceCode' => [
-				'type'        => 'String',
-				'description' => 'Return svg source if image was optimized inside WP',
-				'resolve'     => function ( \WPGraphQL\Model\Post $page ) {
-					try {
-						$file = new FH_SVG( $page->databaseId );
-
-						return $file->get_source_code();
-					} catch ( Exception ) {
-						return null;
-					}
-				}
-			],
-		] );
-	} catch ( Exception ) {
-	}
-} );
-
 // Add hidden inputs and optimize button
 add_filter( 'attachment_fields_to_edit', function ( $form_fields, $post ) {
 
