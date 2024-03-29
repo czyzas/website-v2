@@ -10,8 +10,10 @@ export type ParsedLink = {
   target?: string;
 };
 
+export const linkShouldRender = (unparsed: UnparsedLink) => !!unparsed?.url;
+
 export const parseLink = (unparsed: UnparsedLink): ParsedLink => ({
-  shouldRender: !!unparsed?.url,
+  shouldRender: linkShouldRender(unparsed),
   url: unparsed?.url ?? '',
   title: unparsed?.title ?? '',
   target: unparsed?.target,

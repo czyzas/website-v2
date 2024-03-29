@@ -8,7 +8,7 @@ import Button from './ui/Button.astro';
 
 interface WordpressButtonLinkProps {
   data?: ReplaceTypenameLiteral<LinkFragment>;
-  hasArrow?: boolean;
+  arrow?: boolean;
   href?: never;
   target?: never;
 }
@@ -17,7 +17,7 @@ type Props = WithAttributes<
   HTMLAttributes<'a'> & HTMLAttributes<'button'> & WordpressButtonLinkProps
 >;
 
-const { data, hasArrow = false, class: className, ...props } = Astro.props;
+const { data, arrow = false, class: className, ...props } = Astro.props;
 
 const { shouldRender, title, url, target } = parseLink(data);
 ---
@@ -28,7 +28,7 @@ const { shouldRender, title, url, target } = parseLink(data);
       asLink
       href={url}
       target={target}
-      trailingIcon={hasArrow ? 'arrow-right' : undefined}
+      trailingIcon={arrow ? 'arrow-right' : undefined}
       {...props}
       class={cn('wp-btn-link', className)}
     >
