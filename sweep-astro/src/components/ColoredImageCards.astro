@@ -55,11 +55,7 @@ const { cards } = Astro.props;
 
                 {linkShouldRender(card?.button) && (
                   <div class="mt-auto">
-                    <WordpressButtonLink
-                      data={card?.button}
-                      arrow
-                      class="w-full md:w-auto"
-                    />
+                    <WordpressButtonLink data={card?.button} arrow />
                   </div>
                 )}
               </div>

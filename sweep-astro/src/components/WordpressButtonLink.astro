@@ -30,7 +30,7 @@ const { shouldRender, title, url, target } = parseLink(data);
       target={target}
       trailingIcon={arrow ? 'arrow-right' : undefined}
       {...props}
-      class={cn('wp-btn-link', className)}
+      class={cn('wp-btn-link', 'w-full md:w-auto', className)}
     >
       <slot>{title}</slot>
     </Button>

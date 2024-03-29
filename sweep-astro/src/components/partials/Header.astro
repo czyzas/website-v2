@@ -14,7 +14,10 @@ const { currentLanguage } = getStore(languageStore);
 <header class="py-4 bg-white">
   <Container class="flex items-center justify-between">
     <div class="logo-container">
-      <a href={buildI18nPath('/', currentLanguage.code)}>
+      <a
+        href={buildI18nPath('/', currentLanguage.code)}
+        aria-label="Go to homepage"
+      >
         <Icon
           name="logo"
           aria-label="Sweep logo"
