@@ -2,7 +2,7 @@
 import { Icon } from 'astro-icon/components';
 import { getStore } from '@/scripts/store';
 import { languageStore } from '@/stores/languageStore';
-import { buildPath } from '@/scripts/buildPath';
+import { buildI18nPath } from '@/scripts/buildI18nPath';
 
 const id = `dropdown-${crypto.randomUUID().substring(16)}`;
 const { currentLanguage, languages } = getStore(languageStore);
@@ -63,7 +63,7 @@ const { currentLanguage, languages } = getStore(languageStore);
         {languages.map((lang) => (
           <li class="flex flex-col">
             <a
-              href={buildPath('/', lang?.code)}
+              href={buildI18nPath('/', lang?.code)}
               set:text={lang?.translated_name}
               aria-label={lang?.translated_name}
               data-current={

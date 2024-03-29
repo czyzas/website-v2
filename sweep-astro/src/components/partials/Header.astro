@@ -1,7 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components';
 import { getStore } from '@/scripts/store';
-import { buildPath } from '@/scripts/buildPath';
+import { buildI18nPath } from '@/scripts/buildI18nPath';
 import { languageStore } from '@/stores/languageStore';
 import Container from '../ui/Container.astro';
 import LanguageSwitcher from '../LanguageSwitcher.astro';
@@ -14,7 +14,7 @@ const { currentLanguage } = getStore(languageStore);
 <header class="py-4 bg-white">
   <Container class="flex items-center justify-between">
     <div class="logo-container">
-      <a href={buildPath('/', currentLanguage.code)}>
+      <a href={buildI18nPath('/', currentLanguage.code)}>
         <Icon
           name="logo"
           aria-label="Sweep logo"

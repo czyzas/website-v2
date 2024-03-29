@@ -3,7 +3,7 @@ import { cmsStore } from '@/stores/cmsStore';
 import { getStore } from '@/scripts/store';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
 import { parseLink } from '@/scripts/data-parsers/parseLink';
-import { buildPath } from '@/scripts/buildPath';
+import { buildI18nPath } from '@/scripts/buildI18nPath';
 import Container from '../ui/Container.astro';
 import Button from '../ui/Button.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
@@ -80,7 +80,7 @@ const resources = acf.resources?.nodes ?? [];
             return (
               <div class="swiper-slide">
                 <a
-                  href={buildPath(resource.uri)}
+                  href={buildI18nPath(resource.uri)}
                   class="h-full border border-sw-border rounded-lg overflow-hidden shadow-button-secondary"
                 >
                   <div class="image-container aspect-[16/9] sm:aspect-[28/19]">
