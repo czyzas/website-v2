@@ -1,3 +1,38 @@
-<section>
+---
+import type { HTMLAttributes } from 'astro/types';
+import type { ModulesModulesContentBackgroundColor } from '@/__generated__/cms';
+import { cn } from '@/scripts/cn';
+import { parseBgColor } from '@/scripts/data-parsers/parseBgColor';
+
+interface Props extends HTMLAttributes<'section'> {
+  name: string;
+  bg?: ModulesModulesContentBackgroundColor;
+}
+
+const { name, bg, class: className, ...props } = Astro.props;
+---
+
+<style>
+  section.module {
+    @apply py-12;
+    @media screen(md) {
+      @apply py-20;
+    }
+  }
+
+  section.module.section-title {
+    @apply pb-0;
+
+    & + section.module {
+      @apply pt-12;
+    }
+  }
+</style>
+
+<section
+  {...props}
+  data-bg={bg?.selectBackgroundColor ?? 'white'}
+  class={cn('module', name, parseBgColor(bg), className)}
+>
   <slot />
 </section>

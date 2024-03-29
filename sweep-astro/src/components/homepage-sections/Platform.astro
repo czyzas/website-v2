@@ -20,7 +20,10 @@ const button = parseLink(acf.button);
 
 <section class="platform bg-sw-surface-subdued py-12 md:py-20">
   <Container>
-    <SectionTitle {...parseSectionTitle(acf.sectionTitle)} />
+    <SectionTitle
+      withMargin
+      {...parseSectionTitle(acf.sectionTitle?.selectSectionTitle)}
+    />
     <Grid>
       <Card class="col-span-full md:col-span-6 lg:col-start-1 lg:col-end-5">
         <Prose set:html={acf.content} />

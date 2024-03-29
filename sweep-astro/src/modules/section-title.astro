@@ -1,5 +1,25 @@
 ---
+import type { ModulesModulesContentSectionTitleLayout } from '@/__generated__/cms';
 import ModuleContainer from '@/components/ModuleContainer.astro';
+import UISectionTitle from '@/components/partials/SectionTitle.astro';
+import Container from '@/components/ui/Container.astro';
+import {
+  parseSectionTitle,
+  sectionTitleShouldRender,
+} from '@/scripts/data-parsers/parseSectionTitle';
+
+type Props = ModulesModulesContentSectionTitleLayout;
+
+const { layoutName, backgroundColor, sectionTitle } = Astro.props;
+const data = sectionTitle?.selectSectionTitle;
 ---
 
-<ModuleContainer> Section Title </ModuleContainer>
+{
+  sectionTitleShouldRender(data) && (
+    <ModuleContainer name={layoutName!} bg={backgroundColor}>
+      <Container>
+        <UISectionTitle {...parseSectionTitle(data)} />
+      </Container>
+    </ModuleContainer>
+  )
+}

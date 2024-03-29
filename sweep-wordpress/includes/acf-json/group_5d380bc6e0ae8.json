@@ -72,179 +72,51 @@
                             ]
                         },
                         {
-                            "key": "field_5d380dada3aa7",
-                            "label": "Headline type",
-                            "name": "type",
+                            "key": "field_6606879bee069",
+                            "label": "Section title",
+                            "name": "section_title",
                             "aria-label": "",
-                            "type": "button_group",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "33",
-                                "class": "",
-                                "id": ""
-                            },
-                            "wpml_cf_preferences": 1,
-                            "choices": {
-                                "h1": "H1",
-                                "h2": "H2",
-                                "h3": "H3",
-                                "h4": "H4"
-                            },
-                            "default_value": "h2",
-                            "return_format": "value",
-                            "allow_null": 0,
-                            "layout": "horizontal",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "type",
-                            "graphql_non_null": 0
-                        },
-                        {
-                            "key": "field_6602dea30cc1a",
-                            "label": "Custom style?",
-                            "name": "custom_style",
-                            "aria-label": "",
-                            "type": "true_false",
-                            "instructions": "Display title tag with different look",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "33",
-                                "class": "",
-                                "id": ""
-                            },
-                            "wpml_cf_preferences": 1,
-                            "message": "",
-                            "default_value": 0,
-                            "ui_on_text": "",
-                            "ui_off_text": "",
-                            "ui": 1,
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "customStyle",
-                            "graphql_non_null": 0
-                        },
-                        {
-                            "key": "field_64638d2cc7297",
-                            "label": "Display as",
-                            "name": "display_as",
-                            "aria-label": "",
-                            "type": "button_group",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": [
-                                [
-                                    {
-                                        "field": "field_6602dea30cc1a",
-                                        "operator": "==",
-                                        "value": "1"
-                                    }
-                                ]
-                            ],
-                            "wrapper": {
-                                "width": "33",
-                                "class": "",
-                                "id": ""
-                            },
-                            "wpml_cf_preferences": 1,
-                            "choices": {
-                                "h1": "H1",
-                                "h2": "H2",
-                                "h3": "H3",
-                                "h4": "H4"
-                            },
-                            "default_value": "",
-                            "return_format": "value",
-                            "allow_null": 0,
-                            "layout": "horizontal",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "displayAs",
-                            "graphql_non_null": 0
-                        },
-                        {
-                            "key": "field_6602da647ea5f",
-                            "label": "Overline",
-                            "name": "overline",
-                            "aria-label": "",
-                            "type": "text",
-                            "instructions": "Text that appears above the title",
-                            "required": 0,
-                            "conditional_logic": [
-                                [
-                                    {
-                                        "field": "field_5d380dd5a8655",
-                                        "operator": "!=empty"
-                                    }
-                                ]
-                            ],
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "wpml_cf_preferences": 2,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "overline",
-                            "graphql_non_null": 0
-                        },
-                        {
-                            "key": "field_5d380dd5a8655",
-                            "label": "Headline",
-                            "name": "headline",
-                            "aria-label": "",
-                            "type": "textarea",
+                            "type": "group",
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
                                 "width": "",
-                                "class": "",
+                                "class": "invisible-group",
                                 "id": ""
                             },
-                            "wpml_cf_preferences": 2,
-                            "default_value": "",
-                            "maxlength": "",
-                            "rows": 3,
-                            "placeholder": "",
-                            "new_lines": "br",
+                            "wpml_cf_preferences": 1,
+                            "layout": "block",
                             "show_in_graphql": 1,
                             "graphql_description": "",
-                            "graphql_field_name": "content",
-                            "graphql_non_null": 0
-                        },
-                        {
-                            "key": "field_6602da337ea5e",
-                            "label": "Content",
-                            "name": "content",
-                            "aria-label": "",
-                            "type": "textarea",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "wpml_cf_preferences": 2,
-                            "default_value": "",
-                            "maxlength": "",
-                            "rows": "",
-                            "placeholder": "",
-                            "new_lines": "br",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "content",
-                            "graphql_non_null": 0
+                            "graphql_field_name": "sectionTitle",
+                            "graphql_non_null": 0,
+                            "sub_fields": [
+                                {
+                                    "key": "field_660687afee06a",
+                                    "label": "Section title",
+                                    "name": "section_title",
+                                    "aria-label": "",
+                                    "type": "clone",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "graphql_field_name": "sectionTitle",
+                                    "wpml_cf_preferences": 1,
+                                    "clone": [
+                                        "field_6606859e9c6b5"
+                                    ],
+                                    "display": "seamless",
+                                    "layout": "block",
+                                    "prefix_label": 0,
+                                    "prefix_name": 0
+                                }
+                            ]
                         }
                     ],
                     "min": "",
@@ -1213,5 +1085,5 @@
         "Page",
         "Post"
     ],
-    "modified": 1711637785
+    "modified": 1711708950
 }

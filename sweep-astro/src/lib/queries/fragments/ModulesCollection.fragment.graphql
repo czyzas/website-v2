@@ -6,6 +6,15 @@ fragment ModulesCollection on Modules {
       backgroundColor {
         selectBackgroundColor
       }
+      sectionTitle {
+        selectSectionTitle {
+          customStyle
+          headline
+          headlineType
+          overline
+          textUnder
+        }
+      }
       content
       customStyle
       displayAs

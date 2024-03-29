@@ -25,7 +25,10 @@ const tabs = acf.tabs ?? [];
 
 <section class="goals pt-12 md:pt-20">
   <Container>
-    <SectionTitle {...parseSectionTitle(acf.sectionTitle)} />
+    <SectionTitle
+      withMargin
+      {...parseSectionTitle(acf.sectionTitle?.selectSectionTitle)}
+    />
     <Tabs>
       <TabList>
         {

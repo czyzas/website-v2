@@ -21,7 +21,10 @@ const cards = acf.cards ?? [];
 
 <section class="who-we-work-with py-12 md:py-20">
   <Container>
-    <SectionTitle {...parseSectionTitle(acf.sectionTitle)} />
+    <SectionTitle
+      withMargin
+      {...parseSectionTitle(acf.sectionTitle?.selectSectionTitle)}
+    />
 
     <Grid>
       {

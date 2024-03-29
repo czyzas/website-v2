@@ -16,8 +16,14 @@ query Homepage($PAGE_ID: ID!, $LANGUAGE: String) {
       }
       goals {
         sectionTitle {
-          title
-          overline
+          selectSectionTitle {
+            customStyle
+            displayAs
+            headline
+            headlineType
+            overline
+            textUnder
+          }
         }
         tabs {
           tabTitle
@@ -34,8 +40,14 @@ query Homepage($PAGE_ID: ID!, $LANGUAGE: String) {
       }
       customers1 {
         sectionTitle {
-          title
-          overline
+          selectSectionTitle {
+            customStyle
+            displayAs
+            headline
+            headlineType
+            overline
+            textUnder
+          }
         }
         customersList(first: 100) {
           nodes {
@@ -57,8 +69,14 @@ query Homepage($PAGE_ID: ID!, $LANGUAGE: String) {
       }
       platform {
         sectionTitle {
-          overline
-          title
+          selectSectionTitle {
+            customStyle
+            displayAs
+            headline
+            headlineType
+            overline
+            textUnder
+          }
         }
         content
         image {
@@ -70,8 +88,14 @@ query Homepage($PAGE_ID: ID!, $LANGUAGE: String) {
       }
       whoweworkwith {
         sectionTitle {
-          overline
-          title
+          selectSectionTitle {
+            customStyle
+            displayAs
+            headline
+            headlineType
+            overline
+            textUnder
+          }
         }
         cards {
           imageBackgroundColor
@@ -87,8 +111,14 @@ query Homepage($PAGE_ID: ID!, $LANGUAGE: String) {
       }
       industries {
         sectionTitle {
-          overline
-          title
+          selectSectionTitle {
+            customStyle
+            displayAs
+            headline
+            headlineType
+            overline
+            textUnder
+          }
         }
         show
         selectedIndustries(first: 100) {
@@ -102,8 +132,14 @@ query Homepage($PAGE_ID: ID!, $LANGUAGE: String) {
       }
       caseStudies {
         sectionTitle {
-          overline
-          title
+          selectSectionTitle {
+            customStyle
+            displayAs
+            headline
+            headlineType
+            overline
+            textUnder
+          }
         }
         caseStudyButtonLabel
         caseStudies(first: 100) {
@@ -142,8 +178,14 @@ query Homepage($PAGE_ID: ID!, $LANGUAGE: String) {
       }
       resources {
         sectionTitle {
-          overline
-          title
+          selectSectionTitle {
+            customStyle
+            displayAs
+            headline
+            headlineType
+            overline
+            textUnder
+          }
         }
         resources(first: 100) {
           nodes {
@@ -166,8 +208,14 @@ query Homepage($PAGE_ID: ID!, $LANGUAGE: String) {
       }
       partners {
         sectionTitle {
-          overline
-          title
+          selectSectionTitle {
+            customStyle
+            displayAs
+            headline
+            headlineType
+            overline
+            textUnder
+          }
         }
         partners(first: 100) {
           nodes {
@@ -190,8 +238,14 @@ query Homepage($PAGE_ID: ID!, $LANGUAGE: String) {
       }
       customers2 {
         sectionTitle {
-          title
-          overline
+          selectSectionTitle {
+            customStyle
+            displayAs
+            headline
+            headlineType
+            overline
+            textUnder
+          }
         }
         customersList(first: 100) {
           nodes {

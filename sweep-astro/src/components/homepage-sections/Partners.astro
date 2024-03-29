@@ -20,7 +20,10 @@ const partners = acf.partners?.nodes ?? [];
 
 <section class="partners pt-12 md:pt-20">
   <Container>
-    <SectionTitle {...parseSectionTitle(acf.sectionTitle)} />
+    <SectionTitle
+      withMargin
+      {...parseSectionTitle(acf.sectionTitle?.selectSectionTitle)}
+    />
     <Grid>
       {
         partners.map((partner) => {

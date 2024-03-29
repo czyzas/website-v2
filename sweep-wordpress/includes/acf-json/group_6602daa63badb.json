@@ -129,6 +129,218 @@
                     "graphql_non_null": 0
                 }
             ]
+        },
+        {
+            "key": "field_6606859e9c6b5",
+            "label": "Select section title",
+            "name": "select_section_title",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 1,
+            "layout": "block",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "selectSectionTitle",
+            "graphql_non_null": 0,
+            "sub_fields": [
+                {
+                    "key": "field_660687039c6b9",
+                    "label": "Headline type",
+                    "name": "type",
+                    "aria-label": "",
+                    "type": "button_group",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "33",
+                        "class": "",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 1,
+                    "choices": {
+                        "h1": "H1",
+                        "h2": "H2",
+                        "h3": "H3",
+                        "h4": "H4"
+                    },
+                    "default_value": "h2",
+                    "return_format": "value",
+                    "allow_null": 0,
+                    "layout": "horizontal",
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "headlineType",
+                    "graphql_non_null": 0
+                },
+                {
+                    "key": "field_660687529c6bb",
+                    "label": "Custom style?",
+                    "name": "custom_style",
+                    "aria-label": "",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "33",
+                        "class": "",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 1,
+                    "message": "",
+                    "default_value": 0,
+                    "ui_on_text": "",
+                    "ui_off_text": "",
+                    "ui": 1,
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "customStyle",
+                    "graphql_non_null": 0
+                },
+                {
+                    "key": "field_660687219c6ba",
+                    "label": "Display as",
+                    "name": "display_as",
+                    "aria-label": "",
+                    "type": "button_group",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_660687529c6bb",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "33",
+                        "class": "",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 1,
+                    "choices": {
+                        "h1": "H1",
+                        "h2": "H2",
+                        "h3": "H3",
+                        "h4": "H4",
+                        "overline": "Overline"
+                    },
+                    "default_value": "h2",
+                    "return_format": "value",
+                    "allow_null": 0,
+                    "layout": "horizontal",
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "displayAs",
+                    "graphql_non_null": 0
+                },
+                {
+                    "key": "field_660686799c6b6",
+                    "label": "Overline",
+                    "name": "overline",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "Text that appears above the title",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_660687529c6bb",
+                                "operator": "==",
+                                "value": "1"
+                            },
+                            {
+                                "field": "field_660687219c6ba",
+                                "operator": "!=",
+                                "value": "overline"
+                            }
+                        ],
+                        [
+                            {
+                                "field": "field_660687529c6bb",
+                                "operator": "!=",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 2,
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "overline",
+                    "graphql_non_null": 0
+                },
+                {
+                    "key": "field_660686ac9c6b7",
+                    "label": "Headline",
+                    "name": "headline",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 2,
+                    "default_value": "",
+                    "maxlength": "",
+                    "rows": 2,
+                    "placeholder": "",
+                    "new_lines": "br",
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "headline",
+                    "graphql_non_null": 0
+                },
+                {
+                    "key": "field_660686b59c6b8",
+                    "label": "Text under",
+                    "name": "text_under",
+                    "aria-label": "",
+                    "type": "wysiwyg",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 2,
+                    "default_value": "",
+                    "tabs": "all",
+                    "toolbar": "basic",
+                    "media_upload": 0,
+                    "delay": 0,
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "textUnder",
+                    "graphql_non_null": 0
+                }
+            ]
         }
     ],
     "location": [
@@ -167,5 +379,5 @@
         "Partner",
         "Post"
     ],
-    "modified": 1711626505
+    "modified": 1711709312
 }

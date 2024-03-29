@@ -6,10 +6,10 @@ import type { ModulesCollectionFragment } from '@/__generated__/cms';
 type Props = {
   data?: ModulesCollectionFragment;
 };
-const modulesComponents = await Astro.glob('../modules/*.astro');
 const { data } = Astro.props;
 const modulesContent = data?.modulesContent;
 
+const modulesComponents = await Astro.glob('../modules/*.astro');
 const components: Record<string, AstroComponentFactory> = {};
 for (const component of modulesComponents) {
   const componentBaseName = path.parse(component.file).name;

@@ -1,19 +1,31 @@
+import type { ReusableFieldsSelectSectionTitle } from '@/__generated__/cms';
+import type { ReplaceTypenameLiteral } from '@/types';
+
 export type UnparsedSectionTitle =
-  | {
-      __typename?: string | undefined;
-      title?: string | undefined;
-      overline?: string | undefined;
-    }
+  | ReplaceTypenameLiteral<ReusableFieldsSelectSectionTitle>
   | undefined;
 
 export type ParsedSectionTitle = {
-  title: string;
+  shouldRender: boolean;
+  tag: string;
+  hasCustomStyle: boolean;
+  displayAs: string;
+  headline: string;
   overline: string;
+  textUnder: string;
 };
 
+export const sectionTitleShouldRender = (unparsed: UnparsedSectionTitle) =>
+  !!unparsed?.headline?.length;
+
 export const parseSectionTitle = (
-  unparsed: UnparsedSectionTitle,
+  unparsed: UnparsedSectionTitle
 ): ParsedSectionTitle => ({
-  title: unparsed?.title ?? '',
+  shouldRender: sectionTitleShouldRender(unparsed),
+  tag: unparsed?.headlineType ?? 'h2',
+  hasCustomStyle: unparsed?.customStyle ?? false,
+  displayAs: unparsed?.displayAs ?? unparsed?.headlineType ?? 'h2',
   overline: unparsed?.overline ?? '',
+  headline: unparsed?.headline ?? '',
+  textUnder: unparsed?.textUnder ?? '',
 });
