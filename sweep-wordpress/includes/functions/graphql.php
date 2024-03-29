@@ -1,7 +1,5 @@
 <?php
 
-use WPGraphQL\Acf\FieldType\FlexibleContent;
-
 add_action( 'graphql_register_types', function () {
 	try {
 		register_graphql_fields( 'MediaItem', [
