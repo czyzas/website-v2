@@ -1,0 +1,47 @@
+---
+import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
+import { cn } from '@/scripts/cn';
+import WordpressImage from './WordpressImage.astro';
+import Card from './ui/Card.astro';
+import Grid from './ui/Grid.astro';
+
+interface Props {
+  columns?: number;
+  logos?: UnparsedImage[];
+}
+
+const { columns = 4, logos = [] } = Astro.props;
+
+const columnClassName = (size: number) => {
+  switch (size) {
+    case 1:
+      return cn('col-span-full');
+    case 2:
+      return cn('col-span-full xs:col-span-6');
+    case 3:
+      return cn('col-span-full xs:col-span-6 md:col-span-4');
+    default:
+      return cn('col-span-full xs:col-span-6 md:col-span-4 lg:col-span-3');
+  }
+};
+---
+
+{
+  logos.length > 0 && (
+    <Grid>
+      {logos.map((logo) => (
+        <Card
+          class={cn(
+            'customer-logo p-6 flex items-center justify-center',
+            columnClassName(columns)
+          )}
+        >
+          <WordpressImage
+            data={logo}
+            class="max-h-full max-w-full object-contain"
+          />
+        </Card>
+      ))}
+    </Grid>
+  )
+}
