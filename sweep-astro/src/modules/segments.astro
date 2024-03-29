@@ -1,5 +1,12 @@
 ---
+import type { ModulesModulesContentSegmentsLayout } from '@/__generated__/cms';
 import ModuleContainer from '@/components/ModuleContainer.astro';
+
+type Props = ModulesModulesContentSegmentsLayout;
+
+const { layoutName, backgroundColor } = Astro.props;
 ---
 
-<ModuleContainer> Segments </ModuleContainer>
+<ModuleContainer name={layoutName!} bg={backgroundColor}>
+  Segments
+</ModuleContainer>

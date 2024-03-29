@@ -1,5 +1,12 @@
 ---
+import type { ModulesModulesContentTabsLayout } from '@/__generated__/cms';
 import ModuleContainer from '@/components/ModuleContainer.astro';
+
+type Props = ModulesModulesContentTabsLayout;
+
+const { layoutName, backgroundColor } = Astro.props;
 ---
 
-<ModuleContainer> Tabs </ModuleContainer>
+<ModuleContainer name={layoutName!} bg={backgroundColor}>
+  Tabs
+</ModuleContainer>

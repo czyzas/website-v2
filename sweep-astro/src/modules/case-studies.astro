@@ -1,5 +1,12 @@
 ---
+import type { ModulesModulesContentCaseStudiesLayout } from '@/__generated__/cms';
 import ModuleContainer from '@/components/ModuleContainer.astro';
+
+type Props = ModulesModulesContentCaseStudiesLayout;
+
+const { layoutName, backgroundColor } = Astro.props;
 ---
 
-<ModuleContainer> Case Studies </ModuleContainer>
+<ModuleContainer name={layoutName!} bg={backgroundColor}>
+  Case studies
+</ModuleContainer>
