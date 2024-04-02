@@ -10,6 +10,7 @@ export const buildI18nPath = (
 ) => {
   const language = locales.includes(lang) ? lang : defaultLocale;
 
+  // TODO: handle urls from WP
   if (cleanPath === '/' && language !== defaultLocale) {
     return `/${language}`;
   }

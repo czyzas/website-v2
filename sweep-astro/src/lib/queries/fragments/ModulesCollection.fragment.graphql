@@ -84,34 +84,9 @@ fragment ModulesCollection on Modules {
         selectBackgroundColor
       }
       singleCaseStudyLinkLabel
-      caseStudies(first: 100) {
+      caseStudiesList(first: 100) {
         nodes {
-          __typename
-          ... on CaseStudy {
-            title
-            uri
-            caseStudyAcf {
-              relatedCustomer(first: 100) {
-                nodes {
-                  __typename
-                  ... on Customer {
-                    title
-                    customerAcf {
-                      category
-                      logo {
-                        ...Image
-                      }
-                    }
-                  }
-                }
-              }
-            }
-            subpageSettings {
-              image {
-                ...Image
-              }
-            }
-          }
+          ...CaseStudy
         }
       }
     }

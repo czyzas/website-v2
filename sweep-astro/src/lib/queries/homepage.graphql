@@ -124,9 +124,7 @@ query Homepage($PAGE_ID: ID!, $LANGUAGE: String) {
         selectedIndustries(first: 100) {
           nodes {
             __typename
-            ... on Industry {
-              ...HomepageIndustry
-            }
+            ...HomepageIndustry
           }
         }
       }
@@ -144,32 +142,7 @@ query Homepage($PAGE_ID: ID!, $LANGUAGE: String) {
         caseStudyButtonLabel
         caseStudies(first: 100) {
           nodes {
-            __typename
-            ... on CaseStudy {
-              title
-              uri
-              caseStudyAcf {
-                relatedCustomer(first: 100) {
-                  nodes {
-                    __typename
-                    ... on Customer {
-                      title
-                      customerAcf {
-                        category
-                        logo {
-                          ...Image
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-              subpageSettings {
-                image {
-                  ...Image
-                }
-              }
-            }
+            ...CaseStudy
           }
         }
         button {

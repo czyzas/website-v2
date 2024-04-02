@@ -869,14 +869,14 @@
                                 "post_type",
                                 "taxonomy"
                             ],
-                            "return_format": "id",
+                            "return_format": "object",
                             "min": "",
                             "max": "",
                             "elements": "",
                             "bidirectional": 0,
                             "show_in_graphql": 1,
                             "graphql_description": "",
-                            "graphql_field_name": "caseStudies",
+                            "graphql_field_name": "caseStudiesList",
                             "graphql_connection_type": "one_to_many",
                             "bidirectional_target": []
                         },
@@ -1085,5 +1085,5 @@
         "Page",
         "Post"
     ],
-    "modified": 1712056808
+    "modified": 1712068046
 }

@@ -1,0 +1,28 @@
+---
+import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
+import WordpressImage from './WordpressImage.astro';
+import Card from './ui/Card.astro';
+import Grid from './ui/Grid.astro';
+
+type Props = {
+  image?: UnparsedImage;
+};
+
+const { image } = Astro.props;
+---
+
+<Grid>
+  <Card
+    class="content-column flex flex-col col-span-full md:col-start-1 md:col-end-8 lg:col-end-6 md:row-span-full relative z-[1] md:my-24"
+  >
+    <slot />
+  </Card>
+  <div
+    class="image-column col-start-2 col-end-12 md:col-start-4 lg:col-start-5 md:col-end-13 md:row-span-full hidden md:block"
+  >
+    <WordpressImage
+      data={image}
+      class="w-full h-full object-cover rounded-lg"
+    />
+  </div>
+</Grid>

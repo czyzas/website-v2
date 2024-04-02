@@ -1,0 +1,26 @@
+fragment CaseStudy on CaseStudy {
+  __typename
+  title
+  uri
+  caseStudyAcf {
+    relatedCustomer(first: 100) {
+      nodes {
+        __typename
+        ... on Customer {
+          title
+          customerAcf {
+            category
+            logo {
+              ...Image
+            }
+          }
+        }
+      }
+    }
+  }
+  subpageSettings {
+    image {
+      ...Image
+    }
+  }
+}

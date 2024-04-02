@@ -1,12 +1,88 @@
 ---
-import type { ModulesModulesContentCaseStudiesLayout } from '@/__generated__/cms';
+import type {
+  CaseStudyFragment,
+  ModulesModulesContentCaseStudiesLayout,
+} from '@/__generated__/cms';
+import CardWithBigImage from '@/components/CardWithBigImage.astro';
+import CaseStudyContent from '@/components/CaseStudyContent.astro';
 import ModuleContainer from '@/components/ModuleContainer.astro';
+import WordpressImage from '@/components/WordpressImage.astro';
+import Container from '@/components/ui/Container.astro';
+import TabList from '@/components/ui/Tabs/TabList.astro';
+import TabListItem from '@/components/ui/Tabs/TabListItem.astro';
+import TabPane from '@/components/ui/Tabs/TabPane.astro';
+import Tabs from '@/components/ui/Tabs/Tabs.astro';
 
 type Props = ModulesModulesContentCaseStudiesLayout;
 
-const { layoutName, backgroundColor } = Astro.props;
+const {
+  layoutName,
+  backgroundColor,
+  caseStudiesList,
+  singleCaseStudyLinkLabel,
+} = Astro.props;
+
+const tabId = crypto.randomUUID();
+
+const cases = (caseStudiesList?.nodes ?? []) as unknown as CaseStudyFragment[];
 ---
 
 <ModuleContainer name={layoutName!} bg={backgroundColor}>
-  Case studies
+  <Container>
+    <Tabs>
+      <TabList>
+        {
+          cases.map((caseStudy, index) => {
+            if (caseStudy.__typename !== 'CaseStudy') return null;
+            const customerMaybe =
+              caseStudy.caseStudyAcf?.relatedCustomer?.nodes[0];
+            const customer =
+              customerMaybe?.__typename === 'Customer'
+                ? customerMaybe
+                : undefined;
+            const customerLogo = customer?.customerAcf?.logo;
+
+            return (
+              <TabListItem
+                underline
+                isActive={index === 0}
+                id={`${tabId}-${index}`}
+              >
+                <WordpressImage data={customerLogo} />
+              </TabListItem>
+            );
+          })
+        }
+      </TabList>
+      <div class="tab-content">
+        {
+          cases.map((caseStudy, index) => {
+            if (caseStudy.__typename !== 'CaseStudy') return null;
+            const customerMaybe =
+              caseStudy.caseStudyAcf?.relatedCustomer?.nodes[0];
+            const customer =
+              customerMaybe?.__typename === 'Customer'
+                ? customerMaybe
+                : undefined;
+            const customerLogo = customer?.customerAcf?.logo;
+
+            return (
+              <TabPane isActive={index === 0} id={`${tabId}-${index}`}>
+                <CardWithBigImage image={caseStudy.subpageSettings?.image}>
+                  <CaseStudyContent
+                    customerLogo={customerLogo}
+                    customerTitle={customer?.title}
+                    customerCategory={customer?.customerAcf?.category}
+                    title={customer?.title}
+                    uri={caseStudy.uri}
+                    buttonLabel={singleCaseStudyLinkLabel}
+                  />
+                </CardWithBigImage>
+              </TabPane>
+            );
+          })
+        }
+      </div>
+    </Tabs>
+  </Container>
 </ModuleContainer>

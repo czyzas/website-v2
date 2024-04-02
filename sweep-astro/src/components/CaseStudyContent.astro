@@ -1,0 +1,63 @@
+---
+import { imageShouldRender } from '@/scripts/data-parsers/parseImage';
+import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
+import { buildI18nPath } from '@/scripts/buildI18nPath';
+import Card from './ui/Card.astro';
+import WordpressImage from './WordpressImage.astro';
+import Button from './ui/Button.astro';
+
+type Props = {
+  customerLogo?: UnparsedImage;
+  customerTitle?: string;
+  customerCategory?: string;
+  title?: string;
+  buttonLabel?: string;
+  uri?: string;
+};
+
+const {
+  uri,
+  buttonLabel,
+  customerCategory,
+  customerTitle,
+  customerLogo,
+  title,
+} = Astro.props;
+---
+
+<Fragment>
+  {
+    imageShouldRender(customerLogo) && (
+      <Card class="customer-logo p-3 w-36 h-20 max-w-full flex items-center justify-center mb-8">
+        <WordpressImage
+          data={customerLogo}
+          class="max-h-full max-w-full object-contain"
+        />
+      </Card>
+    )
+  }
+  {
+    !!customerTitle?.length || !!customerCategory?.length ? (
+      <div class="customer-details typography-card-title flex flex-col mb-4">
+        {customerTitle?.length ? <span>{customerTitle}</span> : null}
+        {customerCategory ? (
+          <span class="text-sw-text-subdued">{customerCategory}</span>
+        ) : null}
+      </div>
+    ) : null
+  }
+
+  <h3 set:html={title} class="typography-cards-bold-large" />
+
+  <div class="mt-auto pt-8">
+    <Button
+      asLink
+      trailingIcon="arrow-right"
+      href={buildI18nPath(uri)}
+      variant="secondary"
+      class="w-full md:w-auto"
+    >
+      {buttonLabel}
+    </Button>
+  </div>
+</Fragment>

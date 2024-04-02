@@ -2,10 +2,8 @@
 import { cmsStore } from '@/stores/cmsStore';
 import { getStore } from '@/scripts/store';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
-import { imageShouldRender } from '@/scripts/data-parsers/parseImage';
 import { parseLink } from '@/scripts/data-parsers/parseLink';
 import { cn } from '@/scripts/cn';
-import { buildI18nPath } from '@/scripts/buildI18nPath';
 import Container from '../ui/Container.astro';
 import Button from '../ui/Button.astro';
 import Grid from '../ui/Grid.astro';
@@ -13,6 +11,7 @@ import SectionTitle from '../partials/SectionTitle.astro';
 import Card from '../ui/Card.astro';
 import ButtonContainer from '../ButtonContainer.astro';
 import WordpressImage from '../WordpressImage.astro';
+import CaseStudyContent from '../CaseStudyContent.astro';
 
 const store = getStore(cmsStore);
 const data = store.homepage!;
@@ -64,42 +63,14 @@ const cases = acf.caseStudies?.nodes ?? [];
                       }
                     )}
                   >
-                    {!!customer && (
-                      <Fragment>
-                        {imageShouldRender(customerLogo) && (
-                          <Card class="customer-logo p-3 w-36 h-20 max-w-full flex items-center justify-center mb-8">
-                            <WordpressImage
-                              data={customerLogo}
-                              class="max-h-full max-w-full object-contain"
-                            />
-                          </Card>
-                        )}
-                        <div class="customer-details typography-card-title flex flex-col mb-4">
-                          <span>{customer.title}</span>
-                          {!!customer.customerAcf?.category && (
-                            <span class="text-sw-text-subdued">
-                              {customer.customerAcf?.category}
-                            </span>
-                          )}
-                        </div>
-                      </Fragment>
-                    )}
-                    <h3
-                      set:html={caseStudy.title}
-                      class="typography-cards-bold-large"
+                    <CaseStudyContent
+                      customerLogo={customerLogo}
+                      customerTitle={customer?.title}
+                      customerCategory={customer?.customerAcf?.category}
+                      title={customer?.title}
+                      uri={caseStudy.uri}
+                      buttonLabel={acf.caseStudyButtonLabel}
                     />
-
-                    <div class="mt-auto pt-8">
-                      <Button
-                        asLink
-                        trailingIcon="arrow-right"
-                        href={buildI18nPath(caseStudy.uri)}
-                        variant="secondary"
-                        class="w-full md:w-auto"
-                      >
-                        {acf.caseStudyButtonLabel}
-                      </Button>
-                    </div>
                   </div>
                   <div
                     class={cn(
