@@ -4,20 +4,58 @@ import PrimitiveTabListItem from '@/components/primitives/Tabs/TabListItem.astro
 import { cn } from '@/scripts/cn';
 import type { WithAttributes } from '@/types';
 
-type Props = WithAttributes<ComponentProps<typeof PrimitiveTabListItem>>;
+type Props = WithAttributes<
+  ComponentProps<typeof PrimitiveTabListItem> & {
+    counter?: boolean;
+    underline?: boolean;
+  }
+>;
 
-const { class: className, liClassName = '', ...props } = Astro.props;
+const {
+  class: className,
+  counter = false,
+  underline = false,
+  liClassName = '',
+  ...props
+} = Astro.props;
 ---
 
 <PrimitiveTabListItem
   {...props}
-  liClassName={cn('flex-1 mb-2 md:mb-0', liClassName)}
+  liClassName={cn(
+    'flex-1 mb-2',
+    { '[counter-increment:tab-list]': counter },
+    liClassName
+  )}
   class={cn(
-    'typography-body-2',
-    'w-full border border-sw-text-disabled px-4 py-3 rounded-lg min-w-fit whitespace-nowrap transition-colors hover:bg-sw-surface-subdued',
-    'aria-selected:bg-sw-sky-400 aria-selected:text-white aria-selected:cursor-default aria-selected:border-transparent',
+    'group w-full border border-sw-text-disabled px-4 py-3 rounded-lg min-w-fit whitespace-nowrap aria-selected:cursor-default',
+    {
+      'transition-colors bg-white hover:bg-sw-surface-subdued aria-selected:bg-sw-sky-400 aria-selected:text-white aria-selected:border-transparent':
+        !underline,
+      'relative overflow-hidden': underline,
+      'typography-body-2': !counter,
+      'isolate text-left typography-h3 flex items-baseline gap-3': counter,
+    },
     className
   )}
 >
+  {
+    counter && (
+      <>
+        <span
+          class={cn(
+            'counter text-sw-sky-400 text-6xl before:[counter-increment:tab-item] before:content-[counter(tab-item)]',
+            { 'transition-colors group-aria-selected:text-white': !underline }
+          )}
+        />
+        <span class="hidden lg:block absolute top-1/2 transform -translate-y-1/2 right-5 w-48 h-0.5 mt-3 bg-gradient-to-r from-white/0 to-sw-text-disabled -z-[1]" />
+      </>
+    )
+  }
   <slot />
+  {
+    underline && (
+      <span class="active-line bg-sw-sky-400 h-1 w-full absolute left-0 bottom-0 transition-transform translate-y-1 group-aria-selected:translate-y-0" />
+    )
+  }
 </PrimitiveTabListItem>

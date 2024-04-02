@@ -11,7 +11,10 @@ const { class: className, ...props } = Astro.props;
 
 <PrimitiveTabList
   {...props}
-  class={cn('custom-scrollbar flex gap-2 overflow-auto', className)}
+  class={cn(
+    'custom-scrollbar flex gap-4 overflow-auto [counter-reset:tab-item]',
+    className
+  )}
 >
   <slot />
 </PrimitiveTabList>

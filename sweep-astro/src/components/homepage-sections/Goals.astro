@@ -41,7 +41,7 @@ const tabs = acf.tabs ?? [];
           ))
         }
       </TabList>
-      <div class="tab-content">
+      <div class="tab-content mt-10">
         {
           tabs.map((tab, index) => {
             const button = parseLink(tab?.button);
@@ -51,7 +51,7 @@ const tabs = acf.tabs ?? [];
                 id={['goal', kebabCase(tab!.tabTitle), index].join('-')}
                 isActive={index === 0}
               >
-                <Grid class="mt-12">
+                <Grid>
                   <Card class="content-column flex flex-col col-span-full md:col-start-1 md:col-end-8 lg:col-end-6 md:row-span-full relative z-[1] md:my-24">
                     <p class="typography-subhead mb-2">{tab?.overline}</p>
                     <h3 class="typography-h3 mb-8" set:html={tab?.title} />
