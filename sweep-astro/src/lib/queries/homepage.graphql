@@ -86,6 +86,23 @@ query Homepage($PAGE_ID: ID!, $LANGUAGE: String) {
           ...Link
         }
       }
+      regulations {
+        sectionTitle {
+          selectSectionTitle {
+            customStyle
+            displayAs
+            headline
+            headlineType
+            overline
+            textUnder
+          }
+        }
+        logos {
+          edges {
+            ...Image
+          }
+        }
+      }
       whoweworkwith {
         sectionTitle {
           selectSectionTitle {
