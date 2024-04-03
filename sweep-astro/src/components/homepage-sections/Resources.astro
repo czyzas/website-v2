@@ -8,7 +8,6 @@ import Container from '../ui/Container.astro';
 import Button from '../ui/Button.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
 import SwiperNavigation from '../SwiperNavigation.astro';
-import Prose from '../ui/Prose.astro';
 import ButtonContainer from '../ButtonContainer.astro';
 import WordpressImage from '../WordpressImage.astro';
 
@@ -81,20 +80,23 @@ const resources = acf.resources?.nodes ?? [];
               <div class="swiper-slide">
                 <a
                   href={buildI18nPath(resource.uri)}
-                  class="h-full border border-sw-border rounded-lg overflow-hidden shadow-button-secondary"
+                  class="w-full h-full border border-sw-border rounded-lg overflow-hidden shadow-button-secondary"
                 >
                   <div class="image-container aspect-[16/9] sm:aspect-[28/19]">
                     <WordpressImage
                       data={resource.subpageSettings?.image}
+                      preferredWidth={586}
                       class="w-full h-full object-cover"
                     />
                   </div>
                   <div class="content-container p-6 flex flex-col gap-4">
+                    <p class="typography-card-title text-sw-text-subdued">
+                      Insight
+                    </p>
                     <h3
-                      class="typography-card-title"
+                      class="typography-cards-bold-large"
                       set:html={resource.title}
                     />
-                    <Prose set:html={resource.subpageSettings?.introduction} />
                   </div>
                 </a>
               </div>
