@@ -1,6 +1,6 @@
 ---
 import type {
-  CaseStudyFragment,
+  CaseStudyCardFragment,
   ModulesModulesContentCaseStudiesLayout,
 } from '@/__generated__/cms';
 import CardWithBigImage from '@/components/CardWithBigImage.astro';
@@ -24,7 +24,8 @@ const {
 
 const tabId = crypto.randomUUID();
 
-const cases = (caseStudiesList?.nodes ?? []) as unknown as CaseStudyFragment[];
+const cases = (caseStudiesList?.nodes ??
+  []) as unknown as CaseStudyCardFragment[];
 ---
 
 <ModuleContainer name={layoutName!} bg={backgroundColor}>
@@ -47,14 +48,18 @@ const cases = (caseStudiesList?.nodes ?? []) as unknown as CaseStudyFragment[];
                 underline
                 isActive={index === 0}
                 id={`${tabId}-${index}`}
+                class="flex items-center justify-center"
               >
-                <WordpressImage data={customerLogo} />
+                <WordpressImage
+                  data={customerLogo}
+                  class="max-h-14 max-w-full object-contain"
+                />
               </TabListItem>
             );
           })
         }
       </TabList>
-      <div class="tab-content">
+      <div class="tab-content mt-10">
         {
           cases.map((caseStudy, index) => {
             if (caseStudy.__typename !== 'CaseStudy') return null;
@@ -65,15 +70,19 @@ const cases = (caseStudiesList?.nodes ?? []) as unknown as CaseStudyFragment[];
                 ? customerMaybe
                 : undefined;
             const customerLogo = customer?.customerAcf?.logo;
+            const longerTitle = caseStudy.caseStudyAcf?.longerTitle;
 
             return (
               <TabPane isActive={index === 0} id={`${tabId}-${index}`}>
-                <CardWithBigImage image={caseStudy.subpageSettings?.image}>
+                <CardWithBigImage
+                  preferContentHeight
+                  image={caseStudy.subpageSettings?.image}
+                >
                   <CaseStudyContent
                     customerLogo={customerLogo}
                     customerTitle={customer?.title}
                     customerCategory={customer?.customerAcf?.category}
-                    title={customer?.title}
+                    title={longerTitle || customer?.title}
                     uri={caseStudy.uri}
                     buttonLabel={singleCaseStudyLinkLabel}
                   />

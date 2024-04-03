@@ -142,7 +142,7 @@ query Homepage($PAGE_ID: ID!, $LANGUAGE: String) {
         caseStudyButtonLabel
         caseStudies(first: 100) {
           nodes {
-            ...CaseStudy
+            ...CaseStudyCard
           }
         }
         button {

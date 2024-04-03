@@ -1,8 +1,9 @@
-fragment CaseStudy on CaseStudy {
+fragment CaseStudyCard on CaseStudy {
   __typename
   title
   uri
   caseStudyAcf {
+    longerTitle
     relatedCustomer(first: 100) {
       nodes {
         __typename

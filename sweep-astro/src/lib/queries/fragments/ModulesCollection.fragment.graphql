@@ -86,7 +86,7 @@ fragment ModulesCollection on Modules {
       singleCaseStudyLinkLabel
       caseStudiesList(first: 100) {
         nodes {
-          ...CaseStudy
+          ...CaseStudyCard
         }
       }
     }
