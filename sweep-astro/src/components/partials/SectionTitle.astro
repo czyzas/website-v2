@@ -1,34 +1,73 @@
 ---
+import type { HTMLAttributes } from 'astro/types';
+import { cva } from 'class-variance-authority';
 import { cn } from '@/scripts/cn';
+import { sectionTitleShouldRender } from '@/scripts/data-parsers/parseSectionTitle';
 import type { ParsedSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
+import Prose from '../ui/Prose.astro';
 
-type Props = Partial<ParsedSectionTitle>;
+interface SectionTitleProps {
+  withMargin?: boolean;
+}
 
-const { title = '', overline = '' } = Astro.props;
+type Props = HTMLAttributes<'div'> &
+  Omit<Partial<ParsedSectionTitle>, 'shouldRender'> &
+  SectionTitleProps;
 
-const alignClasses = {
-  left: 'text-left items-start',
-  center: 'text-left md:text-center items-start md:items-center',
-  right: 'text-left md:text-right items-start md:items-end',
-};
+const {
+  tag = 'h2',
+  hasCustomStyle,
+  displayAs = tag,
+  overline = '',
+  headline = '',
+  textUnder = '',
+  withMargin = false,
+} = Astro.props;
+
+const shouldRender = sectionTitleShouldRender(Astro.props);
+
+const Tag = tag as 'h2' | 'h3' | 'h4';
+
+const look = (hasCustomStyle ? displayAs : tag) as
+  | 'h2'
+  | 'h3'
+  | 'h4'
+  | 'overline';
+
+const headlineVariants = cva([], {
+  variants: {
+    variant: {
+      h2: ['typography-h3 md:typography-h2'],
+      h3: ['typography-h4 md:typography-h3'],
+      h4: ['typography-h4'],
+      overline: ['typography-subhead'],
+    },
+  },
+});
 ---
 
 {
-  (!!title.length || !!overline.length) && (
+  shouldRender && (
     <div
       class={cn(
         'section-title flex flex-col gap-2',
-        title.length > 0 ? 'mb-8 md:mb-15' : 'mb-8',
-        alignClasses.center
+        'text-left md:text-center items-start md:items-center',
+        { 'mb-8': withMargin && look === 'overline' },
+        { 'mb-8 md:mb-15': withMargin && look !== 'overline' }
       )}
     >
-      {!!overline && !!title && (
+      {!!overline.length && look !== 'overline' && (
         <p class="typography-subhead" set:html={overline} />
       )}
-      <h2
-        class={title ? 'typography-h3 md:typography-h2' : 'typography-subhead'}
-        set:html={title || overline}
-      />
+
+      <Tag class={headlineVariants({ variant: look })} set:html={headline} />
+
+      {!!textUnder.length && (
+        <Prose
+          class="typography-body-large text-sw-text-subdued mt-2"
+          set:html={textUnder}
+        />
+      )}
     </div>
   )
 }

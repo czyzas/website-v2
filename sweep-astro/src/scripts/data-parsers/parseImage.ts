@@ -1,37 +1,7 @@
-/** Duplicate ImageFragment and replace literal typenames with `string` */
-export type UnparsedImage =
-  | {
-      __typename?: string;
-      node:
-        | {
-            __typename?: string;
-            altText?: string | undefined;
-            sourceUrl?: string | undefined;
-            sizes?: string | undefined;
-            mimeType?: string | undefined;
-            mediaDetails?:
-              | {
-                  __typename?: string;
-                  width?: number | undefined;
-                  height?: number | undefined;
-                  sizes?:
-                    | Array<
-                        | {
-                            __typename?: string;
-                            width?: string | undefined;
-                            height?: string | undefined;
-                            name?: string | undefined;
-                            sourceUrl?: string | undefined;
-                          }
-                        | undefined
-                      >
-                    | undefined;
-                }
-              | undefined;
-          }
-        | undefined;
-    }
-  | undefined;
+import type { ImageFragment } from '@/__generated__/cms';
+import type { ReplaceTypenameLiteral } from '@/types';
+
+export type UnparsedImage = ReplaceTypenameLiteral<ImageFragment> | undefined;
 
 export type ParsedImage = {
   shouldRender: boolean;
@@ -39,21 +9,20 @@ export type ParsedImage = {
   alt: string;
   width: number;
   height: number;
-  sizes: string;
   isSvg: boolean;
 };
 
+export const imageShouldRender = (unparsed: UnparsedImage) =>
+  !!unparsed?.node.sourceUrl;
+
 export const parseImage = (unparsed: UnparsedImage): ParsedImage => {
-  // TODO: handle different image sizes
-  // const imageSizes = unparsed?.node.mediaDetails?.sizes ?? [];
-  const isSvg = unparsed?.node?.mimeType === 'image/svg+xml';
+  const DEFAULT_SIZE = 375;
   return {
-    shouldRender: !!unparsed?.node?.sourceUrl,
+    shouldRender: imageShouldRender(unparsed),
     url: unparsed?.node?.sourceUrl ?? '',
     alt: unparsed?.node?.altText ?? '',
-    width: unparsed?.node?.mediaDetails?.width ?? 0,
-    height: unparsed?.node?.mediaDetails?.height ?? 0,
-    sizes: unparsed?.node?.sizes ?? '',
-    isSvg,
+    width: unparsed?.node?.mediaDetails?.width ?? DEFAULT_SIZE,
+    height: unparsed?.node?.mediaDetails?.height ?? DEFAULT_SIZE,
+    isSvg: unparsed?.node?.mimeType === 'image/svg+xml',
   };
 };

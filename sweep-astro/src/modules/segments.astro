@@ -1,0 +1,17 @@
+---
+import type { ModulesModulesContentSegmentsLayout } from '@/__generated__/cms';
+import ColoredImageCards from '@/components/ColoredImageCards.astro';
+import ModuleContainer from '@/components/ModuleContainer.astro';
+import Container from '@/components/ui/Container.astro';
+
+type Props = ModulesModulesContentSegmentsLayout;
+
+const { layoutName, backgroundColor, cards } = Astro.props;
+const filteredCards = cards ? cards.filter(Boolean) : [];
+---
+
+<ModuleContainer name={layoutName!} bg={backgroundColor}>
+  <Container>
+    <ColoredImageCards cards={filteredCards} />
+  </Container>
+</ModuleContainer>

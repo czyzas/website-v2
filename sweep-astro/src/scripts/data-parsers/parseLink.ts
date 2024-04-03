@@ -1,11 +1,7 @@
-export type UnparsedLink =
-  | {
-      __typename?: string | undefined;
-      url?: string | undefined;
-      title?: string | undefined;
-      target?: string | undefined;
-    }
-  | undefined;
+import type { LinkFragment } from '@/__generated__/cms';
+import type { ReplaceTypenameLiteral } from '@/types';
+
+export type UnparsedLink = ReplaceTypenameLiteral<LinkFragment> | undefined;
 
 export type ParsedLink = {
   shouldRender: boolean;
@@ -14,8 +10,10 @@ export type ParsedLink = {
   target?: string;
 };
 
+export const linkShouldRender = (unparsed: UnparsedLink) => !!unparsed?.url;
+
 export const parseLink = (unparsed: UnparsedLink): ParsedLink => ({
-  shouldRender: !!unparsed?.url,
+  shouldRender: linkShouldRender(unparsed),
   url: unparsed?.url ?? '',
   title: unparsed?.title ?? '',
   target: unparsed?.target,

@@ -19,15 +19,15 @@ import { languageStore } from '@/stores/languageStore';
 const { lang = 'en' } = Astro.params;
 const data = await fetchHomepage(lang as Locales);
 
-updateStore(languageStore, 'currentLanguage', data.page!.language!);
-updateStore(languageStore, 'languages', data.languages);
 updateStore(cmsStore, 'homepage', data.page!);
 updateStore(cmsStore, 'homepageIndustries', data.industries!);
+updateStore(languageStore, 'currentLanguage', data.page!.language!);
+updateStore(languageStore, 'languages', data.languages);
 updateStore(cmsStore, 'primaryMenu', data.primaryMenu!);
 updateStore(cmsStore, 'themeOptions', data.themeOptions!);
 ---
 
-<Layout>
+<Layout home name="homepage" pageTitle={data.page?.title ?? ''}>
   <Hero />
   <Goals />
   <Customers type={1} />

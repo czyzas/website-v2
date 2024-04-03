@@ -1,13 +1,12 @@
 ---
-import { Image } from 'astro:assets';
 import { cmsStore } from '@/stores/cmsStore';
 import { getStore } from '@/scripts/store';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
-import { parseImage } from '@/scripts/data-parsers/parseImage';
 import Container from '../ui/Container.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
 import Grid from '../ui/Grid.astro';
 import Card from '../ui/Card.astro';
+import WordpressImage from '../WordpressImage.astro';
 
 const store = getStore(cmsStore);
 const data = store.homepage!;
@@ -28,39 +27,32 @@ if (showSelected) {
 }
 ---
 
-{/* TODO: Add swiper on mobile */}
 <section class="industries bg-sw-surface-subdued py-12 md:py-20">
   <Container>
-    <SectionTitle {...parseSectionTitle(acf.sectionTitle)} />
+    <SectionTitle
+      withMargin
+      {...parseSectionTitle(acf.sectionTitle?.selectSectionTitle)}
+    />
 
     <Grid>
       {
         industries.length > 0 &&
-          industries.map((industry) => {
-            const icon = parseImage(industry.industryAcf?.icon);
-            return (
-              <a
-                href={industry.uri}
-                class="industry col-span-full xs:col-span-6 md:col-span-4 lg:col-span-3 group"
-              >
-                <Card class="py-[2.1875rem] px-[1.375rem] xs:max-md:p-4 flex flex-col gap-[0.8125rem] h-full transition-colors group-hover:bg-sw-sky-400 hover:border-transparent">
-                  {icon.shouldRender && (
-                    <Image
-                      src={icon.url}
-                      alt={icon.alt}
-                      width={icon.width}
-                      height={icon.height}
-                      class="transition-all group-hover:brightness-0 group-hover:invert"
-                      format={icon.isSvg ? 'svg' : undefined}
-                    />
-                  )}
-                  <span class="transition-colors typography-h4 xs:max-md:text-lg group-hover:text-white">
-                    {industry.title}
-                  </span>
-                </Card>
-              </a>
-            );
-          })
+          industries.map((industry) => (
+            <a
+              href={industry.uri}
+              class="industry col-span-full xs:col-span-6 md:col-span-4 lg:col-span-3 group"
+            >
+              <Card class="py-[2.1875rem] px-[1.375rem] xs:max-md:p-4 flex flex-col gap-[0.8125rem] h-full transition-colors group-hover:bg-sw-sky-400 hover:border-transparent">
+                <WordpressImage
+                  data={industry.industryAcf?.icon}
+                  class="transition-all group-hover:brightness-0 group-hover:invert"
+                />
+                <span class="transition-colors typography-h4 xs:max-md:text-lg group-hover:text-white">
+                  {industry.title}
+                </span>
+              </Card>
+            </a>
+          ))
       }
     </Grid>
   </Container>

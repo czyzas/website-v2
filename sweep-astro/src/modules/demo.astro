@@ -1,0 +1,17 @@
+---
+import type { ModulesModulesContentDemoLayout } from '@/__generated__/cms';
+import ModuleContainer from '@/components/ModuleContainer.astro';
+import Container from '@/components/ui/Container.astro';
+import DemoComponent from '@/components/Demo.astro';
+import { fixDoubleBr } from '@/scripts/fixDoubleBr';
+
+type Props = ModulesModulesContentDemoLayout;
+
+const { layoutName, backgroundColor, title, image, button } = Astro.props;
+---
+
+<ModuleContainer name={layoutName!} bg={backgroundColor}>
+  <Container>
+    <DemoComponent title={fixDoubleBr(title)} image={image} button={button} />
+  </Container>
+</ModuleContainer>

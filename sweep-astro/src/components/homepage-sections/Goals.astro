@@ -1,21 +1,18 @@
 ---
-import { Image } from 'astro:assets';
 import { kebabCase } from 'lodash-es';
 import { cmsStore } from '@/stores/cmsStore';
 import { getStore } from '@/scripts/store';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
 import { parseLink } from '@/scripts/data-parsers/parseLink';
-import { parseImage } from '@/scripts/data-parsers/parseImage';
 import Tabs from '../ui/Tabs/Tabs.astro';
 import TabList from '../ui/Tabs/TabList.astro';
-import Container from '../ui/Container.astro';
-import Button from '../ui/Button.astro';
 import TabListItem from '../ui/Tabs/TabListItem.astro';
 import TabPane from '../ui/Tabs/TabPane.astro';
+import Container from '../ui/Container.astro';
+import Button from '../ui/Button.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
-import Grid from '../ui/Grid.astro';
 import Prose from '../ui/Prose.astro';
-import Card from '../ui/Card.astro';
+import CardWithBigImage from '../CardWithBigImage.astro';
 
 const store = getStore(cmsStore);
 const data = store.homepage!;
@@ -26,7 +23,10 @@ const tabs = acf.tabs ?? [];
 
 <section class="goals pt-12 md:pt-20">
   <Container>
-    <SectionTitle {...parseSectionTitle(acf.sectionTitle)} />
+    <SectionTitle
+      withMargin
+      {...parseSectionTitle(acf.sectionTitle?.selectSectionTitle)}
+    />
     <Tabs>
       <TabList>
         {
@@ -39,49 +39,34 @@ const tabs = acf.tabs ?? [];
           ))
         }
       </TabList>
-      <div class="tab-content">
+      <div class="tab-content mt-10">
         {
           tabs.map((tab, index) => {
             const button = parseLink(tab?.button);
-            const image = parseImage(tab?.image);
 
             return (
               <TabPane
                 id={['goal', kebabCase(tab!.tabTitle), index].join('-')}
                 isActive={index === 0}
               >
-                <Grid class="mt-12">
-                  <Card class="content-column flex flex-col col-span-full md:col-start-1 md:col-end-8 lg:col-end-6 md:row-span-full relative z-[1] md:my-24">
-                    <p class="typography-subhead mb-2">{tab?.overline}</p>
-                    <h3 class="typography-h3 mb-8" set:html={tab?.title} />
-                    <Prose set:html={tab?.content} />
-                    {button.shouldRender && (
-                      <div class="mt-8">
-                        <Button
-                          asLink
-                          href={button.url}
-                          target={button.target}
-                          trailingIcon="arrow-right"
-                          class="w-full md:w-auto"
-                        >
-                          {button.title}
-                        </Button>
-                      </div>
-                    )}
-                  </Card>
-                  <div class="image-column col-start-2 col-end-12 md:col-start-4 lg:col-start-5 md:col-end-13 md:row-span-full hidden md:block">
-                    {image.shouldRender && (
-                      <Image
-                        src={image.url}
-                        alt={image.alt}
-                        width={image.width}
-                        height={image.height}
-                        class="w-full h-full object-cover rounded-lg"
-                        format={image.isSvg ? 'svg' : undefined}
-                      />
-                    )}
-                  </div>
-                </Grid>
+                <CardWithBigImage image={tab?.image}>
+                  <p class="typography-subhead mb-2">{tab?.overline}</p>
+                  <h3 class="typography-h3 mb-8" set:html={tab?.title} />
+                  <Prose set:html={tab?.content} />
+                  {button.shouldRender && (
+                    <div class="mt-8">
+                      <Button
+                        asLink
+                        href={button.url}
+                        target={button.target}
+                        trailingIcon="arrow-right"
+                        class="w-full md:w-auto"
+                      >
+                        {button.title}
+                      </Button>
+                    </div>
+                  )}
+                </CardWithBigImage>
               </TabPane>
             );
           })

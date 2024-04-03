@@ -1,19 +1,17 @@
 ---
-import { Image } from 'astro:assets';
 import { cmsStore } from '@/stores/cmsStore';
 import { getStore } from '@/scripts/store';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
-import { parseImage } from '@/scripts/data-parsers/parseImage';
-import type { ParsedImage } from '@/scripts/data-parsers/parseImage';
 import { parseLink } from '@/scripts/data-parsers/parseLink';
 import { cn } from '@/scripts/cn';
-import { buildPath } from '@/scripts/buildPath';
 import Container from '../ui/Container.astro';
 import Button from '../ui/Button.astro';
 import Grid from '../ui/Grid.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
 import Card from '../ui/Card.astro';
 import ButtonContainer from '../ButtonContainer.astro';
+import WordpressImage from '../WordpressImage.astro';
+import CaseStudyContent from '../CaseStudyContent.astro';
 
 const store = getStore(cmsStore);
 const data = store.homepage!;
@@ -24,20 +22,23 @@ const cases = acf.caseStudies?.nodes ?? [];
 
 <section class="case-studies py-12 md:py-20">
   <Container>
-    <SectionTitle {...parseSectionTitle(acf.sectionTitle)} />
+    <SectionTitle
+      withMargin
+      {...parseSectionTitle(acf.sectionTitle?.selectSectionTitle)}
+    />
     <Grid>
       {
         cases.length > 0 &&
           cases.map((caseStudy, index) => {
             if (caseStudy.__typename !== 'CaseStudy') return null;
             const isFeatured = index === 0;
-            const image = parseImage(caseStudy.subpageSettings?.image);
-            let customer = caseStudy.caseStudyAcf?.relatedCustomer?.nodes[0];
-            if (customer?.__typename !== 'Customer') customer = undefined;
-            let customerLogo: ParsedImage | undefined;
-            if (customer) {
-              customerLogo = parseImage(customer.customerAcf?.logo);
-            }
+            const customerMaybe =
+              caseStudy.caseStudyAcf?.relatedCustomer?.nodes[0];
+            const customer =
+              customerMaybe?.__typename === 'Customer'
+                ? customerMaybe
+                : undefined;
+            const customerLogo = customer?.customerAcf?.logo;
 
             return (
               <div
@@ -62,46 +63,14 @@ const cases = acf.caseStudies?.nodes ?? [];
                       }
                     )}
                   >
-                    {!!customer && (
-                      <Fragment>
-                        {customerLogo?.shouldRender && (
-                          <Card class="customer-logo p-3 w-36 h-20 max-w-full flex items-center justify-center mb-8">
-                            <Image
-                              src={customerLogo.url}
-                              alt={customerLogo.alt}
-                              width={customerLogo.width}
-                              height={customerLogo.height}
-                              class="max-h-full max-w-full object-contain"
-                              format={customerLogo.isSvg ? 'svg' : undefined}
-                            />
-                          </Card>
-                        )}
-                        <div class="customer-details typography-card-title flex flex-col mb-4">
-                          <span>{customer.title}</span>
-                          {!!customer.customerAcf?.category && (
-                            <span class="text-sw-text-subdued">
-                              {customer.customerAcf?.category}
-                            </span>
-                          )}
-                        </div>
-                      </Fragment>
-                    )}
-                    <h3
-                      set:html={caseStudy.title}
-                      class="typography-cards-bold-large"
+                    <CaseStudyContent
+                      customerLogo={customerLogo}
+                      customerTitle={customer?.title}
+                      customerCategory={customer?.customerAcf?.category}
+                      title={customer?.title}
+                      uri={caseStudy.uri}
+                      buttonLabel={acf.caseStudyButtonLabel}
                     />
-
-                    <div class="mt-auto pt-8">
-                      <Button
-                        asLink
-                        trailingIcon="arrow-right"
-                        href={buildPath(caseStudy.uri)}
-                        variant="secondary"
-                        class="w-full md:w-auto"
-                      >
-                        {acf.caseStudyButtonLabel}
-                      </Button>
-                    </div>
                   </div>
                   <div
                     class={cn(
@@ -111,16 +80,10 @@ const cases = acf.caseStudies?.nodes ?? [];
                       }
                     )}
                   >
-                    {image.shouldRender && (
-                      <Image
-                        src={image.url}
-                        alt={image.alt}
-                        width={image.width}
-                        height={image.height}
-                        class="object-cover w-full h-full"
-                        format={image.isSvg ? 'svg' : undefined}
-                      />
-                    )}
+                    <WordpressImage
+                      data={caseStudy.subpageSettings?.image}
+                      class="object-cover w-full h-full"
+                    />
                   </div>
                 </Card>
               </div>

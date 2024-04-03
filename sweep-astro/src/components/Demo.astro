@@ -1,0 +1,39 @@
+---
+import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
+import { linkShouldRender } from '@/scripts/data-parsers/parseLink';
+import type { UnparsedLink } from '@/scripts/data-parsers/parseLink';
+import Grid from './ui/Grid.astro';
+import WordpressButtonLink from './WordpressButtonLink.astro';
+import WordpressImage from './WordpressImage.astro';
+
+type Props = {
+  title?: string;
+  button?: UnparsedLink;
+  image?: UnparsedImage;
+};
+
+const { title, button, image } = Astro.props;
+---
+
+<Grid
+  class="bg-sw-sea-500 rounded-lg p-6 md:p-14 grid-cols-1 md:grid-cols-12 gap-8 md:gap-5"
+>
+  <div class="contents lg:block lg:col-span-6">
+    <h2
+      class="col-span-full text-white typography-h3 md:text-5xl md:leading-tight md:font-bold"
+      set:html={title}
+    />
+    {
+      linkShouldRender(button) && (
+        <div class="col-span-full mt-2 lg:mt-4 order-3 lg:order-none">
+          <WordpressButtonLink data={button} />
+        </div>
+      )
+    }
+  </div>
+  <div
+    class="col-span-full lg:col-span-6 flex items-center justify-center order-2 lg:order-none"
+  >
+    <WordpressImage data={image} />
+  </div>
+</Grid>

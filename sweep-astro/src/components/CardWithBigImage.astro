@@ -1,0 +1,35 @@
+---
+import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
+import { cn } from '@/scripts/cn';
+import WordpressImage from './WordpressImage.astro';
+import Card from './ui/Card.astro';
+import Grid from './ui/Grid.astro';
+
+type Props = {
+  image?: UnparsedImage;
+  preferContentHeight?: boolean;
+};
+
+const { image, preferContentHeight = false } = Astro.props;
+---
+
+<Grid>
+  <Card
+    class="content-column flex flex-col col-span-full md:col-start-1 md:col-end-8 lg:col-end-6 md:row-span-full relative z-[1] md:my-24"
+  >
+    <slot />
+  </Card>
+  <div
+    class={cn(
+      'hidden md:block image-column col-start-2 col-end-[-1] md:col-start-4 lg:col-start-5 md:col-end-13 md:row-span-full',
+      { 'md:relative': preferContentHeight }
+    )}
+  >
+    <WordpressImage
+      data={image}
+      class={cn('w-full h-full object-cover rounded-lg', {
+        'md:absolute md:size-full md:left-0 md:top-0': preferContentHeight,
+      })}
+    />
+  </div>
+</Grid>

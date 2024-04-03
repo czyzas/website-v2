@@ -1,0 +1,68 @@
+---
+import { linkShouldRender } from '@/scripts/data-parsers/parseLink';
+import type { UnparsedLink } from '@/scripts/data-parsers/parseLink';
+import { cn } from '@/scripts/cn';
+import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
+import Grid from './ui/Grid.astro';
+import Card from './ui/Card.astro';
+import WordpressImage from './WordpressImage.astro';
+import Prose from './ui/Prose.astro';
+import WordpressButtonLink from './WordpressButtonLink.astro';
+
+interface Props {
+  cards: {
+    imageBackgroundColor?: string;
+    title?: string;
+    content?: string;
+    image?: UnparsedImage;
+    button?: UnparsedLink;
+  }[];
+}
+
+const { cards } = Astro.props;
+---
+
+{
+  cards.length > 0 ? (
+    <Grid>
+      {cards.map((card) => {
+        const imageBackgroundColor = card?.imageBackgroundColor ?? 'white';
+        const title = card?.title ?? '';
+
+        return (
+          <div class="col-span-full md:col-span-6 lg:col-span-4 flex items-stretch">
+            <Card
+              class={cn(
+                'card-with-image p-0 flex flex-col overflow-hidden w-full'
+              )}
+            >
+              <div
+                style={{
+                  '--bg-color': imageBackgroundColor,
+                }}
+                class="image-container bg-[--bg-color] p-8"
+              >
+                <WordpressImage
+                  data={card?.image}
+                  preferredWidth={400}
+                  class="mx-auto w-full max-w-[25rem]"
+                />
+              </div>
+              <div class="content-container p-6 flex-1 flex flex-col gap-3">
+                <h3 class="typography-h4" set:html={title} />
+
+                <Prose set:html={card?.content} />
+
+                {linkShouldRender(card?.button) && (
+                  <div class="mt-auto">
+                    <WordpressButtonLink data={card?.button} arrow />
+                  </div>
+                )}
+              </div>
+            </Card>
+          </div>
+        );
+      })}
+    </Grid>
+  ) : null
+}

@@ -1,31 +1,9 @@
 ---
-import { cn } from '@/scripts/cn';
+import type { ComponentProps } from 'astro/types';
+import PrimitiveTabPane from '@/components/primitives/Tabs/TabPane.astro';
+import type { WithAttributes } from '@/types';
 
-type TabListItemProps = {
-  id: string;
-  isActive?: boolean;
-  activeClassName?: string;
-};
-export type Props = TabListItemProps & astroHTML.JSX.HTMLAttributes;
-
-const {
-  id,
-  class: className,
-  isActive = false,
-  activeClassName = '',
-} = Astro.props;
+type Props = WithAttributes<ComponentProps<typeof PrimitiveTabPane>>;
 ---
 
-<div
-  class={cn([
-    'tab-pane fade',
-    { show: isActive, active: isActive },
-    className,
-    isActive ? activeClassName : '',
-  ])}
-  id={id}
-  role="tabpanel"
-  aria-labelledby={`${id}-tab-list-item`}
->
-  <slot />
-</div>
+<PrimitiveTabPane {...Astro.props}><slot /></PrimitiveTabPane>

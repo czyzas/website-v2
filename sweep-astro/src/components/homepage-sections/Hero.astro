@@ -48,7 +48,7 @@ const avatar3Processed = await getImage({ src: avatar3, format: 'jpg' });
         }
       </div>
       <div
-        class="col-span-12 md:col-start-6 md:col-end-13"
+        class="col-span-full md:col-start-6 md:col-end-13 [&>svg]:max-w-full [&>svg]:h-auto"
         set:html={heroImage
           .replace('@avatar1', avatar1Processed.src)
           .replace('@avatar2', avatar2Processed.src)

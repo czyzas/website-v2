@@ -1,0 +1,36 @@
+---
+import type { ModulesModulesContentLogosLayout } from '@/__generated__/cms';
+import ButtonContainer from '@/components/ButtonContainer.astro';
+import LogosGrid from '@/components/LogosGrid.astro';
+import ModuleContainer from '@/components/ModuleContainer.astro';
+import WordpressButtonLink from '@/components/WordpressButtonLink.astro';
+import Container from '@/components/ui/Container.astro';
+import { linkShouldRender } from '@/scripts/data-parsers/parseLink';
+
+type Props = ModulesModulesContentLogosLayout;
+
+const {
+  layoutName,
+  backgroundColor,
+  columns = '4',
+  ctaButton,
+  logos: _logos,
+} = Astro.props;
+
+const logos = _logos?.edges.filter(Boolean) ?? [];
+---
+
+{
+  logos.length > 0 ? (
+    <ModuleContainer name={layoutName!} bg={backgroundColor}>
+      <Container>
+        <LogosGrid columns={parseInt(columns)} logos={logos} />
+        {linkShouldRender(ctaButton) && (
+          <ButtonContainer class="mt-12">
+            <WordpressButtonLink data={ctaButton} arrow />
+          </ButtonContainer>
+        )}
+      </Container>
+    </ModuleContainer>
+  ) : null
+}

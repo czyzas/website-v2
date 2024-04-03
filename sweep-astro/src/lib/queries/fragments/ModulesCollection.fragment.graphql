@@ -1,0 +1,107 @@
+fragment ModulesCollection on Modules {
+  modulesContent {
+    __typename
+    ... on ModulesModulesContentSectionTitleLayout {
+      layoutName
+      backgroundColor {
+        selectBackgroundColor
+      }
+      sectionTitle {
+        selectSectionTitle {
+          customStyle
+          headline
+          headlineType
+          overline
+          textUnder
+        }
+      }
+      content
+      customStyle
+      displayAs
+      overline
+      type
+    }
+    ... on ModulesModulesContentTabsLayout {
+      layoutName
+      backgroundColor {
+        selectBackgroundColor
+      }
+      tabsLook
+      ctaButton {
+        ...Link
+      }
+      tabs {
+        content
+        ctaButton {
+          ...Link
+        }
+        image {
+          ...Image
+        }
+        overline
+        overlineIcon {
+          ...Image
+        }
+        tabTitle
+        title
+      }
+    }
+    ... on ModulesModulesContentLogosLayout {
+      layoutName
+      backgroundColor {
+        selectBackgroundColor
+      }
+      columns
+      logos {
+        edges {
+          ...Image
+        }
+      }
+      ctaButton {
+        ...Link
+      }
+    }
+    ... on ModulesModulesContentSegmentsLayout {
+      layoutName
+      backgroundColor {
+        selectBackgroundColor
+      }
+      cards {
+        title
+        imageBackgroundColor
+        image {
+          ...Image
+        }
+        content
+        button {
+          ...Link
+        }
+      }
+    }
+    ... on ModulesModulesContentCaseStudiesLayout {
+      layoutName
+      backgroundColor {
+        selectBackgroundColor
+      }
+      singleCaseStudyLinkLabel
+      caseStudiesList(first: 100) {
+        nodes {
+          ...CaseStudyCard
+        }
+      }
+    }
+    ... on ModulesModulesContentDemoLayout {
+      layoutName
+      backgroundColor {
+        selectBackgroundColor
+      }
+      title
+      image {
+        ...Image
+      }
+      button {
+        ...Link
+      }
+    }
+  }
+}

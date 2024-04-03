@@ -166,7 +166,7 @@
                     "conditional_logic": 0,
                     "wrapper": {
                         "width": "",
-                        "class": "",
+                        "class": "invisible-group",
                         "id": ""
                     },
                     "wpml_cf_preferences": 3,
@@ -177,54 +177,28 @@
                     "graphql_non_null": 0,
                     "sub_fields": [
                         {
-                            "key": "field_65e58fb0e1207",
-                            "label": "Overline",
-                            "name": "overline",
+                            "key": "field_6606a25cd5612",
+                            "label": "Section title",
+                            "name": "section_title",
                             "aria-label": "",
-                            "type": "text",
+                            "type": "clone",
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
-                                "width": "50",
+                                "width": "",
                                 "class": "",
                                 "id": ""
                             },
-                            "wpml_cf_preferences": 2,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "overline",
-                            "graphql_non_null": 0
-                        },
-                        {
-                            "key": "field_65e58fa3e1206",
-                            "label": "Title",
-                            "name": "title",
-                            "aria-label": "",
-                            "type": "textarea",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "wpml_cf_preferences": 2,
-                            "default_value": "",
-                            "maxlength": "",
-                            "rows": 2,
-                            "placeholder": "",
-                            "new_lines": "br",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "title",
-                            "graphql_non_null": 0
+                            "graphql_field_name": "sectionTitle",
+                            "wpml_cf_preferences": 3,
+                            "clone": [
+                                "field_6606859e9c6b5"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 0
                         }
                     ]
                 },
@@ -466,7 +440,7 @@
                     "conditional_logic": 0,
                     "wrapper": {
                         "width": "",
-                        "class": "",
+                        "class": "invisible-group",
                         "id": ""
                     },
                     "wpml_cf_preferences": 3,
@@ -477,54 +451,28 @@
                     "graphql_non_null": 0,
                     "sub_fields": [
                         {
-                            "key": "field_65e58ffd5305b",
-                            "label": "Overline",
-                            "name": "overline",
+                            "key": "field_6606a288d5613",
+                            "label": "Section title",
+                            "name": "section_title",
                             "aria-label": "",
-                            "type": "text",
+                            "type": "clone",
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
-                                "width": "50",
+                                "width": "",
                                 "class": "",
                                 "id": ""
                             },
-                            "wpml_cf_preferences": 2,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "overline",
-                            "graphql_non_null": 0
-                        },
-                        {
-                            "key": "field_65e58ffd5305c",
-                            "label": "Title",
-                            "name": "title",
-                            "aria-label": "",
-                            "type": "textarea",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "wpml_cf_preferences": 2,
-                            "default_value": "",
-                            "maxlength": "",
-                            "rows": 2,
-                            "placeholder": "",
-                            "new_lines": "br",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "title",
-                            "graphql_non_null": 0
+                            "graphql_field_name": "sectionTitle",
+                            "wpml_cf_preferences": 3,
+                            "clone": [
+                                "field_6606859e9c6b5"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 0
                         }
                     ]
                 },
@@ -633,7 +581,7 @@
                     "conditional_logic": 0,
                     "wrapper": {
                         "width": "",
-                        "class": "",
+                        "class": "invisible-group",
                         "id": ""
                     },
                     "wpml_cf_preferences": 3,
@@ -644,54 +592,28 @@
                     "graphql_non_null": 0,
                     "sub_fields": [
                         {
-                            "key": "field_65e5900d5305f",
-                            "label": "Overline",
-                            "name": "overline",
+                            "key": "field_6606a2c0d5614",
+                            "label": "Section title",
+                            "name": "section_title",
                             "aria-label": "",
-                            "type": "text",
+                            "type": "clone",
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
-                                "width": "50",
+                                "width": "",
                                 "class": "",
                                 "id": ""
                             },
-                            "wpml_cf_preferences": 2,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "overline",
-                            "graphql_non_null": 0
-                        },
-                        {
-                            "key": "field_65e5900d53060",
-                            "label": "Title",
-                            "name": "title",
-                            "aria-label": "",
-                            "type": "textarea",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "wpml_cf_preferences": 2,
-                            "default_value": "",
-                            "maxlength": "",
-                            "rows": 2,
-                            "placeholder": "",
-                            "new_lines": "br",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "title",
-                            "graphql_non_null": 0
+                            "graphql_field_name": "sectionTitle",
+                            "wpml_cf_preferences": 3,
+                            "clone": [
+                                "field_6606859e9c6b5"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 0
                         }
                     ]
                 },
@@ -823,7 +745,7 @@
                     "conditional_logic": 0,
                     "wrapper": {
                         "width": "",
-                        "class": "",
+                        "class": "invisible-group",
                         "id": ""
                     },
                     "wpml_cf_preferences": 3,
@@ -834,54 +756,28 @@
                     "graphql_non_null": 0,
                     "sub_fields": [
                         {
-                            "key": "field_65e5908853064",
-                            "label": "Overline",
-                            "name": "overline",
+                            "key": "field_6606a2f0d5615",
+                            "label": "Section title",
+                            "name": "section_title",
                             "aria-label": "",
-                            "type": "text",
+                            "type": "clone",
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
-                                "width": "50",
+                                "width": "",
                                 "class": "",
                                 "id": ""
                             },
-                            "wpml_cf_preferences": 2,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "overline",
-                            "graphql_non_null": 0
-                        },
-                        {
-                            "key": "field_65e5908853065",
-                            "label": "Title",
-                            "name": "title",
-                            "aria-label": "",
-                            "type": "textarea",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "wpml_cf_preferences": 2,
-                            "default_value": "",
-                            "maxlength": "",
-                            "rows": 2,
-                            "placeholder": "",
-                            "new_lines": "br",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "title",
-                            "graphql_non_null": 0
+                            "graphql_field_name": "sectionTitle",
+                            "wpml_cf_preferences": 3,
+                            "clone": [
+                                "field_6606859e9c6b5"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 0
                         }
                     ]
                 },
@@ -1095,7 +991,7 @@
                     "conditional_logic": 0,
                     "wrapper": {
                         "width": "",
-                        "class": "",
+                        "class": "invisible-group",
                         "id": ""
                     },
                     "wpml_cf_preferences": 3,
@@ -1106,54 +1002,28 @@
                     "graphql_non_null": 0,
                     "sub_fields": [
                         {
-                            "key": "field_65e5920753068",
-                            "label": "Overline",
-                            "name": "overline",
+                            "key": "field_6606a320d5616",
+                            "label": "Section title",
+                            "name": "section_title",
                             "aria-label": "",
-                            "type": "text",
+                            "type": "clone",
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
-                                "width": "50",
+                                "width": "",
                                 "class": "",
                                 "id": ""
                             },
-                            "wpml_cf_preferences": 2,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "overline",
-                            "graphql_non_null": 0
-                        },
-                        {
-                            "key": "field_65e5920753069",
-                            "label": "Title",
-                            "name": "title",
-                            "aria-label": "",
-                            "type": "textarea",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "wpml_cf_preferences": 2,
-                            "default_value": "",
-                            "maxlength": "",
-                            "rows": 2,
-                            "placeholder": "",
-                            "new_lines": "br",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "title",
-                            "graphql_non_null": 0
+                            "graphql_field_name": "sectionTitle",
+                            "wpml_cf_preferences": 3,
+                            "clone": [
+                                "field_6606859e9c6b5"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 0
                         }
                     ]
                 },
@@ -1282,7 +1152,7 @@
                     "conditional_logic": 0,
                     "wrapper": {
                         "width": "",
-                        "class": "",
+                        "class": "invisible-group",
                         "id": ""
                     },
                     "wpml_cf_preferences": 3,
@@ -1293,54 +1163,28 @@
                     "graphql_non_null": 0,
                     "sub_fields": [
                         {
-                            "key": "field_65e592135306c",
-                            "label": "Overline",
-                            "name": "overline",
+                            "key": "field_6606a344d5617",
+                            "label": "Section title",
+                            "name": "section_title",
                             "aria-label": "",
-                            "type": "text",
+                            "type": "clone",
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
-                                "width": "50",
+                                "width": "",
                                 "class": "",
                                 "id": ""
                             },
-                            "wpml_cf_preferences": 2,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "overline",
-                            "graphql_non_null": 0
-                        },
-                        {
-                            "key": "field_65e592135306d",
-                            "label": "Title",
-                            "name": "title",
-                            "aria-label": "",
-                            "type": "textarea",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "wpml_cf_preferences": 2,
-                            "default_value": "",
-                            "maxlength": "",
-                            "rows": 2,
-                            "placeholder": "",
-                            "new_lines": "br",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "title",
-                            "graphql_non_null": 0
+                            "graphql_field_name": "sectionTitle",
+                            "wpml_cf_preferences": 3,
+                            "clone": [
+                                "field_6606859e9c6b5"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 0
                         }
                     ]
                 },
@@ -1479,7 +1323,7 @@
                     "conditional_logic": 0,
                     "wrapper": {
                         "width": "",
-                        "class": "",
+                        "class": "invisible-group",
                         "id": ""
                     },
                     "wpml_cf_preferences": 3,
@@ -1490,54 +1334,28 @@
                     "graphql_non_null": 0,
                     "sub_fields": [
                         {
-                            "key": "field_65e5922553070",
-                            "label": "Overline",
-                            "name": "overline",
+                            "key": "field_6606a36cd5618",
+                            "label": "Section title",
+                            "name": "section_title",
                             "aria-label": "",
-                            "type": "text",
+                            "type": "clone",
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
-                                "width": "50",
+                                "width": "",
                                 "class": "",
                                 "id": ""
                             },
-                            "wpml_cf_preferences": 2,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "overline",
-                            "graphql_non_null": 0
-                        },
-                        {
-                            "key": "field_65e5922553071",
-                            "label": "Title",
-                            "name": "title",
-                            "aria-label": "",
-                            "type": "textarea",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "wpml_cf_preferences": 2,
-                            "default_value": "",
-                            "maxlength": "",
-                            "rows": 2,
-                            "placeholder": "",
-                            "new_lines": "br",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "title",
-                            "graphql_non_null": 0
+                            "graphql_field_name": "sectionTitle",
+                            "wpml_cf_preferences": 3,
+                            "clone": [
+                                "field_6606859e9c6b5"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 0
                         }
                     ]
                 },
@@ -1653,7 +1471,7 @@
                     "conditional_logic": 0,
                     "wrapper": {
                         "width": "",
-                        "class": "",
+                        "class": "invisible-group",
                         "id": ""
                     },
                     "wpml_cf_preferences": 3,
@@ -1664,54 +1482,28 @@
                     "graphql_non_null": 0,
                     "sub_fields": [
                         {
-                            "key": "field_65e59e6d8b0fb",
-                            "label": "Overline",
-                            "name": "overline",
+                            "key": "field_6606a39cd5619",
+                            "label": "Section title",
+                            "name": "section_title",
                             "aria-label": "",
-                            "type": "text",
+                            "type": "clone",
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
-                                "width": "50",
+                                "width": "",
                                 "class": "",
                                 "id": ""
                             },
-                            "wpml_cf_preferences": 2,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "overline",
-                            "graphql_non_null": 0
-                        },
-                        {
-                            "key": "field_65e59e6d8b0fc",
-                            "label": "Title",
-                            "name": "title",
-                            "aria-label": "",
-                            "type": "textarea",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "wpml_cf_preferences": 2,
-                            "default_value": "",
-                            "maxlength": "",
-                            "rows": 2,
-                            "placeholder": "",
-                            "new_lines": "br",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "title",
-                            "graphql_non_null": 0
+                            "graphql_field_name": "sectionTitle",
+                            "wpml_cf_preferences": 3,
+                            "clone": [
+                                "field_6606859e9c6b5"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 0
                         }
                     ]
                 },
@@ -1820,65 +1612,39 @@
                     "conditional_logic": 0,
                     "wrapper": {
                         "width": "",
-                        "class": "",
+                        "class": "invisible-group",
                         "id": ""
                     },
                     "wpml_cf_preferences": 3,
                     "layout": "block",
                     "show_in_graphql": 1,
                     "graphql_description": "",
-                    "graphql_field_name": "",
+                    "graphql_field_name": "sectionTitle",
                     "graphql_non_null": 0,
                     "sub_fields": [
                         {
-                            "key": "field_65e5da39cd552",
-                            "label": "Overline",
-                            "name": "overline",
+                            "key": "field_6606a3c3d561a",
+                            "label": "Section title",
+                            "name": "section_title",
                             "aria-label": "",
-                            "type": "text",
+                            "type": "clone",
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
-                                "width": "50",
+                                "width": "",
                                 "class": "",
                                 "id": ""
                             },
-                            "wpml_cf_preferences": 2,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "overline",
-                            "graphql_non_null": 0
-                        },
-                        {
-                            "key": "field_65e5da39cd553",
-                            "label": "Title",
-                            "name": "title",
-                            "aria-label": "",
-                            "type": "textarea",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "wpml_cf_preferences": 2,
-                            "default_value": "",
-                            "maxlength": "",
-                            "rows": 2,
-                            "placeholder": "",
-                            "new_lines": "br",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "title",
-                            "graphql_non_null": 0
+                            "graphql_field_name": "sectionTitle",
+                            "wpml_cf_preferences": 3,
+                            "clone": [
+                                "field_6606859e9c6b5"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 0
                         }
                     ]
                 },
@@ -2086,5 +1852,5 @@
     "graphql_field_name": "homepage",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1710321819
+    "modified": 1711716535
 }

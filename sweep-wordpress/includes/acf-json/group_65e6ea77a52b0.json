@@ -32,6 +32,31 @@
             "graphql_connection_type": "one_to_many",
             "ui": 1,
             "bidirectional_target": []
+        },
+        {
+            "key": "field_660d27b9a7427",
+            "label": "Longer title",
+            "name": "longer_title",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Used in case studies module",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 2,
+            "default_value": "",
+            "maxlength": "",
+            "rows": "",
+            "placeholder": "",
+            "new_lines": "br",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "longerTitle",
+            "graphql_non_null": 0
         }
     ],
     "location": [
@@ -57,5 +82,5 @@
     "graphql_field_name": "caseStudyAcf",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1709649078
+    "modified": 1712138285
 }

@@ -1,5 +1,5 @@
 query DefaultPagesStaticPaths {
-  pages(where: { status: PUBLISH, language: "all" }) {
+  pages(first: 100, where: { status: PUBLISH, language: "all" }) {
     nodes {
       template {
         templateName

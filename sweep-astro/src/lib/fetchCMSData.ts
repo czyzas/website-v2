@@ -8,6 +8,7 @@ import {
 
 import type { Locales } from '@/i18n/config';
 import { defaultLocale } from '@/i18n/config';
+import { HOMEPAGE_IDS } from '@/constants';
 import { gqlClient } from './graphqlClient';
 import { getCachedCMSData, cacheCMSData, CACHE_KEYS } from './cacheCMSData';
 
@@ -47,11 +48,6 @@ const fetchData = async <Query, QueryVariables extends Variables = Variables>(
 };
 
 export function fetchHomepage(lang: Locales) {
-  const HOMEPAGE_IDS: Record<Locales, string> = {
-    en: '6',
-    fr: '506',
-    de: '580',
-  };
   return fetchData(
     HomepageDocument,
     {
@@ -63,6 +59,7 @@ export function fetchHomepage(lang: Locales) {
 }
 
 export function fetchDefaultPagesStaticPaths() {
+  // TODO: handle more than 100 pages
   return fetchData(DefaultPagesStaticPathsDocument).then(
     (data) => data.pages?.nodes ?? []
   );
@@ -76,5 +73,5 @@ export function fetchDefaultPage(slug: string, lang: Locales = defaultLocale) {
       LANG: lang,
     },
     [lang, CACHE_KEYS.PAGE, slug]
-  ).then((data) => data.pages?.nodes?.[0]);
+  );
 }

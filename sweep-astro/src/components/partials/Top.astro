@@ -1,0 +1,85 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { parseLink } from '@/scripts/data-parsers/parseLink';
+import type { UnparsedLink } from '@/scripts/data-parsers/parseLink';
+import { cn } from '@/scripts/cn';
+import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
+import Container from '../ui/Container.astro';
+import Button from '../ui/Button.astro';
+import WordpressImage from '../WordpressImage.astro';
+import Grid from '../ui/Grid.astro';
+
+interface TopProps {
+  title?: string;
+  content?: string;
+  link?: UnparsedLink;
+  image?: UnparsedImage;
+}
+
+type Props = HTMLAttributes<'section'> & TopProps;
+
+const {
+  title,
+  content,
+  link: unparsedLink,
+  image,
+  class: className,
+  ...props
+} = Astro.props;
+
+const link = parseLink(unparsedLink);
+---
+
+<section
+  {...props}
+  class={cn(
+    'top',
+    'bg-gradient-to-b from-sw-surface-subdued to-transparent',
+    className
+  )}
+>
+  <Container>
+    <Grid class="gap-y-8">
+      <div
+        class={cn(
+          'col-span-full md:col-span-6 flex flex-col items-start justify-center gap-4'
+        )}
+      >
+        <h1 class="typography-h2 md:typography-h1" set:html={title ?? ''} />
+        <div
+          class="typography-body md:max-w-[22.125rem]"
+          set:html={content ?? ''}
+        />
+        {
+          link && link.shouldRender && (
+            <Button
+              asLink
+              href={link.url}
+              target={link.target}
+              class="w-full md:w-auto hidden md:inline-flex"
+            >
+              {link.title}
+            </Button>
+          )
+        }
+      </div>
+      <div class="col-span-full md:col-span-6">
+        <slot name="image">
+          <WordpressImage data={image} />
+        </slot>
+      </div>
+      {
+        link && link.shouldRender && (
+          <Button
+            asLink
+            href={link.url}
+            target={link.target}
+            class="col-span-full inline-flex md:hidden w-full"
+          >
+            {link.title}
+          </Button>
+        )
+      }
+    </Grid>
+  </Container>
+</section>
