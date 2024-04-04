@@ -47,13 +47,15 @@ const avatar3Processed = await getImage({ src: avatar3, format: 'jpg' });
           )
         }
       </div>
-      <div
-        class="col-span-full md:col-start-6 md:col-end-13 [&>svg]:max-w-full [&>svg]:h-auto"
-        set:html={heroImage
-          .replace('@avatar1', avatar1Processed.src)
-          .replace('@avatar2', avatar2Processed.src)
-          .replace('@avatar3', avatar3Processed.src)}
-      />
+      <div class="col-span-full md:col-start-6 md:col-end-13">
+        <div
+          class="image-container"
+          set:html={heroImage
+            .replace('@avatar1', avatar1Processed.src)
+            .replace('@avatar2', avatar2Processed.src)
+            .replace('@avatar3', avatar3Processed.src)}
+        />
+      </div>
       {
         button.shouldRender && (
           <Button
@@ -71,37 +73,44 @@ const avatar3Processed = await getImage({ src: avatar3, format: 'jpg' });
 </section>
 
 <style>
-  :global(.box) {
-    --nth: 1;
-    --delay: 250ms;
-    --speed: 750ms;
-    opacity: 0;
-    animation: fade-in var(--speed) ease forwards
-      calc(var(--nth) * var(--delay));
+  .image-container {
+    :global(svg) {
+      width: 100%;
+      height: auto;
 
-    &:nth-child(2) {
-      --nth: 5;
-      --speed: 660ms;
-    }
-    &:nth-child(3) {
-      --nth: 4;
-      --speed: 595ms;
-    }
-    &:nth-child(4) {
-      --nth: 7;
-      --speed: 820ms;
-    }
-    &:nth-child(5) {
-      --nth: 2;
-      --speed: 700ms;
-    }
-    &:nth-child(6) {
-      --nth: 6;
-      --speed: 725ms;
-    }
-    &:nth-child(7) {
-      --speed: 680ms;
-      --nth: 3;
+      & > :global(g) > :global(g) {
+        --nth: 1;
+        --delay: 250ms;
+        --speed: 750ms;
+        opacity: 0;
+        animation: fade-in var(--speed) ease forwards
+          calc(var(--nth) * var(--delay));
+
+        &:nth-child(2) {
+          --nth: 5;
+          --speed: 660ms;
+        }
+        &:nth-child(3) {
+          --nth: 4;
+          --speed: 595ms;
+        }
+        &:nth-child(4) {
+          --nth: 7;
+          --speed: 820ms;
+        }
+        &:nth-child(5) {
+          --nth: 2;
+          --speed: 700ms;
+        }
+        &:nth-child(6) {
+          --nth: 6;
+          --speed: 725ms;
+        }
+        &:nth-child(7) {
+          --speed: 680ms;
+          --nth: 3;
+        }
+      }
     }
   }
   @keyframes fade-in {
