@@ -1,18 +1,16 @@
 {
   "name": "sweep",
   "type": "module",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "prebuild": "npm run codegen",
-    "build": "astro build",
-    "prebuild:ssr": "npm run codegen",
-    "build:ssr": "cross-env APP_MODE=ssr astro build",
+    "clean": "rimraf ./.astro/cms-cache",
+    "build": "npm run codegen & astro build",
+    "build:ssr": "npm run codegen & cross-env APP_MODE=ssr astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "precodegen": "rimraf ./.astro/cms-cache",
-    "codegen": "graphql-codegen --require dotenv/config --config ./src/codegen.ts"
+    "codegen": "npm run clean & graphql-codegen --require dotenv/config --config ./src/codegen.ts"
   },
   "dependencies": {
     "@astrojs/check": "^0.5.6",
