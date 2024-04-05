@@ -1,6 +1,5 @@
-import type { Locales } from './i18n/config';
-
-export const HOMEPAGE_IDS: Record<Locales, string> = {
+// TODO: Find a way to fetch homepage data without hardcoding WP ids
+export const HOMEPAGE_IDS: Record<string, string> = {
   en: '6',
   fr: '506',
   de: '580',

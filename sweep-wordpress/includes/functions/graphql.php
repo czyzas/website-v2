@@ -1,5 +1,14 @@
 <?php
 
+add_filter( 'request', function ( $vars ) {
+
+	if ( is_graphql_http_request() && !empty( $vars['name'] ) ) {
+		$vars['suppress_filters'] = true;
+	}
+
+	return $vars;
+} );
+
 add_action( 'graphql_register_types', function () {
 	try {
 		register_graphql_fields( 'MediaItem', [

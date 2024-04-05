@@ -85,9 +85,14 @@
     "location": [
         [
             {
-                "param": "page_template",
+                "param": "post_type",
                 "operator": "==",
-                "value": "default"
+                "value": "page"
+            },
+            {
+                "param": "page_template",
+                "operator": "!=",
+                "value": "templates\/template-homepage.php"
             }
         ],
         [
@@ -150,5 +155,5 @@
         "Partner",
         "Post"
     ],
-    "modified": 1711622688
+    "modified": 1712303778
 }

@@ -1,12 +1,12 @@
 import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import type { Variables } from 'graphql-request';
 import {
+  ContactPageDocument,
   DefaultPageDocument,
   DefaultPagesStaticPathsDocument,
   HomepageDocument,
 } from '@/__generated__/cms';
 
-import type { Locales } from '@/i18n/config';
 import { defaultLocale } from '@/i18n/config';
 import { HOMEPAGE_IDS } from '@/constants';
 import { gqlClient } from './graphqlClient';
@@ -47,11 +47,12 @@ const fetchData = async <Query, QueryVariables extends Variables = Variables>(
   return data;
 };
 
-export function fetchHomepage(lang: Locales) {
+export function fetchHomepage(lang: string) {
   return fetchData(
     HomepageDocument,
     {
-      PAGE_ID: HOMEPAGE_IDS[lang],
+      PAGE_ID:
+        lang in HOMEPAGE_IDS ? HOMEPAGE_IDS[lang] : HOMEPAGE_IDS[defaultLocale],
       LANGUAGE: lang,
     },
     [lang, CACHE_KEYS.HOMEPAGE]
@@ -65,7 +66,7 @@ export function fetchDefaultPagesStaticPaths() {
   );
 }
 
-export function fetchDefaultPage(slug: string, lang: Locales = defaultLocale) {
+export function fetchDefaultPage(slug: string, lang: string = defaultLocale) {
   return fetchData(
     DefaultPageDocument,
     {
@@ -74,4 +75,11 @@ export function fetchDefaultPage(slug: string, lang: Locales = defaultLocale) {
     },
     [lang, CACHE_KEYS.PAGE, slug]
   );
+}
+
+export function fetchContactPage(lang: string = defaultLocale) {
+  return fetchData(ContactPageDocument, { LANG: lang }, [
+    lang,
+    CACHE_KEYS.CONTACT,
+  ]);
 }

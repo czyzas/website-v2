@@ -7,6 +7,7 @@ import { fileExists } from '../scripts/server/fileExists';
 export const CACHE_KEYS = {
   HOMEPAGE: 'homepage',
   PAGE: 'page',
+  CONTACT: 'contact',
 } as const;
 
 export type CachePayload = string | string[];

@@ -1,0 +1,36 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Top from '@/components/partials/Top.astro';
+import Layout from '@/layouts/Layout.astro';
+import { fetchContactPage } from '@/lib/fetchCMSData';
+import { updateStore } from '@/scripts/store';
+import { cmsStore } from '@/stores/cmsStore';
+import { languageStore } from '@/stores/languageStore';
+import { getStaticPathsWithLangs } from '@/i18n/utils';
+
+export const getStaticPaths = (() => {
+  const pfs = getStaticPathsWithLangs();
+  return pfs;
+}) satisfies GetStaticPaths;
+
+const { lang = 'en' } = Astro.params;
+
+const data = await fetchContactPage(lang as string);
+const page = data.pages!.nodes[0]!;
+
+updateStore(cmsStore, 'contactPage', page);
+updateStore(languageStore, 'currentLanguage', page.language!);
+updateStore(languageStore, 'languages', data.languages);
+updateStore(cmsStore, 'primaryMenu', data.primaryMenu!);
+updateStore(cmsStore, 'themeOptions', data.themeOptions!);
+
+const { subpageSettings } = page;
+const pageTitle = page?.title ?? '';
+const title = subpageSettings?.customTitle || pageTitle || '';
+const content = subpageSettings?.introduction ?? '';
+const image = subpageSettings?.image;
+---
+
+<Layout name="contact" pageTitle={pageTitle}>
+  <Top title={title} content={content} image={image} class="py-25" />
+</Layout>
