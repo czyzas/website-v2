@@ -42,7 +42,7 @@ const link = parseLink(unparsedLink);
     <Grid class="gap-y-8">
       <div
         class={cn(
-          'col-span-full md:col-span-6 flex flex-col items-start justify-center gap-4'
+          'col-span-full md:col-span-5 flex flex-col items-start justify-center gap-4'
         )}
       >
         <h1 class="typography-h2 md:typography-h1" set:html={title ?? ''} />
@@ -63,9 +63,9 @@ const link = parseLink(unparsedLink);
           )
         }
       </div>
-      <div class="col-span-full md:col-span-6">
+      <div class="col-span-full md:col-span-7">
         <slot name="image">
-          <WordpressImage data={image} />
+          <WordpressImage data={image} class="rounded-lg" />
         </slot>
       </div>
       {
