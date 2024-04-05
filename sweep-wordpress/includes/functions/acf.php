@@ -1,25 +1,5 @@
 <?php
 
-//add_action( 'acf/init', function () {
-//	acf_update_setting( 'google_api_key', 'AIzaSyCRPjv9FXcWodJmJ1YU4Nq87F0VMjFl_NE' );
-//
-//	// Add options page programatically for Polylang
-//	if ( function_exists( 'acf_add_options_page' ) && function_exists( 'pll_languages_list' ) ) {
-//		$langs = pll_languages_list();
-//		foreach ( $langs as $lang ) {
-//			#TODO: Ogarnąć lepiej menu_slug/post_id tak aby ACF łapał od razu
-//			acf_add_options_sub_page( [
-//				'page_title'  => "Options: $lang",
-//				'menu_title'  => "Options: $lang",
-//				'menu_slug'   => "options-$lang",
-//				'post_id'     => "options-$lang",
-//				'parent_slug' => 'options'
-//			] );
-//		}
-//	}
-//} );
-
-
 /**
  * Local JSON Functionality to save
  *
