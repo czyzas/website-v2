@@ -6,11 +6,11 @@
     "dev": "astro dev",
     "start": "astro dev",
     "clean": "rimraf ./.astro/cms-cache",
-    "build": "npm run codegen & astro build",
-    "build:ssr": "npm run codegen & cross-env APP_MODE=ssr astro build",
+    "build": "npm run codegen && astro build",
+    "build:ssr": "npm run codegen && cross-env APP_MODE=ssr astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "codegen": "npm run clean & graphql-codegen --require dotenv/config --config ./src/codegen.ts"
+    "codegen": "npm run clean && graphql-codegen --require dotenv/config --config ./src/codegen.ts"
   },
   "dependencies": {
     "@astrojs/check": "^0.5.6",
