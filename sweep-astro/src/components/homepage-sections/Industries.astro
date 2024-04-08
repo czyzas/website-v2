@@ -7,6 +7,7 @@ import SectionTitle from '../partials/SectionTitle.astro';
 import Grid from '../ui/Grid.astro';
 import Card from '../ui/Card.astro';
 import WordpressImage from '../WordpressImage.astro';
+import Section from '../ui/Section.astro';
 
 const store = getStore(cmsStore);
 const data = store.homepage!;
@@ -27,7 +28,7 @@ if (showSelected) {
 }
 ---
 
-<section class="industries bg-sw-surface-subdued py-12 md:py-20">
+<Section name="industries" bg="surface-subdued">
   <Container>
     <SectionTitle
       withMargin
@@ -56,4 +57,4 @@ if (showSelected) {
       }
     </Grid>
   </Container>
-</section>
+</Section>

@@ -11,6 +11,7 @@ import Card from '../ui/Card.astro';
 import Prose from '../ui/Prose.astro';
 import ButtonContainer from '../ButtonContainer.astro';
 import WordpressImage from '../WordpressImage.astro';
+import Section from '../ui/Section.astro';
 
 const store = getStore(cmsStore);
 const data = store.homepage!;
@@ -18,7 +19,7 @@ const acf = data.homepage!.platform!;
 const button = parseLink(acf.button);
 ---
 
-<section class="platform bg-sw-surface-subdued py-12 md:py-20">
+<Section name="platform" transition:name="surface-subdued">
   <Container>
     <SectionTitle
       withMargin
@@ -50,4 +51,4 @@ const button = parseLink(acf.button);
       )
     }
   </Container>
-</section>
+</Section>

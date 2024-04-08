@@ -13,6 +13,7 @@ import Button from '../ui/Button.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
 import Prose from '../ui/Prose.astro';
 import CardWithBigImage from '../CardWithBigImage.astro';
+import Section from '../ui/Section.astro';
 
 const store = getStore(cmsStore);
 const data = store.homepage!;
@@ -21,7 +22,7 @@ const acf = data.homepage!.goals!;
 const tabs = acf.tabs ?? [];
 ---
 
-<section class="goals pt-12 md:pt-20">
+<Section name="goals">
   <Container>
     <SectionTitle
       withMargin
@@ -74,4 +75,4 @@ const tabs = acf.tabs ?? [];
       </div>
     </Tabs>
   </Container>
-</section>
+</Section>

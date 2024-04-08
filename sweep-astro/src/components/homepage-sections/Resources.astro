@@ -10,6 +10,7 @@ import SectionTitle from '../partials/SectionTitle.astro';
 import SwiperNavigation from '../SwiperNavigation.astro';
 import ButtonContainer from '../ButtonContainer.astro';
 import WordpressImage from '../WordpressImage.astro';
+import Section from '../ui/Section.astro';
 
 const store = getStore(cmsStore);
 const data = store.homepage!;
@@ -63,7 +64,7 @@ const resources = acf.resources?.nodes ?? [];
   }
 </style>
 
-<section class="resources py-12 md:py-20 bg-sw-surface-subdued overflow-hidden">
+<Section name="resources" bg="surface-subdued" class="overflow-hidden">
   <Container>
     <SectionTitle
       withMargin
@@ -123,4 +124,4 @@ const resources = acf.resources?.nodes ?? [];
       }
     </ButtonContainer>
   </Container>
-</section>
+</Section>
