@@ -4,7 +4,6 @@ import type { ReplaceTypenameLiteral } from '@/types';
 export type UnparsedLink = ReplaceTypenameLiteral<LinkFragment> | undefined;
 
 export type ParsedLink = {
-  shouldRender: boolean;
   url: string;
   title: string;
   target?: string;
@@ -12,7 +11,9 @@ export type ParsedLink = {
 
 export const linkShouldRender = (unparsed: UnparsedLink) => !!unparsed?.url;
 
-export const parseLink = (unparsed: UnparsedLink): ParsedLink => ({
+export const parseLink = (
+  unparsed: UnparsedLink
+): { shouldRender: boolean } & ParsedLink => ({
   shouldRender: linkShouldRender(unparsed),
   url: unparsed?.url ?? '',
   title: unparsed?.title ?? '',

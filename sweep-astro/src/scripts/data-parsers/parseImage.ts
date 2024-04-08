@@ -4,7 +4,6 @@ import type { ReplaceTypenameLiteral } from '@/types';
 export type UnparsedImage = ReplaceTypenameLiteral<ImageFragment> | undefined;
 
 export type ParsedImage = {
-  shouldRender: boolean;
   url: string;
   alt: string;
   width: number;
@@ -15,7 +14,9 @@ export type ParsedImage = {
 export const imageShouldRender = (unparsed: UnparsedImage) =>
   !!unparsed?.node.sourceUrl;
 
-export const parseImage = (unparsed: UnparsedImage): ParsedImage => {
+export const parseImage = (
+  unparsed: UnparsedImage
+): { shouldRender: boolean } & ParsedImage => {
   const DEFAULT_SIZE = 375;
   return {
     shouldRender: imageShouldRender(unparsed),

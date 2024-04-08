@@ -1,0 +1,45 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
+import type { UnparsedLink } from '@/scripts/data-parsers/parseLink';
+import { cn } from '@/scripts/cn';
+import type { WithAttributes } from '@/types';
+import WordpressImage from './WordpressImage.astro';
+
+type Props = WithAttributes<
+  HTMLAttributes<'div'> & {
+    image?: UnparsedImage;
+    link?: UnparsedLink;
+  }
+>;
+const { image, link, class: className, ...props } = Astro.props;
+
+const Tag = link ? 'a' : 'div';
+---
+
+<Tag
+  {...props}
+  href={link ? link.url : undefined}
+  target={link ? link.target : undefined}
+  class={cn(
+    'article-card',
+    'flex flex-col border border-sw-border rounded-lg overflow-hidden shadow-button-secondary',
+    className
+  )}
+>
+  <div class="image-container aspect-[16/9] sm:aspect-[28/19]">
+    <WordpressImage
+      data={image}
+      preferredWidth={586}
+      class="size-full object-cover"
+    />
+  </div>
+  <div
+    class={cn(
+      'content-container bg-white p-6 lg:max-xl:p-4 flex flex-col gap-4',
+      { 'transition-colors hover:bg-sw-surface-subdued': !!link }
+    )}
+  >
+    <slot />
+  </div>
+</Tag>
