@@ -55,7 +55,7 @@ export const cacheCMSData = async <T = unknown>(
       .mkdir(path.dirname(cachePath), { recursive: true })
       .catch(() => null);
 
-    await writeStream(cachePath, JSON.stringify(data, null, 2));
+    await writeStream(cachePath, JSON.stringify(data));
   } catch (error) {
     if (error instanceof Error) {
       console.error('Caching error', error.message, '\n', error.stack);

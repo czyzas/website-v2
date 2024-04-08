@@ -221,7 +221,7 @@
                         "id": ""
                     },
                     "wpml_cf_preferences": 1,
-                    "layout": "",
+                    "layout": "block",
                     "pagination": 0,
                     "min": 0,
                     "max": 0,
@@ -577,14 +577,18 @@
     "style": "default",
     "label_placement": "top",
     "instruction_placement": "label",
-    "hide_on_screen": "",
+    "hide_on_screen": [
+        "the_content"
+    ],
     "active": true,
     "description": "",
     "show_in_rest": 0,
     "acfml_field_group_mode": "translation",
     "show_in_graphql": 1,
     "graphql_field_name": "contactAcf",
-    "map_graphql_types_from_location_rules": 0,
-    "graphql_types": "",
-    "modified": 1712324378
+    "map_graphql_types_from_location_rules": 1,
+    "graphql_types": [
+        "Page"
+    ],
+    "modified": 1712558513
 }

@@ -14,6 +14,48 @@ query ContactPage($LANG: String) {
           ...Image
         }
       }
+      contactAcf {
+        demo {
+          title
+          image {
+            ...Image
+          }
+          button {
+            ...Link
+          }
+        }
+        updates {
+          sectionTitle {
+            selectSectionTitle {
+              customStyle
+              displayAs
+              headline
+              headlineType
+              overline
+              textUnder
+            }
+          }
+        }
+        offices {
+          sectionTitle {
+            selectSectionTitle {
+              customStyle
+              displayAs
+              headline
+              headlineType
+              overline
+              textUnder
+            }
+          }
+          cards {
+            title
+            image {
+              ...Image
+            }
+            content
+          }
+        }
+      }
     }
   }
   defaultLanguage {
