@@ -1,18 +1,21 @@
-import { CheckCircle } from '@phosphor-icons/react';
-import Parser from 'html-react-parser';
+// import { CheckCircle } from '@phosphor-icons/react';
+import ReactHtmlParser from 'html-react-parser';
 import type { ComponentProps, ReactNode } from 'react';
-import React, { useCallback } from 'react';
-import { Trans } from 'react-i18next';
-import { Box, Stack, styled } from '@mui/material';
-import { t } from 'i18next';
-import { WEBSITE_MENU_ITEM } from '@lib/constants/routing';
-import { algaeGreenStrong } from '../bedrock/SwColors';
-import SwFlash, { SwFlashKind } from '../bedrock/banner/SwFlash';
-import SwButton, { SwButtonKind } from '../bedrock/button/SwButton';
-import { colors } from '../bedrock/fundations';
-import SwLine from '../bedrock/layout/SwLine';
-import SwLink from '../bedrock/typography/SwLink';
-import SwTypography from '../bedrock/typography/SwTypography';
+import type React from 'react';
+import { useCallback } from 'react';
+// import { Trans } from 'react-i18next';
+// import { Box, Stack, styled } from '@mui/material';
+// import { t } from 'i18next';
+// import { WEBSITE_MENU_ITEM } from '@lib/constants/routing';
+import { cn } from '@/scripts/cn';
+// import { algaeGreenStrong } from '../bedrock/SwColors';
+// import SwFlash, { SwFlashKind } from '../bedrock/banner/SwFlash';
+// import SwButton, { SwButtonKind } from '../bedrock/button/SwButton';
+// import { colors } from '../bedrock/fundations';
+// import SwLine from '../bedrock/layout/SwLine';
+// import SwLink from '../bedrock/typography/SwLink';
+// import SwTypography from '../bedrock/typography/SwTypography';
+import { TRANSLATIONS } from '@/constants';
 import { registerCheckboxField } from './HubspotCheckboxField';
 import { HubspotFormGroup } from './HubspotFormGroup';
 import { registerSelectField } from './HubspotSelectField';
@@ -34,13 +37,6 @@ function register(): void {
   registerCheckboxField();
 }
 
-const StyledA = styled('a')`
-  color: black;
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
 export interface HubSpotFormProps
   extends Omit<ComponentProps<'form'>, 'ref' | 'onSubmit'> {
   form: IHubspotFormDefinition;
@@ -61,20 +57,19 @@ export interface HubSpotFormProps
   ipAddress?: string;
 }
 
-export const HubspotForm: React.FC<HubSpotFormProps> = (props) => {
-  const {
-    form: formDefinition,
-    values,
-    options = {},
-    onSubmitForm,
-    reportEvent,
-    onSuccess,
-    pageName,
-    ipAddress,
-    submitRender,
-    formAnchor,
-    ...formProps
-  } = props;
+export const HubspotForm: React.FC<HubSpotFormProps> = ({
+  form: formDefinition,
+  values,
+  options = {},
+  onSubmitForm,
+  reportEvent,
+  onSuccess,
+  pageName,
+  ipAddress,
+  submitRender,
+  formAnchor,
+  ...formProps
+}) => {
   const {
     status,
     formResponse,
@@ -94,10 +89,15 @@ export const HubspotForm: React.FC<HubSpotFormProps> = (props) => {
   const onSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      submitForm(e.currentTarget, { onSuccess });
+      if (onSuccess) {
+        submitForm(e.currentTarget, { onSuccess });
+      } else {
+        console.error('onSuccess function does not exist');
+      }
     },
     [submitForm, onSuccess]
   );
+
   if (!formDefinition) {
     console.error('Form does not exist');
 
@@ -121,49 +121,63 @@ export const HubspotForm: React.FC<HubSpotFormProps> = (props) => {
     }
 
     return (
-      <Stack direction={'row'} id={'success-response'} spacing={1}>
-        <CheckCircle color={algaeGreenStrong} size={24} weight={'fill'} />
+      <div className="flex gap-2" id={'success-response'}>
+        {/* <CheckCircle color={algaeGreenStrong} size={24} weight={'fill'} /> */}
         {formDefinition.inlineMessage ? (
-          <SwTypography
-            component={'div'}
+          <div
             dangerouslySetInnerHTML={{ __html: formDefinition.inlineMessage }}
           />
         ) : (
-          <SwTypography component={'div'}>
+          <div>
             {options.defaultSuccessMessage ||
-              t('get_int_touch_page.form_message_thank_you')}
-          </SwTypography>
+              TRANSLATIONS.FORM_MESSAGE_THANK_YOU}
+          </div>
         )}
-      </Stack>
+      </div>
     );
   }
 
   const name =
     formAnchor ??
     (formDefinition.name ?? formDefinition.id).replace(/\s+/g, '');
-  const submitText =
-    formDefinition.submitText ?? options.defaultSubmitText ?? t('submit');
 
-  const legalConsentOptions =
-    formDefinition.metaData?.find(
-      ({ name }) => name === 'legalConsentOptions'
-    ) || null;
-  const privacyPolicyText = JSON.parse(
-    legalConsentOptions.value
-  )?.privacyPolicyText;
+  const submitText =
+    formDefinition.submitText ??
+    options.defaultSubmitText ??
+    TRANSLATIONS.SUBMIT;
+
+  let privacyPolicyText: string = TRANSLATIONS.PRIVACY_POLICY_TEXT;
+  try {
+    const legalConsentOptionsKV = formDefinition.metaData?.find(
+      (meta) => meta?.name === 'legalConsentOptions'
+    );
+
+    if (legalConsentOptionsKV && legalConsentOptionsKV?.value) {
+      const legalConsentOptions = JSON.parse(legalConsentOptionsKV.value) as {
+        privacyPolicyText?: string;
+      };
+
+      if (legalConsentOptions.privacyPolicyText) {
+        privacyPolicyText = legalConsentOptions.privacyPolicyText;
+      }
+    }
+  } catch {}
+
+  if (!formRef) return null;
 
   return (
-    <Box
-      alignItems={'start'}
-      className={options.formClassName}
-      component={'form'}
-      display={'flex'}
-      flexDirection={'column'}
-      gap={2}
+    <form
+      className={cn(
+        'flex flex-col items-start justify-start gap-4',
+        options.formClassName
+      )}
       id={name}
-      justifyContent={'start'}
-      method={'POST'}
-      ref={formRef as any}
+      method="POST"
+      ref={(r) => {
+        if (r) {
+          formRef.current = r;
+        }
+      }}
       onSubmit={onSubmit}
       {...formProps}
     >
@@ -186,60 +200,50 @@ export const HubspotForm: React.FC<HubSpotFormProps> = (props) => {
         />
       ))}
       {!options.hideSubmitButton && (
-        <Stack
-          alignItems={'start'}
-          gap={3}
-          justifyContent={'start'}
-          width={'100%'}
-        >
-          <SwTypography color={colors.text.secondary} variant={'body2'}>
+        <div className="flex items-start justify-start gap-3 w-full">
+          <div className="typography-body-2 text-sw-text-subdued">
             {privacyPolicyText ? (
-              Parser(privacyPolicyText)
+              ReactHtmlParser(privacyPolicyText)
             ) : (
-              <Trans i18nKey={'form_terms'}>
-                <SwLink
-                  color={colors.text.secondary}
-                  href={WEBSITE_MENU_ITEM.terms.link}
-                  variant={'body2'}
-                />
-                <SwLink
-                  color={colors.text.secondary}
-                  href={WEBSITE_MENU_ITEM.privacy.link}
-                  variant={'body2'}
-                />
-              </Trans>
+              <>
+                <a href="/terms">{TRANSLATIONS.TERMS_LINK_LABEL}</a>
+                <a href="/privacy">{TRANSLATIONS.PRIVCY_LINK_LABEL}</a>
+              </>
             )}
-          </SwTypography>
-          <SwLine color={colors.border} direction={'horizontal'} spacing={0} />
-          <Box display={'flex'} justifyContent={'end'} width={'100%'}>
+          </div>
+          <div className="flex justify-end w-full">
             {submitRender ? (
               submitRender({ isLoading, status })
             ) : (
-              <SwButton
-                className={options.submitClassName}
-                id={`Submit ${name}`}
-                kind={SwButtonKind.Primary}
-                loading={isLoading}
-                type={'submit'}
-              >
-                {options.renderSubmitButton
-                  ? options.renderSubmitButton(submitText)
-                  : submitText}
-              </SwButton>
+              <>
+                {/* TODO: Use Astro button here somehow */}
+                <button
+                  className={options.submitClassName}
+                  id={`Submit ${name}`}
+                  // kind={SwButtonKind.Primary}
+                  // loading={isLoading}
+                  type={'submit'}
+                >
+                  {options.renderSubmitButton
+                    ? options.renderSubmitButton(submitText)
+                    : submitText}
+                </button>
+              </>
             )}
-          </Box>
-        </Stack>
+          </div>
+        </div>
       )}
       {status === 'Failed' && (
-        <SwFlash displayIcon={false} kind={SwFlashKind.Danger}>
-          <SwTypography variant={'body2'}>
-            <Trans i18nKey={'form_submission_failed_message'}>
-              <StyledA href={'mailto:support@sweep.net'} />
-            </Trans>
-          </SwTypography>
-        </SwFlash>
+        <>
+          {/* TODO: HANDLE ERROR */}
+          <div className="flash">
+            <a href={'mailto:support@sweep.net'} className="typography-body-2">
+              {TRANSLATIONS.FORM_SUBMISSION_FAILED_MESSAGE}
+            </a>
+          </div>
+        </>
       )}
-    </Box>
+    </form>
   );
 };
 

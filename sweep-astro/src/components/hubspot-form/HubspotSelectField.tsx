@@ -1,10 +1,8 @@
 import type { ChangeEvent } from 'react';
-import React, { useCallback, useState } from 'react';
-import SwAutocomplete from '../../../components/v1/Inputs/SwAutocomplete';
+import { useCallback, useState } from 'react';
 import { HubspotDependentFields } from './HubspotDependentFields';
 import type { IFieldProps } from './HubspotFormFieldFactory';
 import { registerFieldTypeHandler } from './HubspotFormFieldFactory';
-import type { IHubspotFormFormFieldOptionsDefinition } from './shared';
 import { makeInputId } from './shared';
 
 const HubspotSelectField: React.FC<IFieldProps> = ({
@@ -14,14 +12,14 @@ const HubspotSelectField: React.FC<IFieldProps> = ({
   onChange,
   options,
 }) => {
-  const [currentValue, setCurrentValue] =
-    useState<IHubspotFormFormFieldOptionsDefinition>();
+  const [currentValue, setCurrentValue] = useState<string>('');
 
   const handleChange = useCallback(
     (
-      ev: ChangeEvent<HTMLSelectElement>,
-      value: IHubspotFormFormFieldOptionsDefinition
+      ev: ChangeEvent<HTMLSelectElement>
+      // value: IHubspotFormFormFieldOptionsDefinition
     ) => {
+      const { value } = ev.target;
       setCurrentValue(value);
       onInteracted();
       onChange?.(ev);
@@ -29,24 +27,31 @@ const HubspotSelectField: React.FC<IFieldProps> = ({
     [onInteracted, onChange]
   );
 
+  if (!field.name || !field.options) return null;
+
   return (
     <>
-      <SwAutocomplete
+      <select
         className={options.fieldClassName}
         disabled={!field.enabled}
-        fullWidth={true}
-        getOptionLabel={(option: IHubspotFormFormFieldOptionsDefinition) =>
-          option.label
-        }
-        helperText={field.description}
         id={makeInputId(formName, field.name)}
         name={field.name}
-        options={field.options}
-        placeholder={field.placeholder}
-        required={field.required}
+        // placeholder={field.placeholder ?? ''}
+        required={!!field.required}
         value={currentValue}
         onChange={handleChange}
-      />
+      >
+        {field.options?.map((option) =>
+          option?.value && option?.label ? (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ) : null
+        )}
+      </select>
+      {field.description ? (
+        <span className="helper-text">{field.description}</span>
+      ) : null}
       {field.__typename === 'HubspotFormFormFieldGroupsFields' &&
         field.dependentFieldFilters && (
           <HubspotDependentFields

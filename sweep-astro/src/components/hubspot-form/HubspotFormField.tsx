@@ -1,6 +1,5 @@
-import React from 'react';
-import { Stack } from '@mui/material';
-import SwInputLabel from '../bedrock/form/SwInputLabel';
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import { cn } from '@/scripts/cn';
 import { FieldFactory } from './HubspotFormFieldFactory';
 import type {
   IHubspotFormFieldDefinition,
@@ -16,19 +15,21 @@ export const HubspotFormField: React.FC<{
   onInteracted: () => void;
   onChange?: (ev: React.ChangeEvent<HTMLElement>) => void;
 }> = ({ formName, field, value, onInteracted, onChange, options }) => (
-  <Stack className={options.fieldContainerClassName} gap={0.5}>
+  <div className={cn('flex gap-2', options.fieldContainerClassName)}>
     {options.showLabels !== false && field.label && !field.hidden && (
-      <SwInputLabel
+      <label
         className={options.labelClassName}
         htmlFor={makeInputId(formName, field.name)}
-        required={field.required}
+        // required={field.required}
       >
-        <p dangerouslySetInnerHTML={{ __html: field.label }} />
-      </SwInputLabel>
+        <span dangerouslySetInnerHTML={{ __html: field.label }} />
+      </label>
     )}
-    <FieldFactory
-      field={{ formName, field, value, onInteracted, onChange, options }}
-      type={field.fieldType}
-    />
-  </Stack>
+    {field.fieldType ? (
+      <FieldFactory
+        field={{ formName, field, value, onInteracted, onChange, options }}
+        type={field.fieldType}
+      />
+    ) : null}
+  </div>
 );

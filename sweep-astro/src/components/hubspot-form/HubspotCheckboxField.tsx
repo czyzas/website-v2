@@ -1,7 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Box } from '@mui/material';
-import SwCheckbox from '../bedrock/form/SwCheckbox';
-import SwTypography from '../bedrock/typography/SwTypography';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { cn } from '@/scripts/cn';
 import type { IFieldProps } from './HubspotFormFieldFactory';
 import { registerFieldTypeHandler } from './HubspotFormFieldFactory';
 import type { IHubspotFormFormFieldOptionsDefinition } from './shared';
@@ -93,29 +91,29 @@ const HubspotCheckboxField: React.FC<IFieldProps> = ({
         ) as ReadonlyArray<IHubspotFormFormFieldOptionsDefinition>
       ).map((option) => {
         const { value } = option;
-        const checked = currentValue.includes(value);
+        const checked = !!value && currentValue.includes(value);
 
         return (
-          <Box alignItems={'center'} display={'flex'} gap={1} key={value}>
-            <SwCheckbox
-              backgroundColor={'white'}
+          <div className="flex items-center gap-2" key={value}>
+            <input
+              type="checkbox"
               checked={checked}
               className={options.checkboxFieldClassName}
               id={makeInputId(formName, field.name)}
-              inputProps={{
-                'aria-label': option.label,
-                onInput: onInteracted,
-              }}
+              aria-label={option.label ?? undefined}
               value={option.value ?? undefined}
+              onInput={onInteracted}
               onChange={handleChange}
             />
-            <SwTypography
-              className={options.checkboxLabelClassName}
-              variant={'body2'}
+            <p
+              className={cn(
+                'typography-body-2',
+                options.checkboxLabelClassName
+              )}
             >
               {option.label}
-            </SwTypography>
-          </Box>
+            </p>
+          </div>
         );
       })}
     </div>

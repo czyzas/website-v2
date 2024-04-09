@@ -1,11 +1,12 @@
 import type { HTMLInputTypeAttribute } from 'react';
-import React, { useCallback, useState } from 'react';
-import SwInput, { SwInputKind } from '../bedrock/form/SwInput';
-import { SwPhoneInput } from '../bedrock/form/SwPhoneInput';
+import { useCallback, useState } from 'react';
+// import { SwPhoneInput } from '../bedrock/form/SwPhoneInput';
 import type { IFieldProps } from './HubspotFormFieldFactory';
 import { registerFieldTypeHandler } from './HubspotFormFieldFactory';
 import type { IHubspotFormFieldDefinition } from './shared';
 import { makeInputId } from './shared';
+import Input from './ui/Input';
+import { SwPhoneInput } from './ui/SwPhoneInput/SwPhoneInput';
 
 function calculateInputType(
   field: IHubspotFormFieldDefinition
@@ -48,33 +49,30 @@ const HubspotTextField: React.FC<IFieldProps> = ({
     },
     [onChange]
   );
+  if (!field.name) return null;
 
   return (
-    <SwInput
+    <Input
       className={options.fieldClassName}
-      defaultValue={field.defaultValue}
+      defaultValue={field.defaultValue ?? ''}
       disabled={!field.enabled}
-      helperText={field.description}
-      hidden={field.hidden}
+      helperText={field.description ?? ''}
+      hidden={!!field.hidden}
       id={makeInputId(formName, field.name)}
-      inputProps={{
-        hidden: field.hidden,
-        pattern:
-          field.name === 'email'
-            ? '^(?!.*@(gmail.|yahoo.|hotmail.|outlook.|icloud.|free.)).*$'
-            : undefined,
-        title:
-          field.name === 'email'
-            ? 'Please enter a business email address'
-            : undefined,
-      }}
-      isFullWidth={true}
-      kind={SwInputKind.Default}
       name={field.name}
-      placeholder={field.placeholder}
-      required={field.required}
-      style={{ display: field.hidden ? 'none' : undefined }}
-      type={calculateInputType(field)}
+      pattern={
+        field.name === 'email'
+          ? '^(?!.*@(gmail.|yahoo.|hotmail.|outlook.|icloud.|free.)).*$'
+          : undefined
+      }
+      title={
+        field.name === 'email'
+          ? 'Please enter a business email address'
+          : undefined
+      }
+      placeholder={field.placeholder ?? ''}
+      required={!!field.required}
+      type={calculateInputType(field) ?? 'text'}
       value={currentValue}
       onChange={handleChange}
       onInput={onInteracted}
@@ -100,17 +98,18 @@ const HubspotPhoneField: React.FC<IFieldProps> = ({
     [onChange]
   );
 
+  if (!field.name) return null;
+
   return (
     <SwPhoneInput
       className={options.fieldClassName}
-      defaultValue={field.defaultValue}
+      defaultValue={field.defaultValue ?? ''}
       disabled={!field.enabled}
-      hidden={field.hidden}
+      hidden={!!field.hidden}
       id={makeInputId(formName, field.name)}
-      kind={SwInputKind.Default}
       name={field.name}
-      placeholder={field.placeholder}
-      required={field.required}
+      placeholder={field.placeholder ?? ''}
+      required={!!field.required}
       value={currentValue as string}
       onChange={handleChange}
       onInput={onInteracted}
