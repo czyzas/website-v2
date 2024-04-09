@@ -9,6 +9,9 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:astro/recommended',
     'plugin:astro/jsx-a11y-recommended',
+    'plugin:react/recommended',
+    'plugin:react/jsx-runtime',
+    'plugin:jsx-a11y/recommended',
     'prettier',
   ],
   parser: '@typescript-eslint/parser',
@@ -19,8 +22,9 @@ module.exports = {
   rules: {
     '@typescript-eslint/triple-slash-reference': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
-    'unused-imports/no-unused-imports': 'off',
     'no-underscore-dangle': ['error', { allow: ['__typename'] }],
+    // React
+    'react/prop-types': 'off',
   },
   settings: {
     'import/core-modules': ['astro:assets', 'astro:content'],
