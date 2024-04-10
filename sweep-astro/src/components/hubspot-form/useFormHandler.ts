@@ -57,7 +57,7 @@ export function useFormHandler(
   }, []);
 
   const submitForm = useCallback(
-    (
+    async (
       form: HTMLFormElement,
       callbacks?: { onSuccess: (body: IHubspotFormSubmitBody) => void }
     ) => {
@@ -66,22 +66,26 @@ export function useFormHandler(
           formId: formDefinition.id,
           formName: formDefinition.name?.trim(),
         });
+
         const formData = new FormData(form);
         handleFormData?.(formData);
+
         const fields: Array<{
           objectTypeId: string | undefined;
           name: string;
           value: string;
         }> = [];
+
         const request = {
           fields,
           context: {
-            pageName,
+            pageName: pageName ?? '',
             pageUri: window.location.pathname,
-            hutk: getCookieValue('hubspotutk'),
-            ipAddress,
+            hutk: getCookieValue('hubspotutk') ?? '',
+            ipAddress: ipAddress ?? '',
           },
         };
+
         formData.forEach((v, k) => {
           const field = fieldMapping[k];
           if (field) {
@@ -98,58 +102,60 @@ export function useFormHandler(
         const payload = JSON.stringify(request);
 
         setStatus('Submitting');
-        fetch(url, {
-          method: 'POST',
-          body: payload,
-          headers: { 'Content-Type': 'application/json' },
-        })
-          .then((response) => {
-            if (response.ok) {
-              setFormResponse(undefined);
-              reportEvent?.('hubspot_form_success', {
-                formId: formDefinition.id,
-                formName: formDefinition.name?.trim(),
-              });
 
-              setStatus(formState.current.isDirty ? 'Idle' : 'Success');
-              const element = document.getElementById('success-response');
+        try {
+          const response = await fetch(url, {
+            method: 'POST',
+            body: payload,
+            headers: { 'Content-Type': 'application/json' },
+          });
 
-              if (element) {
-                element.scrollIntoView();
-              }
-              callbacks?.onSuccess?.(request);
-            } else {
-              console.log('error:', response);
-              response
-                .json()
-                .then((t: IHubspotFormResponse) => {
-                  reportEvent?.('hubspot_form_failure', {
-                    formName: formDefinition.name?.trim(),
-                    formId: formDefinition.id,
-                    formResponse: t,
-                  });
-                  setFormResponse(t);
-                })
-                .catch((error) => {
-                  console.error('getting response error:', error);
-                  reportEvent?.('hubspot_form_failure', {
-                    formId: formDefinition.id,
-                    formName: formDefinition.name?.trim(),
-                  });
-                })
-                .finally(() => {
-                  setStatus('Failed');
-                });
+          if (response.ok) {
+            setFormResponse(undefined);
+            reportEvent?.('hubspot_form_success', {
+              formId: formDefinition.id,
+              formName: formDefinition.name?.trim(),
+            });
+
+            setStatus(formState.current.isDirty ? 'Idle' : 'Success');
+            const element = document.getElementById('success-response');
+
+            if (element) {
+              element.scrollIntoView();
             }
-          })
-          .catch((error) => {
-            console.error('Failed', error);
+            callbacks?.onSuccess?.(request);
+          } else {
+            console.log('error:', response);
+            try {
+              const json = (await response.json()) as IHubspotFormResponse;
+              reportEvent?.('hubspot_form_failure', {
+                formName: formDefinition.name?.trim(),
+                formId: formDefinition.id,
+                formResponse: json,
+              });
+              setFormResponse(json);
+            } catch (error) {
+              if (error instanceof Error) {
+                console.error('getting response error:', error);
+                reportEvent?.('hubspot_form_failure', {
+                  formId: formDefinition.id,
+                  formName: formDefinition.name?.trim(),
+                });
+              }
+            } finally {
+              setStatus('Failed');
+            }
+          }
+        } catch (error) {
+          if (error instanceof Error) {
+            console.error('Form submit failed', error);
             reportEvent?.('hubspot_form_error', {
               formId: formDefinition.id,
               formName: formDefinition.name?.trim(),
             });
             setStatus('Failed');
-          });
+          }
+        }
       }
     },
     [
