@@ -15,7 +15,7 @@ export const HubspotFormField: React.FC<{
   onInteracted: () => void;
   onChange?: (ev: React.ChangeEvent<HTMLElement>) => void;
 }> = ({ formName, field, value, onInteracted, onChange, options }) => (
-  <div className={cn('flex gap-2', options.fieldContainerClassName)}>
+  <div className={cn('flex flex-col gap-2', options.fieldContainerClassName)}>
     {options.showLabels !== false && field.label && !field.hidden && (
       <label
         className={options.labelClassName}

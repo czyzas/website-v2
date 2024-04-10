@@ -1,15 +1,10 @@
 // import { CheckCircle } from '@phosphor-icons/react';
 import ReactHtmlParser from 'html-react-parser';
 import type { ComponentProps, ReactNode } from 'react';
-import type React from 'react';
 import { useCallback } from 'react';
 import { cn } from '@/scripts/cn';
 import { TRANSLATIONS } from '@/constants';
-import { registerCheckboxField } from './HubspotCheckboxField';
 import { HubspotFormGroup } from './HubspotFormGroup';
-import { registerSelectField } from './HubspotSelectField';
-import { registerHubspotTextField } from './HubspotTextField';
-import { registerTextAreaField } from './HubspotTextareaField';
 import type {
   EventReporter,
   IHubspotFormDefinition,
@@ -18,6 +13,12 @@ import type {
 } from './shared';
 import type { HubspotFormStatus } from './useFormHandler';
 import { useFormHandler } from './useFormHandler';
+import {
+  registerCheckboxField,
+  registerHubspotTextField,
+  registerSelectField,
+  registerTextAreaField,
+} from './register';
 
 function register(): void {
   registerHubspotTextField();
@@ -92,7 +93,7 @@ export const HubspotForm: React.FC<HubSpotFormProps> = ({
 
     return null;
   }
-  if (!formDefinition.portalId ?? !formDefinition.guid) {
+  if (!(formDefinition.portalId ?? formDefinition.guid)) {
     console.error('Invalid form configuration');
 
     return null;
@@ -189,7 +190,7 @@ export const HubspotForm: React.FC<HubSpotFormProps> = ({
         />
       ))}
       {!options.hideSubmitButton && (
-        <div className="flex items-start justify-start gap-3 w-full">
+        <div className="submit-button-container flex flex-col items-start justify-start gap-3 w-full">
           <div className="typography-body-2 text-sw-text-subdued">
             {privacyPolicyText ? (
               ReactHtmlParser(privacyPolicyText)
@@ -200,7 +201,7 @@ export const HubspotForm: React.FC<HubSpotFormProps> = ({
               </>
             )}
           </div>
-          <div className="flex justify-end w-full">
+          <div className="flex w-full">
             {submitRender ? (
               submitRender({ isLoading, status })
             ) : (

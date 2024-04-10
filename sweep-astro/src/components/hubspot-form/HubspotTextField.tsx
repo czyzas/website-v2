@@ -1,12 +1,8 @@
 import type { HTMLInputTypeAttribute } from 'react';
 import { useCallback, useState } from 'react';
-// import { SwPhoneInput } from '../bedrock/form/SwPhoneInput';
-import type { IFieldProps } from './HubspotFormFieldFactory';
-import { registerFieldTypeHandler } from './HubspotFormFieldFactory';
-import type { IHubspotFormFieldDefinition } from './shared';
+import type { IFieldProps, IHubspotFormFieldDefinition } from './shared';
 import { makeInputId } from './shared';
 import Input from './ui/Input';
-import { SwPhoneInput } from './ui/SwPhoneInput/SwPhoneInput';
 
 function calculateInputType(
   field: IHubspotFormFieldDefinition
@@ -32,14 +28,14 @@ function calculateInputType(
   return type;
 }
 
-const HubspotTextField: React.FC<IFieldProps> = ({
+export const HubspotTextField = ({
   formName,
   field,
   onInteracted,
   onChange,
   value,
   options,
-}) => {
+}: IFieldProps) => {
   const [currentValue, setCurrentValue] = useState(value);
 
   const handleChange = useCallback(
@@ -79,46 +75,3 @@ const HubspotTextField: React.FC<IFieldProps> = ({
     />
   );
 };
-
-const HubspotPhoneField: React.FC<IFieldProps> = ({
-  formName,
-  field,
-  onInteracted,
-  onChange,
-  value,
-  options,
-}) => {
-  const [currentValue, setCurrentValue] = useState(value);
-
-  const handleChange = useCallback(
-    (ev: React.ChangeEvent<HTMLInputElement>) => {
-      setCurrentValue(ev.currentTarget.value);
-      onChange?.(ev);
-    },
-    [onChange]
-  );
-
-  if (!field.name) return null;
-
-  return (
-    <SwPhoneInput
-      className={options.fieldClassName}
-      defaultValue={field.defaultValue ?? ''}
-      disabled={!field.enabled}
-      hidden={!!field.hidden}
-      id={makeInputId(formName, field.name)}
-      name={field.name}
-      placeholder={field.placeholder ?? ''}
-      required={!!field.required}
-      value={currentValue as string}
-      onChange={handleChange}
-      onInput={onInteracted}
-    />
-  );
-};
-
-export function registerHubspotTextField(): void {
-  registerFieldTypeHandler('text', HubspotTextField);
-  registerFieldTypeHandler('number', HubspotTextField);
-  registerFieldTypeHandler('phonenumber', HubspotPhoneField);
-}

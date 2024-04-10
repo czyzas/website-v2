@@ -9,9 +9,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:astro/recommended',
     'plugin:astro/jsx-a11y-recommended',
-    'plugin:react/recommended',
-    'plugin:react/jsx-runtime',
-    'plugin:jsx-a11y/recommended',
+
     'prettier',
   ],
   parser: '@typescript-eslint/parser',
@@ -23,8 +21,6 @@ module.exports = {
     '@typescript-eslint/triple-slash-reference': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
     'no-underscore-dangle': ['error', { allow: ['__typename'] }],
-    // React
-    'react/prop-types': 'off',
   },
   settings: {
     'import/core-modules': ['astro:assets', 'astro:content'],
@@ -32,11 +28,18 @@ module.exports = {
   overrides: [
     {
       files: ['*.{js,jsx,ts,tsx}'],
+      extends: [
+        'plugin:react/recommended',
+        'plugin:react/jsx-runtime',
+        'plugin:jsx-a11y/recommended',
+      ],
       // parserOptions: {
       //   ecmaVersion: 12,
       //   project: './tsconfig.eslint.json',
       // },
-      rules: {},
+      rules: {
+        'react/prop-types': 'off',
+      },
       settings: {
         'import/extensions': ['.js', '.ts'],
         'import/parsers': {

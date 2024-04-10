@@ -1,31 +1,13 @@
-import type {
-  IHubspotFormFieldDefinition,
-  IHubspotFormOptions,
-} from './shared';
-
-export interface IFieldProps {
-  formName: string;
-  field: IHubspotFormFieldDefinition;
-  value?: string | number;
-  onInteracted: () => void;
-  onChange?: (ev: React.ChangeEvent<HTMLElement>) => void;
-  options: IHubspotFormOptions;
-}
-
-const handlers: Record<string, React.FC<IFieldProps>> = {};
-
-export function registerFieldTypeHandler(
-  type: string,
-  component: React.FC<IFieldProps>
-): void {
-  handlers[type] = component;
-}
+import { getStore } from '@/scripts/store';
+import { hubspotHandlersStore } from '@/stores/hubspotHandlersStore';
+import type { IFieldProps } from './shared';
 
 export const FieldFactory: React.FC<{ type: string; field: IFieldProps }> = ({
   type,
   field,
 }) => {
-  const Component = handlers[type];
+  const store = getStore(hubspotHandlersStore);
+  const Component = store[type];
 
   if (!Component) {
     return null;

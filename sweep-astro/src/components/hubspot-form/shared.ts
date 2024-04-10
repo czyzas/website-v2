@@ -164,6 +164,15 @@ export type IHubspotFormSubmitBody = {
   };
 };
 
+export interface IFieldProps {
+  formName: string;
+  field: IHubspotFormFieldDefinition;
+  value?: string | number;
+  onInteracted: () => void;
+  onChange?: (ev: React.ChangeEvent<HTMLElement>) => void;
+  options: IHubspotFormOptions;
+}
+
 export function makeInputId(
   formName: string,
   fieldName?: string | null

@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { cn } from '@/scripts/cn';
-import type { IFieldProps } from './HubspotFormFieldFactory';
-import { registerFieldTypeHandler } from './HubspotFormFieldFactory';
-import type { IHubspotFormFormFieldOptionsDefinition } from './shared';
+import type {
+  IFieldProps,
+  IHubspotFormFormFieldOptionsDefinition,
+} from './shared';
 import { makeInputId } from './shared';
 
 function buildSet(value?: string): ReadonlyArray<string> {
@@ -37,14 +38,14 @@ function removeValue(
   return current.filter((_, i) => i !== index);
 }
 
-const HubspotCheckboxField: React.FC<IFieldProps> = ({
+export const HubspotCheckboxField = ({
   formName,
   field,
   onInteracted,
   onChange,
   value,
   options,
-}) => {
+}: IFieldProps) => {
   const [currentValue, setCurrentValue] = useState(() =>
     buildSet(value as string)
   );
@@ -119,7 +120,3 @@ const HubspotCheckboxField: React.FC<IFieldProps> = ({
     </div>
   );
 };
-
-export function registerCheckboxField(): void {
-  registerFieldTypeHandler('checkbox', HubspotCheckboxField);
-}

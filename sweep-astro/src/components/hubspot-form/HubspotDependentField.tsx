@@ -5,13 +5,21 @@ import type {
   IHubspotFormOptions,
 } from './shared';
 
-export const HubspotDependentField: React.FC<{
+interface HubspotDependentFieldProps {
   formName: string;
   field: IHubspotFormFormDependentFieldDefinition;
   parentValue?: string;
   onInteracted: () => void;
   options: IHubspotFormOptions;
-}> = ({ formName, field, parentValue, options, onInteracted }) => {
+}
+
+export const HubspotDependentField = ({
+  formName,
+  field,
+  parentValue,
+  options,
+  onInteracted,
+}: HubspotDependentFieldProps) => {
   const { filters, dependentFormField } = field;
 
   const isDisplayed = useMemo(() => {

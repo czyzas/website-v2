@@ -1,17 +1,16 @@
 import type { ChangeEvent } from 'react';
 import { useCallback, useState } from 'react';
-import { HubspotDependentFields } from './HubspotDependentFields';
-import type { IFieldProps } from './HubspotFormFieldFactory';
-import { registerFieldTypeHandler } from './HubspotFormFieldFactory';
 import { makeInputId } from './shared';
+import type { IFieldProps } from './shared';
+import { HubspotDependentFields } from './HubspotDependentFields';
 
-const HubspotSelectField: React.FC<IFieldProps> = ({
+export const HubspotSelectField = ({
   formName,
   field,
   onInteracted,
   onChange,
   options,
-}) => {
+}: IFieldProps) => {
   const [currentValue, setCurrentValue] = useState<string>('');
 
   const handleChange = useCallback(
@@ -65,7 +64,3 @@ const HubspotSelectField: React.FC<IFieldProps> = ({
     </>
   );
 };
-
-export function registerSelectField(): void {
-  registerFieldTypeHandler('select', HubspotSelectField);
-}
