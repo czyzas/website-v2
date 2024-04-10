@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { loadEnv } from 'vite';
 import { defineConfig } from 'astro/config';
 import vercel from '@astrojs/vercel/serverless';
 // import node from '@astrojs/node';
@@ -6,7 +8,12 @@ import icon from 'astro-icon';
 import react from '@astrojs/react';
 import { defaultLocale, locales } from './src/i18n/config';
 
-const appMode = process.env.APP_MODE;
+const appMode = (process.env.APP_MODE ?? 'static') as 'static' | 'ssr';
+const { CMS_ASSETS_DOMAIN } = loadEnv(
+  process.env.NODE_ENV ?? 'production',
+  process.cwd(),
+  ''
+);
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,7 +24,7 @@ export default defineConfig({
     locales: [...locales],
   },
   image: {
-    domains: ['sweep.flyhigh.pro'],
+    domains: [CMS_ASSETS_DOMAIN],
   },
   integrations: [
     icon({

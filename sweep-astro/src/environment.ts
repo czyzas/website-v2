@@ -8,13 +8,11 @@ export const env = createEnv({
    */
   clientPrefix: 'PUBLIC_',
   server: {
-    APP_MODE: z.enum(['static', 'ssr']).default('static'),
+    CMS_ASSETS_DOMAIN: z.string(),
   },
   client: {
-    PUBLIC_CMS_BASE_URL: z.string().url(),
     PUBLIC_CMS_ENDPOINT: z.string().url(),
-    PUBLIC_CMS_API_TOKEN: z.string().min(1),
-    PUBLIC_APP_ENV: z.enum(['development', 'staging', 'production']),
+    PUBLIC_HUBSPOT_ACCESS_TOKEN: z.string(),
   },
   /**
    * What object holds the environment variables at runtime.
