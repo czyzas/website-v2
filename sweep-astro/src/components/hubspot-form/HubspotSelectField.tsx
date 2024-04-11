@@ -1,8 +1,11 @@
 import type { ChangeEvent } from 'react';
 import { useCallback, useState } from 'react';
+import { cn } from '@/scripts/cn';
 import { makeInputId } from './shared';
 import type { IFieldProps } from './shared';
 import { HubspotDependentFields } from './HubspotDependentFields';
+import { base } from './ui/styles';
+import { Combobox } from './ui/Combobox/Combobox';
 
 export const HubspotSelectField = ({
   formName,
@@ -15,7 +18,7 @@ export const HubspotSelectField = ({
 
   const handleChange = useCallback(
     (
-      ev: ChangeEvent<HTMLSelectElement>
+      ev: ChangeEvent<HTMLInputElement>
       // value: IHubspotFormFormFieldOptionsDefinition
     ) => {
       const { value } = ev.target;
@@ -28,10 +31,26 @@ export const HubspotSelectField = ({
 
   if (!field.name || !field.options) return null;
 
+  const selectOptions = field.options
+    .filter(
+      (o): o is { value: string; label: string } => !!(o && o.value && o.label)
+    )
+    .map(({ value, label }) => ({ value, label }));
+
   return (
     <>
-      <select
-        className={options.fieldClassName}
+      <Combobox
+        className={cn('select', base, options.fieldClassName)}
+        disabled={!field.enabled}
+        id={makeInputId(formName, field.name)}
+        name={field.name}
+        required={!!field.required}
+        value={currentValue}
+        onChange={handleChange}
+        options={selectOptions}
+      />
+      {/* <select
+        className={cn('select', base, options.fieldClassName)}
         disabled={!field.enabled}
         id={makeInputId(formName, field.name)}
         name={field.name}
@@ -47,10 +66,7 @@ export const HubspotSelectField = ({
             </option>
           ) : null
         )}
-      </select>
-      {field.description ? (
-        <span className="helper-text">{field.description}</span>
-      ) : null}
+      </select> */}
       {field.__typename === 'HubspotFormFormFieldGroupsFields' &&
         field.dependentFieldFilters && (
           <HubspotDependentFields

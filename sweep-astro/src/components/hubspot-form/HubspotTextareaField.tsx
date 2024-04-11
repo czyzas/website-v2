@@ -1,7 +1,9 @@
 import type React from 'react';
 import { useCallback, useEffect, useState } from 'react';
+import { cn } from '@/scripts/cn';
 import { makeInputId } from './shared';
 import type { IFieldProps } from './shared';
+import { base } from './ui/styles';
 
 export const HubspotTextareaField = ({
   formName,
@@ -26,7 +28,7 @@ export const HubspotTextareaField = ({
   return (
     <>
       <textarea
-        className={options.fieldClassName}
+        className={cn('textarea', base, options.fieldClassName)}
         // defaultValue={field.defaultValue ?? ''}
         disabled={!field.enabled}
         hidden={!!field.hidden}

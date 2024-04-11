@@ -50,9 +50,8 @@ export const HubspotTextField = ({
   return (
     <Input
       className={options.fieldClassName}
-      defaultValue={field.defaultValue ?? ''}
+      // defaultValue={field.defaultValue ?? ''}
       disabled={!field.enabled}
-      helperText={field.description ?? ''}
       hidden={!!field.hidden}
       id={makeInputId(formName, field.name)}
       name={field.name}

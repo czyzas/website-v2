@@ -81,8 +81,8 @@ export function useFormHandler(
           context: {
             pageName: pageName ?? '',
             pageUri: window.location.pathname,
-            hutk: getCookieValue('hubspotutk') ?? '',
-            ipAddress: ipAddress ?? '',
+            hutk: getCookieValue('hubspotutk') ?? undefined,
+            ipAddress: ipAddress ?? undefined,
           },
         };
 
@@ -107,7 +107,9 @@ export function useFormHandler(
           const response = await fetch(url, {
             method: 'POST',
             body: payload,
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+              'Content-Type': 'application/json',
+            },
           });
 
           if (response.ok) {
@@ -135,26 +137,22 @@ export function useFormHandler(
               });
               setFormResponse(json);
             } catch (error) {
-              if (error instanceof Error) {
-                console.error('getting response error:', error);
-                reportEvent?.('hubspot_form_failure', {
-                  formId: formDefinition.id,
-                  formName: formDefinition.name?.trim(),
-                });
-              }
+              console.error('getting response error:', error);
+              reportEvent?.('hubspot_form_failure', {
+                formId: formDefinition.id,
+                formName: formDefinition.name?.trim(),
+              });
             } finally {
               setStatus('Failed');
             }
           }
         } catch (error) {
-          if (error instanceof Error) {
-            console.error('Form submit failed', error);
-            reportEvent?.('hubspot_form_error', {
-              formId: formDefinition.id,
-              formName: formDefinition.name?.trim(),
-            });
-            setStatus('Failed');
-          }
+          console.error('Form submit failed', error);
+          reportEvent?.('hubspot_form_error', {
+            formId: formDefinition.id,
+            formName: formDefinition.name?.trim(),
+          });
+          setStatus('Failed');
         }
       }
     },

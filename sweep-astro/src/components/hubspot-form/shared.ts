@@ -159,8 +159,8 @@ export type IHubspotFormSubmitBody = {
   context: {
     pageName: string;
     pageUri: string;
-    hutk: string;
-    ipAddress: string;
+    hutk?: string;
+    ipAddress?: string;
   };
 };
 

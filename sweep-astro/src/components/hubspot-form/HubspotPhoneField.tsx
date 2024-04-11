@@ -26,7 +26,7 @@ export const HubspotPhoneField = ({
   return (
     <SwPhoneInput
       className={options.fieldClassName}
-      defaultValue={field.defaultValue ?? ''}
+      // defaultValue={field.defaultValue ?? ''}
       disabled={!field.enabled}
       hidden={!!field.hidden}
       id={makeInputId(formName, field.name)}

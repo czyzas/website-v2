@@ -47,7 +47,7 @@ export interface HubSpotFormProps
   ipAddress?: string;
 }
 
-export const HubspotForm: React.FC<HubSpotFormProps> = ({
+export const HubspotForm = ({
   form: formDefinition,
   values,
   options = {},
@@ -59,7 +59,7 @@ export const HubspotForm: React.FC<HubSpotFormProps> = ({
   submitRender,
   formAnchor,
   ...formProps
-}) => {
+}: HubSpotFormProps) => {
   const {
     status,
     formResponse,
@@ -79,11 +79,11 @@ export const HubspotForm: React.FC<HubSpotFormProps> = ({
   const onSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      if (onSuccess) {
-        submitForm(e.currentTarget, { onSuccess });
-      } else {
-        console.error('onSuccess function does not exist');
-      }
+      submitForm(e.currentTarget, {
+        onSuccess(body) {
+          onSuccess?.(body);
+        },
+      });
     },
     [submitForm, onSuccess]
   );

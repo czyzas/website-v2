@@ -1,37 +1,27 @@
 import { forwardRef } from 'react';
 import type { ForwardedRef, InputHTMLAttributes } from 'react';
 import { cn } from '@/scripts/cn';
+import { base } from './styles';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  dataTestId?: string;
   onValueChange?: (value: string) => void;
-  helperText?: string;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
   (
-    {
-      className,
-      dataTestId,
-      helperText,
-      onChange,
-      onValueChange,
-      ...rest
-    }: InputProps,
+    { className, onChange, onValueChange, ...rest }: InputProps,
     ref: ForwardedRef<HTMLInputElement>
   ) => (
-    <div>
+    <div className="input-container">
       <input
         {...rest}
         ref={ref}
-        data-text-id={dataTestId ?? 'textField'}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           onChange?.(e);
           onValueChange?.(e.target.value);
         }}
-        className={cn('input', className)}
+        className={cn('input', base, className)}
       />
-      {helperText ? <div className="helper-text">{helperText}</div> : null}
     </div>
   )
 );
