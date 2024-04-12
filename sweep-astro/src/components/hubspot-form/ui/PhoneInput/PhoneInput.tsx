@@ -1,6 +1,8 @@
 import { forwardRef, useRef, useState } from 'react';
+import { cn } from '@/scripts/cn';
 import Input from '../Input';
 import type { InputProps } from '../Input';
+import { Combobox } from '../Combobox/Combobox';
 import countries from './countries';
 import type { Country as CountryType, PhoneNumber } from './utils';
 import {
@@ -26,7 +28,7 @@ const DEFAULT_PHONE_NUMBER = {
   country: countries[0],
 };
 
-export const SwPhoneInput = forwardRef<
+export const PhoneInput = forwardRef<
   HTMLInputElement,
   Omit<SwPhoneInputProps, 'size'>
 >((props, ref) => {
@@ -65,11 +67,16 @@ export const SwPhoneInput = forwardRef<
     }
   };
 
+  const selectOptions = countries.map((country) => ({
+    value: country[2],
+    label: `${country[0]} (+${country[3]})`,
+    keywords: [country[0].toLowerCase()],
+  }));
+
   return (
-    <div className="grid grid-cols-[minmax(auto,155px)_1fr] gap-8">
+    <div className="phone-input grid grid-cols-[minmax(auto,12rem)_1fr] gap-4">
       <input
         aria-hidden={'true'}
-        id={id}
         name={name}
         style={{ display: 'none' }}
         type={'tel'}
@@ -82,10 +89,12 @@ export const SwPhoneInput = forwardRef<
           inputRef.current = r;
         }}
       />
-      <select
-        value={phoneNumberValue.country[2]}
-        onChange={(e) => {
-          const country = getCountryByIso(e.target.value as CountryType[2]);
+      <Combobox
+        buttonClassName={cn('truncate')}
+        options={selectOptions}
+        allowUnselect={false}
+        onValueChange={(val) => {
+          const country = getCountryByIso(val as CountryType[2]);
 
           const raw = phoneNumberValue.raw
             ? replaceDialCode(
@@ -101,17 +110,11 @@ export const SwPhoneInput = forwardRef<
             country,
           });
         }}
-      >
-        {countries.map((country) => (
-          <option key={country[2]} value={country[2]}>
-            {country[0]}&nbsp;(+{country[3]})
-          </option>
-        ))}
-      </select>
+      />
       <Input
         ref={inputRef}
         {...rest}
-        id={undefined}
+        id={id}
         type={'tel'}
         value={phoneNumberValue.formatted}
         onChange={(e) => {
@@ -130,4 +133,4 @@ export const SwPhoneInput = forwardRef<
   );
 });
 
-SwPhoneInput.displayName = 'PhoneInput';
+PhoneInput.displayName = 'PhoneInput';

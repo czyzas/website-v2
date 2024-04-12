@@ -52,9 +52,13 @@ const officesCards = offices?.cards ?? [];
 
 <Layout name="contact" pageTitle={pageTitle}>
   <Top title={title} content={content} image={image} class="py-25" />
-  <Section>
+  <Section bg="surface-subdued" class="md:py-15">
     <Container>
-      <Form formGuid="a83996b3-80a3-4bb2-8595-a0a51f71a11e" />
+      <Grid>
+        <div class="form-container col-span-full lg:col-start-3 lg:col-end-11">
+          <Form formGuid="a83996b3-80a3-4bb2-8595-a0a51f71a11e" />
+        </div>
+      </Grid>
     </Container>
   </Section>
   <Section name="demo">

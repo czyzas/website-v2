@@ -127,7 +127,6 @@ export function useFormHandler(
             }
             callbacks?.onSuccess?.(request);
           } else {
-            console.log('error:', response);
             try {
               const json = (await response.json()) as IHubspotFormResponse;
               reportEvent?.('hubspot_form_failure', {
@@ -136,8 +135,9 @@ export function useFormHandler(
                 formResponse: json,
               });
               setFormResponse(json);
+              console.log('error:', { error: json, response });
             } catch (error) {
-              console.error('getting response error:', error);
+              console.error('getting response error:', { error, response });
               reportEvent?.('hubspot_form_failure', {
                 formId: formDefinition.id,
                 formName: formDefinition.name?.trim(),

@@ -36,13 +36,12 @@ export const HubspotFormGroup = ({
   onChange,
 }: IFormGroupProps) => {
   const allHiddenFields = group.every((f) => f.hidden);
-
   return (
     <div
       className={cn(
-        'w-full grid grid-cols-1 gap-6',
+        'form-group w-full grid grid-cols-1 gap-5',
         columns?.[group.length] ?? 'md:grid-cols-1',
-
+        { hidden: allHiddenFields },
         allHiddenFields
           ? options.hiddenFieldGroupClassName
           : options.fieldGroupClassName

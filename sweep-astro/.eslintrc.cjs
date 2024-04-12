@@ -9,7 +9,6 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:astro/recommended',
     'plugin:astro/jsx-a11y-recommended',
-
     'prettier',
   ],
   parser: '@typescript-eslint/parser',
@@ -21,6 +20,7 @@ module.exports = {
     '@typescript-eslint/triple-slash-reference': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
     'no-underscore-dangle': ['error', { allow: ['__typename'] }],
+    'import/no-extraneous-dependencies': ['error', { packageDir: '.' }],
   },
   settings: {
     'import/core-modules': ['astro:assets', 'astro:content'],

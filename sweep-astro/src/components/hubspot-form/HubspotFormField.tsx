@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import { cn } from '@/scripts/cn';
 import { FieldFactory } from './HubspotFormFieldFactory';
 import type {
@@ -7,15 +6,30 @@ import type {
 } from './shared';
 import { makeInputId } from './shared';
 
-export const HubspotFormField: React.FC<{
+interface HubspotFormFieldProps {
   formName: string;
   field: IHubspotFormFieldDefinition;
   options: IHubspotFormOptions;
   value?: string | number | undefined;
   onInteracted: () => void;
   onChange?: (ev: React.ChangeEvent<HTMLElement>) => void;
-}> = ({ formName, field, value, onInteracted, onChange, options }) => (
-  <div className={cn('flex flex-col gap-2', options.fieldContainerClassName)}>
+}
+
+export const HubspotFormField = ({
+  formName,
+  field,
+  value,
+  onInteracted,
+  onChange,
+  options,
+}: HubspotFormFieldProps) => (
+  <div
+    className={cn(
+      'form-field',
+      'flex flex-col gap-1',
+      options.fieldContainerClassName
+    )}
+  >
     {options.showLabels !== false && field.label && !field.hidden && (
       <label
         className={options.labelClassName}
@@ -23,6 +37,7 @@ export const HubspotFormField: React.FC<{
         // required={field.required}
       >
         <span dangerouslySetInnerHTML={{ __html: field.label }} />
+        {field.required ? <span className="text-sw-fire-400">*</span> : null}
       </label>
     )}
     {field.fieldType ? (

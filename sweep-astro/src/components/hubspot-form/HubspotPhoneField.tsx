@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { SwPhoneInput } from './ui/SwPhoneInput/SwPhoneInput';
+import { PhoneInput } from './ui/PhoneInput/PhoneInput';
 import { makeInputId } from './shared';
 import type { IFieldProps } from './shared';
 
@@ -24,7 +24,7 @@ export const HubspotPhoneField = ({
   if (!field.name) return null;
 
   return (
-    <SwPhoneInput
+    <PhoneInput
       className={options.fieldClassName}
       // defaultValue={field.defaultValue ?? ''}
       disabled={!field.enabled}

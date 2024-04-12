@@ -2,6 +2,7 @@ import { forwardRef } from 'react';
 import type { ElementRef, ComponentPropsWithoutRef } from 'react';
 import { Command as CommandPrimitive } from 'cmdk';
 import { cn } from '@/scripts/cn';
+import SearchIcon from '@/assets/icons/search.svg?react';
 
 const Command = forwardRef<
   ElementRef<typeof CommandPrimitive>,
@@ -24,11 +25,11 @@ const CommandInput = forwardRef<
 >(({ className, ...props }, ref) => (
   // eslint-disable-next-line react/no-unknown-property
   <div className="flex items-center border-b px-3" cmdk-input-wrapper="">
-    <div className="mr-2 h-4 w-4 shrink-0 opacity-50">s</div>
+    <SearchIcon className="mr-2 h-4 w-4 shrink-0 opacity-50" />
     <CommandPrimitive.Input
       ref={ref}
       className={cn(
-        'flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50',
+        'flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none disabled:cursor-not-allowed disabled:opacity-50',
         className
       )}
       {...props}
@@ -87,7 +88,7 @@ const CommandItem = forwardRef<
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      'relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:text-sw-sky-400 data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50',
+      'relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:text-sw-sky-400 data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50',
       className
     )}
     {...props}

@@ -6,6 +6,7 @@ import vercel from '@astrojs/vercel/serverless';
 import tailwind from '@astrojs/tailwind';
 import icon from 'astro-icon';
 import react from '@astrojs/react';
+import svgr from 'vite-plugin-svgr';
 import { defaultLocale, locales } from './src/i18n/config';
 
 const appMode = (process.env.APP_MODE ?? 'static') as 'static' | 'ssr';
@@ -35,4 +36,7 @@ export default defineConfig({
     }),
     react(),
   ],
+  vite: {
+    plugins: [svgr()],
+  },
 });

@@ -4,6 +4,7 @@ import type { ComponentProps, ReactNode } from 'react';
 import { useCallback } from 'react';
 import { cn } from '@/scripts/cn';
 import { TRANSLATIONS } from '@/constants';
+import { Button } from '../ui/Button.tsx';
 import { HubspotFormGroup } from './HubspotFormGroup';
 import type {
   EventReporter,
@@ -19,6 +20,7 @@ import {
   registerSelectField,
   registerTextAreaField,
 } from './register';
+import { usePublicIp } from './ip';
 
 function register(): void {
   registerHubspotTextField();
@@ -44,7 +46,6 @@ export interface HubSpotFormProps
     isLoading: boolean;
     status: HubspotFormStatus;
   }) => ReactNode;
-  ipAddress?: string;
 }
 
 export const HubspotForm = ({
@@ -55,11 +56,13 @@ export const HubspotForm = ({
   reportEvent,
   onSuccess,
   pageName,
-  ipAddress,
   submitRender,
   formAnchor,
   ...formProps
 }: HubSpotFormProps) => {
+  // TODO: handle user consent
+  const ipAddress = usePublicIp();
+
   const {
     status,
     formResponse,
@@ -81,6 +84,7 @@ export const HubspotForm = ({
       e.preventDefault();
       submitForm(e.currentTarget, {
         onSuccess(body) {
+          // TODO: reset form
           onSuccess?.(body);
         },
       });
@@ -132,9 +136,11 @@ export const HubspotForm = ({
     (formDefinition.name ?? formDefinition.id).replace(/\s+/g, '');
 
   const submitText =
-    formDefinition.submitText ??
-    options.defaultSubmitText ??
-    TRANSLATIONS.SUBMIT;
+    status === 'Submitting'
+      ? TRANSLATIONS.SUBMITTING
+      : formDefinition.submitText ??
+        options.defaultSubmitText ??
+        TRANSLATIONS.SUBMIT;
 
   let privacyPolicyText: string = TRANSLATIONS.PRIVACY_POLICY_TEXT;
   try {
@@ -153,19 +159,18 @@ export const HubspotForm = ({
     }
   } catch {}
 
-  if (!formRef) return null;
-
+  // TODO: reset form after submit
   return (
     <form
       className={cn(
-        'flex flex-col items-start justify-start gap-4',
+        'form flex flex-col items-start justify-start gap-6',
         options.formClassName
       )}
       id={name}
       method="POST"
-      ref={(r) => {
-        if (r) {
-          formRef.current = r;
+      ref={(el) => {
+        if (el) {
+          formRef.current = el;
         }
       }}
       onSubmit={onSubmit}
@@ -206,18 +211,18 @@ export const HubspotForm = ({
               submitRender({ isLoading, status })
             ) : (
               <>
-                {/* TODO: Use Astro button here somehow */}
-                <button
+                <Button
+                  type="submit"
                   className={options.submitClassName}
                   id={`Submit ${name}`}
+                  variant="secondary"
                   // kind={SwButtonKind.Primary}
                   // loading={isLoading}
-                  type={'submit'}
                 >
                   {options.renderSubmitButton
                     ? options.renderSubmitButton(submitText)
                     : submitText}
-                </button>
+                </Button>
               </>
             )}
           </div>
@@ -227,9 +232,7 @@ export const HubspotForm = ({
         <>
           {/* TODO: HANDLE ERROR */}
           <div className="flash">
-            <a href={'mailto:support@sweep.net'} className="typography-body-2">
-              {TRANSLATIONS.FORM_SUBMISSION_FAILED_MESSAGE}
-            </a>
+            <p>{TRANSLATIONS.FORM_SUBMISSION_FAILED_MESSAGE}</p>
           </div>
         </>
       )}

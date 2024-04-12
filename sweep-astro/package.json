@@ -61,6 +61,7 @@
     "prettier-plugin-astro": "^0.13.0",
     "rimraf": "^5.0.5",
     "tailwind-merge": "^2.2.1",
-    "taze": "^0.13.3"
+    "taze": "^0.13.3",
+    "vite-plugin-svgr": "^4.2.0"
   }
 }
