@@ -5,6 +5,7 @@ import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
 import Container from '../ui/Container.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
 import ColoredImageCards from '../ColoredImageCards.astro';
+import Section from '../ui/Section.astro';
 
 const store = getStore(cmsStore);
 const data = store.homepage!;
@@ -13,7 +14,7 @@ const acf = data.homepage!.whoweworkwith!;
 const cards = acf?.cards?.filter(Boolean) ?? [];
 ---
 
-<section class="who-we-work-with py-12 md:py-20">
+<Section name="who-we-work-with">
   <Container>
     <SectionTitle
       withMargin
@@ -22,4 +23,4 @@ const cards = acf?.cards?.filter(Boolean) ?? [];
 
     <ColoredImageCards cards={cards} />
   </Container>
-</section>
+</Section>

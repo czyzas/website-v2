@@ -1,0 +1,86 @@
+query ContactPage($LANG: String) {
+  pages(first: 1, where: { name: "contact", language: $LANG }) {
+    nodes {
+      title
+      slug
+      uri
+      language {
+        ...Languages
+      }
+      subpageSettings {
+        customTitle
+        introduction
+        image {
+          ...Image
+        }
+      }
+      contactAcf {
+        demo {
+          title
+          image {
+            ...Image
+          }
+          button {
+            ...Link
+          }
+        }
+        updates {
+          sectionTitle {
+            selectSectionTitle {
+              customStyle
+              displayAs
+              headline
+              headlineType
+              overline
+              textUnder
+            }
+          }
+          cards {
+            title
+            overline
+            link {
+              ...Link
+            }
+            image {
+              ...Image
+            }
+          }
+          button {
+            ...Link
+          }
+        }
+        offices {
+          sectionTitle {
+            selectSectionTitle {
+              customStyle
+              displayAs
+              headline
+              headlineType
+              overline
+              textUnder
+            }
+          }
+          cards {
+            title
+            image {
+              ...Image
+            }
+            content
+          }
+        }
+      }
+    }
+  }
+  defaultLanguage {
+    ...Languages
+  }
+  languages {
+    ...Languages
+  }
+  primaryMenu: menu(idType: LOCATION, id: "primary-menu") {
+    ...Menu
+  }
+  themeOptions {
+    ...ThemeOptions
+  }
+}

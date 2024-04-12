@@ -9,7 +9,8 @@ import Button from '../ui/Button.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
 import SwiperNavigation from '../SwiperNavigation.astro';
 import ButtonContainer from '../ButtonContainer.astro';
-import WordpressImage from '../WordpressImage.astro';
+import Section from '../ui/Section.astro';
+import ArticleCard from '../ArticleCard.astro';
 
 const store = getStore(cmsStore);
 const data = store.homepage!;
@@ -63,7 +64,7 @@ const resources = acf.resources?.nodes ?? [];
   }
 </style>
 
-<section class="resources py-12 md:py-20 bg-sw-surface-subdued overflow-hidden">
+<Section name="resources" bg="surface-subdued" class="overflow-hidden">
   <Container>
     <SectionTitle
       withMargin
@@ -78,27 +79,21 @@ const resources = acf.resources?.nodes ?? [];
 
             return (
               <div class="swiper-slide">
-                <a
-                  href={buildI18nPath(resource.uri)}
-                  class="w-full h-full border border-sw-border rounded-lg overflow-hidden shadow-button-secondary"
+                <ArticleCard
+                  image={resource.subpageSettings?.image}
+                  link={{
+                    url: buildI18nPath(resource.uri),
+                  }}
+                  class="size-full"
                 >
-                  <div class="image-container aspect-[16/9] sm:aspect-[28/19]">
-                    <WordpressImage
-                      data={resource.subpageSettings?.image}
-                      preferredWidth={586}
-                      class="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div class="content-container p-6 flex flex-col gap-4">
-                    <p class="typography-card-title text-sw-text-subdued">
-                      Insight
-                    </p>
-                    <h3
-                      class="typography-cards-bold-large"
-                      set:html={resource.title}
-                    />
-                  </div>
-                </a>
+                  <p class="typography-card-title text-sw-text-subdued">
+                    Insight
+                  </p>
+                  <h3
+                    class="typography-cards-bold-large"
+                    set:html={resource.title}
+                  />
+                </ArticleCard>
               </div>
             );
           })
@@ -123,4 +118,4 @@ const resources = acf.resources?.nodes ?? [];
       }
     </ButtonContainer>
   </Container>
-</section>
+</Section>

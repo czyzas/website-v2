@@ -7,6 +7,7 @@ import { fileExists } from '../scripts/server/fileExists';
 export const CACHE_KEYS = {
   HOMEPAGE: 'homepage',
   PAGE: 'page',
+  CONTACT: 'contact',
 } as const;
 
 export type CachePayload = string | string[];
@@ -34,7 +35,13 @@ export const getCachedCMSData = async <T = unknown>(payload: CachePayload) => {
     return (JSON.parse(cacheData) || {}) as T;
   } catch (error) {
     if (error instanceof Error) {
-      console.error('Cache get error', error.message, '\n', error.stack);
+      console.error(
+        new Date().toLocaleTimeString(),
+        `\x1B[31m[cache]\x1B[0m`,
+        `Error getting cache: ${error.message}`,
+        '\n',
+        error.stack
+      );
     }
   }
 };
@@ -54,10 +61,16 @@ export const cacheCMSData = async <T = unknown>(
       .mkdir(path.dirname(cachePath), { recursive: true })
       .catch(() => null);
 
-    await writeStream(cachePath, JSON.stringify(data, null, 2));
+    await writeStream(cachePath, JSON.stringify(data));
   } catch (error) {
     if (error instanceof Error) {
-      console.error('Caching error', error.message, '\n', error.stack);
+      console.error(
+        new Date().toLocaleTimeString(),
+        `\x1B[31m[cache]\x1B[0m`,
+        `Error creating cache: ${error.message}`,
+        '\n',
+        error.stack
+      );
     }
   }
 };

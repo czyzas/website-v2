@@ -12,6 +12,7 @@ import Card from '../ui/Card.astro';
 import ButtonContainer from '../ButtonContainer.astro';
 import WordpressImage from '../WordpressImage.astro';
 import CaseStudyContent from '../CaseStudyContent.astro';
+import Section from '../ui/Section.astro';
 
 const store = getStore(cmsStore);
 const data = store.homepage!;
@@ -20,7 +21,7 @@ const button = parseLink(acf.button);
 const cases = acf.caseStudies?.nodes ?? [];
 ---
 
-<section class="case-studies py-12 md:py-20">
+<Section name="case-studies">
   <Container>
     <SectionTitle
       withMargin
@@ -106,4 +107,4 @@ const cases = acf.caseStudies?.nodes ?? [];
       )
     }
   </Container>
-</section>
+</Section>

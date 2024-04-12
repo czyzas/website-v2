@@ -1,4 +1,5 @@
 import type {
+  ContactPageQuery,
   HomepageQuery,
   LanguagesFragment,
   MenuFragment,
@@ -12,6 +13,7 @@ export const cmsStore = createStore<{
   homepage?: HomepageQuery['page'];
   homepageIndustries?: HomepageQuery['industries'];
   defaultPage?: Page;
+  contactPage?: ContactPageQuery;
   primaryMenu?: MenuFragment;
   themeOptions?: ThemeOptionsFragment;
 }>({
@@ -19,6 +21,7 @@ export const cmsStore = createStore<{
   homepage: undefined,
   homepageIndustries: undefined,
   defaultPage: undefined,
+  contactPage: undefined,
   primaryMenu: undefined,
   themeOptions: undefined,
 });

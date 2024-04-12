@@ -1,15 +1,15 @@
 ---
-import type { HTMLAttributes } from 'astro/types';
 import type { ModulesModulesContentBackgroundColor } from '@/__generated__/cms';
-import { cn } from '@/scripts/cn';
 import { parseBgColor } from '@/scripts/data-parsers/parseBgColor';
+import type { WithAttributes } from '@/types';
+import Section from './ui/Section.astro';
 
-interface Props extends HTMLAttributes<'section'> {
+type Props = WithAttributes<{
   name: string;
   bg?: ModulesModulesContentBackgroundColor;
-}
+}>;
 
-const { name, bg, class: className, ...props } = Astro.props;
+const { name, bg, ...props } = Astro.props;
 ---
 
 <style>
@@ -29,10 +29,11 @@ const { name, bg, class: className, ...props } = Astro.props;
   }
 </style>
 
-<section
+<Section
   {...props}
-  data-bg={bg?.selectBackgroundColor ?? 'white'}
-  class={cn('module', name, parseBgColor(bg), className)}
+  padding={false}
+  name={`module ${name}`}
+  bg={parseBgColor(bg)}
 >
   <slot />
-</section>
+</Section>

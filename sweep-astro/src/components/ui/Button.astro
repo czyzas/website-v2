@@ -1,41 +1,16 @@
 ---
-import { cva } from 'class-variance-authority';
 import type { VariantProps } from 'class-variance-authority';
 import type { HTMLAttributes } from 'astro/types';
 import { Icon } from 'astro-icon/components';
 import { cn } from '@/scripts/cn';
 import type { WithAttributes } from '@/types';
+import { buttonVariants } from './buttonVariants';
 
 type ButtonProps = {
   leadingIcon?: string;
   trailingIcon?: string;
   asLink?: boolean;
 };
-
-const buttonVariants = cva(
-  [
-    'button inline-flex items-center justify-center gap-x-1 rounded-lg text-base font-medium whitespace-nowrap px-3 py-2 border border-transparent transition-colors',
-  ],
-  {
-    variants: {
-      variant: {
-        primary: [
-          'bg-sw-sky-400',
-          'text-white',
-          'hover:bg-sw-sky-500',
-          'shadow-button',
-        ],
-        secondary: [
-          'bg-white',
-          'border-sw-border',
-          'shadow-button-secondary',
-          'text-black',
-          'hover:bg-sw-surface-subdued',
-        ],
-      },
-    },
-  }
-);
 
 type AttributesLink = HTMLAttributes<'a'>;
 type AttributesButton = HTMLAttributes<'button'>;

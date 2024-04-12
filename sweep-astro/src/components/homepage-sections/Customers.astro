@@ -8,6 +8,7 @@ import Button from '../ui/Button.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
 import ButtonContainer from '../ButtonContainer.astro';
 import WordpressImage from '../WordpressImage.astro';
+import Section from '../ui/Section.astro';
 
 interface Props {
   type: 1 | 2;
@@ -72,7 +73,7 @@ const customersList = acf.customersList?.nodes ?? [];
   }
 </style>
 
-<section class="customers py-12 md:py-20">
+<Section name="customers">
   <Container>
     <SectionTitle
       withMargin
@@ -116,4 +117,4 @@ const customersList = acf.customersList?.nodes ?? [];
       )
     }
   </Container>
-</section>
+</Section>

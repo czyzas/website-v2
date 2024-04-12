@@ -1,0 +1,28 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/scripts/cn';
+import { getBgColor } from '@/scripts/data-parsers/parseBgColor';
+import type { AvailableBgColor } from '@/scripts/data-parsers/parseBgColor';
+
+interface Props extends HTMLAttributes<'section'> {
+  name?: string;
+  bg?: AvailableBgColor;
+  padding?: boolean;
+}
+
+const {
+  name,
+  bg = 'white',
+  padding = true,
+  class: className,
+  ...props
+} = Astro.props;
+---
+
+<section
+  {...props}
+  data-bg={bg}
+  class={cn(name, { 'py-12 md:py-20': padding }, getBgColor(bg), className)}
+>
+  <slot />
+</section>
