@@ -1,14 +1,5 @@
 <?php
 
-add_filter( 'request', function ( $vars ) {
-
-	if ( is_graphql_http_request() && !empty( $vars['name'] ) ) {
-		$vars['suppress_filters'] = true;
-	}
-
-	return $vars;
-} );
-
 add_action( 'graphql_register_types', function () {
 	try {
 		register_graphql_fields( 'MediaItem', [
@@ -57,7 +48,7 @@ add_action( 'graphql_register_types', function () {
 		$allowed_post_types = \WPGraphQL::get_allowed_post_types( 'objects', [ 'graphql_register_root_field' => true ] );
 
 		foreach ( $allowed_post_types as $post_type_object ) {
-			register_graphql_field( 'RootQuery', $post_type_object->graphql_single_name."ByLang", [
+			register_graphql_field( 'RootQuery', $post_type_object->graphql_single_name . "ByLang", [
 				'type'        => $post_type_object->graphql_single_name,
 				'description' => "Get page by lang",
 				'args'        => [
@@ -72,7 +63,9 @@ add_action( 'graphql_register_types', function () {
 						]
 					]
 				],
-				'resolve'     => function ( $source, $args, $context, $info ) use ( $post_type_object ) {
+				'resolve'     => function ( $source, $args, $context, $info ) use (
+					$post_type_object
+				) {
 					if ( isset( $args['lang'] ) ) {
 						do_action( 'wpml_switch_language', $args['lang'] );
 					}
