@@ -13,7 +13,7 @@ const { lang = 'en' } = fixLangParams(Astro.params, 'page');
 const { slug = '' } = Astro.props;
 
 const data = await fetchDefaultPage(slug, lang as Locales);
-const page = data.pages!.nodes[0]!;
+const page = data.page!;
 
 updateStore(cmsStore, 'defaultPage', page);
 updateStore(languageStore, 'currentLanguage', page.language!);
