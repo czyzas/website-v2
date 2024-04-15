@@ -14,6 +14,9 @@ query ContactPage($LANG: String!) {
       }
     }
     contactAcf {
+      form {
+        hubspotFormGuid
+      }
       demo {
         title
         image {
