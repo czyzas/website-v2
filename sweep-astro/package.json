@@ -10,6 +10,7 @@
     "build:ssr": "npm run codegen && cross-env APP_MODE=ssr astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "check": "astro check --silent",
     "codegen": "npm run clean && graphql-codegen --require dotenv/config --config ./src/codegen.ts"
   },
   "dependencies": {

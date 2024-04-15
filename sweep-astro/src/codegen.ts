@@ -17,6 +17,10 @@ const config: CodegenConfig = {
       },
     },
   },
+  hooks: {
+    // onError passes error string to the console.error directly
+    onError: console.error,
+  },
 };
 
 export default config;
