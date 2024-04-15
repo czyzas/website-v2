@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import type { ForwardedRef, InputHTMLAttributes } from 'react';
 import { cn } from '@/scripts/cn';
-import { base } from './styles';
+import { base } from '../styles';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   onValueChange?: (value: string) => void;

@@ -44,6 +44,7 @@ export const HubspotSelectField = ({
         value={currentValue}
         onChange={handleChange}
         options={selectOptions}
+        withSearch={selectOptions.length > 10}
       />
       {field.__typename === 'HubspotFormFormFieldGroupsFields' &&
         field.dependentFieldFilters && (

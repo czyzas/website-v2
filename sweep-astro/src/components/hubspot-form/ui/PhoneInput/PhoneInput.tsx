@@ -1,7 +1,7 @@
 import { forwardRef, useRef, useState } from 'react';
 import { cn } from '@/scripts/cn';
-import Input from '../Input';
-import type { InputProps } from '../Input';
+import Input from '../Input/Input';
+import type { InputProps } from '../Input/Input';
 import { Combobox } from '../Combobox/Combobox';
 import countries from './countries';
 import type { Country as CountryType, PhoneNumber } from './utils';

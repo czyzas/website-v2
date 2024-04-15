@@ -216,8 +216,6 @@ export const HubspotForm = ({
                   className={options.submitClassName}
                   id={`Submit ${name}`}
                   variant="secondary"
-                  // kind={SwButtonKind.Primary}
-                  // loading={isLoading}
                 >
                   {options.renderSubmitButton
                     ? options.renderSubmitButton(submitText)

@@ -3,6 +3,7 @@ import type { ElementRef, ComponentPropsWithoutRef } from 'react';
 import { Command as CommandPrimitive } from 'cmdk';
 import { cn } from '@/scripts/cn';
 import SearchIcon from '@/assets/icons/search.svg?react';
+import { selectOptionItem, selectOptionsList } from '../styles';
 
 const Command = forwardRef<
   ElementRef<typeof CommandPrimitive>,
@@ -11,7 +12,7 @@ const Command = forwardRef<
   <CommandPrimitive
     ref={ref}
     className={cn(
-      'flex h-full w-full flex-col overflow-hidden rounded-md bg-white text-sw-text-subdued',
+      'flex h-full w-full flex-col overflow-hidden rounded-lg bg-white text-sw-text-subdued',
       className
     )}
     {...props}
@@ -25,11 +26,11 @@ const CommandInput = forwardRef<
 >(({ className, ...props }, ref) => (
   // eslint-disable-next-line react/no-unknown-property
   <div className="flex items-center border-b px-3" cmdk-input-wrapper="">
-    <SearchIcon className="mr-2 h-4 w-4 shrink-0 opacity-50" />
+    <SearchIcon className="mr-3 size-5 shrink-0 opacity-50" />
     <CommandPrimitive.Input
       ref={ref}
       className={cn(
-        'flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none disabled:cursor-not-allowed disabled:opacity-50',
+        'flex h-11 w-full rounded-md bg-transparent py-3 text-md outline-none disabled:cursor-not-allowed disabled:opacity-50',
         className
       )}
       {...props}
@@ -58,7 +59,7 @@ const CommandEmpty = forwardRef<
 >((props, ref) => (
   <CommandPrimitive.Empty
     ref={ref}
-    className="py-6 text-center text-sm"
+    className="py-4 px-2 text-center typography-body"
     {...props}
   />
 ));
@@ -71,10 +72,7 @@ const CommandGroup = forwardRef<
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.Group
     ref={ref}
-    className={cn(
-      'overflow-hidden p-1 text-foreground [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground',
-      className
-    )}
+    className={cn('overflow-hidden', selectOptionsList, className)}
     {...props}
   />
 ));
@@ -88,7 +86,8 @@ const CommandItem = forwardRef<
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      'relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:text-sw-sky-400 data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50',
+      'relative flex select-none items-center outline-none',
+      selectOptionItem,
       className
     )}
     {...props}

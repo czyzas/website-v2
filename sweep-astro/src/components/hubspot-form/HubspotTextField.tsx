@@ -2,7 +2,7 @@ import type { HTMLInputTypeAttribute } from 'react';
 import { useCallback, useState } from 'react';
 import type { IFieldProps, IHubspotFormFieldDefinition } from './shared';
 import { makeInputId } from './shared';
-import Input from './ui/Input';
+import Input from './ui/Input/Input';
 
 function calculateInputType(
   field: IHubspotFormFieldDefinition
