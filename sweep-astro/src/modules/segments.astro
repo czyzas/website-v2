@@ -6,7 +6,7 @@ import Container from '@/components/ui/Container.astro';
 
 type Props = ModulesModulesContentSegmentsLayout;
 
-const { layoutName, backgroundColor, cards } = Astro.props;
+const { layoutName, backgroundColor, segmentsCards: cards } = Astro.props;
 const filteredCards = cards ? cards.filter(Boolean) : [];
 ---
 

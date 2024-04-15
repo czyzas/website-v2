@@ -61,12 +61,42 @@ fragment ModulesCollection on Modules {
         ...Link
       }
     }
+    ... on ModulesModulesContentCardsLayout {
+      layoutName
+      backgroundColor {
+        selectBackgroundColor
+      }
+      columns
+      cards {
+        icon {
+          ...Image
+        }
+        overline
+        title
+        content
+      }
+    }
+    ... on ModulesModulesContentResourceLinkLayout {
+      layoutName
+      backgroundColor {
+        selectBackgroundColor
+      }
+      overline
+      title
+      content
+      button {
+        ...Link
+      }
+      image {
+        ...Image
+      }
+    }
     ... on ModulesModulesContentSegmentsLayout {
       layoutName
       backgroundColor {
         selectBackgroundColor
       }
-      cards {
+      segmentsCards {
         title
         imageBackgroundColor
         image {
