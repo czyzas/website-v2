@@ -11,6 +11,8 @@ const defaultValues = {
   phonenumber: null,
 };
 
+export type HubspotHandlersKeys = keyof typeof defaultValues;
+
 export const hubspotHandlersStore = createStore<{
   [Key in keyof typeof defaultValues]: FC<IFieldProps> | null;
 }>(defaultValues);

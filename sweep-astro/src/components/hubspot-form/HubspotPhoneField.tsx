@@ -31,7 +31,9 @@ export const HubspotPhoneField = ({
       hidden={!!field.hidden}
       id={makeInputId(formName, field.name)}
       name={field.name}
-      placeholder={field.placeholder ?? ''}
+      placeholder={
+        (field.label ?? field.placeholder ?? '') + (field.required ? '*' : '')
+      }
       required={!!field.required}
       value={currentValue as string}
       onChange={handleChange}

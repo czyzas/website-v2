@@ -1,5 +1,5 @@
-query Homepage($PAGE_ID: ID!, $LANGUAGE: String) {
-  page(id: $PAGE_ID, idType: DATABASE_ID) {
+query Homepage($LANG: String!) {
+  page: pageByLang(slug: "/", lang: $LANG) {
     title
     slug
     uri
@@ -263,7 +263,7 @@ query Homepage($PAGE_ID: ID!, $LANGUAGE: String) {
       }
     }
   }
-  industries(first: 100, where: { status: PUBLISH, language: $LANGUAGE }) {
+  industries(first: 100, where: { status: PUBLISH, language: $LANG }) {
     nodes {
       ...HomepageIndustry
     }

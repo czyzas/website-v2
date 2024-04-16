@@ -2,7 +2,7 @@ import type { HTMLInputTypeAttribute } from 'react';
 import { useCallback, useState } from 'react';
 import type { IFieldProps, IHubspotFormFieldDefinition } from './shared';
 import { makeInputId } from './shared';
-import Input from './ui/Input';
+import Input from './ui/Input/Input';
 
 function calculateInputType(
   field: IHubspotFormFieldDefinition
@@ -65,7 +65,9 @@ export const HubspotTextField = ({
           ? 'Please enter a business email address'
           : undefined
       }
-      placeholder={field.placeholder ?? ''}
+      placeholder={
+        (field.label ?? field.placeholder ?? '') + (field.required ? '*' : '')
+      }
       required={!!field.required}
       type={calculateInputType(field) ?? 'text'}
       value={currentValue}

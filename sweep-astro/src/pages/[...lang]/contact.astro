@@ -19,6 +19,7 @@ import WordpressButtonLink from '@/components/WordpressButtonLink.astro';
 import { linkShouldRender } from '@/scripts/data-parsers/parseLink';
 import ArticleCard from '@/components/ArticleCard.astro';
 import Prose from '@/components/ui/Prose.astro';
+import { defaultLocale } from '@/i18n/config';
 
 export const getStaticPaths = (() => {
   // TODO: fix this
@@ -27,10 +28,10 @@ export const getStaticPaths = (() => {
   return pfs;
 }) satisfies GetStaticPaths;
 
-const { lang = 'en' } = Astro.params;
+const { lang = defaultLocale } = Astro.params;
 
 const data = await fetchContactPage(lang as string);
-const page = data.pages!.nodes[0]!;
+const page = data.page!;
 
 updateStore(cmsStore, 'contactPage', page);
 updateStore(languageStore, 'currentLanguage', page.language!);
@@ -44,6 +45,9 @@ const title = subpageSettings?.customTitle || pageTitle || '';
 const content = subpageSettings?.introduction ?? '';
 const image = subpageSettings?.image;
 
+const form = page.contactAcf?.form;
+const formGuid = form?.hubspotFormGuid ?? '';
+
 const demo = page.contactAcf?.demo;
 const updates = page.contactAcf?.updates;
 const updatesCards = updates?.cards ?? [];
@@ -54,15 +58,19 @@ const officesCards = offices?.cards ?? [];
 
 <Layout name="contact" pageTitle={pageTitle}>
   <Top title={title} content={content} image={image} class="py-25" />
-  <Section bg="surface-subdued" class="md:py-15">
-    <Container>
-      <Grid>
-        <div class="form-container col-span-full lg:col-start-3 lg:col-end-11">
-          <Form formGuid="a83996b3-80a3-4bb2-8595-a0a51f71a11e" />
-        </div>
-      </Grid>
-    </Container>
-  </Section>
+  {
+    formGuid ? (
+      <Section bg="surface-subdued" class="md:py-15">
+        <Container>
+          <Grid>
+            <div class="form-container col-span-full lg:col-start-3 lg:col-end-11">
+              <Form formGuid={formGuid} />
+            </div>
+          </Grid>
+        </Container>
+      </Section>
+    ) : null
+  }
   <Section name="demo">
     <Container>
       <Demo title={demo?.title} button={demo?.button} image={demo?.image} />

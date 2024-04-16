@@ -15,8 +15,9 @@ import Resources from '@/components/homepage-sections/Resources.astro';
 import WhoWeWorkWith from '@/components/homepage-sections/WhoWeWorkWith.astro';
 import { languageStore } from '@/stores/languageStore';
 import Regulations from '@/components/homepage-sections/Regulations.astro';
+import { defaultLocale } from '@/i18n/config';
 
-const { lang = 'en' } = Astro.params;
+const { lang = defaultLocale } = Astro.params;
 const data = await fetchHomepage(lang);
 
 updateStore(cmsStore, 'homepage', data.page!);

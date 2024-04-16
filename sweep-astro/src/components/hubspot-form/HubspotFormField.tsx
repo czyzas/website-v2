@@ -32,7 +32,7 @@ export const HubspotFormField = ({
   >
     {options.showLabels !== false && field.label && !field.hidden && (
       <label
-        className={options.labelClassName}
+        className={cn('sr-only', options.labelClassName)}
         htmlFor={makeInputId(formName, field.name)}
         // required={field.required}
       >
