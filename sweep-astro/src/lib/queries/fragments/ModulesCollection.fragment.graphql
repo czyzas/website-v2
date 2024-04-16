@@ -71,7 +71,6 @@ fragment ModulesCollection on Modules {
         icon {
           ...Image
         }
-        overline
         title
         content
       }
@@ -83,7 +82,6 @@ fragment ModulesCollection on Modules {
       }
       overline
       title
-      content
       button {
         ...Link
       }

@@ -698,14 +698,13 @@
                                     "required": 0,
                                     "conditional_logic": 0,
                                     "wrapper": {
-                                        "width": "25",
+                                        "width": "",
                                         "class": "",
                                         "id": ""
                                     },
-                                    "graphql_field_name": "",
                                     "wpml_cf_preferences": 1,
-                                    "return_format": "",
-                                    "library": "",
+                                    "return_format": "array",
+                                    "library": "all",
                                     "min_width": "",
                                     "min_height": "",
                                     "min_size": "",
@@ -713,35 +712,10 @@
                                     "max_height": "",
                                     "max_size": "",
                                     "mime_types": "",
-                                    "preview_size": "medium",
+                                    "preview_size": "thumbnail",
                                     "show_in_graphql": 1,
                                     "graphql_description": "",
-                                    "parent_repeater": "field_661d0e49f7900"
-                                },
-                                {
-                                    "key": "field_661d0e6cf7902",
-                                    "label": "Overline",
-                                    "name": "overline",
-                                    "aria-label": "",
-                                    "type": "text",
-                                    "instructions": "",
-                                    "required": 0,
-                                    "conditional_logic": 0,
-                                    "wrapper": {
-                                        "width": "75",
-                                        "class": "",
-                                        "id": ""
-                                    },
-                                    "wpml_cf_preferences": 2,
-                                    "default_value": "",
-                                    "maxlength": "",
-                                    "placeholder": "",
-                                    "prepend": "",
-                                    "append": "",
-                                    "show_in_graphql": 1,
-                                    "graphql_description": "",
-                                    "graphql_field_name": "overline",
-                                    "graphql_non_null": 0,
+                                    "graphql_field_name": "icon",
                                     "parent_repeater": "field_661d0e49f7900"
                                 },
                                 {
@@ -1463,5 +1437,5 @@
         "Page",
         "Post"
     ],
-    "modified": 1713184544
+    "modified": 1713252661
 }
