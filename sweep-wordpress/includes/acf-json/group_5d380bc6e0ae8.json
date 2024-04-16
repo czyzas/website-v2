@@ -888,15 +888,15 @@
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
-                                "width": "50",
+                                "width": "33",
                                 "class": "",
                                 "id": ""
                             },
-                            "graphql_field_name": "",
                             "wpml_cf_preferences": 1,
                             "return_format": "array",
                             "show_in_graphql": 1,
                             "graphql_description": "",
+                            "graphql_field_name": "button",
                             "graphql_non_null": 0
                         },
                         {
@@ -909,7 +909,7 @@
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
-                                "width": "50",
+                                "width": "33",
                                 "class": "",
                                 "id": ""
                             },
@@ -1437,5 +1437,5 @@
         "Page",
         "Post"
     ],
-    "modified": 1713252661
+    "modified": 1713267989
 }
