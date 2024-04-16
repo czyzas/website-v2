@@ -19,6 +19,7 @@ import WordpressButtonLink from '@/components/WordpressButtonLink.astro';
 import { linkShouldRender } from '@/scripts/data-parsers/parseLink';
 import ArticleCard from '@/components/ArticleCard.astro';
 import Prose from '@/components/ui/Prose.astro';
+import { defaultLocale } from '@/i18n/config';
 
 export const getStaticPaths = (() => {
   // TODO: fix this
@@ -27,7 +28,7 @@ export const getStaticPaths = (() => {
   return pfs;
 }) satisfies GetStaticPaths;
 
-const { lang = 'en' } = Astro.params;
+const { lang = defaultLocale } = Astro.params;
 
 const data = await fetchContactPage(lang as string);
 const page = data.page!;

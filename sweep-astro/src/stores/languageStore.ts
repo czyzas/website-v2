@@ -1,4 +1,5 @@
 import type { LanguagesFragment } from '@/__generated__/cms';
+import { defaultLocale } from '@/i18n/config';
 import { createStore } from '@/scripts/store';
 
 export const languageStore = createStore<{
@@ -6,8 +7,8 @@ export const languageStore = createStore<{
   languages?: (LanguagesFragment | undefined)[];
 }>({
   currentLanguage: {
-    code: 'en',
-    language_code: 'en',
+    code: defaultLocale,
+    language_code: defaultLocale,
   },
   languages: [],
 });

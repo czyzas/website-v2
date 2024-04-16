@@ -1,6 +1,7 @@
 ---
 import ModulesIncluder from '@/components/ModulesIncluder.astro';
 import Top from '@/components/partials/Top.astro';
+import { defaultLocale } from '@/i18n/config';
 import type { Locales } from '@/i18n/config';
 import { fixLangParams } from '@/i18n/utils';
 import Layout from '@/layouts/Layout.astro';
@@ -9,7 +10,7 @@ import { updateStore } from '@/scripts/store';
 import { cmsStore } from '@/stores/cmsStore';
 import { languageStore } from '@/stores/languageStore';
 
-const { lang = 'en' } = fixLangParams(Astro.params, 'page');
+const { lang = defaultLocale } = fixLangParams(Astro.params, 'page');
 const { slug = '' } = Astro.props;
 
 const data = await fetchDefaultPage(slug, lang as Locales);
