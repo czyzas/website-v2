@@ -12,17 +12,11 @@ interface Props {
 
 const { columns = 4, logos = [] } = Astro.props;
 
-const columnClassName = (size: number) => {
-  switch (size) {
-    case 1:
-      return cn('col-span-full');
-    case 2:
-      return cn('col-span-full xs:col-span-6');
-    case 3:
-      return cn('col-span-full xs:col-span-6 md:col-span-4');
-    default:
-      return cn('col-span-full xs:col-span-6 md:col-span-4 lg:col-span-3');
-  }
+const columnClassName: Record<number, string> = {
+  1: cn('col-span-full'),
+  2: cn('col-span-full xs:col-span-6'),
+  3: cn('col-span-full xs:col-span-6 md:col-span-4'),
+  4: cn('col-span-full xs:col-span-6 md:col-span-4 lg:col-span-3'),
 };
 ---
 
@@ -33,7 +27,7 @@ const columnClassName = (size: number) => {
         <Card
           class={cn(
             'customer-logo p-6 flex items-center justify-center',
-            columnClassName(columns)
+            columnClassName?.[columns] ?? 'col-span-full'
           )}
         >
           <WordpressImage
