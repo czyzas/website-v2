@@ -34,7 +34,9 @@ export const HubspotTextareaField = ({
         hidden={!!field.hidden}
         id={makeInputId(formName, field.name)}
         name={field.name}
-        placeholder={field.placeholder ?? ''}
+        placeholder={
+          (field.label ?? field.placeholder ?? '') + (field.required ? '*' : '')
+        }
         required={!!field.required}
         rows={4}
         value={currentValue}

@@ -37,7 +37,8 @@ export const Combobox = forwardRef<HTMLSelectElement, ComboboxProps>(
     {
       id,
       name,
-      placeholder = 'Select',
+      placeholder = '',
+      defaultValue = '',
       className,
       options,
       emptyText,
@@ -51,7 +52,7 @@ export const Combobox = forwardRef<HTMLSelectElement, ComboboxProps>(
     ref: ForwardedRef<HTMLSelectElement>
   ) => {
     const [open, setOpen] = useState(false);
-    const [value, setValue] = useState('');
+    const [value, setValue] = useState(defaultValue);
     const [btnWidth, setBtnWidth] = useState(0);
     const btnRef = useRef<HTMLButtonElement>(null);
 
@@ -120,7 +121,7 @@ export const Combobox = forwardRef<HTMLSelectElement, ComboboxProps>(
                   buttonClassName
                 )}
               >
-                <span className="truncate">
+                <span className="truncate min-h-[1.5em]">
                   {value
                     ? options.find((option) => option.value === value)?.label
                     : placeholder}

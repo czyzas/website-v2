@@ -13,9 +13,12 @@ const { class: className, ...props } = Astro.props;
       @apply mt-6;
     }
 
-    :global(:where(a, a:hover)) {
+    :global(:where(a, a:hover, a:focus)) {
       @apply text-current underline underline-offset-4 decoration-current;
       text-decoration-skip-ink: none;
+    }
+    :global(:where(a:hover, a:focus)) {
+      @apply text-sw-sky-400;
     }
 
     :global(:where(strong)) {

@@ -93,6 +93,7 @@ export const PhoneInput = forwardRef<
         buttonClassName={cn('truncate')}
         options={selectOptions}
         allowUnselect={false}
+        defaultValue={defaultCountry}
         onValueChange={(val) => {
           const country = getCountryByIso(val as CountryType[2]);
 

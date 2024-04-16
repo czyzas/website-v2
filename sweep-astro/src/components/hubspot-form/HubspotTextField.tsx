@@ -65,7 +65,9 @@ export const HubspotTextField = ({
           ? 'Please enter a business email address'
           : undefined
       }
-      placeholder={field.placeholder ?? ''}
+      placeholder={
+        (field.label ?? field.placeholder ?? '') + (field.required ? '*' : '')
+      }
       required={!!field.required}
       type={calculateInputType(field) ?? 'text'}
       value={currentValue}
