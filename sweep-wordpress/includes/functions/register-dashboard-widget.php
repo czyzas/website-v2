@@ -17,7 +17,7 @@ add_action( 'wp_dashboard_setup', function () {
 function deploy_page_callback() {
 	global $wpdb;
 	$table_name = "{$wpdb->prefix}deploy_logs";
-	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $table_name ORDER BY id DESC LIMIT %d", 1), ARRAY_A);
+	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $table_name ORDER BY id DESC LIMIT %d", 1 ), ARRAY_A );
 	$result = $results[0] ?? [];
 	?>
 	<p>Click button below to start deploy action! <strong>It may take a while.</strong></p>
@@ -65,7 +65,7 @@ function deploy_page_js_script() {
 					deployButton.prop('disabled', false);
 				}).fail(function () {
 					clearInterval(interval);
-					deployResult.html("Deployment failed. Please try again.");
+					deployResult.html('Deployment failed. Please try again.');
 					deployButton.prop('disabled', false);
 				});
 			});
@@ -73,6 +73,7 @@ function deploy_page_js_script() {
 	</script>
 	<?php
 }
+
 add_action( 'admin_footer', 'deploy_page_js_script' );
 
 
@@ -87,7 +88,7 @@ function deploy_via_ajax() {
 		$list = get_deployments_list_by_timestamp( $deploy_by_hook['job']['createdAt'] - 2 * 60 * 1000 );
 		$status = check_deploy_status( $list['deployments'][0]['uid'] );
 
-		$date = date( 'Y-m-d H:i:s', $deploy_by_hook['job']['createdAt'] / 1000 );
+		$date = date( 'Y-m-d H:i:s', intval( $deploy_by_hook['job']['createdAt'] / 1000 ) );
 		$response = "<strong>Current deploy:</strong><br> UID: {$list['deployments'][0]['uid']} <br> Created at: $date <br> Deployment status: $status";
 
 		$table_name = "{$wpdb->prefix}deploy_logs";
