@@ -2,13 +2,13 @@
 import { cmsStore } from '@/stores/cmsStore';
 import { getStore } from '@/scripts/store';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
-import { parseLink } from '@/scripts/data-parsers/parseLink';
+import { linkShouldRender } from '@/scripts/data-parsers/parseLink';
 import Container from '../ui/Container.astro';
-import Button from '../ui/Button.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
 import ButtonContainer from '../ButtonContainer.astro';
-import WordpressImage from '../WordpressImage.astro';
 import Section from '../ui/Section.astro';
+import LogosCollection from '../LogosCollection.astro';
+import WordpressButtonLink from '../WordpressButtonLink.astro';
 
 interface Props {
   type: 1 | 2;
@@ -20,58 +20,17 @@ const store = getStore(cmsStore);
 const data = store.homepage!;
 const acf =
   type === 1 ? data.homepage!.customers1! : data.homepage!.customers2!;
-const button = parseLink(
-  type === 1 ? data.homepage!.customers1?.button : undefined
-);
+const button = type === 1 ? data.homepage!.customers1?.button : undefined;
 
 const customersList = acf.customersList?.nodes ?? [];
+const logos = customersList
+  .map((customer) => {
+    if (customer.__typename !== 'Customer') return null;
+
+    return customer.customerAcf?.logo ?? null;
+  })
+  .filter(Boolean);
 ---
-
-<script>
-  import Swiper from 'swiper';
-
-  const swiperContainers =
-    document.querySelectorAll<HTMLDivElement>('.customers-swiper');
-
-  for (const swiperContainer of swiperContainers) {
-    let swiper: Swiper;
-
-    const initSwiper = () => {
-      swiperContainer.classList.add('swiper');
-      swiper = new Swiper(swiperContainer, {
-        slidesPerView: 'auto',
-        spaceBetween: 16,
-      });
-    };
-
-    const destroySwiper = () => {
-      if (swiper) {
-        swiperContainer.classList.remove('swiper');
-        swiper.destroy();
-      }
-    };
-
-    const media = window.matchMedia('(min-width: 768px)');
-    if (!media.matches) initSwiper();
-
-    media.addEventListener('change', (event) => {
-      event.matches ? destroySwiper() : initSwiper();
-    });
-  }
-</script>
-
-<style>
-  .swiper-slide {
-    @apply self-stretch h-auto flex w-auto;
-  }
-
-  .swiper-wrapper,
-  .swiper-slide {
-    @media screen(md) {
-      @apply contents;
-    }
-  }
-</style>
 
 <Section name="customers">
   <Container>
@@ -79,40 +38,11 @@ const customersList = acf.customersList?.nodes ?? [];
       withMargin
       {...parseSectionTitle(acf.sectionTitle?.selectSectionTitle)}
     />
+    <LogosCollection logos={logos} />
     {
-      customersList.length > 0 && (
-        <div class="customers-swiper md:flex md:flex-wrap md:gap-2 md:items-center">
-          <div class="swiper-wrapper">
-            {customersList.map((customer) => {
-              if (customer.__typename !== 'Customer') return null;
-
-              return (
-                <div class="swiper-slide">
-                  <div class="customer p-3 flex items-center justify-center md:flex-1 md:basis-40">
-                    <WordpressImage
-                      data={customer.customerAcf?.logo}
-                      class="max-h-12 object-contain"
-                    />
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )
-    }
-    {
-      button.shouldRender && (
+      linkShouldRender(button) && (
         <ButtonContainer class="mt-8">
-          <Button
-            asLink
-            href={button.url}
-            target={button.target}
-            trailingIcon="arrow-right"
-            class="w-full md:w-auto"
-          >
-            {button.title}
-          </Button>
+          <WordpressButtonLink data={button} arrow />
         </ButtonContainer>
       )
     }

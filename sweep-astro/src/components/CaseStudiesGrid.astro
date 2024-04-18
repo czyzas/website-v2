@@ -1,0 +1,93 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/scripts/cn';
+import type { CaseStudyCardFragment } from '@/__generated__/cms';
+import type { WithAttributes } from '@/types';
+import Grid from './ui/Grid.astro';
+import Card from './ui/Card.astro';
+import CaseStudyContent from './CaseStudyContent.astro';
+import WordpressImage from './WordpressImage.astro';
+
+interface CaseStudiesGridProps {
+  cases: CaseStudyCardFragment[];
+  buttonLabel?: string;
+  hasLongerTitle?: boolean;
+}
+
+type Props = WithAttributes<CaseStudiesGridProps & HTMLAttributes<'div'>>;
+
+const {
+  class: className,
+  cases,
+  hasLongerTitle = false,
+  buttonLabel = 'View Case Study',
+  ...props
+} = Astro.props;
+---
+
+<Grid {...props} class={cn('case-studies-grid', className)}>
+  {
+    cases.length > 0 &&
+      cases.map((caseStudy, index) => {
+        if (caseStudy.__typename !== 'CaseStudy') return null;
+        const isFeatured = index === 0;
+        const customerMaybe = caseStudy.caseStudyAcf?.relatedCustomer?.nodes[0];
+        const customer =
+          customerMaybe?.__typename === 'Customer' ? customerMaybe : undefined;
+        const customerLogo = customer?.customerAcf?.logo;
+        const longerTitle = caseStudy.caseStudyAcf?.longerTitle;
+        const title = hasLongerTitle
+          ? longerTitle || customer?.title
+          : customer?.title;
+
+        return (
+          <div
+            class={cn('case-study', 'col-span-full lg:col-span-6', {
+              'lg:col-span-full': isFeatured,
+            })}
+          >
+            <Card
+              class={cn(
+                'overflow-hidden h-full p-0 bg-sw-surface-subdued',
+                'grid gap-5 lg:min-h-[26.25rem] grid-cols-2',
+                {
+                  'lg:grid-cols-12': isFeatured,
+                }
+              )}
+            >
+              <div
+                class={cn(
+                  'content-column flex flex-col p-6 col-span-full md:col-span-1',
+                  {
+                    'lg:col-span-4': isFeatured,
+                  }
+                )}
+              >
+                <CaseStudyContent
+                  customerLogo={customerLogo}
+                  customerTitle={customer?.title}
+                  customerCategory={customer?.customerAcf?.category}
+                  title={title}
+                  uri={caseStudy.uri}
+                  buttonLabel={buttonLabel}
+                />
+              </div>
+              <div
+                class={cn(
+                  'image-column aspect-[16/9] col-span-full md:aspect-auto md:col-span-1',
+                  {
+                    'lg:col-span-8': isFeatured,
+                  }
+                )}
+              >
+                <WordpressImage
+                  data={caseStudy.subpageSettings?.image}
+                  class="object-cover w-full h-full"
+                />
+              </div>
+            </Card>
+          </div>
+        );
+      })
+  }
+</Grid>

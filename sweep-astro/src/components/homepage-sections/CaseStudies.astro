@@ -3,22 +3,19 @@ import { cmsStore } from '@/stores/cmsStore';
 import { getStore } from '@/scripts/store';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
 import { parseLink } from '@/scripts/data-parsers/parseLink';
-import { cn } from '@/scripts/cn';
+import type { CaseStudyCardFragment } from '@/__generated__/cms';
 import Container from '../ui/Container.astro';
 import Button from '../ui/Button.astro';
-import Grid from '../ui/Grid.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
-import Card from '../ui/Card.astro';
 import ButtonContainer from '../ButtonContainer.astro';
-import WordpressImage from '../WordpressImage.astro';
-import CaseStudyContent from '../CaseStudyContent.astro';
 import Section from '../ui/Section.astro';
+import CaseStudiesGrid from '../CaseStudiesGrid.astro';
 
 const store = getStore(cmsStore);
 const data = store.homepage!;
 const acf = data.homepage!.caseStudies!;
 const button = parseLink(acf.button);
-const cases = acf.caseStudies?.nodes ?? [];
+const cases = acf.caseStudies?.nodes as CaseStudyCardFragment[] | undefined;
 ---
 
 <Section name="case-studies">
@@ -27,71 +24,10 @@ const cases = acf.caseStudies?.nodes ?? [];
       withMargin
       {...parseSectionTitle(acf.sectionTitle?.selectSectionTitle)}
     />
-    <Grid>
-      {
-        cases.length > 0 &&
-          cases.map((caseStudy, index) => {
-            if (caseStudy.__typename !== 'CaseStudy') return null;
-            const isFeatured = index === 0;
-            const customerMaybe =
-              caseStudy.caseStudyAcf?.relatedCustomer?.nodes[0];
-            const customer =
-              customerMaybe?.__typename === 'Customer'
-                ? customerMaybe
-                : undefined;
-            const customerLogo = customer?.customerAcf?.logo;
-
-            return (
-              <div
-                class={cn('case-study', 'col-span-full lg:col-span-6', {
-                  'lg:col-span-full': isFeatured,
-                })}
-              >
-                <Card
-                  class={cn(
-                    'overflow-hidden h-full p-0 bg-sw-surface-subdued',
-                    'grid gap-5 lg:min-h-[26.25rem] grid-cols-2',
-                    {
-                      'lg:grid-cols-12': isFeatured,
-                    }
-                  )}
-                >
-                  <div
-                    class={cn(
-                      'content-column flex flex-col p-6 col-span-full md:col-span-1',
-                      {
-                        'lg:col-span-4': isFeatured,
-                      }
-                    )}
-                  >
-                    <CaseStudyContent
-                      customerLogo={customerLogo}
-                      customerTitle={customer?.title}
-                      customerCategory={customer?.customerAcf?.category}
-                      title={customer?.title}
-                      uri={caseStudy.uri}
-                      buttonLabel={acf.caseStudyButtonLabel}
-                    />
-                  </div>
-                  <div
-                    class={cn(
-                      'image-column aspect-[16/9] col-span-full md:aspect-auto md:col-span-1',
-                      {
-                        'lg:col-span-8': isFeatured,
-                      }
-                    )}
-                  >
-                    <WordpressImage
-                      data={caseStudy.subpageSettings?.image}
-                      class="object-cover w-full h-full"
-                    />
-                  </div>
-                </Card>
-              </div>
-            );
-          })
-      }
-    </Grid>
+    <CaseStudiesGrid
+      cases={cases ?? []}
+      buttonLabel={acf.caseStudyButtonLabel}
+    />
     {
       button.shouldRender && (
         <ButtonContainer class="mt-8 md:mt-15">
