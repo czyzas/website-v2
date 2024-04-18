@@ -1,0 +1,86 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
+import { cn } from '@/scripts/cn';
+import WordpressImage from './WordpressImage.astro';
+
+interface LogosCollectionProps {
+  logos?: UnparsedImage[];
+}
+
+type Props = LogosCollectionProps & HTMLAttributes<'div'>;
+
+const { class: className, logos, ...props } = Astro.props;
+---
+
+<script>
+  import Swiper from 'swiper';
+
+  const swiperContainers = document.querySelectorAll<HTMLDivElement>(
+    '.logos-collection-swiper'
+  );
+
+  for (const swiperContainer of swiperContainers) {
+    let swiper: Swiper;
+
+    const initSwiper = () => {
+      swiperContainer.classList.add('swiper');
+      swiper = new Swiper(swiperContainer, {
+        slidesPerView: 'auto',
+        spaceBetween: 16,
+      });
+    };
+
+    const destroySwiper = () => {
+      if (swiper) {
+        swiperContainer.classList.remove('swiper');
+        swiper.destroy();
+      }
+    };
+
+    const media = window.matchMedia('(min-width: 768px)');
+    if (!media.matches) initSwiper();
+
+    media.addEventListener('change', (event) => {
+      event.matches ? destroySwiper() : initSwiper();
+    });
+  }
+</script>
+
+<style>
+  .swiper-slide {
+    @apply self-stretch h-auto flex w-auto;
+  }
+
+  .swiper-wrapper,
+  .swiper-slide {
+    @media screen(md) {
+      @apply contents;
+    }
+  }
+</style>
+
+{
+  logos && logos.length > 0 && (
+    <div
+      {...props}
+      class={cn(
+        'logos-collection-swiper md:flex md:flex-wrap md:gap-2 md:items-center',
+        className
+      )}
+    >
+      <div class="swiper-wrapper">
+        {logos.map((logo) => (
+          <div class="swiper-slide">
+            <div class="logo p-3 flex items-center justify-center md:flex-1 md:basis-40">
+              <WordpressImage
+                data={logo}
+                class="max-h-12 object-contain select-none"
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}

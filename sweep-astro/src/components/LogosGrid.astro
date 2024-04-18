@@ -1,16 +1,20 @@
 ---
+import type { HTMLAttributes } from 'astro/types';
 import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
 import { cn } from '@/scripts/cn';
+import type { WithAttributes } from '@/types';
 import WordpressImage from './WordpressImage.astro';
 import Card from './ui/Card.astro';
 import Grid from './ui/Grid.astro';
 
-interface Props {
-  columns?: number;
-  logos?: UnparsedImage[];
-}
+type Props = WithAttributes<
+  {
+    columns?: number;
+    logos?: UnparsedImage[];
+  } & HTMLAttributes<'div'>
+>;
 
-const { columns = 4, logos = [] } = Astro.props;
+const { class: className, columns = 4, logos = [], ...props } = Astro.props;
 
 const columnClassName: Record<number, string> = {
   1: cn('col-span-full'),
@@ -22,7 +26,7 @@ const columnClassName: Record<number, string> = {
 
 {
   logos.length > 0 && (
-    <Grid>
+    <Grid {...props} class={cn('logos-grid', className)}>
       {logos.map((logo) => (
         <Card
           class={cn(

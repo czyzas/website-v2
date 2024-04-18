@@ -3,23 +3,29 @@ import type {
   CaseStudyCardFragment,
   ModulesModulesContentCaseStudiesLayout,
 } from '@/__generated__/cms';
+import ButtonContainer from '@/components/ButtonContainer.astro';
 import CardWithBigImage from '@/components/CardWithBigImage.astro';
+import CaseStudiesGrid from '@/components/CaseStudiesGrid.astro';
 import CaseStudyContent from '@/components/CaseStudyContent.astro';
 import ModuleContainer from '@/components/ModuleContainer.astro';
+import WordpressButtonLink from '@/components/WordpressButtonLink.astro';
 import WordpressImage from '@/components/WordpressImage.astro';
 import Container from '@/components/ui/Container.astro';
 import TabList from '@/components/ui/Tabs/TabList.astro';
 import TabListItem from '@/components/ui/Tabs/TabListItem.astro';
 import TabPane from '@/components/ui/Tabs/TabPane.astro';
 import Tabs from '@/components/ui/Tabs/Tabs.astro';
+import { linkShouldRender } from '@/scripts/data-parsers/parseLink';
 
 type Props = ModulesModulesContentCaseStudiesLayout;
 
 const {
   layoutName,
+  layout = 'tabs',
   backgroundColor,
   caseStudiesList,
   singleCaseStudyLinkLabel,
+  ctaButton,
 } = Astro.props;
 
 const tabId = crypto.randomUUID();
@@ -30,68 +36,84 @@ const cases = (caseStudiesList?.nodes ??
 
 <ModuleContainer name={layoutName!} bg={backgroundColor}>
   <Container>
-    <Tabs>
-      <TabList>
-        {
-          cases.map((caseStudy, index) => {
-            if (caseStudy.__typename !== 'CaseStudy') return null;
-            const customerMaybe =
-              caseStudy.caseStudyAcf?.relatedCustomer?.nodes[0];
-            const customer =
-              customerMaybe?.__typename === 'Customer'
-                ? customerMaybe
-                : undefined;
-            const customerLogo = customer?.customerAcf?.logo;
+    {
+      layout === 'tabs' && (
+        <Tabs>
+          <TabList>
+            {cases.map((caseStudy, index) => {
+              if (caseStudy.__typename !== 'CaseStudy') return null;
+              const customerMaybe =
+                caseStudy.caseStudyAcf?.relatedCustomer?.nodes[0];
+              const customer =
+                customerMaybe?.__typename === 'Customer'
+                  ? customerMaybe
+                  : undefined;
+              const customerLogo = customer?.customerAcf?.logo;
 
-            return (
-              <TabListItem
-                underline
-                isActive={index === 0}
-                id={`${tabId}-${index}`}
-                class="flex items-center justify-center"
-              >
-                <WordpressImage
-                  data={customerLogo}
-                  class="max-h-14 max-w-full object-contain"
-                />
-              </TabListItem>
-            );
-          })
-        }
-      </TabList>
-      <div class="tab-content mt-10">
-        {
-          cases.map((caseStudy, index) => {
-            if (caseStudy.__typename !== 'CaseStudy') return null;
-            const customerMaybe =
-              caseStudy.caseStudyAcf?.relatedCustomer?.nodes[0];
-            const customer =
-              customerMaybe?.__typename === 'Customer'
-                ? customerMaybe
-                : undefined;
-            const customerLogo = customer?.customerAcf?.logo;
-            const longerTitle = caseStudy.caseStudyAcf?.longerTitle;
-
-            return (
-              <TabPane isActive={index === 0} id={`${tabId}-${index}`}>
-                <CardWithBigImage
-                  preferContentHeight
-                  image={caseStudy.subpageSettings?.image}
+              return (
+                <TabListItem
+                  underline
+                  isActive={index === 0}
+                  id={`${tabId}-${index}`}
+                  class="flex items-center justify-center"
                 >
-                  <CaseStudyContent
-                    customerLogo={customerLogo}
-                    customerTitle={customer?.title}
-                    customerCategory={customer?.customerAcf?.category}
-                    title={longerTitle || customer?.title}
-                    uri={caseStudy.uri}
-                    buttonLabel={singleCaseStudyLinkLabel}
+                  <WordpressImage
+                    data={customerLogo}
+                    class="max-h-14 max-w-full object-contain"
                   />
-                </CardWithBigImage>
-              </TabPane>
-            );
-          })
-        }
-      </div>
-    </Tabs>
+                </TabListItem>
+              );
+            })}
+          </TabList>
+          <div class="tab-content mt-10">
+            {cases.map((caseStudy, index) => {
+              if (caseStudy.__typename !== 'CaseStudy') return null;
+              const customerMaybe =
+                caseStudy.caseStudyAcf?.relatedCustomer?.nodes[0];
+              const customer =
+                customerMaybe?.__typename === 'Customer'
+                  ? customerMaybe
+                  : undefined;
+              const customerLogo = customer?.customerAcf?.logo;
+              const longerTitle = caseStudy.caseStudyAcf?.longerTitle;
+
+              return (
+                <TabPane isActive={index === 0} id={`${tabId}-${index}`}>
+                  <CardWithBigImage
+                    preferContentHeight
+                    image={caseStudy.subpageSettings?.image}
+                  >
+                    <CaseStudyContent
+                      customerLogo={customerLogo}
+                      customerTitle={customer?.title}
+                      customerCategory={customer?.customerAcf?.category}
+                      title={longerTitle || customer?.title}
+                      uri={caseStudy.uri}
+                      buttonLabel={singleCaseStudyLinkLabel}
+                    />
+                  </CardWithBigImage>
+                </TabPane>
+              );
+            })}
+          </div>
+        </Tabs>
+      )
+    }
+    {
+      layout === 'grid' && (
+        <CaseStudiesGrid
+          hasLongerTitle
+          cases={cases}
+          buttonLabel={singleCaseStudyLinkLabel}
+        />
+      )
+    }
+    {
+      linkShouldRender(ctaButton) && (
+        <ButtonContainer class="mt-8 md:mt-15">
+          <WordpressButtonLink data={ctaButton} />
+        </ButtonContainer>
+      )
+    }
   </Container>
 </ModuleContainer>
