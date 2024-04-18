@@ -55,7 +55,14 @@ export function fetchHomepage(lang: string) {
 
 export async function fetchDefaultPagesStaticPaths() {
   // TODO: handle more than 100 pages
-  return (await fetchData(DefaultPagesStaticPathsDocument)).pages?.nodes ?? [];
+  return (
+    (
+      await fetchData(DefaultPagesStaticPathsDocument, undefined, [
+        'static-paths',
+        CACHE_KEYS.PAGE,
+      ])
+    ).pages?.nodes ?? []
+  );
 }
 
 export function fetchDefaultPage(slug: string, lang: string = defaultLocale) {
