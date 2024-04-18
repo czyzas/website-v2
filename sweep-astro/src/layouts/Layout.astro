@@ -34,9 +34,9 @@ const description = 'Sweep description';
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body>
+  <body class="min-h-screen flex flex-col">
     <Header />
-    <main class={cn({ subpage: !home }, name)}>
+    <main class={cn({ subpage: !home }, name, 'flex-1')}>
       <slot />
     </main>
     <Footer />
