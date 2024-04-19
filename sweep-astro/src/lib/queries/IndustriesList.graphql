@@ -1,0 +1,7 @@
+query IndustriesList($LANG: String!) {
+  industries(first: 100, where: { status: PUBLISH, language: $LANG }) {
+    nodes {
+      ...IndustriesList
+    }
+  }
+}

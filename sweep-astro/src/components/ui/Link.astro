@@ -1,0 +1,35 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/scripts/cn';
+
+interface LinkProps {
+  to: string;
+  /** Use `to` prop instead */
+  href?: never;
+  external?: boolean;
+}
+
+type Props = HTMLAttributes<'a'> & LinkProps;
+
+const {
+  class: className,
+  href,
+  target,
+  rel,
+  to,
+  external: externalProp,
+  ...props
+} = Astro.props;
+
+const external = externalProp ?? target === '_blank';
+---
+
+<a
+  href={to ?? href}
+  rel={external ? 'noopener noreferrer' : rel}
+  target={external ? '_blank' : target}
+  {...props}
+  class={cn(['underline hover:text-sw-sky-400', className])}
+>
+  <slot />
+</a>

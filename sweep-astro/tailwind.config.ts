@@ -14,9 +14,6 @@ export default {
       },
       colors: {
         sw: {
-          action: {
-            primary: '#283FFF',
-          },
           sky: {
             400: '#283FFF',
             500: '#0010A3',
@@ -121,6 +118,12 @@ export default {
           fontWeight: theme('fontWeight.medium'),
           color: theme('colors.black'),
           textTransform: 'uppercase',
+        },
+        '.typography-number-stats': {
+          fontSize: theme('fontSize.6xl'),
+          lineHeight: theme('lineHeight.snug'),
+          fontWeight: theme('fontWeight.semibold'),
+          color: theme('colors.sw.sky.400'),
         },
       });
     }),

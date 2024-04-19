@@ -2,20 +2,19 @@
 import { cmsStore } from '@/stores/cmsStore';
 import { getStore } from '@/scripts/store';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
-import { parseLink } from '@/scripts/data-parsers/parseLink';
+import { linkShouldRender } from '@/scripts/data-parsers/parseLink';
 import type { CaseStudyCardFragment } from '@/__generated__/cms';
 import Container from '../ui/Container.astro';
-import Button from '../ui/Button.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
 import ButtonContainer from '../ButtonContainer.astro';
 import Section from '../ui/Section.astro';
 import CaseStudiesGrid from '../CaseStudiesGrid.astro';
+import WordpressButtonLink from '../WordpressButtonLink.astro';
 
 const store = getStore(cmsStore);
 const data = store.homepage!;
 const acf = data.homepage!.caseStudies!;
-const button = parseLink(acf.button);
-const cases = acf.caseStudies?.nodes as CaseStudyCardFragment[] | undefined;
+const cases = (acf.caseStudies?.nodes ?? []) as CaseStudyCardFragment[];
 ---
 
 <Section name="case-studies">
@@ -24,21 +23,11 @@ const cases = acf.caseStudies?.nodes as CaseStudyCardFragment[] | undefined;
       withMargin
       {...parseSectionTitle(acf.sectionTitle?.selectSectionTitle)}
     />
-    <CaseStudiesGrid
-      cases={cases ?? []}
-      buttonLabel={acf.caseStudyButtonLabel}
-    />
+    <CaseStudiesGrid cases={cases} buttonLabel={acf.caseStudyButtonLabel} />
     {
-      button.shouldRender && (
-        <ButtonContainer class="mt-8 md:mt-15">
-          <Button
-            asLink
-            href={button.url}
-            target={button.target}
-            class="w-full md:w-auto"
-          >
-            {button.title}
-          </Button>
+      linkShouldRender(acf.button) && (
+        <ButtonContainer>
+          <WordpressButtonLink data={acf.button} />
         </ButtonContainer>
       )
     }

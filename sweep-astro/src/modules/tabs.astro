@@ -12,6 +12,7 @@ import TabList from '@/components/ui/Tabs/TabList.astro';
 import TabListItem from '@/components/ui/Tabs/TabListItem.astro';
 import TabPane from '@/components/ui/Tabs/TabPane.astro';
 import UITabs from '@/components/ui/Tabs/Tabs.astro';
+import { cn } from '@/scripts/cn';
 import { linkShouldRender } from '@/scripts/data-parsers/parseLink';
 import { fixDoubleBr } from '@/scripts/fixDoubleBr';
 
@@ -33,6 +34,7 @@ const tabId = crypto.randomUUID();
                 underline={tabsLook === 'ordered'}
                 isActive={tabIndex === 0}
                 id={`${tabId}-${tabIndex}`}
+                class={cn({ 'min-w-52': tabsLook === 'ordered' })}
               >
                 <Fragment set:html={fixDoubleBr(tab?.tabTitle)} />
               </TabListItem>
@@ -81,7 +83,7 @@ const tabId = crypto.randomUUID();
           </div>
         </UITabs>
         {linkShouldRender(ctaButton) && (
-          <ButtonContainer class="mt-12">
+          <ButtonContainer class="md:mt-12">
             <WordpressButtonLink data={ctaButton} arrow />
           </ButtonContainer>
         )}

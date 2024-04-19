@@ -1,7 +1,7 @@
 .custom-scrollbar {
   --scrollbar-size: 0.375rem;
   --scrollbar-border-radius: 0.625rem;
-  --scrollbar-thumb-color: theme('colors.sw.action.primary');
+  --scrollbar-thumb-color: theme('colors.sw.sky.400');
   --scrollbar-track-color: rgb(0 0 0 / 8%);
 
   @supports (-moz-appearance: none) {

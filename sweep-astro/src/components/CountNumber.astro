@@ -1,0 +1,81 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/scripts/cn';
+
+interface CountNumberProps {
+  value: string;
+}
+
+type Props = CountNumberProps & HTMLAttributes<'div'>;
+const { class: className, value: rawValue, ...props } = Astro.props;
+
+type IValue = {
+  valid: boolean;
+  prefix?: string;
+  value?: string;
+  suffix?: string;
+};
+
+function parseValue(str: string): IValue {
+  const NUMBER_RE = /^(.*?)((?:[0-9]*[.,])?[0-9]+)(.*?)?$/gm;
+
+  try {
+    const matches = [...rawValue.matchAll(NUMBER_RE)];
+    const match = matches?.[0];
+    if (!match) {
+      throw new Error('No matches');
+    }
+
+    const [, prefix, value, suffix] = match;
+    const valueToNumber = Number(value);
+    if (Number.isNaN(valueToNumber)) {
+      throw new TypeError('Value not a number');
+    }
+
+    return { valid: true, prefix, value, suffix };
+  } catch (err) {
+    return { valid: false, prefix: undefined, value: str, suffix: undefined };
+  }
+}
+
+const { prefix, value, suffix, valid } = parseValue(rawValue);
+---
+
+<script>
+  import { CountUp } from 'countup.js';
+
+  const countContainers =
+    document.querySelectorAll<HTMLDivElement>('[data-count-up]');
+  for (const countContainer of countContainers) {
+    if (countContainer.dataset.valid !== 'true') continue;
+    const { value } = countContainer.dataset;
+    if (!value) continue;
+    const countInstance = new CountUp(countContainer, Number(value), {
+      // prefix,
+      // suffix,
+      enableScrollSpy: true,
+      scrollSpyOnce: true,
+    });
+
+    if (!countInstance.error) {
+      countInstance.start();
+    } else {
+      console.error(countInstance.error);
+    }
+  }
+</script>
+
+<div
+  {...props}
+  data-count-up
+  data-value={value}
+  data-prefix={prefix}
+  data-suffix={suffix}
+  data-valid={valid ? 'true' : 'false'}
+  class={cn(
+    'count-number',
+    'before:content-[attr(data-prefix)] after:content-[attr(data-suffix)] tabular-nums before:normal-nums after:normal-nums',
+    className
+  )}
+  set:html={valid ? 0 : rawValue}
+/>

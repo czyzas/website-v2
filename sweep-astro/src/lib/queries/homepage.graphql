@@ -140,8 +140,7 @@ query Homepage($LANG: String!) {
         show
         selectedIndustries(first: 100) {
           nodes {
-            __typename
-            ...HomepageIndustry
+            ...IndustriesList
           }
         }
       }
@@ -209,17 +208,7 @@ query Homepage($LANG: String!) {
         }
         partners(first: 100) {
           nodes {
-            __typename
-            ... on Partner {
-              title
-              partnerAcf {
-                logo {
-                  ...Image
-                }
-                categoryColor
-                category
-              }
-            }
+            ...PartnersList
           }
         }
         button {
@@ -263,10 +252,8 @@ query Homepage($LANG: String!) {
       }
     }
   }
-  industries(first: 100, where: { status: PUBLISH, language: $LANG }) {
-    nodes {
-      ...HomepageIndustry
-    }
+  defaultLanguage {
+    ...Languages
   }
   languages {
     ...Languages
@@ -276,15 +263,5 @@ query Homepage($LANG: String!) {
   }
   themeOptions {
     ...ThemeOptions
-  }
-}
-
-fragment HomepageIndustry on Industry {
-  title
-  uri
-  industryAcf {
-    icon {
-      ...Image
-    }
   }
 }

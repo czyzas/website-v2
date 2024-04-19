@@ -1,0 +1,88 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import type { IndustriesListFragment } from '@/__generated__/cms';
+import { fetchIndustriesList } from '@/lib/fetchCMSData';
+import { defaultLocale } from '@/i18n/config';
+import { getStore, updateStore } from '@/scripts/store';
+import { languageStore } from '@/stores/languageStore';
+import { cn } from '@/scripts/cn';
+import type { WithAttributes } from '@/types';
+import { cacheStore } from '@/stores/cacheStore';
+import Grid from './ui/Grid.astro';
+import Card from './ui/Card.astro';
+import WordpressImage from './WordpressImage.astro';
+
+interface IndustriesListProps {
+  industries?: IndustriesListFragment[];
+}
+type Props = WithAttributes<IndustriesListProps & HTMLAttributes<'div'>>;
+
+const {
+  class: className,
+  industries: listOfIndustries,
+  ...props
+} = Astro.props;
+
+// TODO: create useLanguage hook to get current lang from the store automatically
+const { currentLanguage } = getStore(languageStore);
+const showSelected = !!listOfIndustries;
+const industries: IndustriesListFragment[] = [];
+
+async function getAllIndustries() {
+  // Use in-memory cache to
+  try {
+    const { allIndustries: cachedIndustries } = getStore(cacheStore);
+    if (cachedIndustries) {
+      return cachedIndustries;
+    }
+
+    const fetchedIndustries = await fetchIndustriesList(
+      currentLanguage.code ?? defaultLocale
+    );
+
+    updateStore(cacheStore, 'allIndustries', fetchedIndustries);
+
+    return fetchedIndustries;
+  } catch (err) {
+    console.error(
+      'Industries fetching error',
+      err,
+      err instanceof Error ? err.message : ''
+    );
+  }
+  return [];
+}
+
+const rawIndustries = showSelected
+  ? /* use acf selected industries */ listOfIndustries
+  : /* fetch all industries from cms */ await getAllIndustries();
+
+for (const industry of rawIndustries) {
+  if (industry.__typename !== 'Industry') continue;
+
+  industries.push(industry);
+}
+---
+
+{
+  industries.length > 0 && (
+    <Grid {...props} class={cn('industries-list', className)}>
+      {industries.map((industry) => (
+        <a
+          href={industry.uri}
+          class="industry col-span-full xs:col-span-6 md:col-span-4 lg:col-span-3 group"
+        >
+          <Card class="py-[2.1875rem] px-[1.375rem] xs:max-md:p-4 flex flex-col gap-[0.8125rem] h-full transition-colors group-hover:bg-sw-sky-400 hover:border-transparent">
+            <WordpressImage
+              data={industry.industryAcf?.icon}
+              class="transition-all group-hover:brightness-0 group-hover:invert"
+            />
+            <span class="transition-colors typography-h4 xs:max-md:text-lg group-hover:text-white">
+              {industry.title}
+            </span>
+          </Card>
+        </a>
+      ))}
+    </Grid>
+  )
+}

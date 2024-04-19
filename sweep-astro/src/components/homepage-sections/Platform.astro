@@ -2,9 +2,8 @@
 import { cmsStore } from '@/stores/cmsStore';
 import { getStore } from '@/scripts/store';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
-import { parseLink } from '@/scripts/data-parsers/parseLink';
+import { linkShouldRender } from '@/scripts/data-parsers/parseLink';
 import Container from '../ui/Container.astro';
-import Button from '../ui/Button.astro';
 import Grid from '../ui/Grid.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
 import Card from '../ui/Card.astro';
@@ -12,11 +11,11 @@ import Prose from '../ui/Prose.astro';
 import ButtonContainer from '../ButtonContainer.astro';
 import WordpressImage from '../WordpressImage.astro';
 import Section from '../ui/Section.astro';
+import WordpressButtonLink from '../WordpressButtonLink.astro';
 
 const store = getStore(cmsStore);
 const data = store.homepage!;
 const acf = data.homepage!.platform!;
-const button = parseLink(acf.button);
 ---
 
 <Section name="platform" transition:name="surface-subdued">
@@ -36,17 +35,9 @@ const button = parseLink(acf.button);
       </div>
     </Grid>
     {
-      button.shouldRender && (
-        <ButtonContainer class="mt-8 md:mt-18">
-          <Button
-            asLink
-            trailingIcon="arrow-right"
-            href={button.url}
-            target={button.target}
-            class="w-full md:w-auto"
-          >
-            {button.title}
-          </Button>
+      linkShouldRender(acf.button) && (
+        <ButtonContainer class="md:mt-18">
+          <WordpressButtonLink data={acf.button} arrow />
         </ButtonContainer>
       )
     }

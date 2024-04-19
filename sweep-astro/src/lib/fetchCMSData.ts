@@ -5,7 +5,9 @@ import {
   DefaultPageDocument,
   DefaultPagesStaticPathsDocument,
   HomepageDocument,
+  IndustriesListDocument,
 } from '@/__generated__/cms';
+import type { IndustriesListFragment } from '@/__generated__/cms';
 
 import { defaultLocale } from '@/i18n/config';
 import { gqlClient } from './graphqlClient';
@@ -53,9 +55,25 @@ export function fetchHomepage(lang: string) {
   ]);
 }
 
+export async function fetchIndustriesList(lang: string) {
+  const fetched = await fetchData(IndustriesListDocument, { LANG: lang }, [
+    lang,
+    CACHE_KEYS.INDUSTRIES_LIST,
+  ]);
+  return (fetched.industries?.nodes ??
+    []) as unknown as IndustriesListFragment[];
+}
+
 export async function fetchDefaultPagesStaticPaths() {
   // TODO: handle more than 100 pages
-  return (await fetchData(DefaultPagesStaticPathsDocument)).pages?.nodes ?? [];
+  return (
+    (
+      await fetchData(DefaultPagesStaticPathsDocument, undefined, [
+        'static-paths',
+        CACHE_KEYS.PAGE,
+      ])
+    ).pages?.nodes ?? []
+  );
 }
 
 export function fetchDefaultPage(slug: string, lang: string = defaultLocale) {

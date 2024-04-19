@@ -1,0 +1,11 @@
+fragment PartnersList on Partner {
+  __typename
+  title
+  partnerAcf {
+    logo {
+      ...Image
+    }
+    categoryColor
+    category
+  }
+}

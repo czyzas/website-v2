@@ -8,6 +8,7 @@ export const CACHE_KEYS = {
   HOMEPAGE: 'homepage',
   PAGE: 'page',
   CONTACT: 'contact',
+  INDUSTRIES_LIST: 'industries-list',
 } as const;
 
 export type CachePayload = string | string[];
