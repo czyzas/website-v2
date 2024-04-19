@@ -23,6 +23,10 @@ const { name, bg, ...props } = Astro.props;
   section.module.section-title {
     @apply pb-0;
 
+    &.display-as-overline {
+      @apply pt-2.5;
+    }
+
     & + section.module {
       @apply pt-12;
     }

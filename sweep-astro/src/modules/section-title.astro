@@ -3,6 +3,7 @@ import type { ModulesModulesContentSectionTitleLayout } from '@/__generated__/cm
 import ModuleContainer from '@/components/ModuleContainer.astro';
 import UISectionTitle from '@/components/partials/SectionTitle.astro';
 import Container from '@/components/ui/Container.astro';
+import { cn } from '@/scripts/cn';
 import {
   parseSectionTitle,
   sectionTitleShouldRender,
@@ -12,13 +13,19 @@ type Props = ModulesModulesContentSectionTitleLayout;
 
 const { layoutName, backgroundColor, sectionTitle } = Astro.props;
 const data = sectionTitle?.selectSectionTitle;
+const parsed = parseSectionTitle(data);
 ---
 
 {
   sectionTitleShouldRender(data) && (
-    <ModuleContainer name={layoutName!} bg={backgroundColor}>
+    <ModuleContainer
+      name={cn(layoutName!, {
+        'display-as-overline': parsed.displayAs === 'overline',
+      })}
+      bg={backgroundColor}
+    >
       <Container>
-        <UISectionTitle {...parseSectionTitle(data)} />
+        <UISectionTitle {...parsed} />
       </Container>
     </ModuleContainer>
   )

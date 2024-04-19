@@ -1,0 +1,75 @@
+---
+import type { ModulesModulesContentBigNumbersLayout } from '@/__generated__/cms';
+import ModuleContainer from '@/components/ModuleContainer.astro';
+import Container from '@/components/ui/Container.astro';
+import { fixDoubleBr } from '@/scripts/fixDoubleBr';
+import { cn } from '@/scripts/cn';
+import Grid from '@/components/ui/Grid.astro';
+import Card from '@/components/ui/Card.astro';
+import { TRANSLATIONS } from '@/constants';
+import Link from '@/components/ui/Link.astro';
+import { parseLink } from '@/scripts/data-parsers/parseLink';
+import CountNumber from '@/components/CountNumber.astro';
+
+type Props = ModulesModulesContentBigNumbersLayout;
+
+const {
+  layoutName,
+  backgroundColor,
+  columns = '1',
+  numbers: rawNumbers,
+} = Astro.props;
+
+const numbers = rawNumbers ? rawNumbers.filter(Boolean) : [];
+
+const columnClassName: Record<number, string> = {
+  1: cn('col-span-full'),
+  2: cn('col-span-full sm:col-span-6'),
+  3: cn('col-span-full sm:col-span-6 lg:col-span-4'),
+  4: cn('col-span-full sm:col-span-6 lg:col-span-3'),
+};
+---
+
+<ModuleContainer name={layoutName!} bg={backgroundColor}>
+  <Container>
+    <Grid>
+      {
+        numbers.map((number) => {
+          const link = parseLink(number.link);
+          return (
+            <Card
+              class={cn(
+                'number',
+                columnClassName?.[parseInt(columns)] ?? 'col-span-full',
+                'flex flex-col gap-2'
+              )}
+            >
+              {number.number ? (
+                <CountNumber
+                  value={number.number}
+                  class="text-6xl leading-snug font-semibold text-sw-sky-400"
+                />
+              ) : null}
+              <p
+                class="typography-body-large"
+                set:html={fixDoubleBr(number.content)}
+              />
+              {link.shouldRender && (
+                <div class="typography-body text-sw-text-subdued">
+                  <span>
+                    {TRANSLATIONS.SOURCE}:{' '}
+                    <Link
+                      to={link.url}
+                      target={link?.target}
+                      set:html={link.title}
+                    />
+                  </span>
+                </div>
+              )}
+            </Card>
+          );
+        })
+      }
+    </Grid>
+  </Container>
+</ModuleContainer>

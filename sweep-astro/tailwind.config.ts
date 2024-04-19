@@ -14,9 +14,6 @@ export default {
       },
       colors: {
         sw: {
-          action: {
-            primary: '#283FFF',
-          },
           sky: {
             400: '#283FFF',
             500: '#0010A3',
