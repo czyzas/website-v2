@@ -119,6 +119,12 @@ export default {
           color: theme('colors.black'),
           textTransform: 'uppercase',
         },
+        '.typography-number-stats': {
+          fontSize: theme('fontSize.6xl'),
+          lineHeight: theme('lineHeight.snug'),
+          fontWeight: theme('fontWeight.semibold'),
+          color: theme('colors.sw.sky.400'),
+        },
       });
     }),
   ],
