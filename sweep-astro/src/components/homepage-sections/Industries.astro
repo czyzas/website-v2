@@ -2,30 +2,19 @@
 import { cmsStore } from '@/stores/cmsStore';
 import { getStore } from '@/scripts/store';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
+import type { IndustriesListFragment } from '@/__generated__/cms';
 import Container from '../ui/Container.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
-import Grid from '../ui/Grid.astro';
-import Card from '../ui/Card.astro';
-import WordpressImage from '../WordpressImage.astro';
 import Section from '../ui/Section.astro';
+import IndustriesList from '../IndustriesList.astro';
 
 const store = getStore(cmsStore);
+
 const data = store.homepage!;
 const acf = data.homepage!.industries!;
 const showSelected = (acf?.show ?? 'all') === 'selected';
-const allIndustries = store.homepageIndustries?.nodes ?? [];
-let industries = allIndustries;
-
-if (showSelected) {
-  const filteredIndustries = [];
-  for (const industry of acf.selectedIndustries?.nodes ?? []) {
-    if (industry.__typename !== 'Industry') continue;
-
-    filteredIndustries.push(industry);
-  }
-
-  industries = filteredIndustries;
-}
+const selectedIndustries = acf.selectedIndustries
+  ?.nodes as IndustriesListFragment[];
 ---
 
 <Section name="industries" bg="surface-subdued">
@@ -34,27 +23,8 @@ if (showSelected) {
       withMargin
       {...parseSectionTitle(acf.sectionTitle?.selectSectionTitle)}
     />
-
-    <Grid>
-      {
-        industries.length > 0 &&
-          industries.map((industry) => (
-            <a
-              href={industry.uri}
-              class="industry col-span-full xs:col-span-6 md:col-span-4 lg:col-span-3 group"
-            >
-              <Card class="py-[2.1875rem] px-[1.375rem] xs:max-md:p-4 flex flex-col gap-[0.8125rem] h-full transition-colors group-hover:bg-sw-sky-400 hover:border-transparent">
-                <WordpressImage
-                  data={industry.industryAcf?.icon}
-                  class="transition-all group-hover:brightness-0 group-hover:invert"
-                />
-                <span class="transition-colors typography-h4 xs:max-md:text-lg group-hover:text-white">
-                  {industry.title}
-                </span>
-              </Card>
-            </a>
-          ))
-      }
-    </Grid>
+    <IndustriesList
+      industries={showSelected ? selectedIndustries : undefined}
+    />
   </Container>
 </Section>

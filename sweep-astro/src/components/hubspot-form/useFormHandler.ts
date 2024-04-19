@@ -135,7 +135,7 @@ export function useFormHandler(
                 formResponse: json,
               });
               setFormResponse(json);
-              console.log('error:', { error: json, response });
+              console.error('error:', { error: json, response });
             } catch (error) {
               console.error('getting response error:', { error, response });
               reportEvent?.('hubspot_form_failure', {

@@ -1,0 +1,30 @@
+---
+import type {
+  IndustriesListFragment,
+  ModulesModulesContentIndustriesLayout,
+} from '@/__generated__/cms';
+import IndustriesList from '@/components/IndustriesList.astro';
+import ModuleContainer from '@/components/ModuleContainer.astro';
+import Container from '@/components/ui/Container.astro';
+
+type Props = ModulesModulesContentIndustriesLayout;
+
+const {
+  layoutName,
+  backgroundColor,
+  show = 'all',
+  selectedIndustries: rawSelectedIndustries,
+} = Astro.props;
+
+const showSelected = show === 'selected';
+const selectedIndustries =
+  rawSelectedIndustries?.nodes as unknown as IndustriesListFragment[];
+---
+
+<ModuleContainer name={layoutName!} bg={backgroundColor}>
+  <Container>
+    <IndustriesList
+      industries={showSelected ? selectedIndustries : undefined}
+    />
+  </Container>
+</ModuleContainer>

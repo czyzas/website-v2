@@ -5,7 +5,9 @@ import {
   DefaultPageDocument,
   DefaultPagesStaticPathsDocument,
   HomepageDocument,
+  IndustriesListDocument,
 } from '@/__generated__/cms';
+import type { IndustriesListFragment } from '@/__generated__/cms';
 
 import { defaultLocale } from '@/i18n/config';
 import { gqlClient } from './graphqlClient';
@@ -51,6 +53,15 @@ export function fetchHomepage(lang: string) {
     lang,
     CACHE_KEYS.HOMEPAGE,
   ]);
+}
+
+export async function fetchIndustriesList(lang: string) {
+  const fetched = await fetchData(IndustriesListDocument, { LANG: lang }, [
+    lang,
+    CACHE_KEYS.INDUSTRIES_LIST,
+  ]);
+  return (fetched.industries?.nodes ??
+    []) as unknown as IndustriesListFragment[];
 }
 
 export async function fetchDefaultPagesStaticPaths() {

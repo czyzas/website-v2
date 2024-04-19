@@ -1,0 +1,10 @@
+fragment IndustriesList on Industry {
+  __typename
+  title
+  uri
+  industryAcf {
+    icon {
+      ...Image
+    }
+  }
+}

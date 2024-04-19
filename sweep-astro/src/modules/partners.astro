@@ -1,0 +1,40 @@
+---
+import type {
+  ModulesModulesContentPartnersLayout,
+  PartnersListFragment,
+} from '@/__generated__/cms';
+import ButtonContainer from '@/components/ButtonContainer.astro';
+import ModuleContainer from '@/components/ModuleContainer.astro';
+import PartnersList from '@/components/PartnersList.astro';
+import WordpressButtonLink from '@/components/WordpressButtonLink.astro';
+import Container from '@/components/ui/Container.astro';
+import { linkShouldRender } from '@/scripts/data-parsers/parseLink';
+
+type Props = ModulesModulesContentPartnersLayout;
+
+const {
+  layoutName,
+  backgroundColor,
+  partners: rawPartners,
+  button,
+} = Astro.props;
+
+const partners = rawPartners?.nodes ?? [];
+---
+
+{
+  partners.length > 0 && (
+    <ModuleContainer name={layoutName!} bg={backgroundColor}>
+      <Container>
+        <PartnersList
+          partners={partners as unknown as PartnersListFragment[]}
+        />
+        {linkShouldRender(button) && (
+          <ButtonContainer class="mt-8 md:mt-15">
+            <WordpressButtonLink data={button} />
+          </ButtonContainer>
+        )}
+      </Container>
+    </ModuleContainer>
+  )
+}

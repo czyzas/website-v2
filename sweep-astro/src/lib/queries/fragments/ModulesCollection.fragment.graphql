@@ -63,6 +63,20 @@ fragment ModulesCollection on Modules {
         ...Link
       }
     }
+    ... on ModulesModulesContentBigNumbersLayout {
+      layoutName
+      backgroundColor {
+        selectBackgroundColor
+      }
+      columns
+      numbers {
+        number
+        content
+        link {
+          ...Link
+        }
+      }
+    }
     ... on ModulesModulesContentCardsLayout {
       layoutName
       backgroundColor {
@@ -75,6 +89,32 @@ fragment ModulesCollection on Modules {
         }
         title
         content
+      }
+    }
+    ... on ModulesModulesContentPartnersLayout {
+      layoutName
+      backgroundColor {
+        selectBackgroundColor
+      }
+      partners(first: 100) {
+        nodes {
+          ...PartnersList
+        }
+      }
+      button {
+        ...Link
+      }
+    }
+    ... on ModulesModulesContentIndustriesLayout {
+      layoutName
+      backgroundColor {
+        selectBackgroundColor
+      }
+      show
+      selectedIndustries(first: 100) {
+        nodes {
+          ...IndustriesList
+        }
       }
     }
     ... on ModulesModulesContentResourceLinkLayout {

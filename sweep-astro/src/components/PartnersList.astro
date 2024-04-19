@@ -1,0 +1,43 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import type { WithAttributes } from '@/types';
+import { cn } from '@/scripts/cn';
+import type { PartnersListFragment } from '@/__generated__/cms';
+import Grid from './ui/Grid.astro';
+import Card from './ui/Card.astro';
+import WordpressImage from './WordpressImage.astro';
+
+interface PartnersListProps {
+  partners?: PartnersListFragment[];
+}
+
+type Props = WithAttributes<PartnersListProps & HTMLAttributes<'div'>>;
+
+const { class: className, partners = [], ...props } = Astro.props;
+---
+
+{
+  partners.length > 0 && (
+    <Grid {...props} class={cn('partners-list', className)}>
+      {partners.map((partner) => (
+        <Card class="col-span-full sm:col-span-6 md:col-span-4 gap-8 flex flex-col items-start">
+          <WordpressImage
+            data={partner?.partnerAcf?.logo}
+            class="h-20 w-48 object-contain object-left"
+          />
+          <div class="flex flex-col typography-card-title">
+            <span>{partner.title}</span>
+            <span
+              style={{
+                '--fg': partner.partnerAcf?.categoryColor ?? 'currentColor',
+              }}
+              class="text-[--fg]"
+            >
+              {partner.partnerAcf?.category}
+            </span>
+          </div>
+        </Card>
+      ))}
+    </Grid>
+  )
+}

@@ -21,7 +21,6 @@ const { lang = defaultLocale } = Astro.params;
 const data = await fetchHomepage(lang);
 
 updateStore(cmsStore, 'homepage', data.page!);
-updateStore(cmsStore, 'homepageIndustries', data.industries!);
 updateStore(languageStore, 'currentLanguage', data.page!.language!);
 updateStore(languageStore, 'languages', data.languages);
 updateStore(cmsStore, 'primaryMenu', data.primaryMenu!);
