@@ -31,7 +31,7 @@ const logos = rawLogos?.edges.filter(Boolean) ?? [];
         )}
         {layout === 'collection' && <LogosCollection logos={logos} />}
         {linkShouldRender(ctaButton) && (
-          <ButtonContainer class="mt-8 md:mt-12">
+          <ButtonContainer class="md:mt-12">
             <WordpressButtonLink data={ctaButton} arrow />
           </ButtonContainer>
         )}

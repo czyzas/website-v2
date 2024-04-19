@@ -26,7 +26,7 @@ const cases = (acf.caseStudies?.nodes ?? []) as CaseStudyCardFragment[];
     <CaseStudiesGrid cases={cases} buttonLabel={acf.caseStudyButtonLabel} />
     {
       linkShouldRender(acf.button) && (
-        <ButtonContainer class="mt-8 md:mt-15">
+        <ButtonContainer>
           <WordpressButtonLink data={acf.button} />
         </ButtonContainer>
       )

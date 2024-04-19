@@ -30,7 +30,7 @@ const partners = rawPartners?.nodes ?? [];
           partners={partners as unknown as PartnersListFragment[]}
         />
         {linkShouldRender(button) && (
-          <ButtonContainer class="mt-8 md:mt-15">
+          <ButtonContainer>
             <WordpressButtonLink data={button} />
           </ButtonContainer>
         )}
