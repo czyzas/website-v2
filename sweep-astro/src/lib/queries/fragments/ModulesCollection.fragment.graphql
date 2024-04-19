@@ -28,6 +28,7 @@ fragment ModulesCollection on Modules {
         selectBackgroundColor
       }
       tabsLook
+      contentLayout
       ctaButton {
         ...Link
       }
