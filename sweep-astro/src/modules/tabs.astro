@@ -38,19 +38,21 @@ const ContentWrapper =
     <ModuleContainer name={layoutName!} bg={backgroundColor}>
       <Container>
         <UITabs>
-          <TabList>
-            {tabs.map((tab, tabIndex) => (
-              <TabListItem
-                counter={tabsLook === 'ordered'}
-                underline={tabsLook === 'ordered'}
-                isActive={tabIndex === 0}
-                id={`${tabId}-${tabIndex}`}
-                class={cn({ 'min-w-52': tabsLook === 'ordered' })}
-              >
-                <Fragment set:html={fixDoubleBr(tab?.tabTitle)} />
-              </TabListItem>
-            ))}
-          </TabList>
+          {tabs.length > 1 && (
+            <TabList>
+              {tabs.map((tab, tabIndex) => (
+                <TabListItem
+                  counter={tabsLook === 'ordered'}
+                  underline={tabsLook === 'ordered'}
+                  isActive={tabIndex === 0}
+                  id={`${tabId}-${tabIndex}`}
+                  class={cn({ 'min-w-52': tabsLook === 'ordered' })}
+                >
+                  <Fragment set:html={fixDoubleBr(tab?.tabTitle)} />
+                </TabListItem>
+              ))}
+            </TabList>
+          )}
           <div class="tab-content mt-10">
             {tabs.map((tab, tabIndex) => (
               <TabPane isActive={tabIndex === 0} id={`${tabId}-${tabIndex}`}>
