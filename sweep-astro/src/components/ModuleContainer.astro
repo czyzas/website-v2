@@ -1,13 +1,16 @@
 ---
+import type { HTMLAttributes } from 'astro/types';
 import type { ModulesModulesContentBackgroundColor } from '@/__generated__/cms';
 import { parseBgColor } from '@/scripts/data-parsers/parseBgColor';
 import type { WithAttributes } from '@/types';
 import Section from './ui/Section.astro';
 
-type Props = WithAttributes<{
-  name: string;
-  bg?: ModulesModulesContentBackgroundColor;
-}>;
+type Props = WithAttributes<
+  {
+    name: string;
+    bg?: ModulesModulesContentBackgroundColor;
+  } & HTMLAttributes<'div'>
+>;
 
 const { name, bg, ...props } = Astro.props;
 ---
@@ -30,6 +33,10 @@ const { name, bg, ...props } = Astro.props;
     & + section.module {
       @apply pt-12;
     }
+  }
+
+  section.module.break {
+    @apply p-0;
   }
 </style>
 

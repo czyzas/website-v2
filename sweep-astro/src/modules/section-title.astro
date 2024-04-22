@@ -19,10 +19,11 @@ const parsed = parseSectionTitle(data);
 {
   sectionTitleShouldRender(data) && (
     <ModuleContainer
-      name={cn(layoutName!, {
+      name={layoutName!}
+      bg={backgroundColor}
+      class={cn({
         'display-as-overline': parsed.displayAs === 'overline',
       })}
-      bg={backgroundColor}
     >
       <Container>
         <UISectionTitle {...parsed} />

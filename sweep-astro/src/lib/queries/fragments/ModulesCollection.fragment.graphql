@@ -22,6 +22,13 @@ fragment ModulesCollection on Modules {
       overline
       type
     }
+    ... on ModulesModulesContentBreakLayout {
+      layoutName
+      backgroundColor {
+        selectBackgroundColor
+      }
+      height
+    }
     ... on ModulesModulesContentTabsLayout {
       layoutName
       backgroundColor {
@@ -140,6 +147,7 @@ fragment ModulesCollection on Modules {
       segmentsCards {
         title
         imageBackgroundColor
+        fillImage
         image {
           ...Image
         }
@@ -164,6 +172,32 @@ fragment ModulesCollection on Modules {
       ctaButton {
         ...Link
       }
+    }
+    ... on ModulesModulesContentTeamLayout {
+      layoutName
+      backgroundColor {
+        selectBackgroundColor
+      }
+      team {
+        image {
+          ...Image
+        }
+        name
+        position
+      }
+    }
+    ... on ModulesModulesContentQuotationLayout {
+      layoutName
+      backgroundColor {
+        selectBackgroundColor
+      }
+      theme
+      quote
+      authorsImage {
+        ...Image
+      }
+      authorName
+      authorsOccupation
     }
     ... on ModulesModulesContentDemoLayout {
       layoutName

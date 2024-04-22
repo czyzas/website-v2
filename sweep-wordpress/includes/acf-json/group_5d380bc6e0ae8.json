@@ -122,6 +122,89 @@
                     "min": "",
                     "max": ""
                 },
+                "layout_66262c3157e91": {
+                    "key": "layout_66262c3157e91",
+                    "name": "break",
+                    "label": "Break",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_66262c3e57e94",
+                            "label": "Background color",
+                            "name": "background_color",
+                            "aria-label": "",
+                            "type": "group",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "invisible-group",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "layout": "block",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "backgroundColor",
+                            "graphql_non_null": 0,
+                            "sub_fields": [
+                                {
+                                    "key": "field_66262c3e57e96",
+                                    "label": "Background color",
+                                    "name": "background_color",
+                                    "aria-label": "",
+                                    "type": "clone",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 1,
+                                    "clone": [
+                                        "field_6602daa862d57"
+                                    ],
+                                    "display": "seamless",
+                                    "layout": "block",
+                                    "prefix_label": 0,
+                                    "prefix_name": 0
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_66262c5557e97",
+                            "label": "Height",
+                            "name": "height",
+                            "aria-label": "",
+                            "type": "number",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "default_value": "",
+                            "min": 0,
+                            "max": "",
+                            "placeholder": "",
+                            "step": 1,
+                            "prepend": "",
+                            "append": "px",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "height",
+                            "graphql_non_null": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
                 "layout_6602e0f3b5d4b": {
                     "key": "layout_6602e0f3b5d4b",
                     "name": "tabs",
@@ -1499,6 +1582,32 @@
                             "rows_per_page": 20,
                             "sub_fields": [
                                 {
+                                    "key": "field_66262fcf57e98",
+                                    "label": "Fill image?",
+                                    "name": "fill_image",
+                                    "aria-label": "",
+                                    "type": "true_false",
+                                    "instructions": "If checked - the image will fill entire space",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "25",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 1,
+                                    "message": "",
+                                    "default_value": 0,
+                                    "ui_on_text": "",
+                                    "ui_off_text": "",
+                                    "ui": 1,
+                                    "show_in_graphql": 1,
+                                    "graphql_description": "",
+                                    "graphql_field_name": "fillImage",
+                                    "graphql_non_null": 0,
+                                    "parent_repeater": "field_6603e6ba90762"
+                                },
+                                {
                                     "key": "field_6603e6d890763",
                                     "label": "Image background color",
                                     "name": "image_background_color",
@@ -1532,7 +1641,7 @@
                                     "required": 0,
                                     "conditional_logic": 0,
                                     "wrapper": {
-                                        "width": "75",
+                                        "width": "50",
                                         "class": "",
                                         "id": ""
                                     },
@@ -1798,6 +1907,362 @@
                     "min": "",
                     "max": ""
                 },
+                "layout_6626301557e99": {
+                    "key": "layout_6626301557e99",
+                    "name": "team",
+                    "label": "Team",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_6626301557e9b",
+                            "label": "Background color",
+                            "name": "background_color",
+                            "aria-label": "",
+                            "type": "group",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "invisible-group",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "layout": "block",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "backgroundColor",
+                            "graphql_non_null": 0,
+                            "sub_fields": [
+                                {
+                                    "key": "field_6626301557e9c",
+                                    "label": "Background color",
+                                    "name": "background_color",
+                                    "aria-label": "",
+                                    "type": "clone",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "graphql_field_name": "",
+                                    "wpml_cf_preferences": 1,
+                                    "clone": [
+                                        "field_6602daa862d57"
+                                    ],
+                                    "display": "seamless",
+                                    "layout": "",
+                                    "prefix_label": 0,
+                                    "prefix_name": 0
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_6626305a57ea0",
+                            "label": "Team",
+                            "name": "team",
+                            "aria-label": "",
+                            "type": "repeater",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "layout": "block",
+                            "min": 0,
+                            "max": 0,
+                            "collapsed": "field_6626306c57ea2",
+                            "button_label": "Add person",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "team",
+                            "graphql_non_null": 0,
+                            "rows_per_page": 20,
+                            "sub_fields": [
+                                {
+                                    "key": "field_6626306357ea1",
+                                    "label": "Image",
+                                    "name": "image",
+                                    "aria-label": "",
+                                    "type": "image",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "33",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 1,
+                                    "return_format": "array",
+                                    "library": "all",
+                                    "min_width": "",
+                                    "min_height": "",
+                                    "min_size": "",
+                                    "max_width": "",
+                                    "max_height": "",
+                                    "max_size": "",
+                                    "mime_types": "",
+                                    "preview_size": "medium",
+                                    "show_in_graphql": 1,
+                                    "graphql_description": "",
+                                    "graphql_field_name": "image",
+                                    "parent_repeater": "field_6626305a57ea0"
+                                },
+                                {
+                                    "key": "field_6626306c57ea2",
+                                    "label": "Name",
+                                    "name": "name",
+                                    "aria-label": "",
+                                    "type": "text",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "33",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 2,
+                                    "default_value": "",
+                                    "maxlength": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "show_in_graphql": 1,
+                                    "graphql_description": "",
+                                    "graphql_field_name": "name",
+                                    "graphql_non_null": 0,
+                                    "parent_repeater": "field_6626305a57ea0"
+                                },
+                                {
+                                    "key": "field_6626308857ea3",
+                                    "label": "Position",
+                                    "name": "position",
+                                    "aria-label": "",
+                                    "type": "textarea",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "33",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 2,
+                                    "default_value": "",
+                                    "maxlength": "",
+                                    "rows": 2,
+                                    "placeholder": "",
+                                    "new_lines": "br",
+                                    "show_in_graphql": 1,
+                                    "graphql_description": "",
+                                    "graphql_field_name": "position",
+                                    "graphql_non_null": 0,
+                                    "parent_repeater": "field_6626305a57ea0"
+                                }
+                            ]
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
+                "layout_6626312c57ea4": {
+                    "key": "layout_6626312c57ea4",
+                    "name": "quotation",
+                    "label": "Quotation",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_6626312c57ea6",
+                            "label": "Background color",
+                            "name": "background_color",
+                            "aria-label": "",
+                            "type": "group",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "invisible-group",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "layout": "block",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "",
+                            "graphql_non_null": 0,
+                            "sub_fields": [
+                                {
+                                    "key": "field_6626312c57ea7",
+                                    "label": "Background color",
+                                    "name": "background_color",
+                                    "aria-label": "",
+                                    "type": "clone",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "graphql_field_name": "",
+                                    "wpml_cf_preferences": 1,
+                                    "clone": [
+                                        "field_6602daa862d57"
+                                    ],
+                                    "display": "seamless",
+                                    "layout": "block",
+                                    "prefix_label": 0,
+                                    "prefix_name": 0
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_662631b757eb0",
+                            "label": "Theme",
+                            "name": "theme",
+                            "aria-label": "",
+                            "type": "button_group",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "choices": {
+                                "light": "Light",
+                                "dark": "Dark"
+                            },
+                            "default_value": "",
+                            "return_format": "value",
+                            "allow_null": 0,
+                            "layout": "horizontal",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "theme",
+                            "graphql_non_null": 0
+                        },
+                        {
+                            "key": "field_6626316d57eac",
+                            "label": "Quote",
+                            "name": "quote",
+                            "aria-label": "",
+                            "type": "wysiwyg",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 2,
+                            "default_value": "",
+                            "tabs": "all",
+                            "toolbar": "full",
+                            "media_upload": 1,
+                            "delay": 0,
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "quote",
+                            "graphql_non_null": 0
+                        },
+                        {
+                            "key": "field_6626319857eae",
+                            "label": "Author's image",
+                            "name": "authors_image",
+                            "aria-label": "",
+                            "type": "image",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "33",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "return_format": "array",
+                            "library": "all",
+                            "min_width": "",
+                            "min_height": "",
+                            "min_size": "",
+                            "max_width": "",
+                            "max_height": "",
+                            "max_size": "",
+                            "mime_types": "",
+                            "preview_size": "medium",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "authorsImage"
+                        },
+                        {
+                            "key": "field_6626317d57ead",
+                            "label": "Author's name",
+                            "name": "authors_name",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "33",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 2,
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "authorName",
+                            "graphql_non_null": 0
+                        },
+                        {
+                            "key": "field_662631a357eaf",
+                            "label": "Author's occupation",
+                            "name": "authors_occupation",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "33",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 2,
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "authorsOccupation",
+                            "graphql_non_null": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
                 "layout_6603f448f8b17": {
                     "key": "layout_6603f448f8b17",
                     "name": "demo",
@@ -1974,5 +2439,5 @@
         "Page",
         "Post"
     ],
-    "modified": 1713525187
+    "modified": 1713785152
 }
