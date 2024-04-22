@@ -2183,7 +2183,7 @@
                         {
                             "key": "field_6626319857eae",
                             "label": "Author's image",
-                            "name": "authors_image",
+                            "name": "author_image",
                             "aria-label": "",
                             "type": "image",
                             "instructions": "",
@@ -2204,15 +2204,15 @@
                             "max_height": "",
                             "max_size": "",
                             "mime_types": "",
-                            "preview_size": "medium",
+                            "preview_size": "thumbnail",
                             "show_in_graphql": 1,
                             "graphql_description": "",
-                            "graphql_field_name": "authorsImage"
+                            "graphql_field_name": "authorImage"
                         },
                         {
                             "key": "field_6626317d57ead",
                             "label": "Author's name",
-                            "name": "authors_name",
+                            "name": "author_name",
                             "aria-label": "",
                             "type": "text",
                             "instructions": "",
@@ -2237,7 +2237,7 @@
                         {
                             "key": "field_662631a357eaf",
                             "label": "Author's occupation",
-                            "name": "authors_occupation",
+                            "name": "author_occupation",
                             "aria-label": "",
                             "type": "text",
                             "instructions": "",
@@ -2256,7 +2256,7 @@
                             "append": "",
                             "show_in_graphql": 1,
                             "graphql_description": "",
-                            "graphql_field_name": "authorsOccupation",
+                            "graphql_field_name": "authorOccupation",
                             "graphql_non_null": 0
                         }
                     ],
@@ -2439,5 +2439,5 @@
         "Page",
         "Post"
     ],
-    "modified": 1713785152
+    "modified": 1713794644
 }

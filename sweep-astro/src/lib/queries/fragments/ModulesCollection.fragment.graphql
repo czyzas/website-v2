@@ -193,11 +193,11 @@ fragment ModulesCollection on Modules {
       }
       theme
       quote
-      authorsImage {
+      authorImage {
         ...Image
       }
       authorName
-      authorsOccupation
+      authorOccupation
     }
     ... on ModulesModulesContentDemoLayout {
       layoutName

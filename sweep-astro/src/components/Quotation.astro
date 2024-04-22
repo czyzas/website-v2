@@ -1,0 +1,40 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/scripts/cn';
+import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
+import WordpressImage from './WordpressImage.astro';
+
+interface QuotationProps {
+  /** @default 'light' */
+  theme?: 'light' | 'dark';
+  authorImage?: UnparsedImage;
+  authorName?: string;
+  authorOccupation?: string;
+}
+
+type Props = QuotationProps & HTMLAttributes<'div'>;
+
+const {
+  class: className,
+  authorImage,
+  authorName,
+  authorOccupation,
+  ...props
+} = Astro.props;
+---
+
+<div {...props} class={cn('quotation', className)}>
+  <blockquote><slot /></blockquote>
+
+  <div class="author flex items-center gap-6">
+    <WordpressImage
+      data={authorImage}
+      preferredWidth={115}
+      class="aspect-square object-cover rounded-full size-[4.875rem]"
+    />
+    <div class="details">
+      <div class="author-name">{authorName}</div>
+      <div class="occupation">{authorOccupation}</div>
+    </div>
+  </div>
+</div>

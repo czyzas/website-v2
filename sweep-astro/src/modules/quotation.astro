@@ -1,0 +1,41 @@
+---
+import type { ModulesModulesContentQuotationLayout } from '@/__generated__/cms';
+import ModuleContainer from '@/components/ModuleContainer.astro';
+import Container from '@/components/ui/Container.astro';
+import UIQuotation from '@/components/Quotation.astro';
+
+type Props = ModulesModulesContentQuotationLayout;
+
+const {
+  layoutName,
+  backgroundColor,
+  theme: rawTheme,
+  quote,
+  authorName,
+  authorImage,
+  authorOccupation,
+} = Astro.props;
+
+let theme: 'light' | 'dark';
+switch (rawTheme) {
+  case 'dark':
+    theme = 'dark';
+    break;
+  case 'light':
+  default:
+    theme = 'light';
+    break;
+}
+---
+
+<ModuleContainer name={layoutName!} bg={backgroundColor}>
+  <Container>
+    <UIQuotation
+      theme={theme}
+      authorName={authorName}
+      authorImage={authorImage}
+      authorOccupation={authorOccupation}
+      set:html={quote}
+    />
+  </Container>
+</ModuleContainer>
