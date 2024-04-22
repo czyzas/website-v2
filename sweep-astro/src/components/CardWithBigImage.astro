@@ -1,19 +1,28 @@
 ---
+import type { HTMLAttributes } from 'astro/types';
 import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
 import { cn } from '@/scripts/cn';
+import type { WithAttributes } from '@/types';
 import WordpressImage from './WordpressImage.astro';
 import Card from './ui/Card.astro';
 import Grid from './ui/Grid.astro';
 
-type Props = {
-  image?: UnparsedImage;
-  preferContentHeight?: boolean;
-};
+type Props = WithAttributes<
+  {
+    image?: UnparsedImage;
+    preferContentHeight?: boolean;
+  } & HTMLAttributes<'div'>
+>;
 
-const { image, preferContentHeight = false } = Astro.props;
+const {
+  class: className,
+  image,
+  preferContentHeight = false,
+  ...props
+} = Astro.props;
 ---
 
-<Grid>
+<Grid {...props} class={cn('card-with-big-image', className)}>
   <Card
     class="content-column flex flex-col col-span-full md:col-start-1 md:col-end-8 lg:col-end-6 md:row-span-full relative z-[1] md:my-24"
   >

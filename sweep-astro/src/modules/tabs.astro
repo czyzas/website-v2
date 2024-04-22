@@ -2,12 +2,11 @@
 import type { ModulesModulesContentTabsLayout } from '@/__generated__/cms';
 import ButtonContainer from '@/components/ButtonContainer.astro';
 import CardWithBigImage from '@/components/CardWithBigImage.astro';
+import CardWithSideImage from '@/components/CardWithSideImage.astro';
 import ModuleContainer from '@/components/ModuleContainer.astro';
 import WordpressButtonLink from '@/components/WordpressButtonLink.astro';
 import WordpressImage from '@/components/WordpressImage.astro';
-import Card from '@/components/ui/Card.astro';
 import Container from '@/components/ui/Container.astro';
-import Grid from '@/components/ui/Grid.astro';
 import Prose from '@/components/ui/Prose.astro';
 import TabList from '@/components/ui/Tabs/TabList.astro';
 import TabListItem from '@/components/ui/Tabs/TabListItem.astro';
@@ -29,6 +28,9 @@ const {
 } = Astro.props;
 const tabId = crypto.randomUUID();
 const layout = contentLayout ?? 'side';
+
+const ContentWrapper =
+  layout === 'overlapping' ? CardWithBigImage : CardWithSideImage;
 ---
 
 {
@@ -52,75 +54,33 @@ const layout = contentLayout ?? 'side';
           <div class="tab-content mt-10">
             {tabs.map((tab, tabIndex) => (
               <TabPane isActive={tabIndex === 0} id={`${tabId}-${tabIndex}`}>
-                {/* TODO: handle duplicated content code */}
-                {layout === 'overlapping' && (
-                  <CardWithBigImage image={tab?.image}>
-                    {(!!tab?.overline || !!tab?.overlineIcon) && (
-                      <p class="overline-container mb-2 flex item-scenter gap-1">
-                        <WordpressImage
-                          data={tab?.overlineIcon}
-                          class="size-8 object-contain"
-                        />
-                        {!!tab.overline && (
-                          <span class="typography-subhead">{tab.overline}</span>
-                        )}
-                      </p>
-                    )}
-                    {!!tab?.title && (
-                      <h3
-                        class="typography-h3 max-w-96"
-                        set:html={fixDoubleBr(tab.title)}
-                      />
-                    )}
-                    {!!tab?.content && (
-                      <Prose class="mt-[1.125rem]" set:html={tab?.content} />
-                    )}
-                    {linkShouldRender(tab?.ctaButton) && (
-                      <div class="mt-auto pt-4">
-                        <WordpressButtonLink data={tab?.ctaButton} arrow />
-                      </div>
-                    )}
-                  </CardWithBigImage>
-                )}
-                {layout === 'side' && (
-                  <Grid class="gap-x-4">
-                    <Card class="flex flex-col col-span-full md:col-span-5">
-                      {(!!tab?.overline || !!tab?.overlineIcon) && (
-                        <p class="overline-container mb-2 flex item-scenter gap-1">
-                          <WordpressImage
-                            data={tab?.overlineIcon}
-                            class="size-8 object-contain"
-                          />
-                          {!!tab.overline && (
-                            <span class="typography-subhead">
-                              {tab.overline}
-                            </span>
-                          )}
-                        </p>
-                      )}
-                      {!!tab?.title && (
-                        <h3
-                          class="typography-h3 max-w-96"
-                          set:html={fixDoubleBr(tab.title)}
-                        />
-                      )}
-                      {!!tab?.content && (
-                        <Prose class="mt-[1.125rem]" set:html={tab?.content} />
-                      )}
-                      {linkShouldRender(tab?.ctaButton) && (
-                        <div class="mt-auto pt-4">
-                          <WordpressButtonLink data={tab?.ctaButton} arrow />
-                        </div>
-                      )}
-                    </Card>
-                    <div class="image-container col-span-full md:col-span-7 relative">
+                <ContentWrapper image={tab?.image}>
+                  {(!!tab?.overline || !!tab?.overlineIcon) && (
+                    <p class="overline-container mb-2 flex item-scenter gap-1">
                       <WordpressImage
-                        data={tab?.image}
-                        class="md:absolute md:size-full md:object-cover md:object-left-top rounded-tl-lg"
+                        data={tab?.overlineIcon}
+                        class="size-8 object-contain"
                       />
+                      {!!tab.overline && (
+                        <span class="typography-subhead">{tab.overline}</span>
+                      )}
+                    </p>
+                  )}
+                  {!!tab?.title && (
+                    <h3
+                      class="typography-h3 max-w-96"
+                      set:html={fixDoubleBr(tab.title)}
+                    />
+                  )}
+                  {!!tab?.content && (
+                    <Prose class="mt-[1.125rem]" set:html={tab?.content} />
+                  )}
+                  {linkShouldRender(tab?.ctaButton) && (
+                    <div class="mt-auto pt-4">
+                      <WordpressButtonLink data={tab?.ctaButton} arrow />
                     </div>
-                  </Grid>
-                )}
+                  )}
+                </ContentWrapper>
               </TabPane>
             ))}
           </div>
