@@ -6,6 +6,7 @@ fragment ModulesCollection on Modules {
       backgroundColor {
         selectBackgroundColor
       }
+      addBottomSpace
       sectionTitle {
         selectSectionTitle {
           customStyle

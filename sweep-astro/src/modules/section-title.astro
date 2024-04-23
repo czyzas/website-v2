@@ -11,7 +11,8 @@ import {
 
 type Props = ModulesModulesContentSectionTitleLayout;
 
-const { layoutName, backgroundColor, sectionTitle } = Astro.props;
+const { layoutName, backgroundColor, sectionTitle, addBottomSpace } =
+  Astro.props;
 const data = sectionTitle?.selectSectionTitle;
 const parsed = parseSectionTitle(data);
 ---
@@ -22,6 +23,7 @@ const parsed = parseSectionTitle(data);
       name={layoutName!}
       bg={backgroundColor}
       class={cn({
+        'with-bottom-padding': addBottomSpace ?? false,
         'display-as-overline': parsed.displayAs === 'overline',
       })}
     >
