@@ -28,7 +28,7 @@ const hasAuthor = !!authorImage || !!authorName || !!authorOccupation;
 ---
 
 <Card {...props} class={cn('quotation', 'xl:p-16', className)}>
-  <blockquote class="text-lg md:text-[1.625rem] leading-snug">
+  <blockquote class="text-lg leading-snug md:typography-large-quote">
     <slot />
   </blockquote>
 

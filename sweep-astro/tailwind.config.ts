@@ -125,6 +125,10 @@ export default {
           fontWeight: theme('fontWeight.semibold'),
           color: theme('colors.sw.sky.400'),
         },
+        '.typography-large-quote': {
+          fontSize: '1.625rem',
+          lineHeight: theme('lineHeight.snug'),
+        },
       });
     }),
   ],
