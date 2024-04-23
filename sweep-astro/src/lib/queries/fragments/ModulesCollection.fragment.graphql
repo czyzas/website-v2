@@ -187,18 +187,24 @@ fragment ModulesCollection on Modules {
         position
       }
     }
-    ... on ModulesModulesContentQuotationLayout {
+    ... on ModulesModulesContentQuotationWithCardsLayout {
       layoutName
       backgroundColor {
         selectBackgroundColor
       }
-      theme
       quote
       authorImage {
         ...Image
       }
       authorName
       authorOccupation
+      cards {
+        icon {
+          ...Image
+        }
+        title
+        content
+      }
     }
     ... on ModulesModulesContentDemoLayout {
       layoutName
