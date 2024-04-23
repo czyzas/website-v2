@@ -2,9 +2,11 @@
 import type { HTMLAttributes } from 'astro/types';
 import { cn } from '@/scripts/cn';
 import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
+import type { WithAttributes } from '@/types';
 import WordpressImage from './WordpressImage.astro';
+import Card from './ui/Card.astro';
 
-interface QuotationProps {
+interface QuotationProps extends HTMLAttributes<'div'> {
   /** @default 'light' */
   theme?: 'light' | 'dark';
   authorImage?: UnparsedImage;
@@ -12,7 +14,7 @@ interface QuotationProps {
   authorOccupation?: string;
 }
 
-type Props = QuotationProps & HTMLAttributes<'div'>;
+type Props = WithAttributes<QuotationProps>;
 
 const {
   class: className,
@@ -21,20 +23,32 @@ const {
   authorOccupation,
   ...props
 } = Astro.props;
+
+const hasAuthor = !!authorImage || !!authorName || !!authorOccupation;
 ---
 
-<div {...props} class={cn('quotation', className)}>
-  <blockquote><slot /></blockquote>
+<Card {...props} class={cn('quotation', 'xl:p-16', className)}>
+  <blockquote class="text-lg md:text-[1.625rem] leading-snug">
+    <slot />
+  </blockquote>
 
-  <div class="author flex items-center gap-6">
-    <WordpressImage
-      data={authorImage}
-      preferredWidth={115}
-      class="aspect-square object-cover rounded-full size-[4.875rem]"
-    />
-    <div class="details">
-      <div class="author-name">{authorName}</div>
-      <div class="occupation">{authorOccupation}</div>
-    </div>
-  </div>
-</div>
+  {
+    hasAuthor && (
+      <div class="author flex items-center gap-6 mt-8 md:mt-16">
+        <WordpressImage
+          data={authorImage}
+          preferredWidth={115}
+          class="aspect-square object-cover rounded-full size-[4.875rem]"
+        />
+        <div class="details">
+          {!!authorName && (
+            <div class="typography-subhead text-black">{authorName}</div>
+          )}
+          {!!authorOccupation && (
+            <div class="text-base">{authorOccupation}</div>
+          )}
+        </div>
+      </div>
+    )
+  }
+</Card>
