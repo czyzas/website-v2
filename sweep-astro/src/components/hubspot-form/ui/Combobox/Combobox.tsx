@@ -94,6 +94,7 @@ export const Combobox = forwardRef<HTMLSelectElement, ComboboxProps>(
           value={value}
           onChange={(e) => {
             onChange?.(e);
+            onValueChange?.(e.target.value);
             setValue(e.target.value);
           }}
           ref={ref}
@@ -186,7 +187,12 @@ export const Combobox = forwardRef<HTMLSelectElement, ComboboxProps>(
             </PopoverContent>
           </Popover>
         ) : (
-          <Select>
+          <Select
+            onValueChange={(currentValue) => {
+              setValue(currentValue === value ? '' : currentValue);
+              onValueChange?.(currentValue === value ? '' : currentValue);
+            }}
+          >
             <SelectTrigger>
               <SelectValue placeholder={placeholder} />
             </SelectTrigger>
