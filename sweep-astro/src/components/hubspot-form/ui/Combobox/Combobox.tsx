@@ -76,7 +76,7 @@ export const Combobox = forwardRef<HTMLSelectElement, ComboboxProps>(
     }, [btnRef]);
 
     return (
-      <div className={cn('combobox-container', className)}>
+      <div className={cn('combobox-container', 'relative', className)}>
         <select
           {...rest}
           aria-hidden="true"
@@ -88,6 +88,8 @@ export const Combobox = forwardRef<HTMLSelectElement, ComboboxProps>(
             width: 1,
             height: 1,
             pointerEvents: 'none',
+            left: '50%',
+            bottom: 0,
           }}
           value={value}
           onChange={(e) => {

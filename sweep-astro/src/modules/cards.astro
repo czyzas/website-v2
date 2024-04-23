@@ -1,13 +1,8 @@
 ---
 import type { ModulesModulesContentCardsLayout } from '@/__generated__/cms';
+import CardsGrid from '@/components/CardsGrid.astro';
 import ModuleContainer from '@/components/ModuleContainer.astro';
-import WordpressImage from '@/components/WordpressImage.astro';
-import Card from '@/components/ui/Card.astro';
 import Container from '@/components/ui/Container.astro';
-import Grid from '@/components/ui/Grid.astro';
-import Prose from '@/components/ui/Prose.astro';
-import { cn } from '@/scripts/cn';
-import { fixDoubleBr } from '@/scripts/fixDoubleBr';
 
 type Props = ModulesModulesContentCardsLayout;
 
@@ -15,44 +10,18 @@ const {
   layoutName,
   backgroundColor,
   cards: rawCards,
-  columns = '1',
+  columns: stringifiedColumns = '1',
 } = Astro.props;
 
 const cards = rawCards ? rawCards.filter(Boolean) : [];
-
-const columnClassName: Record<number, string> = {
-  1: cn('col-span-full'),
-  2: cn('col-span-full sm:col-span-6'),
-  3: cn('col-span-full sm:col-span-6 lg:col-span-4'),
-  4: cn('col-span-full sm:col-span-6 lg:col-span-3'),
-};
+const columns = Number(stringifiedColumns);
 ---
 
 {
   cards.length > 0 && (
     <ModuleContainer name={layoutName!} bg={backgroundColor}>
       <Container>
-        <Grid>
-          {cards.map((card) => (
-            <Card
-              class={cn(
-                columnClassName?.[parseInt(columns)] ?? 'col-span-full'
-              )}
-            >
-              <WordpressImage
-                data={card.icon}
-                class="size-8 object-contain mb-3"
-              />
-              <h3
-                class="typography-cards-bold-large"
-                set:html={fixDoubleBr(card.title)}
-              />
-              {card.content ? (
-                <Prose class="mt-2.5" set:html={card.content} />
-              ) : null}
-            </Card>
-          ))}
-        </Grid>
+        <CardsGrid columns={columns} cards={cards} />
       </Container>
     </ModuleContainer>
   )

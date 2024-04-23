@@ -1,0 +1,25 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
+import { cn } from '@/scripts/cn';
+import type { WithAttributes } from '@/types';
+import WordpressImage from './WordpressImage.astro';
+import Card from './ui/Card.astro';
+import Grid from './ui/Grid.astro';
+
+type Props = WithAttributes<{ image?: UnparsedImage } & HTMLAttributes<'div'>>;
+
+const { class: className, image, ...props } = Astro.props;
+---
+
+<Grid {...props} class={cn('card-with-side-image', className)}>
+  <Card class="flex flex-col col-span-full md:col-span-5">
+    <slot />
+  </Card>
+  <div class="image-container col-span-full md:col-span-7 relative">
+    <WordpressImage
+      data={image}
+      class="md:absolute md:size-full md:object-cover md:object-left-top rounded-tl-lg"
+    />
+  </div>
+</Grid>

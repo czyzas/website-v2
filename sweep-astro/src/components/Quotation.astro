@@ -1,0 +1,54 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/scripts/cn';
+import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
+import type { WithAttributes } from '@/types';
+import WordpressImage from './WordpressImage.astro';
+import Card from './ui/Card.astro';
+
+interface QuotationProps extends HTMLAttributes<'div'> {
+  /** @default 'light' */
+  theme?: 'light' | 'dark';
+  authorImage?: UnparsedImage;
+  authorName?: string;
+  authorOccupation?: string;
+}
+
+type Props = WithAttributes<QuotationProps>;
+
+const {
+  class: className,
+  authorImage,
+  authorName,
+  authorOccupation,
+  ...props
+} = Astro.props;
+
+const hasAuthor = !!authorImage || !!authorName || !!authorOccupation;
+---
+
+<Card {...props} class={cn('quotation', 'xl:p-16', className)}>
+  <blockquote class="text-lg leading-snug md:typography-large-quote">
+    <slot />
+  </blockquote>
+
+  {
+    hasAuthor && (
+      <div class="author flex items-center gap-6 mt-8 md:mt-16">
+        <WordpressImage
+          data={authorImage}
+          preferredWidth={115}
+          class="aspect-square object-cover rounded-full size-[4.875rem]"
+        />
+        <div class="details">
+          {!!authorName && (
+            <div class="typography-subhead text-black">{authorName}</div>
+          )}
+          {!!authorOccupation && (
+            <div class="text-base">{authorOccupation}</div>
+          )}
+        </div>
+      </div>
+    )
+  }
+</Card>

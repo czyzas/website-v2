@@ -12,6 +12,7 @@ import WordpressButtonLink from './WordpressButtonLink.astro';
 interface Props {
   cards: {
     imageBackgroundColor?: string;
+    fillImage?: boolean;
     title?: string;
     content?: string;
     image?: UnparsedImage;
@@ -28,6 +29,7 @@ const { cards } = Astro.props;
       {cards.map((card) => {
         const imageBackgroundColor = card?.imageBackgroundColor ?? 'white';
         const title = card?.title ?? '';
+        const fillImage = card.fillImage ?? false;
 
         return (
           <div class="col-span-full md:col-span-6 lg:col-span-4 flex items-stretch">
@@ -40,12 +42,14 @@ const { cards } = Astro.props;
                 style={{
                   '--bg-color': imageBackgroundColor,
                 }}
-                class="image-container bg-[--bg-color] p-8"
+                class={cn('image-container bg-[--bg-color] p-8', {
+                  'p-0': fillImage,
+                })}
               >
                 <WordpressImage
                   data={card?.image}
-                  preferredWidth={400}
-                  class="mx-auto w-full max-w-[25rem]"
+                  preferredWidth={700}
+                  class="mx-auto w-full md:aspect-[420/337]"
                 />
               </div>
               <div class="content-container p-6 flex-1 flex flex-col gap-3">

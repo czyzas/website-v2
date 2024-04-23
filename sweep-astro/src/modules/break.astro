@@ -1,0 +1,17 @@
+---
+import type { ModulesModulesContentBreakLayout } from '@/__generated__/cms';
+import ModuleContainer from '@/components/ModuleContainer.astro';
+import { cn } from '@/scripts/cn';
+
+type Props = ModulesModulesContentBreakLayout;
+
+const { layoutName, backgroundColor, height } = Astro.props;
+const rem = (height ?? 0) / 16;
+---
+
+<ModuleContainer
+  name={layoutName!}
+  bg={backgroundColor}
+  class={cn('h-[var(--height)]')}
+  style={{ '--height': `${rem}rem` }}
+/>
