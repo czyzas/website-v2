@@ -39,7 +39,7 @@ const ContentWrapper =
       <Container>
         <UITabs>
           {tabs.length > 1 && (
-            <TabList>
+            <TabList class="mb-10">
               {tabs.map((tab, tabIndex) => (
                 <TabListItem
                   counter={tabsLook === 'ordered'}
@@ -53,7 +53,7 @@ const ContentWrapper =
               ))}
             </TabList>
           )}
-          <div class="tab-content mt-10">
+          <div class="tab-content">
             {tabs.map((tab, tabIndex) => (
               <TabPane isActive={tabIndex === 0} id={`${tabId}-${tabIndex}`}>
                 <ContentWrapper image={tab?.image}>
