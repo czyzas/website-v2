@@ -12,6 +12,7 @@ import {
 import type { IndustriesListFragment } from '@/__generated__/cms';
 
 import { defaultLocale } from '@/i18n/config';
+import { getUrlWithoutLang } from '@/i18n/utils';
 import { gqlClient } from './graphqlClient';
 import { getCachedCMSData, cacheCMSData, CACHE_KEYS } from './cacheCMSData';
 import { parseStaticPaths } from './helpers';
@@ -96,7 +97,7 @@ export function fetchDefaultPage(slug: string, lang: string = defaultLocale) {
       SLUG: slug,
       LANG: lang,
     },
-    [lang, CACHE_KEYS.PAGE, slug]
+    [lang, CACHE_KEYS.PAGE, getUrlWithoutLang(slug)]
   );
 }
 
