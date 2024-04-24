@@ -1,5 +1,5 @@
 query ContactPage($LANG: String!) {
-  page: pageByLang(slug: "contact", lang: $LANG) {
+  page: pageByLang(uri: "contact", lang: $LANG) {
     title
     slug
     uri

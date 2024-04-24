@@ -1,5 +1,5 @@
 query ContactPageStaticPaths {
-  page: pageByLang(slug: "/contact", lang: "en") {
+  page: pageByLang(uri: "/contact", lang: "en") {
     databaseId
     slug
     uri

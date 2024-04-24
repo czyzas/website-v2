@@ -73,7 +73,7 @@ add_action( 'graphql_register_types', function () {
 							'non_null' => 'String',
 						]
 					],
-					'slug' => [
+					'uri'  => [
 						'type' => [
 							'non_null' => 'String',
 						]
@@ -87,7 +87,7 @@ add_action( 'graphql_register_types', function () {
 					}
 
 					return $context->node_resolver->resolve_uri(
-						$args['slug'],
+						$args['uri'],
 						[
 							'post_type' => $post_type_object->name,
 							'nodeType'  => 'ContentNode'

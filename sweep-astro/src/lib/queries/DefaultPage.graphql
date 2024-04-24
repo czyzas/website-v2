@@ -1,5 +1,5 @@
-query DefaultPage($SLUG: String!, $LANG: String!) {
-  page: pageByLang(slug: $SLUG, lang: $LANG) {
+query DefaultPage($URI: String!, $LANG: String!) {
+  page: pageByLang(uri: $URI, lang: $LANG) {
     title
     slug
     uri

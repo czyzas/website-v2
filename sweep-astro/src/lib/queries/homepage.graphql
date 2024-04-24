@@ -1,5 +1,5 @@
 query Homepage($LANG: String!) {
-  page: pageByLang(slug: "/", lang: $LANG) {
+  page: pageByLang(uri: "/", lang: $LANG) {
     title
     slug
     uri

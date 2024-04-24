@@ -79,14 +79,14 @@ export async function fetchDefaultPagesStaticPaths() {
   );
 }
 
-export function fetchDefaultPage(slug: string, lang: string = defaultLocale) {
+export function fetchDefaultPage(uri: string, lang: string = defaultLocale) {
   return fetchData(
     DefaultPageDocument,
     {
-      SLUG: slug,
+      URI: uri,
       LANG: lang,
     },
-    [lang, CACHE_KEYS.PAGE, getUrlWithoutLang(slug)]
+    [lang, CACHE_KEYS.PAGE, getUrlWithoutLang(uri)]
   );
 }
 
