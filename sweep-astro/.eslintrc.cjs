@@ -28,28 +28,33 @@ module.exports = {
   overrides: [
     {
       files: ['*.{js,jsx,ts,tsx}'],
-      extends: [
-        'plugin:react/recommended',
-        'plugin:react/jsx-runtime',
-        'plugin:jsx-a11y/recommended',
-      ],
-      // parserOptions: {
-      //   ecmaVersion: 12,
-      //   project: './tsconfig.eslint.json',
-      // },
-      rules: {
-        'react/prop-types': 'off',
-      },
+      extends: [],
       settings: {
-        'import/extensions': ['.js', '.ts'],
+        'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
         'import/parsers': {
-          '@typescript-eslint/parser': ['.ts'],
+          '@typescript-eslint/parser': ['.ts', '.tsx'],
         },
         'import/resolver': {
           node: {
             extensions: ['.js', '.ts', '.astro'],
           },
         },
+      },
+    },
+    {
+      files: ['*.{jsx,tsx}'],
+      extends: [
+        'plugin:react/recommended',
+        'plugin:react/jsx-runtime',
+        'plugin:jsx-a11y/recommended',
+      ],
+      settings: {
+        react: {
+          version: 'detect',
+        },
+      },
+      rules: {
+        'react/prop-types': 'off',
       },
     },
     {

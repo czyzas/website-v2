@@ -6,7 +6,8 @@ import { cn } from '@/scripts/cn';
 type Props = ModulesModulesContentBreakLayout;
 
 const { layoutName, backgroundColor, height } = Astro.props;
-const rem = (height ?? 0) / 16;
+const px = !Number.isNaN(Number(height)) ? Number(height) : 0;
+const rem = px / 16;
 ---
 
 <ModuleContainer

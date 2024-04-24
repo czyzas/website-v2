@@ -10,7 +10,7 @@
     "build:ssr": "npm run codegen && cross-env APP_MODE=ssr astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "check": "astro check --silent",
+    "check": "astro check --silent && tsc --noEmit && eslint . --cache",
     "codegen": "npm run clean && graphql-codegen --require dotenv/config --config ./src/codegen.ts",
     "upgrade-deps": "taze major -I"
   },
