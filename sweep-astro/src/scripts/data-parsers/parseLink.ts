@@ -15,7 +15,7 @@ export const parseLink = (
   unparsed: UnparsedLink
 ): { shouldRender: boolean } & ParsedLink => ({
   shouldRender: linkShouldRender(unparsed),
-  url: unparsed?.url ?? '',
+  url: unparsed?.internalUrl ?? unparsed?.url ?? '',
   title: unparsed?.title ?? '',
   target: unparsed?.target,
 });

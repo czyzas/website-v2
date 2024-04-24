@@ -2,20 +2,36 @@
 
 add_action( 'graphql_register_types', function () {
 	try {
-		register_graphql_fields( 'MediaItem', [
-			'svgSourceCode' => [
-				'type'        => 'String',
-				'description' => 'Return svg source if image was optimized inside WP',
-				'resolve'     => function ( \WPGraphQL\Model\Post $page ) {
-					try {
-						$file = new FH_SVG( $page->databaseId );
+		register_graphql_field( 'MediaItem', 'svgSourceCode', [
+			'type'        => 'String',
+			'description' => 'Return svg source if image was optimized inside WP',
+			'resolve'     => function ( \WPGraphQL\Model\Post $page ) {
+				try {
+					$file = new FH_SVG( $page->databaseId );
 
-						return $file->get_source_code();
-					} catch ( Exception ) {
-						return null;
-					}
+					return $file->get_source_code();
+				} catch ( Exception ) {
+					return null;
 				}
-			],
+			}
+		] );
+
+		register_graphql_fields( 'AcfLink', [
+			'internalUrl' => [
+				'type'        => 'String',
+				'description' => 'Url without wordpress domain',
+				'resolve'     => function ( $page ) {
+					$url = $page['url'];
+					$parsed = parse_url( $url );
+
+					$current_host = $_SERVER['HTTP_HOST'];
+					$host = $parsed['host'];
+					$path = $parsed['path'];
+					if ( $current_host !== $host ) return null;
+
+					return rtrim( $path, '/' );
+				}
+			]
 		] );
 
 		$MODULES_GROUP_ID = 1918;
