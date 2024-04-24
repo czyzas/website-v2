@@ -158,4 +158,29 @@ add_filter( 'parse_query', function ( $query ) {
 //Uncomment if you want to enable svg safe plugin optimization
 //add_filter( 'safe_svg_optimizer_enabled', '__return_true' );
 
+//Add "View SSR" button to admin menu bar
+add_action( 'admin_bar_menu', 'add_item', 100 );
+function add_item( $admin_bar ) {
+	global $pagenow;
+	$ssr_domain = "sweep-git-develop-flyhigh-pro.vercel.app";
+	$wp_domain = "sweep.flyhigh.pro";
 
+	if ( $pagenow == "edit.php" ) {
+		$url = home_url();
+	} else {
+		$url = get_the_permalink();
+	}
+
+	$url = str_replace( $wp_domain, $ssr_domain, $url );
+	$admin_bar->add_menu( [
+		'id'    => 'wp-admin-bar-view-ssr',
+		'title' => 'View SSR page',
+		'href'  => $url,
+		'meta'  => [ 'target' => '_blank' ]
+	] );
+}
+
+//Hide "View page" from admin menu bar
+add_action( 'admin_bar_menu', function ( $wp_admin_bar ) {
+	$wp_admin_bar->remove_node( 'view' );
+}, 999 );
