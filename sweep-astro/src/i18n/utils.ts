@@ -15,17 +15,16 @@ export const getLangParam = (l: string) =>
 
 export const getUrlWithoutLang = (
   url: string,
-  options?: {
+  options: {
     /** @default true */
     trimSlashes?: boolean;
-  }
+  } = {}
 ) => {
-  const { trimSlashes = true } = options ?? {};
-  const startsWithSlash = url.startsWith('/');
-  let paramPath = startsWithSlash ? url.slice(1) : url;
+  const { trimSlashes = true } = options;
+  let paramPath = url.startsWith('/') ? url.slice(1) : url;
   const chunks = paramPath.split('/');
 
-  if (locales.includes(chunks.at(0) ?? '')) {
+  if (locales.includes(chunks[0] ?? '')) {
     chunks.shift();
     paramPath = chunks.join('/');
   }

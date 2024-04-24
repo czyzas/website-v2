@@ -39,7 +39,7 @@ export function cleanURI(
   }
 
   // uri have lang
-  // FIXME: typescript 5.4.5 bug - wait until its fixed
+  // FIXME: typescript 5.4.5 bug -remove tempUri when its fixed
   const tempUri = uri;
   const currentUriLang = locales.find(
     (locale) => locale !== defaultLocale && tempUri.startsWith(`${locale}/`)
