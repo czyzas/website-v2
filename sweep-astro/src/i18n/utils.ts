@@ -1,9 +1,5 @@
-import type {
-  GetStaticPaths,
-  GetStaticPathsItem,
-  GetStaticPathsResult,
-} from 'astro';
-import { merge, trim } from 'lodash-es';
+import type { GetStaticPathsItem } from 'astro';
+import { trim } from 'lodash-es';
 import { locales, defaultLocale } from './config';
 
 /**
@@ -42,34 +38,6 @@ export const getUrlWithoutLang = (
 };
 
 /**
- * Propagate locales to provided params
- */
-export const withLangParams = (
-  paths: GetStaticPathsResult
-): GetStaticPathsResult => {
-  const finalPaths = [];
-
-  for (const lang of locales) {
-    for (const pagePath of paths) {
-      const raw = {
-        params: {
-          lang: getLangParam(lang),
-        },
-      };
-      finalPaths.push(merge(raw, pagePath));
-    }
-  }
-
-  return finalPaths;
-};
-
-/**
- * Propagate locales to single page without params
- */
-export const getStaticPathsWithLangs = (() =>
-  withLangParams([{ params: {} }])) satisfies GetStaticPaths;
-
-/**
  * Determine if provided `lang` param is valid, if not, pass it to another param
  *
  * This function fixes the optional default lang problem, when using nested pages , such as `pages/[...lang]/[...page].astro`
@@ -102,4 +70,22 @@ export const fixLangParams = (
       ? `${params.lang}/${params[notLangParam]}`
       : params.lang,
   };
+};
+
+/**
+ * Returns path with attached lang
+ * @param cleanPath Path without lang
+ */
+export const buildI18nPath = (
+  cleanPath = '/',
+  lang: string = defaultLocale
+) => {
+  const language = locales.includes(lang) ? lang : defaultLocale;
+
+  // TODO: handle urls from WP
+  if (cleanPath === '/' && language !== defaultLocale) {
+    return `/${language}`;
+  }
+
+  return cleanPath;
 };
