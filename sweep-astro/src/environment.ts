@@ -11,6 +11,7 @@ export const env = createEnv({
     CMS_ASSETS_DOMAIN: z.string(),
   },
   client: {
+    PUBLIC_CMS_DOMAIN: z.string().url(),
     PUBLIC_CMS_ENDPOINT: z.string().url(),
     PUBLIC_HUBSPOT_ACCESS_TOKEN: z.string(),
   },
