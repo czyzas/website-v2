@@ -165,12 +165,6 @@ function add_item( $admin_bar ) {
 	$ssr_domain = "sweep-git-develop-flyhigh-pro.vercel.app";
 	$wp_domain = "sweep.flyhigh.pro";
 
-add_action( 'admin_bar_menu', 'add_item', 100 );
-function add_item( $admin_bar ) {
-	global $pagenow;
-	$ssr_domain = "sweep-git-develop-flyhigh-pro.vercel.app";
-	$wp_domain = "sweep.flyhigh.pro";
-
 	if ( $pagenow == "edit.php" ) {
 		$url = home_url();
 	} else {
@@ -186,6 +180,7 @@ function add_item( $admin_bar ) {
 	] );
 }
 
+//Remove "View page" button from admin menu bar
 add_action( 'admin_bar_menu', function ( $wp_admin_bar ) {
 	$wp_admin_bar->remove_node( 'view' );
 }, 999 );
