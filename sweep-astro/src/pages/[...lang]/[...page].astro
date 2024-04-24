@@ -5,7 +5,6 @@ import {
   fetchDefaultPage,
   fetchDefaultPagesStaticPaths,
   fetchHomepage,
-  fetchHomepageStaticPaths,
 } from '@/lib/fetchCMSData';
 import { defaultLocale } from '@/i18n/config';
 import { cleanURI, compareURI } from '@/scripts/uri-utils';
@@ -13,26 +12,14 @@ import Homepage from './_index.astro';
 import Page from './_page.astro';
 
 export const getStaticPaths = async () => {
-  const finalPaths: GetStaticPathsResult = [];
-
-  const homepagePaths = await fetchHomepageStaticPaths();
-  for (const staticPath of homepagePaths) {
-    if (!staticPath?.languageCode || !staticPath?.uri) {
-      continue;
-    }
-
-    finalPaths.push({
-      params: {
-        lang: getLangParam(staticPath.languageCode),
-      },
-      props: staticPath,
-    });
-  }
+  const finalPaths = [];
 
   const paths = await fetchDefaultPagesStaticPaths();
   for (const staticPath of paths) {
     if (
-      staticPath.template?.templateName !== 'Default' ||
+      !['Default', 'Homepage'].includes(
+        staticPath.template?.templateName ?? ''
+      ) ||
       !staticPath?.languageCode ||
       !staticPath?.uri
     ) {

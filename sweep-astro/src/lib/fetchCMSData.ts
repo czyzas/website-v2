@@ -6,7 +6,6 @@ import {
   DefaultPageDocument,
   DefaultPagesStaticPathsDocument,
   HomepageDocument,
-  HomepageStaticPathsDocument,
   IndustriesListDocument,
 } from '@/__generated__/cms';
 import type { IndustriesListFragment } from '@/__generated__/cms';
@@ -68,16 +67,6 @@ export async function fetchIndustriesList(lang: string) {
     []) as unknown as IndustriesListFragment[];
 }
 
-export async function fetchHomepageStaticPaths() {
-  const rawData = await fetchData(HomepageStaticPathsDocument, undefined, [
-    CACHE_KEYS.STATIC_PATHS,
-    CACHE_KEYS.HOMEPAGE,
-  ]);
-
-  if (!rawData?.page) return [];
-
-  return parseStaticPaths(rawData.page);
-}
 export async function fetchDefaultPagesStaticPaths() {
   // TODO: handle more than 100 pages
   return (
