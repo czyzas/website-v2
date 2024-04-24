@@ -6,6 +6,14 @@ import type {
 import { merge, trim } from 'lodash-es';
 import { locales, defaultLocale } from './config';
 
+/**
+ * Return undefined if provided language is the default one
+ * @example
+ * ```
+ * const french = getLangParam('fr'); // fr
+ * const english = getLangParam('en'); // undefined
+ * ```
+ */
 export const getLangParam = (l: string) =>
   l === defaultLocale ? undefined : l;
 

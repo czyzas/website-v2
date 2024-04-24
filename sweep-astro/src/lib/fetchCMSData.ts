@@ -2,9 +2,11 @@ import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import type { Variables } from 'graphql-request';
 import {
   ContactPageDocument,
+  ContactPageStaticPathsDocument,
   DefaultPageDocument,
   DefaultPagesStaticPathsDocument,
   HomepageDocument,
+  HomepageStaticPathsDocument,
   IndustriesListDocument,
 } from '@/__generated__/cms';
 import type { IndustriesListFragment } from '@/__generated__/cms';
@@ -12,6 +14,7 @@ import type { IndustriesListFragment } from '@/__generated__/cms';
 import { defaultLocale } from '@/i18n/config';
 import { gqlClient } from './graphqlClient';
 import { getCachedCMSData, cacheCMSData, CACHE_KEYS } from './cacheCMSData';
+import { parseStaticPaths } from './helpers';
 
 const fetchData = async <Query, QueryVariables extends Variables = Variables>(
   document: TypedDocumentNode<Query, QueryVariables>,
@@ -64,12 +67,22 @@ export async function fetchIndustriesList(lang: string) {
     []) as unknown as IndustriesListFragment[];
 }
 
+export async function fetchHomepageStaticPaths() {
+  const rawData = await fetchData(HomepageStaticPathsDocument, undefined, [
+    CACHE_KEYS.STATIC_PATHS,
+    CACHE_KEYS.HOMEPAGE,
+  ]);
+
+  if (!rawData?.page) return [];
+
+  return parseStaticPaths(rawData.page);
+}
 export async function fetchDefaultPagesStaticPaths() {
   // TODO: handle more than 100 pages
   return (
     (
       await fetchData(DefaultPagesStaticPathsDocument, undefined, [
-        'static-paths',
+        CACHE_KEYS.STATIC_PATHS,
         CACHE_KEYS.PAGE,
       ])
     ).pages?.nodes ?? []
@@ -87,6 +100,16 @@ export function fetchDefaultPage(slug: string, lang: string = defaultLocale) {
   );
 }
 
+export async function fetchContactStaticPaths() {
+  const rawData = await fetchData(ContactPageStaticPathsDocument, undefined, [
+    CACHE_KEYS.STATIC_PATHS,
+    CACHE_KEYS.CONTACT,
+  ]);
+
+  if (!rawData?.page) return [];
+
+  return parseStaticPaths(rawData.page);
+}
 export function fetchContactPage(lang: string = defaultLocale) {
   return fetchData(ContactPageDocument, { LANG: lang }, [
     lang,

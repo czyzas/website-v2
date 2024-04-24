@@ -1,20 +1,30 @@
 ---
-import type { InferGetStaticParamsType } from 'astro';
+import type { GetStaticPathsResult, InferGetStaticParamsType } from 'astro';
+import { fixLangParams, getLangParam, getUrlWithoutLang } from '@/i18n/utils';
 import {
-  fixLangParams,
-  getLangParam,
-  getStaticPathsWithLangs,
-  getUrlWithoutLang,
-} from '@/i18n/utils';
-import { fetchDefaultPagesStaticPaths } from '@/lib/fetchCMSData';
+  fetchDefaultPagesStaticPaths,
+  fetchHomepageStaticPaths,
+} from '@/lib/fetchCMSData';
 import Homepage from './_index.astro';
 import Page from './_page.astro';
 
 export const getStaticPaths = async () => {
-  // At the beginning we need to add homepages in all available languages
-  const returnPaths = getStaticPathsWithLangs();
-  const paths = await fetchDefaultPagesStaticPaths();
+  const finalPaths: GetStaticPathsResult = [];
 
+  const homepagePaths = await fetchHomepageStaticPaths();
+  for (const staticPath of homepagePaths) {
+    if (!staticPath?.languageCode || !staticPath?.uri) {
+      continue;
+    }
+
+    finalPaths.push({
+      params: {
+        lang: getLangParam(staticPath.languageCode),
+      },
+    });
+  }
+
+  const paths = await fetchDefaultPagesStaticPaths();
   for (const staticPath of paths) {
     if (
       staticPath.template?.templateName !== 'Default' ||
@@ -26,7 +36,7 @@ export const getStaticPaths = async () => {
 
     const paramPath = getUrlWithoutLang(staticPath.uri);
 
-    returnPaths.push({
+    finalPaths.push({
       params: {
         lang: getLangParam(staticPath.languageCode),
         page: paramPath,
@@ -35,7 +45,7 @@ export const getStaticPaths = async () => {
     });
   }
 
-  return returnPaths;
+  return finalPaths;
 };
 
 type Params = InferGetStaticParamsType<typeof getStaticPaths>;

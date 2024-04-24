@@ -1,0 +1,14 @@
+query HomepageStaticPaths {
+  page: pageByLang(slug: "/", lang: "en") {
+    databaseId
+    slug
+    uri
+    languageCode
+    translations {
+      databaseId
+      slug
+      uri
+      languageCode
+    }
+  }
+}

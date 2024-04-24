@@ -1,0 +1,14 @@
+query ContactPageStaticPaths {
+  page: pageByLang(slug: "/contact", lang: "en") {
+    databaseId
+    slug
+    uri
+    languageCode
+    translations {
+      databaseId
+      slug
+      uri
+      languageCode
+    }
+  }
+}
