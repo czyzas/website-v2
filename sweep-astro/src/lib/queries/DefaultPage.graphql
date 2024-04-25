@@ -17,16 +17,5 @@ query DefaultPage($URI: String!, $LANG: String!) {
       ...ModulesCollection
     }
   }
-  defaultLanguage {
-    ...Languages
-  }
-  languages {
-    ...Languages
-  }
-  primaryMenu: menu(idType: LOCATION, id: "primary-menu") {
-    ...Menu
-  }
-  themeOptions {
-    ...ThemeOptions
-  }
+  ...Essential
 }
