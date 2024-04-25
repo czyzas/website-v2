@@ -341,6 +341,133 @@
                     "graphql_non_null": 0
                 }
             ]
+        },
+        {
+            "key": "field_662a151974620",
+            "label": "Select quotation",
+            "name": "select_quotation",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 0,
+            "layout": "block",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "selectQuotation",
+            "graphql_non_null": 0,
+            "sub_fields": [
+                {
+                    "key": "field_662a156374621",
+                    "label": "Quote",
+                    "name": "quote",
+                    "aria-label": "",
+                    "type": "wysiwyg",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 0,
+                    "default_value": "",
+                    "tabs": "all",
+                    "toolbar": "full",
+                    "media_upload": 1,
+                    "delay": 0,
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "quote",
+                    "graphql_non_null": 0
+                },
+                {
+                    "key": "field_662a157274622",
+                    "label": "Author's image",
+                    "name": "author_image",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "33",
+                        "class": "",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 0,
+                    "return_format": "array",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "",
+                    "preview_size": "thumbnail",
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "authorImage"
+                },
+                {
+                    "key": "field_662a158874623",
+                    "label": "Author's name",
+                    "name": "author_name",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "33",
+                        "class": "",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 0,
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "authorName",
+                    "graphql_non_null": 0
+                },
+                {
+                    "key": "field_662a159874624",
+                    "label": "Author's occupation",
+                    "name": "author_occupation",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "33",
+                        "class": "",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 0,
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "authorOccupation",
+                    "graphql_non_null": 0
+                }
+            ]
         }
     ],
     "location": [
@@ -379,5 +506,5 @@
         "Partner",
         "Post"
     ],
-    "modified": 1711709312
+    "modified": 1714034117
 }
