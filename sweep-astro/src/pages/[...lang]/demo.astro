@@ -1,8 +1,42 @@
 ---
-import { fetchSinglePageStaticPaths } from '@/lib/fetchCMSData';
+import Container from '@/components/ui/Container.astro';
+import Grid from '@/components/ui/Grid.astro';
+import Prose from '@/components/ui/Prose.astro';
+import { defaultLocale } from '@/i18n/config';
+import Layout from '@/layouts/Layout.astro';
+import { fetchDemoPage, fetchSinglePageStaticPaths } from '@/lib/fetchCMSData';
+import { updateStore } from '@/scripts/store';
 import { createSinglePageStaticPaths } from '@/scripts/utils-static-paths';
+import { cmsStore } from '@/stores/cmsStore';
+import { languageStore } from '@/stores/languageStore';
 
 export async function getStaticPaths() {
   return createSinglePageStaticPaths(await fetchSinglePageStaticPaths('/demo'));
 }
+
+const { lang = defaultLocale } = Astro.params;
+
+const data = await fetchDemoPage(lang as string);
+const page = data.page!;
+const { subpageSettings } = page;
+const pageTitle = page?.title ?? '';
+const title = subpageSettings?.customTitle || pageTitle || '';
+const introduction = subpageSettings?.introduction ?? '';
+
+updateStore(cmsStore, 'demoPage', page);
+updateStore(languageStore, 'currentLanguage', page.language!);
+updateStore(languageStore, 'languages', data.languages);
+updateStore(cmsStore, 'primaryMenu', data.primaryMenu!);
+updateStore(cmsStore, 'themeOptions', data.themeOptions!);
 ---
+
+<Layout name="demo" pageTitle={pageTitle}>
+  <Container>
+    <Grid>
+      <div class="col-span-full md:col-span-6">
+        <h1 class="typography-h2" set:html={title} />
+        <Prose set:html={`<p>${introduction}</p>`} />
+      </div>
+    </Grid>
+  </Container>
+</Layout>

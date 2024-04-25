@@ -4,6 +4,7 @@ import {
   ContactPageDocument,
   DefaultPageDocument,
   DefaultPagesStaticPathsDocument,
+  DemoPageDocument,
   HomepageDocument,
   IndustriesListDocument,
   SinglePageStaticPathsDocument,
@@ -110,8 +111,5 @@ export function fetchContactPage(lang: string = defaultLocale) {
 }
 
 export function fetchDemoPage(lang: string = defaultLocale) {
-  return fetchData(ContactPageDocument, { LANG: lang }, [
-    lang,
-    CACHE_KEYS.CONTACT,
-  ]);
+  return fetchData(DemoPageDocument, { LANG: lang }, [lang, CACHE_KEYS.DEMO]);
 }
