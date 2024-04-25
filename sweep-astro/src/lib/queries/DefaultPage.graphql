@@ -7,11 +7,7 @@ query DefaultPage($URI: String!, $LANG: String!) {
       ...Languages
     }
     subpageSettings {
-      customTitle
-      introduction
-      image {
-        ...Image
-      }
+      ...SubpageSettings
     }
     modules {
       ...ModulesCollection

@@ -1,0 +1,10 @@
+fragment SubpageSettings on SubpageSettings {
+  customTitle
+  introduction
+  image {
+    ...Image
+  }
+  topButtonLink {
+    ...Link
+  }
+}
