@@ -31,9 +31,8 @@ export const getStaticPaths = async () => {
     finalPaths.push({
       params: {
         lang: getLangParam(staticPath.languageCode),
-        page: paramPath,
+        page: paramPath || undefined,
       },
-      props: staticPath,
     });
   }
 
