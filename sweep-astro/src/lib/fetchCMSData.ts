@@ -108,3 +108,10 @@ export function fetchContactPage(lang: string = defaultLocale) {
     CACHE_KEYS.CONTACT,
   ]);
 }
+
+export function fetchDemoPage(lang: string = defaultLocale) {
+  return fetchData(ContactPageDocument, { LANG: lang }, [
+    lang,
+    CACHE_KEYS.CONTACT,
+  ]);
+}

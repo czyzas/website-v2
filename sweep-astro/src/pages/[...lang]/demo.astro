@@ -1,0 +1,8 @@
+---
+import { fetchSinglePageStaticPaths } from '@/lib/fetchCMSData';
+import { createSinglePageStaticPaths } from '@/lib/helpers';
+
+export async function getStaticPaths() {
+  return createSinglePageStaticPaths(await fetchSinglePageStaticPaths('/demo'));
+}
+---

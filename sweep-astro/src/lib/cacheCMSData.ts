@@ -9,6 +9,7 @@ export const CACHE_KEYS = {
   HOMEPAGE: 'homepage',
   PAGE: 'page',
   CONTACT: 'contact',
+  DEMO: 'demo',
   INDUSTRIES_LIST: 'industries-list',
 } as const;
 

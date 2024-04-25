@@ -1,0 +1,109 @@
+{
+    "key": "group_662a1426ba312",
+    "title": "Demo",
+    "fields": [
+        {
+            "key": "field_662a142aa03de",
+            "label": "Quotations",
+            "name": "quotations",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 0,
+            "layout": "table",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "Add Row",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "quotations",
+            "graphql_non_null": 0,
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_662a14c8a03df",
+                    "label": "Quotation",
+                    "name": "quotation",
+                    "aria-label": "",
+                    "type": "group",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 0,
+                    "layout": "block",
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "quotation",
+                    "graphql_non_null": 0,
+                    "sub_fields": [
+                        {
+                            "key": "field_662a15f5a03e0",
+                            "label": "Quotation",
+                            "name": "quotation",
+                            "aria-label": "",
+                            "type": "clone",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "graphql_field_name": "quotation",
+                            "wpml_cf_preferences": 0,
+                            "clone": [
+                                "field_662a151974620"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 0
+                        }
+                    ],
+                    "parent_repeater": "field_662a142aa03de"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "templates\/template-demo.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "acfml_field_group_mode": "translation",
+    "show_in_graphql": 1,
+    "graphql_field_name": "demoPageAcf",
+    "map_graphql_types_from_location_rules": 1,
+    "graphql_types": [
+        "Page"
+    ],
+    "modified": 1714036890
+}
