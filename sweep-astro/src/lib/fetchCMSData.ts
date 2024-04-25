@@ -2,11 +2,11 @@ import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import type { Variables } from 'graphql-request';
 import {
   ContactPageDocument,
-  ContactPageStaticPathsDocument,
   DefaultPageDocument,
   DefaultPagesStaticPathsDocument,
   HomepageDocument,
   IndustriesListDocument,
+  SinglePageStaticPathsDocument,
 } from '@/__generated__/cms';
 import type { IndustriesListFragment } from '@/__generated__/cms';
 
@@ -79,6 +79,18 @@ export async function fetchDefaultPagesStaticPaths() {
   );
 }
 
+export async function fetchSinglePageStaticPaths(uri: string) {
+  const rawData = await fetchData(
+    SinglePageStaticPathsDocument,
+    { STATIC_PATH_URI: uri },
+    [CACHE_KEYS.STATIC_PATHS, CACHE_KEYS.CONTACT]
+  );
+
+  if (!rawData?.page) return [];
+
+  return parseStaticPaths(rawData.page);
+}
+
 export function fetchDefaultPage(uri: string, lang: string = defaultLocale) {
   return fetchData(
     DefaultPageDocument,
@@ -90,16 +102,6 @@ export function fetchDefaultPage(uri: string, lang: string = defaultLocale) {
   );
 }
 
-export async function fetchContactStaticPaths() {
-  const rawData = await fetchData(ContactPageStaticPathsDocument, undefined, [
-    CACHE_KEYS.STATIC_PATHS,
-    CACHE_KEYS.CONTACT,
-  ]);
-
-  if (!rawData?.page) return [];
-
-  return parseStaticPaths(rawData.page);
-}
 export function fetchContactPage(lang: string = defaultLocale) {
   return fetchData(ContactPageDocument, { LANG: lang }, [
     lang,
