@@ -21,7 +21,7 @@ import { linkShouldRender } from '@/scripts/data-parsers/parseLink';
 import ArticleCard from '@/components/ArticleCard.astro';
 import Prose from '@/components/ui/Prose.astro';
 import { defaultLocale } from '@/i18n/config';
-import { createSinglePageStaticPaths } from '@/lib/helpers';
+import { createSinglePageStaticPaths } from '@/scripts/utils-static-paths';
 
 export async function getStaticPaths() {
   return createSinglePageStaticPaths(

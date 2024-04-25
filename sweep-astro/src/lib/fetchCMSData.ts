@@ -12,9 +12,9 @@ import type { IndustriesListFragment } from '@/__generated__/cms';
 
 import { defaultLocale } from '@/i18n/config';
 import { getUrlWithoutLang } from '@/i18n/utils';
+import { parseStaticPaths } from '@/scripts/utils-static-paths';
 import { gqlClient } from './graphqlClient';
 import { getCachedCMSData, cacheCMSData, CACHE_KEYS } from './cacheCMSData';
-import { parseStaticPaths } from './helpers';
 
 const fetchData = async <Query, QueryVariables extends Variables = Variables>(
   document: TypedDocumentNode<Query, QueryVariables>,
