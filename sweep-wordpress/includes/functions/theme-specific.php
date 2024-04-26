@@ -1,4 +1,5 @@
 <?php
+
 use Roots\WPConfig\Config;
 use function Env\env;
 
@@ -165,8 +166,8 @@ add_filter( 'parse_query', function ( $query ) {
 add_action( 'admin_bar_menu', 'add_item', 100 );
 function add_item( $admin_bar ) {
 	global $pagenow;
-	$ssr_domain = env("SSR_HOME_DOMAIN");
-	$wp_domain = env("WP_HOME");
+	$ssr_domain = env( "SSR_HOME_DOMAIN" );
+	$wp_domain = env( "WP_HOME" );
 
 	if ( $pagenow == "post.php" ) {
 		$url = get_the_permalink();
@@ -187,3 +188,12 @@ function add_item( $admin_bar ) {
 add_action( 'admin_bar_menu', function ( $wp_admin_bar ) {
 	$wp_admin_bar->remove_node( 'view' );
 }, 999 );
+
+// Replace current host url with internal url
+add_filter( 'the_content', function ( $str ) {
+	$current_host = $_SERVER['HTTP_HOST'];
+	$URL_RE = sprintf( '/[\'"]https?:\/\/%s(\/.*[^\/])\/?[\'"]/', preg_quote( $current_host ) );
+	$str = preg_replace( $URL_RE, '"$1"', $str );
+
+	return $str;
+}, 9999 );
