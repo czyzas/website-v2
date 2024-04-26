@@ -74,7 +74,7 @@ export const PhoneInput = forwardRef<
   }));
 
   return (
-    <div className="phone-input grid grid-cols-[minmax(auto,12rem)_1fr] gap-4">
+    <div className="phone-input grid grid-cols-[minmax(auto,12rem)_minmax(9.25rem,1fr)] gap-4">
       <input
         aria-hidden={'true'}
         name={name}
@@ -90,6 +90,7 @@ export const PhoneInput = forwardRef<
         }}
       />
       <Combobox
+        className="min-w-0"
         buttonClassName={cn('truncate')}
         options={selectOptions}
         allowUnselect={false}
