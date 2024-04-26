@@ -12,12 +12,19 @@ interface QuotationProps extends HTMLAttributes<'div'> {
   authorImage?: UnparsedImage;
   authorName?: string;
   authorOccupation?: string;
+  /** @default 'md' */
+  avatarSize?: 'sm' | 'md';
+  /** @default 'md' */
+  quoteSize?: 'sm' | 'md';
 }
 
 type Props = WithAttributes<QuotationProps>;
 
 const {
   class: className,
+  theme = 'light',
+  avatarSize = 'md',
+  quoteSize = 'md',
   authorImage,
   authorName,
   authorOccupation,
@@ -27,22 +34,59 @@ const {
 const hasAuthor = !!authorImage || !!authorName || !!authorOccupation;
 ---
 
-<Card {...props} class={cn('quotation', 'xl:p-16', className)}>
-  <blockquote class="text-lg leading-snug md:typography-large-quote">
+<Card
+  {...props}
+  class={cn(
+    'quotation',
+    {
+      'xl:p-16': quoteSize === 'md',
+      'xl:p-8': quoteSize === 'sm',
+    },
+    { 'bg-sw-sea-500 text-white border-transparent': theme === 'dark' },
+    className
+  )}
+>
+  <blockquote
+    class={cn({
+      'text-lg leading-snug md:typography-large-quote': quoteSize === 'md',
+      'text-lg leading-normal md:typography-body-large': quoteSize === 'sm',
+      // TODO: switch from `typography` to `text`
+      '!text-white': theme === 'dark',
+    })}
+  >
     <slot />
   </blockquote>
 
   {
     hasAuthor && (
-      <div class="author flex items-center gap-6 mt-8 md:mt-16">
+      <div
+        class={cn('author flex items-center gap-6 mt-8', {
+          'md:mt-16': quoteSize === 'md',
+          'md:mt-12': quoteSize === 'sm',
+        })}
+      >
         <WordpressImage
           data={authorImage}
-          preferredWidth={115}
-          class="aspect-square object-cover rounded-full size-[4.875rem]"
+          preferredWidth={avatarSize === 'sm' ? 50 : 115}
+          class={cn(
+            'aspect-square object-cover rounded-full border-2 border-transparent',
+            {
+              'border-white': theme === 'dark',
+              'size-[4.875rem]': avatarSize === 'md',
+              'size-12': avatarSize === 'sm',
+            }
+          )}
         />
         <div class="details">
           {!!authorName && (
-            <div class="typography-subhead text-black">{authorName}</div>
+            <div
+              class={cn('typography-subhead', {
+                'text-black': theme === 'light',
+                'text-white': theme === 'dark',
+              })}
+            >
+              {authorName}
+            </div>
           )}
           {!!authorOccupation && (
             <div class="text-base">{authorOccupation}</div>

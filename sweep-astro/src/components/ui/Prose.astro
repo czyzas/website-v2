@@ -1,10 +1,14 @@
 ---
-import type { HTMLAttributes } from 'astro/types';
+import type { HTMLAttributes, HTMLTag } from 'astro/types';
 import { cn } from '@/scripts/cn';
+import type { WithAttributes } from '@/types';
 
-type Props = HTMLAttributes<'div'>;
+interface ProseProps extends HTMLAttributes<'div'> {
+  tag?: HTMLTag;
+}
+type Props = WithAttributes<ProseProps>;
 
-const { class: className, ...props } = Astro.props;
+const { class: className, tag: Tag = 'div', ...props } = Astro.props;
 ---
 
 <style>
@@ -83,6 +87,10 @@ const { class: className, ...props } = Astro.props;
   }
 </style>
 
-<div {...props} class={cn('prose-content typography-body', className)}>
-  <slot />
-</div>
+{
+  Astro.slots.has('default') && (
+    <Tag {...props} class={cn('prose-content typography-body', className)}>
+      <slot />
+    </Tag>
+  )
+}

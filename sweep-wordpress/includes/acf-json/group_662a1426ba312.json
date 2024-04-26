@@ -21,8 +21,8 @@
             "pagination": 0,
             "min": 0,
             "max": 0,
-            "collapsed": "",
-            "button_label": "Add Row",
+            "collapsed": "field_662a49b3feff3",
+            "button_label": "Add slide",
             "show_in_graphql": 1,
             "graphql_description": "",
             "graphql_field_name": "slider",
@@ -77,7 +77,7 @@
                     ],
                     "wrapper": {
                         "width": "",
-                        "class": "",
+                        "class": "invisible-group",
                         "id": ""
                     },
                     "wpml_cf_preferences": 1,
@@ -362,5 +362,5 @@
     "graphql_types": [
         "Page"
     ],
-    "modified": 1714051338
+    "modified": 1714116288
 }
