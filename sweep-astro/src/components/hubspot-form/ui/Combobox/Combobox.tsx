@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useRef, useState } from 'react';
+import { forwardRef, useState } from 'react';
 import type { ForwardedRef, InputHTMLAttributes } from 'react';
 import { CommandList } from 'cmdk';
 import { cn } from '@/scripts/cn';
@@ -53,27 +53,6 @@ export const Combobox = forwardRef<HTMLSelectElement, ComboboxProps>(
   ) => {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(defaultValue);
-    const [btnWidth, setBtnWidth] = useState(0);
-    const btnRef = useRef<HTMLButtonElement>(null);
-
-    useEffect(() => {
-      const btn = btnRef.current;
-      const resizeObserver = new ResizeObserver((entries) => {
-        for (const entry of entries) {
-          const { width } = entry.target.getBoundingClientRect();
-
-          setBtnWidth(width);
-        }
-      });
-
-      if (btn) {
-        resizeObserver.observe(btn);
-      }
-
-      return () => {
-        resizeObserver.disconnect();
-      };
-    }, [btnRef]);
 
     return (
       <div className={cn('combobox-container', 'relative', className)}>
@@ -110,7 +89,6 @@ export const Combobox = forwardRef<HTMLSelectElement, ComboboxProps>(
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <button
-                ref={btnRef}
                 id={id}
                 type="button"
                 // eslint-disable-next-line jsx-a11y/role-has-required-aria-props -- `aria-controls` property is set by PopoverTrigger
@@ -132,12 +110,7 @@ export const Combobox = forwardRef<HTMLSelectElement, ComboboxProps>(
                 <CaretDownIcon className="size-4 shrink-0 text-sw-text-subdued" />
               </button>
             </PopoverTrigger>
-            <PopoverContent
-              style={
-                { '--button-width': `${btnWidth}px` } as React.CSSProperties
-              }
-              className="w-[var(--radix-popper-anchor-width)] p-0"
-            >
+            <PopoverContent className="w-[max(12rem,var(--radix-popper-anchor-width))] p-0">
               <Command>
                 <CommandInput placeholder="Search..." />
                 <CommandList className="max-h-48 custom-scrollbar overflow-auto">

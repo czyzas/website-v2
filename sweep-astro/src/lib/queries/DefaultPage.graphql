@@ -1,5 +1,5 @@
-query DefaultPage($SLUG: String!, $LANG: String!) {
-  page: pageByLang(slug: $SLUG, lang: $LANG) {
+query DefaultPage($URI: String!, $LANG: String!) {
+  page: pageByLang(uri: $URI, lang: $LANG) {
     title
     slug
     uri
@@ -7,26 +7,11 @@ query DefaultPage($SLUG: String!, $LANG: String!) {
       ...Languages
     }
     subpageSettings {
-      customTitle
-      introduction
-      image {
-        ...Image
-      }
+      ...SubpageSettings
     }
     modules {
       ...ModulesCollection
     }
   }
-  defaultLanguage {
-    ...Languages
-  }
-  languages {
-    ...Languages
-  }
-  primaryMenu: menu(idType: LOCATION, id: "primary-menu") {
-    ...Menu
-  }
-  themeOptions {
-    ...ThemeOptions
-  }
+  ...Essential
 }

@@ -1,23 +1,25 @@
 ---
 import type { InferGetStaticParamsType } from 'astro';
+import { fixLangParams, getLangParam, getUrlWithoutLang } from '@/i18n/utils';
 import {
-  fixLangParams,
-  getLangParam,
-  getStaticPathsWithLangs,
-  getUrlWithoutLang,
-} from '@/i18n/utils';
-import { fetchDefaultPagesStaticPaths } from '@/lib/fetchCMSData';
+  fetchDefaultPage,
+  fetchDefaultPagesStaticPaths,
+  fetchHomepage,
+} from '@/lib/fetchCMSData';
+import { defaultLocale } from '@/i18n/config';
+import { cleanURI, compareURI } from '@/scripts/utils-uri';
 import Homepage from './_index.astro';
 import Page from './_page.astro';
 
 export const getStaticPaths = async () => {
-  // At the beginning we need to add homepages in all available languages
-  const returnPaths = getStaticPathsWithLangs();
-  const paths = await fetchDefaultPagesStaticPaths();
+  const finalPaths = [];
 
+  const paths = await fetchDefaultPagesStaticPaths();
   for (const staticPath of paths) {
     if (
-      staticPath.template?.templateName !== 'Default' ||
+      !['Default', 'Homepage'].includes(
+        staticPath.template?.templateName ?? ''
+      ) ||
       !staticPath?.languageCode ||
       !staticPath?.uri
     ) {
@@ -26,22 +28,49 @@ export const getStaticPaths = async () => {
 
     const paramPath = getUrlWithoutLang(staticPath.uri);
 
-    returnPaths.push({
+    finalPaths.push({
       params: {
         lang: getLangParam(staticPath.languageCode),
-        page: paramPath,
+        page: paramPath || undefined,
       },
-      props: staticPath,
     });
   }
 
-  return returnPaths;
+  return finalPaths;
 };
 
-type Params = InferGetStaticParamsType<typeof getStaticPaths>;
+const { page: paramUri, lang: paramLang = defaultLocale } = fixLangParams(
+  Astro.params,
+  'page'
+) as InferGetStaticParamsType<typeof getStaticPaths>;
 
-const { page = '' } = fixLangParams(Astro.params, 'page') as Params;
-const uri = getUrlWithoutLang(page as string) || '/';
+const lang =
+  paramLang && typeof paramLang === 'string' ? paramLang : defaultLocale;
+const uri = cleanURI(paramUri, lang, { defaultUri: '/' });
+const isHomepage = uri === '/';
+
+let data;
+if (isHomepage) {
+  data = await fetchHomepage(lang);
+} else {
+  if (!uri) {
+    if (import.meta.env.SSR) {
+      return Astro.redirect('/404');
+    }
+
+    throw new Error(`Page with uri '${paramUri}' does not exists`);
+  }
+
+  data = await fetchDefaultPage(uri, lang);
+
+  if (!compareURI(uri, data.page?.uri)) {
+    if (import.meta.env.SSR) {
+      return Astro.redirect('/404');
+    }
+
+    throw new Error(`Page with uri '${paramUri}' does not exists`);
+  }
+}
 ---
 
-{uri === '/' ? <Homepage {...Astro.props} /> : <Page {...Astro.props} />}
+{isHomepage ? <Homepage data={data} /> : <Page data={data} />}

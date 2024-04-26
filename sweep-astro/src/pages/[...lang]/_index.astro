@@ -1,6 +1,5 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import { fetchHomepage } from '@/lib/fetchCMSData';
 import { cmsStore } from '@/stores/cmsStore';
 import { updateStore } from '@/scripts/store';
 import Hero from '@/components/homepage-sections/Hero.astro';
@@ -15,10 +14,13 @@ import Resources from '@/components/homepage-sections/Resources.astro';
 import WhoWeWorkWith from '@/components/homepage-sections/WhoWeWorkWith.astro';
 import { languageStore } from '@/stores/languageStore';
 import Regulations from '@/components/homepage-sections/Regulations.astro';
-import { defaultLocale } from '@/i18n/config';
+import type { HomepageQuery } from '@/__generated__/cms';
 
-const { lang = defaultLocale } = Astro.params;
-const data = await fetchHomepage(lang);
+interface Props {
+  data: HomepageQuery;
+}
+
+const { data } = Astro.props;
 
 updateStore(cmsStore, 'homepage', data.page!);
 updateStore(languageStore, 'currentLanguage', data.page!.language!);

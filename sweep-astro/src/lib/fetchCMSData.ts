@@ -4,12 +4,16 @@ import {
   ContactPageDocument,
   DefaultPageDocument,
   DefaultPagesStaticPathsDocument,
+  DemoPageDocument,
   HomepageDocument,
   IndustriesListDocument,
+  SinglePageStaticPathsDocument,
 } from '@/__generated__/cms';
 import type { IndustriesListFragment } from '@/__generated__/cms';
 
 import { defaultLocale } from '@/i18n/config';
+import { getUrlWithoutLang } from '@/i18n/utils';
+import { parseStaticPaths } from '@/scripts/utils-static-paths';
 import { gqlClient } from './graphqlClient';
 import { getCachedCMSData, cacheCMSData, CACHE_KEYS } from './cacheCMSData';
 
@@ -69,21 +73,33 @@ export async function fetchDefaultPagesStaticPaths() {
   return (
     (
       await fetchData(DefaultPagesStaticPathsDocument, undefined, [
-        'static-paths',
+        CACHE_KEYS.STATIC_PATHS,
         CACHE_KEYS.PAGE,
       ])
     ).pages?.nodes ?? []
   );
 }
 
-export function fetchDefaultPage(slug: string, lang: string = defaultLocale) {
+export async function fetchSinglePageStaticPaths(uri: string) {
+  const rawData = await fetchData(
+    SinglePageStaticPathsDocument,
+    { STATIC_PATH_URI: uri },
+    [CACHE_KEYS.STATIC_PATHS, CACHE_KEYS.CONTACT]
+  );
+
+  if (!rawData?.page) return [];
+
+  return parseStaticPaths(rawData.page);
+}
+
+export function fetchDefaultPage(uri: string, lang: string = defaultLocale) {
   return fetchData(
     DefaultPageDocument,
     {
-      SLUG: slug,
+      URI: uri,
       LANG: lang,
     },
-    [lang, CACHE_KEYS.PAGE, slug]
+    [lang, CACHE_KEYS.PAGE, getUrlWithoutLang(uri)]
   );
 }
 
@@ -92,4 +108,8 @@ export function fetchContactPage(lang: string = defaultLocale) {
     lang,
     CACHE_KEYS.CONTACT,
   ]);
+}
+
+export function fetchDemoPage(lang: string = defaultLocale) {
+  return fetchData(DemoPageDocument, { LANG: lang }, [lang, CACHE_KEYS.DEMO]);
 }

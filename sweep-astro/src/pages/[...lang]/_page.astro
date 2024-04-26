@@ -1,19 +1,17 @@
 ---
 import ModulesIncluder from '@/components/ModulesIncluder.astro';
 import Top from '@/components/partials/Top.astro';
-import { defaultLocale } from '@/i18n/config';
-import type { Locales } from '@/i18n/config';
-import { fixLangParams } from '@/i18n/utils';
 import Layout from '@/layouts/Layout.astro';
-import { fetchDefaultPage } from '@/lib/fetchCMSData';
 import { updateStore } from '@/scripts/store';
 import { cmsStore } from '@/stores/cmsStore';
 import { languageStore } from '@/stores/languageStore';
+import type { DefaultPageQuery } from '@/__generated__/cms';
 
-const { lang = defaultLocale } = fixLangParams(Astro.params, 'page');
-const { slug = '' } = Astro.props;
+interface Props {
+  data: DefaultPageQuery;
+}
+const { data } = Astro.props;
 
-const data = await fetchDefaultPage(slug, lang as Locales);
 const page = data.page!;
 
 updateStore(cmsStore, 'defaultPage', page);

@@ -2,7 +2,7 @@
 import { Icon } from 'astro-icon/components';
 import { getStore } from '@/scripts/store';
 import { languageStore } from '@/stores/languageStore';
-import { buildI18nPath } from '@/scripts/buildI18nPath';
+import { buildI18nPath } from '@/i18n/utils';
 
 const id = `dropdown-${crypto.randomUUID().substring(16)}`;
 const { currentLanguage, languages } = getStore(languageStore);

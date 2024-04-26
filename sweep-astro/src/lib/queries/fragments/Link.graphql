@@ -1,5 +1,6 @@
 fragment Link on AcfLink {
   url
+  internalUrl
   title
   target
 }

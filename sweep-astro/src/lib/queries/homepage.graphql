@@ -1,5 +1,5 @@
 query Homepage($LANG: String!) {
-  page: pageByLang(slug: "/", lang: $LANG) {
+  page: pageByLang(uri: "/", lang: $LANG) {
     title
     slug
     uri
@@ -252,16 +252,5 @@ query Homepage($LANG: String!) {
       }
     }
   }
-  defaultLanguage {
-    ...Languages
-  }
-  languages {
-    ...Languages
-  }
-  primaryMenu: menu(idType: LOCATION, id: "primary-menu") {
-    ...Menu
-  }
-  themeOptions {
-    ...ThemeOptions
-  }
+  ...Essential
 }

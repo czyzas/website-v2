@@ -5,9 +5,11 @@ import { readStream } from '../scripts/server/readStream';
 import { fileExists } from '../scripts/server/fileExists';
 
 export const CACHE_KEYS = {
+  STATIC_PATHS: 'static-paths',
   HOMEPAGE: 'homepage',
   PAGE: 'page',
   CONTACT: 'contact',
+  DEMO: 'demo',
   INDUSTRIES_LIST: 'industries-list',
 } as const;
 

@@ -1,8 +1,9 @@
 ---
+import 'swiper/swiper-bundle.css';
 import { cmsStore } from '@/stores/cmsStore';
 import { getStore } from '@/scripts/store';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
-import { buildI18nPath } from '@/scripts/buildI18nPath';
+import { buildI18nPath } from '@/i18n/utils';
 import Container from '../ui/Container.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
 import SwiperNavigation from '../SwiperNavigation.astro';

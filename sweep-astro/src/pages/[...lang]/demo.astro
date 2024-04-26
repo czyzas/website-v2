@@ -1,0 +1,166 @@
+---
+import 'swiper/swiper-bundle.css';
+import Container from '@/components/ui/Container.astro';
+import Grid from '@/components/ui/Grid.astro';
+import Prose from '@/components/ui/Prose.astro';
+import { defaultLocale } from '@/i18n/config';
+import Layout from '@/layouts/Layout.astro';
+import { fetchDemoPage, fetchSinglePageStaticPaths } from '@/lib/fetchCMSData';
+import { updateStore } from '@/scripts/store';
+import { createSinglePageStaticPaths } from '@/scripts/utils-static-paths';
+import { cmsStore } from '@/stores/cmsStore';
+import { languageStore } from '@/stores/languageStore';
+import Quotation from '@/components/Quotation.astro';
+import WordpressImage from '@/components/WordpressImage.astro';
+import LogosCollection from '@/components/LogosCollection.astro';
+import Form from '@/components/hubspot-form/Form.astro';
+import { fixDoubleBr } from '@/scripts/fixDoubleBr';
+
+export async function getStaticPaths() {
+  return createSinglePageStaticPaths(await fetchSinglePageStaticPaths('/demo'));
+}
+
+const { lang = defaultLocale } = Astro.params;
+
+const data = await fetchDemoPage(lang as string);
+const page = data.page!;
+
+updateStore(cmsStore, 'demoPage', page);
+updateStore(languageStore, 'currentLanguage', page.language!);
+updateStore(languageStore, 'languages', data.languages);
+updateStore(cmsStore, 'primaryMenu', data.primaryMenu!);
+updateStore(cmsStore, 'themeOptions', data.themeOptions!);
+
+const { subpageSettings, demoPageAcf: acf = {} } = page;
+const pageTitle = page?.title ?? '';
+const title = subpageSettings?.customTitle || pageTitle || '';
+const introduction = subpageSettings?.introduction ?? '';
+
+const {
+  slider: rawSlider,
+  logosLabel,
+  logos: rawLogos,
+  formTitle,
+  hubspotFormGuid,
+  contentUnderForm,
+} = acf;
+
+const slider = (rawSlider ?? []).filter(Boolean);
+const logos = (rawLogos?.edges ?? []).filter(Boolean);
+---
+
+<script>
+  import { Swiper } from 'swiper';
+  import { Pagination } from 'swiper/modules';
+
+  new Swiper('.demo-swiper', {
+    modules: [Pagination],
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    spaceBetween: 16,
+    autoHeight: true,
+  });
+</script>
+
+<style>
+  .swiper-slide {
+    @apply self-start;
+  }
+  .swiper-pagination {
+    @apply static flex justify-center gap-2.5 mt-4.5;
+    --swiper-pagination-color: theme(colors.sw.sky.400);
+    --swiper-pagination-bullet-inactive-color: theme(colors.neutral.400);
+    --swiper-pagination-bullet-horizontal-gap: theme(spacing[3.5]);
+
+    :global(.swiper-pagination-bullet) {
+      @apply m-0;
+    }
+  }
+</style>
+
+<Layout
+  name="demo"
+  pageTitle={pageTitle}
+  class="py-8 md:py-18 bg-gradient-to-b from-sw-surface-subdued to-transparent"
+>
+  <Container>
+    <Grid>
+      <div class="col-span-full lg:col-span-6">
+        <h1 class="typography-h2" set:html={title} />
+        <Prose tag="p" set:html={introduction} class="mt-5" />
+        {
+          slider.length > 0 && (
+            <div class="swiper demo-swiper my-8 md:my-10 lg:mt-11 lg:mb-28">
+              <div class="swiper-wrapper">
+                {slider.map((slide) => {
+                  const { contentType, image, quotation } = slide;
+
+                  if (
+                    contentType === 'quotation' &&
+                    quotation?.selectQuotation
+                  ) {
+                    const { quote, authorImage, authorName, authorOccupation } =
+                      quotation.selectQuotation;
+                    return (
+                      <div class="swiper-slide">
+                        <Quotation
+                          theme="dark"
+                          avatarSize="sm"
+                          quoteSize="sm"
+                          authorImage={authorImage}
+                          authorName={authorName}
+                          authorOccupation={authorOccupation}
+                          set:html={quote}
+                        />
+                      </div>
+                    );
+                  }
+
+                  if (contentType === 'image' && image) {
+                    return (
+                      <div class="swiper-slide">
+                        <WordpressImage
+                          data={image}
+                          preferredWidth={640}
+                          class="w-full rounded-lg"
+                        />
+                      </div>
+                    );
+                  }
+
+                  return null;
+                })}
+              </div>
+              <div class="swiper-pagination" />
+            </div>
+          )
+        }
+        {
+          logos.length > 0 && (
+            <Fragment>
+              <h2 class="typography-subhead">{logosLabel}</h2>
+              <LogosCollection logos={logos} sizing="sm" />
+            </Fragment>
+          )
+        }
+      </div>
+      <div class="col-span-full lg:col-start-8 lg:col-end-13">
+        <h2 class="typography-h3">{formTitle}</h2>
+        {
+          !!hubspotFormGuid && (
+            <div class="mt-4 mb-8 md:mb-12 lg:mb-24">
+              <Form formGuid={hubspotFormGuid} />
+            </div>
+          )
+        }
+        <h3
+          class="typography-h4"
+          set:html={fixDoubleBr(contentUnderForm?.title)}
+        />
+        <Prose set:html={contentUnderForm?.content} />
+      </div>
+    </Grid>
+  </Container>
+</Layout>

@@ -1,27 +1,30 @@
-import type {
-  GetStaticPaths,
-  GetStaticPathsItem,
-  GetStaticPathsResult,
-} from 'astro';
-import { merge, trim } from 'lodash-es';
+import type { GetStaticPathsItem } from 'astro';
+import { trim } from 'lodash-es';
 import { locales, defaultLocale } from './config';
 
+/**
+ * Return undefined if provided language is the default one
+ * @example
+ * ```
+ * const french = getLangParam('fr'); // fr
+ * const english = getLangParam('en'); // undefined
+ * ```
+ */
 export const getLangParam = (l: string) =>
   l === defaultLocale ? undefined : l;
 
 export const getUrlWithoutLang = (
   url: string,
-  options?: {
+  options: {
     /** @default true */
     trimSlashes?: boolean;
-  }
+  } = {}
 ) => {
-  const { trimSlashes = true } = options ?? {};
-  const startsWithSlash = url.startsWith('/');
-  let paramPath = startsWithSlash ? url.slice(1) : url;
+  const { trimSlashes = true } = options;
+  let paramPath = url.startsWith('/') ? url.slice(1) : url;
   const chunks = paramPath.split('/');
 
-  if (locales.includes(chunks.at(0) ?? '')) {
+  if (locales.includes(chunks[0] ?? '')) {
     chunks.shift();
     paramPath = chunks.join('/');
   }
@@ -32,34 +35,6 @@ export const getUrlWithoutLang = (
 
   return paramPath;
 };
-
-/**
- * Propagate locales to provided params
- */
-export const withLangParams = (
-  paths: GetStaticPathsResult
-): GetStaticPathsResult => {
-  const finalPaths = [];
-
-  for (const lang of locales) {
-    for (const pagePath of paths) {
-      const raw = {
-        params: {
-          lang: getLangParam(lang),
-        },
-      };
-      finalPaths.push(merge(raw, pagePath));
-    }
-  }
-
-  return finalPaths;
-};
-
-/**
- * Propagate locales to single page without params
- */
-export const getStaticPathsWithLangs = (() =>
-  withLangParams([{ params: {} }])) satisfies GetStaticPaths;
 
 /**
  * Determine if provided `lang` param is valid, if not, pass it to another param
@@ -94,4 +69,22 @@ export const fixLangParams = (
       ? `${params.lang}/${params[notLangParam]}`
       : params.lang,
   };
+};
+
+/**
+ * Returns path with attached lang
+ * @param cleanPath Path without lang
+ */
+export const buildI18nPath = (
+  cleanPath = '/',
+  lang: string = defaultLocale
+) => {
+  const language = locales.includes(lang) ? lang : defaultLocale;
+
+  // TODO: handle urls from WP
+  if (cleanPath === '/' && language !== defaultLocale) {
+    return `/${language}`;
+  }
+
+  return cleanPath;
 };

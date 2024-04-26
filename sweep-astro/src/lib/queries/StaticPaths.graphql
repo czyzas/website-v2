@@ -1,0 +1,28 @@
+query DefaultPagesStaticPaths {
+  pages(first: 100, where: { status: PUBLISH, language: "all" }) {
+    nodes {
+      template {
+        templateName
+      }
+      databaseId
+      slug
+      uri
+      languageCode
+    }
+  }
+}
+
+query SinglePageStaticPaths($STATIC_PATH_URI: String!) {
+  page: pageByLang(uri: $STATIC_PATH_URI, lang: "en") {
+    databaseId
+    slug
+    uri
+    languageCode
+    translations {
+      databaseId
+      slug
+      uri
+      languageCode
+    }
+  }
+}

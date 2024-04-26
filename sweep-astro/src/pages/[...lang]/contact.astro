@@ -1,12 +1,13 @@
 ---
-import type { GetStaticPaths } from 'astro';
 import Top from '@/components/partials/Top.astro';
 import Layout from '@/layouts/Layout.astro';
-import { fetchContactPage } from '@/lib/fetchCMSData';
+import {
+  fetchContactPage,
+  fetchSinglePageStaticPaths,
+} from '@/lib/fetchCMSData';
 import { updateStore } from '@/scripts/store';
 import { cmsStore } from '@/stores/cmsStore';
 import { languageStore } from '@/stores/languageStore';
-// import { getStaticPathsWithLangs } from '@/i18n/utils';
 import Section from '@/components/ui/Section.astro';
 import Demo from '@/components/Demo.astro';
 import Container from '@/components/ui/Container.astro';
@@ -20,13 +21,13 @@ import { linkShouldRender } from '@/scripts/data-parsers/parseLink';
 import ArticleCard from '@/components/ArticleCard.astro';
 import Prose from '@/components/ui/Prose.astro';
 import { defaultLocale } from '@/i18n/config';
+import { createSinglePageStaticPaths } from '@/scripts/utils-static-paths';
 
-export const getStaticPaths = (() => {
-  // TODO: fix this
-  // const pfs = getStaticPathsWithLangs();
-  const pfs = [{ params: { lang: undefined } }];
-  return pfs;
-}) satisfies GetStaticPaths;
+export async function getStaticPaths() {
+  return createSinglePageStaticPaths(
+    await fetchSinglePageStaticPaths('/contact')
+  );
+}
 
 const { lang = defaultLocale } = Astro.params;
 

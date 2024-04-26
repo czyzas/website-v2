@@ -1,4 +1,5 @@
 ---
+import 'swiper/swiper-bundle.css';
 import type { HTMLAttributes } from 'astro/types';
 import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
 import { cn } from '@/scripts/cn';
@@ -6,11 +7,18 @@ import WordpressImage from './WordpressImage.astro';
 
 interface LogosCollectionProps {
   logos?: UnparsedImage[];
+  sizing?: 'sm' | 'md';
 }
 
 type Props = LogosCollectionProps & HTMLAttributes<'div'>;
 
-const { class: className, logos, ...props } = Astro.props;
+const {
+  class: className,
+  logos: rawLogos,
+  sizing = 'md',
+  ...props
+} = Astro.props;
+const logos = (rawLogos ?? []).filter(Boolean);
 ---
 
 <script>
@@ -61,7 +69,7 @@ const { class: className, logos, ...props } = Astro.props;
 </style>
 
 {
-  logos && logos.length > 0 && (
+  logos.length > 0 && (
     <div
       {...props}
       class={cn(
@@ -72,7 +80,12 @@ const { class: className, logos, ...props } = Astro.props;
       <div class="swiper-wrapper">
         {logos.map((logo) => (
           <div class="swiper-slide">
-            <div class="logo p-3 flex items-center justify-center md:flex-1 md:basis-40">
+            <div
+              class={cn('logo p-3 flex items-center justify-center md:flex-1', {
+                'md:basis-40': sizing === 'md',
+                'md:basis-25': sizing === 'sm',
+              })}
+            >
               <WordpressImage
                 data={logo}
                 class="max-h-12 object-contain select-none"

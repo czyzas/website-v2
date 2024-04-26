@@ -1,0 +1,44 @@
+query DemoPage($LANG: String!) {
+  page: pageByLang(uri: "demo", lang: $LANG) {
+    title
+    slug
+    uri
+    language {
+      ...Languages
+    }
+    subpageSettings {
+      ...SubpageSettings
+    }
+    demoPageAcf {
+      slider {
+        contentType
+        quotation {
+          selectQuotation {
+            quote
+            authorImage {
+              ...Image
+            }
+            authorName
+            authorOccupation
+          }
+        }
+        image {
+          ...Image
+        }
+      }
+      logosLabel
+      logos {
+        edges {
+          ...Image
+        }
+      }
+      formTitle
+      hubspotFormGuid
+      contentUnderForm {
+        title
+        content
+      }
+    }
+  }
+  ...Essential
+}

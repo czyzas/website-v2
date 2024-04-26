@@ -1,22 +1,23 @@
 ---
 import '@/styles/global.css';
 import '@/assets/fonts/font.css';
-import 'swiper/swiper-bundle.css';
+import type { HTMLAttributes } from 'astro/types';
 import Footer from '@/components/partials/Footer.astro';
 import Header from '@/components/partials/Header.astro';
 import { cn } from '@/scripts/cn';
 
-type Props = {
+interface Props extends HTMLAttributes<'main'> {
   home?: boolean;
   name: string;
   pageTitle: string;
-};
-const { home, name, pageTitle } = Astro.props;
+}
+const { home, name, pageTitle, class: className, ...props } = Astro.props;
 
+// TODO: Update SEO
 const siteTitle = 'Sweep';
+const description = 'Sweep description';
 
 const title = !home && pageTitle ? `${pageTitle} - ${siteTitle}` : siteTitle;
-const description = 'Sweep description';
 ---
 
 <!doctype html>
@@ -34,9 +35,9 @@ const description = 'Sweep description';
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body class="min-h-screen flex flex-col">
+  <body class="antialiased min-h-screen flex flex-col">
     <Header />
-    <main class={cn({ subpage: !home }, name, 'flex-1')}>
+    <main {...props} class={cn({ subpage: !home }, name, 'flex-1', className)}>
       <slot />
     </main>
     <Footer />

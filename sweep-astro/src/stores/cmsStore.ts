@@ -1,5 +1,6 @@
 import type {
   ContactPageQuery,
+  DemoPageQuery,
   HomepageQuery,
   LanguagesFragment,
   MenuFragment,
@@ -13,6 +14,7 @@ export const cmsStore = createStore<{
   homepage?: HomepageQuery['page'];
   defaultPage?: Page;
   contactPage?: ContactPageQuery;
+  demoPage?: DemoPageQuery;
   primaryMenu?: MenuFragment;
   themeOptions?: ThemeOptionsFragment;
 }>({
@@ -20,6 +22,7 @@ export const cmsStore = createStore<{
   homepage: undefined,
   defaultPage: undefined,
   contactPage: undefined,
+  demoPage: undefined,
   primaryMenu: undefined,
   themeOptions: undefined,
 });

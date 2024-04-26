@@ -7,16 +7,10 @@ import CardsGrid from '@/components/CardsGrid.astro';
 
 type Props = ModulesModulesContentQuotationWithCardsLayout;
 
-const {
-  layoutName,
-  backgroundColor,
-  quote,
-  authorName,
-  authorImage,
-  authorOccupation,
-  cards: rawCards,
-} = Astro.props;
+const { layoutName, backgroundColor, quotation, cards: rawCards } = Astro.props;
 
+const { quote, authorImage, authorName, authorOccupation } =
+  quotation?.selectQuotation ?? {};
 const cards = rawCards ? rawCards.filter(Boolean) : [];
 ---
 
@@ -28,7 +22,6 @@ const cards = rawCards ? rawCards.filter(Boolean) : [];
       authorOccupation={authorOccupation}
       set:html={quote}
     />
-
     <CardsGrid columns={4} cards={cards} class="mt-8 md:mt-15" />
   </Container>
 </ModuleContainer>

@@ -1,5 +1,5 @@
 query ContactPage($LANG: String!) {
-  page: pageByLang(slug: "contact", lang: $LANG) {
+  page: pageByLang(uri: "contact", lang: $LANG) {
     title
     slug
     uri
@@ -7,11 +7,7 @@ query ContactPage($LANG: String!) {
       ...Languages
     }
     subpageSettings {
-      customTitle
-      introduction
-      image {
-        ...Image
-      }
+      ...SubpageSettings
     }
     contactAcf {
       form {
@@ -72,16 +68,5 @@ query ContactPage($LANG: String!) {
       }
     }
   }
-  defaultLanguage {
-    ...Languages
-  }
-  languages {
-    ...Languages
-  }
-  primaryMenu: menu(idType: LOCATION, id: "primary-menu") {
-    ...Menu
-  }
-  themeOptions {
-    ...ThemeOptions
-  }
+  ...Essential
 }
