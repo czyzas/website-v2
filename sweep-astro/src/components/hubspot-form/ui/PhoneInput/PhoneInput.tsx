@@ -74,7 +74,7 @@ export const PhoneInput = forwardRef<
   }));
 
   return (
-    <div className="phone-input grid grid-cols-[minmax(auto,12rem)_minmax(9.25rem,1fr)] gap-4">
+    <div className="phone-input grid grid-cols-[minmax(auto,12rem)_minmax(9.25rem,1fr)] gap-3.5">
       <input
         aria-hidden={'true'}
         name={name}
