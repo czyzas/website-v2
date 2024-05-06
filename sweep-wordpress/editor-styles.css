@@ -1,34 +1,17 @@
-table tr td {
-  padding: 5px;
-  border-bottom: 1px solid #f0f0f0;
+.as-h2, .as-h3, .as-h4 {
+	font-family: sans-serif !important;
+	line-height: 1.1;
+	margin-bottom: 24px;
 }
 
-table tr.table-row-head td,
-table tr.table-row-head th {
-    color: #ff0000!important;
-    font-weight: bold;
+.as-h2 {
+	font-size: 40px !important;
 }
 
-table tr.custom-row-underline {
-    border-bottom: 1px solid #666666;
+.as-h3 {
+	font-size: 32px !important;
 }
 
-table tr.custom-row-underline-color {
-  border-bottom: 1px solid #ff0000;
+.as-h4 {
+	font-size: 24px !important;
 }
-
-table tr.custom-row-grey-bg{
-    background: #999999;
-}
-
-table tr td.custom-cell-underline {
-  border-bottom: 1px solid #666666;
-}
-
-table tr td.custom-cell-grey-bg {
-     background: #999999;
- }
-
-table tr td.custom-cell-indent {
-     padding-left: 20px;
- }

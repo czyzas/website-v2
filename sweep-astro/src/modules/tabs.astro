@@ -1,7 +1,9 @@
 ---
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 import type { ModulesModulesContentTabsLayout } from '@/__generated__/cms';
 import ButtonContainer from '@/components/ButtonContainer.astro';
 import CardWithBigImage from '@/components/CardWithBigImage.astro';
+import CardWithImageSpaced from '@/components/CardWithImageSpaced.astro';
 import CardWithSideImage from '@/components/CardWithSideImage.astro';
 import ModuleContainer from '@/components/ModuleContainer.astro';
 import WordpressButtonLink from '@/components/WordpressButtonLink.astro';
@@ -29,8 +31,13 @@ const {
 const tabId = crypto.randomUUID();
 const layout = contentLayout ?? 'side';
 
-const ContentWrapper =
-  layout === 'overlapping' ? CardWithBigImage : CardWithSideImage;
+const layouts: Record<string, AstroComponentFactory> = {
+  side: CardWithSideImage,
+  overlapping: CardWithBigImage,
+  spaced: CardWithImageSpaced,
+} as const;
+
+const ContentWrapper = layout in layouts ? layouts[layout] : layouts.side;
 ---
 
 {

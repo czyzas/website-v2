@@ -61,7 +61,7 @@ add_action( 'acf/input/admin_head', function () {
 add_action( 'acf/input/admin_head', function () {
 	?>
 	<style>
-		.acf-field-flexible-content .acf-label {
+		.acf-field-flexible-content > .acf-label {
 			display: flex;
 			align-items: center;
 			justify-content: space-between;

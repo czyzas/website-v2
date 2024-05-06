@@ -187,6 +187,36 @@ fragment ModulesCollection on Modules {
         position
       }
     }
+    ... on ModulesModulesContentSourcedInfoLayout {
+      layoutName
+      backgroundColor {
+        selectBackgroundColor
+      }
+      image {
+        ...Image
+      }
+      content
+      sourceLink {
+        ...Link
+      }
+    }
+    ... on ModulesModulesContentQuotationLayout {
+      layoutName
+      backgroundColor {
+        selectBackgroundColor
+      }
+      theme
+      quotation {
+        selectQuotation {
+          quote
+          authorImage {
+            ...Image
+          }
+          authorName
+          authorOccupation
+        }
+      }
+    }
     ... on ModulesModulesContentQuotationWithCardsLayout {
       layoutName
       backgroundColor {
