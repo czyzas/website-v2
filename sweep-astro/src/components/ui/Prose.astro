@@ -69,15 +69,18 @@ const { class: className, tag: Tag = 'div', ...props } = Astro.props;
       @apply mt-0;
     }
 
-    :global(:where(h2)) {
+    :global(:where(h2)),
+    :global(:is(.as-h2)) {
       @apply typography-h2;
     }
 
-    :global(:where(h3)) {
+    :global(:where(h3)),
+    :global(:is(.as-h3)) {
       @apply typography-h3;
     }
 
-    :global(:where(h4)) {
+    :global(:where(h4)),
+    :global(:is(.as-h4)) {
       @apply typography-h4;
     }
 

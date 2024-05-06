@@ -9,7 +9,26 @@
 add_filter( 'tiny_mce_before_init', function ( $settings ) {
 
 	$style_formats = [
-		$table_formats ?? [],
+		[
+			'title' => 'Headings',
+			'items' => [
+				[
+					'title'    => 'Heading H2 (40px)',
+					'selector' => 'h1,h2,h3,h4,h5,h6',
+					'classes'  => 'as-h2'
+				],
+				[
+					'title'    => 'Heading H3 (32px)',
+					'selector' => 'h1,h2,h3,h4,h5,h6',
+					'classes'  => 'as-h3'
+				],
+				[
+					'title'    => 'Heading H4 (24px)',
+					'selector' => 'h1,h2,h3,h4,h5,h6',
+					'classes'  => 'as-h4'
+				],
+			],
+		]
 	];
 
 	$style_formats = array_filter( $style_formats );

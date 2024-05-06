@@ -288,6 +288,35 @@
                             ]
                         },
                         {
+                            "key": "field_6622379ffd40a",
+                            "label": "Content layout",
+                            "name": "content_layout",
+                            "aria-label": "",
+                            "type": "button_group",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "choices": {
+                                "side": "Side by side",
+                                "overlapping": "Overlapping",
+                                "spaced": "Spaced"
+                            },
+                            "default_value": "",
+                            "return_format": "value",
+                            "allow_null": 0,
+                            "layout": "horizontal",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "contentLayout",
+                            "graphql_non_null": 0
+                        },
+                        {
                             "key": "field_6602e686682d4",
                             "label": "Nav tabs look",
                             "name": "tabs_look",
@@ -295,7 +324,15 @@
                             "type": "button_group",
                             "instructions": "",
                             "required": 0,
-                            "conditional_logic": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_6602e3d4b5d53",
+                                        "operator": ">",
+                                        "value": "1"
+                                    }
+                                ]
+                            ],
                             "wrapper": {
                                 "width": "50",
                                 "class": "",
@@ -313,34 +350,6 @@
                             "show_in_graphql": 1,
                             "graphql_description": "",
                             "graphql_field_name": "tabsLook",
-                            "graphql_non_null": 0
-                        },
-                        {
-                            "key": "field_6622379ffd40a",
-                            "label": "Content layout",
-                            "name": "content_layout",
-                            "aria-label": "",
-                            "type": "button_group",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "wpml_cf_preferences": 1,
-                            "choices": {
-                                "side": "Side by side",
-                                "overlapping": "Overlapping"
-                            },
-                            "default_value": "",
-                            "return_format": "value",
-                            "allow_null": 0,
-                            "layout": "horizontal",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "contentLayout",
                             "graphql_non_null": 0
                         },
                         {
@@ -2104,6 +2113,268 @@
                     "min": "",
                     "max": ""
                 },
+                "layout_66389f908c122": {
+                    "key": "layout_66389f908c122",
+                    "name": "sourced-info",
+                    "label": "Sourced info",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_6638a0078c128",
+                            "label": "Background color",
+                            "name": "background_color",
+                            "aria-label": "",
+                            "type": "group",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "invisible-group",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "layout": "block",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "backgroundColor",
+                            "graphql_non_null": 0,
+                            "sub_fields": [
+                                {
+                                    "key": "field_6638a0078c12a",
+                                    "label": "Background color",
+                                    "name": "background_color",
+                                    "aria-label": "",
+                                    "type": "clone",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 1,
+                                    "clone": [
+                                        "field_6602daa862d57"
+                                    ],
+                                    "display": "seamless",
+                                    "layout": "block",
+                                    "prefix_label": 0,
+                                    "prefix_name": 0
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_66389fcb8c125",
+                            "label": "Image",
+                            "name": "image",
+                            "aria-label": "",
+                            "type": "image",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "25",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "return_format": "array",
+                            "library": "all",
+                            "min_width": "",
+                            "min_height": "",
+                            "min_size": "",
+                            "max_width": "",
+                            "max_height": "",
+                            "max_size": "",
+                            "mime_types": "",
+                            "preview_size": "mobile-xs",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "image"
+                        },
+                        {
+                            "key": "field_66389fd78c126",
+                            "label": "Content",
+                            "name": "content",
+                            "aria-label": "",
+                            "type": "wysiwyg",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 0,
+                            "default_value": "",
+                            "tabs": "all",
+                            "toolbar": "full",
+                            "media_upload": 0,
+                            "delay": 0,
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "content",
+                            "graphql_non_null": 0
+                        },
+                        {
+                            "key": "field_66389fe78c127",
+                            "label": "Source link",
+                            "name": "source_link",
+                            "aria-label": "",
+                            "type": "link",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "25",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 0,
+                            "return_format": "array",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "sourceLink",
+                            "graphql_non_null": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
+                "layout_66389e43a2314": {
+                    "key": "layout_66389e43a2314",
+                    "name": "quotation",
+                    "label": "Quotation",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_66389e43a2317",
+                            "label": "Background color",
+                            "name": "background_color",
+                            "aria-label": "",
+                            "type": "group",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "invisible-group",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "layout": "block",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "backgroundColor",
+                            "graphql_non_null": 0,
+                            "sub_fields": [
+                                {
+                                    "key": "field_66389e43a2318",
+                                    "label": "Background color",
+                                    "name": "background_color",
+                                    "aria-label": "",
+                                    "type": "clone",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 1,
+                                    "clone": [
+                                        "field_6602daa862d57"
+                                    ],
+                                    "display": "seamless",
+                                    "layout": "block",
+                                    "prefix_label": 0,
+                                    "prefix_name": 0
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_66389e4ea231f",
+                            "label": "Theme",
+                            "name": "theme",
+                            "aria-label": "",
+                            "type": "button_group",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "choices": {
+                                "light": "Light",
+                                "dark": "Dark"
+                            },
+                            "default_value": "",
+                            "return_format": "value",
+                            "allow_null": 0,
+                            "layout": "horizontal",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "theme",
+                            "graphql_non_null": 0
+                        },
+                        {
+                            "key": "field_66389e43a2319",
+                            "label": "Quotation",
+                            "name": "quotation",
+                            "aria-label": "",
+                            "type": "group",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "invisible-group",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "layout": "block",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "quotation",
+                            "graphql_non_null": 0,
+                            "sub_fields": [
+                                {
+                                    "key": "field_66389e43a231a",
+                                    "label": "Quotation",
+                                    "name": "quotation",
+                                    "aria-label": "",
+                                    "type": "clone",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "graphql_field_name": "quotation",
+                                    "wpml_cf_preferences": 1,
+                                    "clone": [
+                                        "field_662a151974620"
+                                    ],
+                                    "display": "seamless",
+                                    "layout": "block",
+                                    "prefix_label": 0,
+                                    "prefix_name": 0
+                                }
+                            ]
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
                 "layout_6626312c57ea4": {
                     "key": "layout_6626312c57ea4",
                     "name": "quotation-with-cards",
@@ -2494,5 +2765,5 @@
         "Page",
         "Post"
     ],
-    "modified": 1714038617
+    "modified": 1714987302
 }

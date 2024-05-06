@@ -4,14 +4,12 @@ import { getStore } from '@/scripts/store';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
 import { linkShouldRender } from '@/scripts/data-parsers/parseLink';
 import Container from '../ui/Container.astro';
-import Grid from '../ui/Grid.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
-import Card from '../ui/Card.astro';
-import Prose from '../ui/Prose.astro';
 import ButtonContainer from '../ButtonContainer.astro';
-import WordpressImage from '../WordpressImage.astro';
 import Section from '../ui/Section.astro';
 import WordpressButtonLink from '../WordpressButtonLink.astro';
+import CardWithImageSpaced from '../CardWithImageSpaced.astro';
+import Prose from '../ui/Prose.astro';
 
 const store = getStore(cmsStore);
 const data = store.homepage!;
@@ -24,16 +22,9 @@ const acf = data.homepage!.platform!;
       withMargin
       {...parseSectionTitle(acf.sectionTitle?.selectSectionTitle)}
     />
-    <Grid>
-      <Card class="col-span-full md:col-span-6 lg:col-start-1 lg:col-end-5">
-        <Prose set:html={acf.content} />
-      </Card>
-      <div
-        class="col-span-full md:col-start-7 md:col-end-13 lg:col-start-6 lg:col-end-12"
-      >
-        <WordpressImage data={acf.image} class="mx-auto" />
-      </div>
-    </Grid>
+    <CardWithImageSpaced image={acf.image}>
+      <Prose set:html={acf.content} />
+    </CardWithImageSpaced>
     {
       linkShouldRender(acf.button) && (
         <ButtonContainer class="md:mt-18">
