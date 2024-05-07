@@ -1,0 +1,11 @@
+query EventsModuleList($LIMIT: Int, $LANG: String!) {
+  events(first: $LIMIT, where: { language: $LANG }) {
+    nodes {
+      databaseId
+      title
+      eventAcf {
+        eventDate
+      }
+    }
+  }
+}
