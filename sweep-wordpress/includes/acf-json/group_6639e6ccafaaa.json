@@ -1,0 +1,76 @@
+{
+    "key": "group_6639e6ccafaaa",
+    "title": "Tag taxonomy",
+    "fields": [
+        {
+            "key": "field_6639e6d044309",
+            "label": "Tag color",
+            "name": "tag_color",
+            "aria-label": "",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "tag-radio-list",
+                "id": ""
+            },
+            "wpml_cf_preferences": 1,
+            "choices": {
+                "gray": "<span class=\"tag-radio-item\" data-color=\"gray\">GRAY<\/span>",
+                "gray-outline": "<span class=\"tag-radio-item\" data-color=\"gray-outline\">GRAY OUTLINE<\/span>",
+                "green": "<span class=\"tag-radio-item\" data-color=\"green\">GREEN<\/span>",
+                "algea": "<span class=\"tag-radio-item\" data-color=\"algea\">ALGEA<\/span>",
+                "red": "<span class=\"tag-radio-item\" data-color=\"red\">RED<\/span>",
+                "sea": "<span class=\"tag-radio-item\" data-color=\"sea\">SEA<\/span>",
+                "blue": "<span class=\"tag-radio-item\" data-color=\"blue\">BLUE<\/span>",
+                "glacier": "<span class=\"tag-radio-item\" data-color=\"glacier\">GLACIER<\/span>",
+                "coral": "<span class=\"tag-radio-item\" data-color=\"coral\">CORAL<\/span>",
+                "flower": "<span class=\"tag-radio-item\" data-color=\"flower\">FLOWER<\/span>",
+                "yellow": "<span class=\"tag-radio-item\" data-color=\"yellow\">YELLOW<\/span>"
+            },
+            "default_value": "gray",
+            "return_format": "value",
+            "allow_null": 0,
+            "other_choice": 0,
+            "layout": "vertical",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "tagColor",
+            "graphql_non_null": 0,
+            "save_other_choice": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "taxonomy",
+                "operator": "==",
+                "value": "post_tag"
+            }
+        ],
+        [
+            {
+                "param": "taxonomy",
+                "operator": "==",
+                "value": "event_tag"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "acfml_field_group_mode": "translation",
+    "show_in_graphql": 1,
+    "graphql_field_name": "tagTaxonomyAcf",
+    "map_graphql_types_from_location_rules": 0,
+    "graphql_types": "",
+    "modified": 1715075121
+}

@@ -150,6 +150,13 @@
                 "operator": "==",
                 "value": "partner"
             }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "event"
+            }
         ]
     ],
     "menu_order": 0,
@@ -176,5 +183,5 @@
         "Partner",
         "Post"
     ],
-    "modified": 1713526552
+    "modified": 1715069085
 }
