@@ -169,6 +169,8 @@ function add_item( $admin_bar ) {
 	$ssr_domain = env( "SSR_HOME_DOMAIN" );
 	$wp_domain = env( "WP_HOME" );
 
+	if ( !$ssr_domain || !$wp_domain ) return;
+
 	if ( $pagenow == "post.php" ) {
 		$url = get_the_permalink();
 	} else {

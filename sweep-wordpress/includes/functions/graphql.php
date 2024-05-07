@@ -21,12 +21,17 @@ add_action( 'graphql_register_types', function () {
 				'type'        => 'String',
 				'description' => 'Url without wordpress domain',
 				'resolve'     => function ( $page ) {
+					if ( !isset( $page['url'] ) ) {
+						return null;
+					}
+
 					$url = $page['url'];
 					$parsed = parse_url( $url );
 
 					$current_host = $_SERVER['HTTP_HOST'];
-					$host = $parsed['host'];
-					$path = $parsed['path'];
+					$host = $parsed['host'] ?? null;
+					$path = $parsed['path'] ?? null;
+
 					if ( $current_host !== $host ) return null;
 
 					return rtrim( $path, '/' );
