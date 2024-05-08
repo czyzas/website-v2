@@ -24,6 +24,7 @@ const rawEvents = await fetchListOfPostsModuleList('event', {
   categorySlug,
   limit: limitPosts,
 });
+// TODO: Add in-memory caching from IndustriesList component
 const events = (rawEvents?.events?.nodes ?? []).filter(Boolean);
 ---
 

@@ -23,6 +23,7 @@ const rawPosts = await fetchListOfPostsModuleList('post', {
   categorySlug,
   limit: limitPosts,
 });
+// TODO: Add in-memory caching from IndustriesList component
 const posts = (rawPosts?.posts?.nodes ?? []).filter(Boolean);
 ---
 
