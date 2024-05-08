@@ -1,10 +1,23 @@
-query EventsModuleList($LIMIT: Int, $LANG: String!) {
-  events(first: $LIMIT, where: { language: $LANG }) {
+query EventsModuleList($LIMIT: Int, $CATEGORY_SLUG: [String], $LANG: String!) {
+  events(
+    first: $LIMIT
+    where: {
+      language: $LANG
+      categorySlug: $CATEGORY_SLUG
+      metaKey: "event_date"
+      metaType: DATE
+      orderby: { order: DESC, field: META_VALUE }
+    }
+  ) {
     nodes {
-      databaseId
       title
       eventAcf {
         eventDate
+      }
+      eventCategories {
+        nodes {
+          name
+        }
       }
     }
   }
