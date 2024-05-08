@@ -14,7 +14,6 @@ const { data } = Astro.props;
 
 const page = data.page!;
 
-updateStore(cmsStore, 'defaultPage', page);
 updateStore(languageStore, 'currentLanguage', page.language!);
 updateStore(languageStore, 'languages', data.languages);
 updateStore(cmsStore, 'primaryMenu', data.primaryMenu!);
