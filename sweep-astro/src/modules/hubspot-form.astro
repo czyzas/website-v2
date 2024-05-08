@@ -1,0 +1,25 @@
+---
+import type { ModulesModulesContentHubspotFormLayout } from '@/__generated__/cms';
+import ModuleContainer from '@/components/ModuleContainer.astro';
+import Form from '@/components/hubspot-form/Form.astro';
+import Container from '@/components/ui/Container.astro';
+import Grid from '@/components/ui/Grid.astro';
+
+type Props = ModulesModulesContentHubspotFormLayout;
+
+const { layoutName, backgroundColor, hubspotFormGuid } = Astro.props;
+---
+
+{
+  !!hubspotFormGuid && (
+    <ModuleContainer name={layoutName!} bg={backgroundColor}>
+      <Container>
+        <Grid>
+          <div class="form-container col-span-full lg:col-start-3 lg:col-end-11">
+            <Form formGuid={hubspotFormGuid} />
+          </div>
+        </Grid>
+      </Container>
+    </ModuleContainer>
+  )
+}
