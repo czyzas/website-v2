@@ -11,6 +11,8 @@ export const CACHE_KEYS = {
   CONTACT: 'contact',
   DEMO: 'demo',
   INDUSTRIES_LIST: 'industries-list',
+  LIST_OF_EVENTS_MODULE_LIST: 'list-of-events-module-list',
+  LIST_OF_POSTS_MODULE_LIST: 'list-of-posts-module-list',
 } as const;
 
 export type CachePayload = string | string[];

@@ -1,5 +1,7 @@
+import crypto from 'node:crypto';
 import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import type { Variables } from 'graphql-request';
+import { isNil, omitBy } from 'lodash-es';
 import {
   ContactPageDocument,
   DefaultPageDocument,
@@ -7,10 +9,15 @@ import {
   DemoPageDocument,
   HomepageDocument,
   IndustriesListDocument,
+  ListOfEventsModuleListDocument,
+  ListOfPostsModuleListDocument,
   SinglePageStaticPathsDocument,
 } from '@/__generated__/cms';
-import type { IndustriesListFragment } from '@/__generated__/cms';
-
+import type {
+  IndustriesListFragment,
+  ListOfEventsModuleListQuery,
+  ListOfPostsModuleListQuery,
+} from '@/__generated__/cms';
 import { defaultLocale } from '@/i18n/config';
 import { getUrlWithoutLang } from '@/i18n/utils';
 import { parseStaticPaths } from '@/scripts/utils-static-paths';
@@ -59,6 +66,9 @@ export function fetchHomepage(lang: string) {
   ]);
 }
 
+/**
+ * **NOTE** - This function can be used at component-level
+ */
 export async function fetchIndustriesList(lang: string) {
   const fetched = await fetchData(IndustriesListDocument, { LANG: lang }, [
     lang,
@@ -66,6 +76,58 @@ export async function fetchIndustriesList(lang: string) {
   ]);
   return (fetched.industries?.nodes ??
     []) as unknown as IndustriesListFragment[];
+}
+
+interface ListOfPostsParams {
+  lang: string;
+  categorySlug?: string;
+  limit?: number;
+}
+
+type ListOfPostsReturnType = Promise<
+  ListOfEventsModuleListQuery | ListOfPostsModuleListQuery | never[]
+>;
+
+export async function fetchListOfPostsModuleList(
+  postType: 'event',
+  params: ListOfPostsParams
+): Promise<ListOfEventsModuleListQuery>;
+export async function fetchListOfPostsModuleList(
+  postType: 'post',
+  params: ListOfPostsParams
+): Promise<ListOfPostsModuleListQuery>;
+export async function fetchListOfPostsModuleList(
+  postType: 'event' | 'post',
+  params: ListOfPostsParams
+): ListOfPostsReturnType {
+  const { lang, categorySlug, limit } = params;
+
+  const options = {
+    LANG: lang,
+    CATEGORY_SLUG: categorySlug,
+    LIMIT: limit && limit > 0 ? limit : undefined,
+  };
+
+  const hashedOptions = crypto
+    .createHash('md5')
+    .update(JSON.stringify(omitBy(options, isNil)))
+    .digest('hex');
+
+  if (postType === 'event') {
+    return await fetchData(ListOfEventsModuleListDocument, options, [
+      CACHE_KEYS.LIST_OF_EVENTS_MODULE_LIST,
+      hashedOptions,
+    ]);
+  }
+
+  if (postType === 'post') {
+    return await fetchData(ListOfPostsModuleListDocument, options, [
+      CACHE_KEYS.LIST_OF_POSTS_MODULE_LIST,
+      hashedOptions,
+    ]);
+  }
+
+  return [];
 }
 
 export async function fetchDefaultPagesStaticPaths() {

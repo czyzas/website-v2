@@ -1,4 +1,8 @@
-query PostsModuleList($LIMIT: Int, $CATEGORY_SLUG: [String], $LANG: String!) {
+query ListOfPostsModuleList(
+  $LIMIT: Int
+  $CATEGORY_SLUG: [String]
+  $LANG: String!
+) {
   posts(
     first: $LIMIT
     where: { language: $LANG, categorySlug: $CATEGORY_SLUG }

@@ -1,0 +1,49 @@
+---
+import type { ModulesModulesContentListOfPostsLayout } from '@/__generated__/cms';
+import ButtonContainer from '@/components/ButtonContainer.astro';
+import ModuleContainer from '@/components/ModuleContainer.astro';
+import WordpressButtonLink from '@/components/WordpressButtonLink.astro';
+import Card from '@/components/ui/Card.astro';
+import Container from '@/components/ui/Container.astro';
+import Grid from '@/components/ui/Grid.astro';
+import { fetchListOfPostsModuleList } from '@/lib/fetchCMSData';
+import { getStore } from '@/scripts/store';
+import { languageStore } from '@/stores/languageStore';
+
+type Props = ModulesModulesContentListOfPostsLayout;
+
+const { layoutName, backgroundColor, limitPosts, categoryFilter, ctaButton } =
+  Astro.props;
+const categorySlug = categoryFilter?.nodes?.[0]?.slug;
+// TODO: create useLanguage hook to get current lang from the store automatically
+const { currentLanguage } = getStore(languageStore);
+
+const rawPosts = await fetchListOfPostsModuleList('post', {
+  lang: currentLanguage.code,
+  categorySlug,
+  limit: limitPosts,
+});
+const posts = (rawPosts?.posts?.nodes ?? []).filter(Boolean);
+---
+
+{
+  posts.length > 0 && (
+    <ModuleContainer name={layoutName!} bg={backgroundColor}>
+      <Container>
+        <Grid>
+          {posts.map((post) => (
+            <Card class="colspan-full md:col-span-3">
+              <span class="text-sw-text-subdued typography-card-title">
+                {post.categories?.nodes?.[0].name}
+              </span>
+              <div class="typography-h3">{post.title}</div>
+            </Card>
+          ))}
+        </Grid>
+        <ButtonContainer>
+          <WordpressButtonLink data={ctaButton} secondary />
+        </ButtonContainer>
+      </Container>
+    </ModuleContainer>
+  )
+}

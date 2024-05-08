@@ -1,4 +1,8 @@
-query EventsModuleList($LIMIT: Int, $CATEGORY_SLUG: [String], $LANG: String!) {
+query ListOfEventsModuleList(
+  $LIMIT: Int
+  $CATEGORY_SLUG: [String]
+  $LANG: String!
+) {
   events(
     first: $LIMIT
     where: {
