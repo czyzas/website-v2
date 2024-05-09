@@ -49,6 +49,7 @@ fragment ModulesCollection on Modules {
         }
         tabTitle
         title
+        titleSize
       }
     }
     ... on ModulesModulesContentLogosLayout {

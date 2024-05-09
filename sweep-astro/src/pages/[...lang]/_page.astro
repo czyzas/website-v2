@@ -27,6 +27,7 @@ const pageTitle = page?.title ?? '';
 const title = subpageSettings?.customTitle || pageTitle || '';
 const content = subpageSettings?.introduction ?? '';
 const image = subpageSettings?.image;
+// TODO: replace select with radio/buttons group
 const [size] = castArray(subpageSettings?.titleImageDistribution);
 ---
 
