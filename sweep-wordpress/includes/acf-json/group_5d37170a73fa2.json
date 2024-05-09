@@ -3,6 +3,38 @@
     "title": "Subpage settings",
     "fields": [
         {
+            "key": "field_663c93d7fc5e8",
+            "label": "Title \/ image distribution",
+            "name": "top_distribution",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "The width proportion of title and image sections",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 1,
+            "choices": {
+                "5-7": "5-7 (default)",
+                "6-6": "6-6",
+                "7-5": "7-5"
+            },
+            "default_value": "5-7",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 1,
+            "ajax": 0,
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "titleImageDistribution",
+            "graphql_non_null": 0,
+            "placeholder": ""
+        },
+        {
             "key": "field_6602d6ab344f5",
             "label": "Custom title",
             "name": "custom_title",
@@ -150,6 +182,13 @@
                 "operator": "==",
                 "value": "partner"
             }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "event"
+            }
         ]
     ],
     "menu_order": 0,
@@ -170,11 +209,12 @@
     "graphql_types": [
         "CaseStudy",
         "Customer",
+        "Event",
         "Industry",
         "LibraryItem",
         "Page",
         "Partner",
         "Post"
     ],
-    "modified": 1713526552
+    "modified": 1715246221
 }

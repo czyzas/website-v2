@@ -1,5 +1,7 @@
+import crypto from 'node:crypto';
 import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import type { Variables } from 'graphql-request';
+import { isNil, omitBy } from 'lodash-es';
 import {
   ContactPageDocument,
   DefaultPageDocument,
@@ -7,10 +9,15 @@ import {
   DemoPageDocument,
   HomepageDocument,
   IndustriesListDocument,
+  EventsModuleListDocument,
+  PostsModuleListDocument,
   SinglePageStaticPathsDocument,
 } from '@/__generated__/cms';
-import type { IndustriesListFragment } from '@/__generated__/cms';
-
+import type {
+  IndustriesListFragment,
+  EventsModuleListQuery,
+  PostsModuleListQuery,
+} from '@/__generated__/cms';
 import { defaultLocale } from '@/i18n/config';
 import { getUrlWithoutLang } from '@/i18n/utils';
 import { parseStaticPaths } from '@/scripts/utils-static-paths';
@@ -59,6 +66,9 @@ export function fetchHomepage(lang: string) {
   ]);
 }
 
+/**
+ * **NOTE** - This function can be used at component-level
+ */
 export async function fetchIndustriesList(lang: string) {
   const fetched = await fetchData(IndustriesListDocument, { LANG: lang }, [
     lang,
@@ -66,6 +76,58 @@ export async function fetchIndustriesList(lang: string) {
   ]);
   return (fetched.industries?.nodes ??
     []) as unknown as IndustriesListFragment[];
+}
+
+interface PostsParams {
+  lang: string;
+  categorySlug?: string;
+  limit?: number;
+}
+
+type PostsReturnType = Promise<
+  EventsModuleListQuery | PostsModuleListQuery | never[]
+>;
+
+export async function fetchPostsModuleList(
+  postType: 'event',
+  params: PostsParams
+): Promise<EventsModuleListQuery>;
+export async function fetchPostsModuleList(
+  postType: 'post',
+  params: PostsParams
+): Promise<PostsModuleListQuery>;
+export async function fetchPostsModuleList(
+  postType: 'event' | 'post',
+  params: PostsParams
+): PostsReturnType {
+  const { lang, categorySlug, limit } = params;
+
+  const options = {
+    LANG: lang,
+    CATEGORY_SLUG: categorySlug,
+    LIMIT: limit && limit > 0 ? limit : undefined,
+  };
+
+  const hashedOptions = crypto
+    .createHash('md5')
+    .update(JSON.stringify(omitBy(options, isNil)))
+    .digest('hex');
+
+  if (postType === 'event') {
+    return await fetchData(EventsModuleListDocument, options, [
+      CACHE_KEYS.LIST_OF_EVENTS_MODULE_LIST,
+      hashedOptions,
+    ]);
+  }
+
+  if (postType === 'post') {
+    return await fetchData(PostsModuleListDocument, options, [
+      CACHE_KEYS.LIST_OF_POSTS_MODULE_LIST,
+      hashedOptions,
+    ]);
+  }
+
+  return [];
 }
 
 export async function fetchDefaultPagesStaticPaths() {

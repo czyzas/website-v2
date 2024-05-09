@@ -461,6 +461,39 @@
                                     "parent_repeater": "field_6602e3d4b5d53"
                                 },
                                 {
+                                    "key": "field_663c956421d5d",
+                                    "label": "Title size",
+                                    "name": "title_size",
+                                    "aria-label": "",
+                                    "type": "select",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "25",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 1,
+                                    "choices": {
+                                        "smaller": "Smaller (24px)",
+                                        "default": "Default size (32px)",
+                                        "bigger": "Bigger (40px)"
+                                    },
+                                    "default_value": "default",
+                                    "return_format": "value",
+                                    "multiple": 0,
+                                    "allow_null": 0,
+                                    "ui": 0,
+                                    "show_in_graphql": 1,
+                                    "graphql_description": "",
+                                    "graphql_field_name": "titleSize",
+                                    "graphql_non_null": 0,
+                                    "ajax": 0,
+                                    "placeholder": "",
+                                    "parent_repeater": "field_6602e3d4b5d53"
+                                },
+                                {
                                     "key": "field_6603ec848b784",
                                     "label": "Title",
                                     "name": "title",
@@ -470,7 +503,7 @@
                                     "required": 0,
                                     "conditional_logic": 0,
                                     "wrapper": {
-                                        "width": "",
+                                        "width": "75",
                                         "class": "",
                                         "id": ""
                                     },
@@ -710,12 +743,12 @@
                             "graphql_non_null": 0
                         },
                         {
-                            "key": "field_6603e4ac0175f",
-                            "label": "Logos",
+                            "key": "field_663a2fc39504a",
+                            "label": "<s>Logos<\/s> [DEPRECATED]",
                             "name": "logos",
                             "aria-label": "",
                             "type": "gallery",
-                            "instructions": "",
+                            "instructions": "Please remove all images from this field, because it will be deleted in the future.",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
@@ -740,6 +773,93 @@
                             "show_in_graphql": 1,
                             "graphql_description": "",
                             "graphql_field_name": "logos"
+                        },
+                        {
+                            "key": "field_663a1e0e4aebd",
+                            "label": "Tabs",
+                            "name": "tabs",
+                            "aria-label": "",
+                            "type": "repeater",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "layout": "block",
+                            "min": 0,
+                            "max": 0,
+                            "collapsed": "field_663a1e2c4aebe",
+                            "button_label": "Add tab",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "logosTabs",
+                            "graphql_non_null": 0,
+                            "rows_per_page": 20,
+                            "sub_fields": [
+                                {
+                                    "key": "field_663a1e2c4aebe",
+                                    "label": "Tab title",
+                                    "name": "tab_title",
+                                    "aria-label": "",
+                                    "type": "text",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 2,
+                                    "default_value": "",
+                                    "maxlength": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "show_in_graphql": 1,
+                                    "graphql_description": "",
+                                    "graphql_field_name": "tabTitle",
+                                    "graphql_non_null": 0,
+                                    "parent_repeater": "field_663a1e0e4aebd"
+                                },
+                                {
+                                    "key": "field_6603e4ac0175f",
+                                    "label": "Logos",
+                                    "name": "logos",
+                                    "aria-label": "",
+                                    "type": "gallery",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 1,
+                                    "return_format": "array",
+                                    "library": "all",
+                                    "min": "",
+                                    "max": "",
+                                    "min_width": "",
+                                    "min_height": "",
+                                    "min_size": "",
+                                    "max_width": "",
+                                    "max_height": "",
+                                    "max_size": "",
+                                    "mime_types": "",
+                                    "insert": "append",
+                                    "preview_size": "medium",
+                                    "show_in_graphql": 1,
+                                    "graphql_description": "",
+                                    "graphql_field_name": "logos",
+                                    "parent_repeater": "field_663a1e0e4aebd"
+                                }
+                            ]
                         },
                         {
                             "key": "field_6603f0596352a",
@@ -1542,6 +1662,272 @@
                     "min": "",
                     "max": ""
                 },
+                "layout_663a0e479c416": {
+                    "key": "layout_663a0e479c416",
+                    "name": "list-of-events",
+                    "label": "List of events",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_663a0e479c418",
+                            "label": "Background color",
+                            "name": "background_color",
+                            "aria-label": "",
+                            "type": "group",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "invisible-group",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "layout": "block",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "backgroundColor",
+                            "graphql_non_null": 0,
+                            "sub_fields": [
+                                {
+                                    "key": "field_663a0e479c419",
+                                    "label": "Background color",
+                                    "name": "background_color",
+                                    "aria-label": "",
+                                    "type": "clone",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 1,
+                                    "clone": [
+                                        "field_6602daa862d57"
+                                    ],
+                                    "display": "seamless",
+                                    "layout": "block",
+                                    "prefix_label": 0,
+                                    "prefix_name": 0
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_663a0e929c41e",
+                            "label": "Category filter",
+                            "name": "category_filter",
+                            "aria-label": "",
+                            "type": "taxonomy",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "taxonomy": "event-category",
+                            "add_term": 0,
+                            "save_terms": 0,
+                            "load_terms": 0,
+                            "return_format": "id",
+                            "field_type": "select",
+                            "allow_null": 1,
+                            "bidirectional": 0,
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "categoryFilter",
+                            "multiple": 0,
+                            "bidirectional_target": []
+                        },
+                        {
+                            "key": "field_663a0ee09c41f",
+                            "label": "Limit posts",
+                            "name": "limit_posts",
+                            "aria-label": "",
+                            "type": "number",
+                            "instructions": "Use <code>-1<\/code> to display all available posts",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "default_value": "",
+                            "min": -1,
+                            "max": "",
+                            "placeholder": -1,
+                            "step": 1,
+                            "prepend": "",
+                            "append": "",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "limitPosts",
+                            "graphql_non_null": 0
+                        },
+                        {
+                            "key": "field_663a18f74d5b1",
+                            "label": "CTA Button",
+                            "name": "cta_button",
+                            "aria-label": "",
+                            "type": "link",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "return_format": "array",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "ctaButton",
+                            "graphql_non_null": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
+                "layout_663a102f92e0c": {
+                    "key": "layout_663a102f92e0c",
+                    "name": "list-of-posts",
+                    "label": "List of posts",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_663a102f92e0f",
+                            "label": "Background color",
+                            "name": "background_color",
+                            "aria-label": "",
+                            "type": "group",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "invisible-group",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "layout": "block",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "backgroundColor",
+                            "graphql_non_null": 0,
+                            "sub_fields": [
+                                {
+                                    "key": "field_663a102f92e10",
+                                    "label": "Background color",
+                                    "name": "background_color",
+                                    "aria-label": "",
+                                    "type": "clone",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 1,
+                                    "clone": [
+                                        "field_6602daa862d57"
+                                    ],
+                                    "display": "seamless",
+                                    "layout": "block",
+                                    "prefix_label": 0,
+                                    "prefix_name": 0
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_663a102f92e11",
+                            "label": "Category filter",
+                            "name": "category_filter",
+                            "aria-label": "",
+                            "type": "taxonomy",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "taxonomy": "category",
+                            "add_term": 0,
+                            "save_terms": 0,
+                            "load_terms": 0,
+                            "return_format": "id",
+                            "field_type": "select",
+                            "allow_null": 1,
+                            "bidirectional": 0,
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "",
+                            "multiple": 0,
+                            "bidirectional_target": []
+                        },
+                        {
+                            "key": "field_663a102f92e12",
+                            "label": "Limit posts",
+                            "name": "limit_posts",
+                            "aria-label": "",
+                            "type": "number",
+                            "instructions": "Use <code>-1<\/code> to display all available posts",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "default_value": "",
+                            "min": -1,
+                            "max": "",
+                            "placeholder": -1,
+                            "step": 1,
+                            "prepend": "",
+                            "append": "",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "limitPosts",
+                            "graphql_non_null": 0
+                        },
+                        {
+                            "key": "field_663a19064d5b2",
+                            "label": "CTA Button",
+                            "name": "cta_button",
+                            "aria-label": "",
+                            "type": "link",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "return_format": "array",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "ctaButton",
+                            "graphql_non_null": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
                 "layout_6603e5dc9075d": {
                     "key": "layout_6603e5dc9075d",
                     "name": "segments",
@@ -2113,6 +2499,87 @@
                     "min": "",
                     "max": ""
                 },
+                "layout_663a1d51cfdb0": {
+                    "key": "layout_663a1d51cfdb0",
+                    "name": "hubspot-form",
+                    "label": "Hubspot Form",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_663a1d51cfdb2",
+                            "label": "Background color",
+                            "name": "background_color",
+                            "aria-label": "",
+                            "type": "group",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "invisible-group",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "layout": "block",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "backgroundColor",
+                            "graphql_non_null": 0,
+                            "sub_fields": [
+                                {
+                                    "key": "field_663a1d51cfdb3",
+                                    "label": "Background color",
+                                    "name": "background_color",
+                                    "aria-label": "",
+                                    "type": "clone",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 1,
+                                    "clone": [
+                                        "field_6602daa862d57"
+                                    ],
+                                    "display": "seamless",
+                                    "layout": "block",
+                                    "prefix_label": 0,
+                                    "prefix_name": 0
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_663a1da9cfdb8",
+                            "label": "Hubspot Form GUID",
+                            "name": "hubspot_form_guid",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 2,
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "Eg. 550e8400-e29b-41d4-a716-446655440000",
+                            "prepend": "",
+                            "append": "",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "hubspotFormGuid",
+                            "graphql_non_null": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
                 "layout_66389f908c122": {
                     "key": "layout_66389f908c122",
                     "name": "sourced-info",
@@ -2208,7 +2675,7 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "wpml_cf_preferences": 0,
+                            "wpml_cf_preferences": 2,
                             "default_value": "",
                             "tabs": "all",
                             "toolbar": "full",
@@ -2233,7 +2700,7 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "wpml_cf_preferences": 0,
+                            "wpml_cf_preferences": 1,
                             "return_format": "array",
                             "show_in_graphql": 1,
                             "graphql_description": "",
@@ -2765,5 +3232,5 @@
         "Page",
         "Post"
     ],
-    "modified": 1714987302
+    "modified": 1715255346
 }

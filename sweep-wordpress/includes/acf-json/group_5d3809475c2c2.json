@@ -69,7 +69,7 @@
             "name": "",
             "aria-label": "",
             "type": "accordion",
-            "instructions": "Listy dodajemy ze specjalną nazwą pola: <code>{post_type}_posts_list<\/code><br \/>\r\nLista powinna być typu <b>obiekt wpis<\/b>",
+            "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -77,16 +77,45 @@
                 "class": "",
                 "id": ""
             },
-            "graphql_field_name": "postsLists",
+            "graphql_field_name": "",
             "wpml_cf_preferences": 1,
             "open": 1,
             "multi_expand": 0,
             "endpoint": 0
         },
         {
-            "key": "field_635b6fbf0ccf7",
-            "label": "Lista not objaśniających",
-            "name": "noty_objasniajace_posts_list",
+            "key": "field_6639f3409a66d",
+            "label": "Post default top image",
+            "name": "post_default_top_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 1,
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "postDefaultTopImage"
+        },
+        {
+            "key": "field_6639f3529a66e",
+            "label": "Posts list",
+            "name": "post_posts_list",
             "aria-label": "",
             "type": "post_object",
             "instructions": "",
@@ -97,16 +126,82 @@
                 "class": "",
                 "id": ""
             },
+            "wpml_cf_preferences": 1,
             "post_type": [
                 "page"
             ],
+            "post_status": "",
             "taxonomy": "",
             "return_format": "object",
             "multiple": 0,
             "allow_null": 1,
+            "bidirectional": 0,
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "postPostsList",
+            "graphql_connection_type": "one_to_one",
             "ui": 1,
-            "bidirectional_target": [],
-            "wpml_cf_preferences": 1
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_6639f03bc3089",
+            "label": "Event default top image",
+            "name": "event_default_top_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 1,
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "eventDefaultTopImage"
+        },
+        {
+            "key": "field_635b6fbf0ccf7",
+            "label": "Events list",
+            "name": "event_posts_list",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 1,
+            "post_type": [
+                "page"
+            ],
+            "post_status": "",
+            "taxonomy": "",
+            "return_format": "object",
+            "multiple": 0,
+            "allow_null": 1,
+            "bidirectional": 0,
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "eventPostsList",
+            "graphql_connection_type": "one_to_one",
+            "ui": 1,
+            "bidirectional_target": []
         },
         {
             "key": "field_635b6f3d0ccf6",
@@ -449,5 +544,5 @@
     "graphql_field_name": "themeOptionsAcf",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1710169310
+    "modified": 1715256989
 }

@@ -34,7 +34,6 @@ const { lang = defaultLocale } = Astro.params;
 const data = await fetchContactPage(lang as string);
 const page = data.page!;
 
-updateStore(cmsStore, 'contactPage', page);
 updateStore(languageStore, 'currentLanguage', page.language!);
 updateStore(languageStore, 'languages', data.languages);
 updateStore(cmsStore, 'primaryMenu', data.primaryMenu!);

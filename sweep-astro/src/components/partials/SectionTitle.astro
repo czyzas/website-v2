@@ -4,6 +4,7 @@ import { cva } from 'class-variance-authority';
 import { cn } from '@/scripts/cn';
 import { sectionTitleShouldRender } from '@/scripts/data-parsers/parseSectionTitle';
 import type { ParsedSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
+import { fixDoubleBr } from '@/scripts/fixDoubleBr';
 import Prose from '../ui/Prose.astro';
 
 interface SectionTitleProps {
@@ -60,7 +61,10 @@ const headlineVariants = cva([], {
         <p class="typography-subhead" set:html={overline} />
       )}
 
-      <Tag class={headlineVariants({ variant: look })} set:html={headline} />
+      <Tag
+        class={headlineVariants({ variant: look })}
+        set:html={fixDoubleBr(headline)}
+      />
 
       {!!textUnder.length && (
         <Prose

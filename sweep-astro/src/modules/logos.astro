@@ -7,6 +7,11 @@ import ModuleContainer from '@/components/ModuleContainer.astro';
 import WordpressButtonLink from '@/components/WordpressButtonLink.astro';
 import Container from '@/components/ui/Container.astro';
 import { linkShouldRender } from '@/scripts/data-parsers/parseLink';
+import TabList from '@/components/ui/Tabs/TabList.astro';
+import TabListItem from '@/components/ui/Tabs/TabListItem.astro';
+import TabPane from '@/components/ui/Tabs/TabPane.astro';
+import Tabs from '@/components/ui/Tabs/Tabs.astro';
+import { fixDoubleBr } from '@/scripts/fixDoubleBr';
 
 type Props = ModulesModulesContentLogosLayout;
 
@@ -16,20 +21,56 @@ const {
   layout = 'cards',
   columns = '4',
   ctaButton,
-  logos: rawLogos,
+  logosTabs = [],
 } = Astro.props;
 
-const logos = rawLogos?.edges.filter(Boolean) ?? [];
+const tabs = (logosTabs ?? [])
+  .filter(Boolean)
+  .map((tab) => ({ ...tab, logos: tab.logos?.edges?.filter(Boolean) }));
+const tabId = crypto.randomUUID();
 ---
 
 {
-  logos.length > 0 ? (
+  tabs.length > 0 ? (
     <ModuleContainer name={layoutName!} bg={backgroundColor}>
       <Container>
-        {layout === 'cards' && (
-          <LogosGrid columns={parseInt(columns)} logos={logos} />
-        )}
-        {layout === 'collection' && <LogosCollection logos={logos} />}
+        <Tabs>
+          {tabs.length > 1 && (
+            <TabList class="mb-10">
+              {tabs.map((tab, tabIndex) => {
+                const { logos } = tab;
+
+                if (!logos || logos.length === 0) return null;
+
+                return (
+                  <TabListItem
+                    isActive={tabIndex === 0}
+                    id={`${tabId}-${tabIndex}`}
+                  >
+                    <Fragment set:html={fixDoubleBr(tab?.tabTitle)} />
+                  </TabListItem>
+                );
+              })}
+            </TabList>
+          )}
+          <div class="tab-content">
+            {tabs.map((tab, tabIndex) => {
+              const { logos } = tab;
+
+              if (!logos || logos.length === 0) return null;
+
+              return (
+                <TabPane isActive={tabIndex === 0} id={`${tabId}-${tabIndex}`}>
+                  {layout === 'cards' && (
+                    <LogosGrid columns={parseInt(columns)} logos={logos} />
+                  )}
+                  {layout === 'collection' && <LogosCollection logos={logos} />}
+                </TabPane>
+              );
+            })}
+          </div>
+        </Tabs>
+
         {linkShouldRender(ctaButton) && (
           <ButtonContainer class="md:mt-12">
             <WordpressButtonLink data={ctaButton} arrow />

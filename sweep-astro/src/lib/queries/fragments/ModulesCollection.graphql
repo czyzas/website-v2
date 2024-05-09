@@ -17,11 +17,6 @@ fragment ModulesCollection on Modules {
           textUnder
         }
       }
-      content
-      customStyle
-      displayAs
-      overline
-      type
     }
     ... on ModulesModulesContentBreakLayout {
       layoutName
@@ -54,6 +49,7 @@ fragment ModulesCollection on Modules {
         }
         tabTitle
         title
+        titleSize
       }
     }
     ... on ModulesModulesContentLogosLayout {
@@ -66,6 +62,14 @@ fragment ModulesCollection on Modules {
       logos {
         edges {
           ...Image
+        }
+      }
+      logosTabs {
+        tabTitle
+        logos {
+          edges {
+            ...Image
+          }
         }
       }
       ctaButton {
@@ -111,6 +115,38 @@ fragment ModulesCollection on Modules {
         }
       }
       button {
+        ...Link
+      }
+    }
+    ... on ModulesModulesContentListOfEventsLayout {
+      layoutName
+      backgroundColor {
+        selectBackgroundColor
+      }
+      limitPosts
+      categoryFilter {
+        nodes {
+          slug
+          name
+        }
+      }
+      ctaButton {
+        ...Link
+      }
+    }
+    ... on ModulesModulesContentListOfPostsLayout {
+      layoutName
+      backgroundColor {
+        selectBackgroundColor
+      }
+      limitPosts
+      categoryFilter {
+        nodes {
+          slug
+          name
+        }
+      }
+      ctaButton {
         ...Link
       }
     }
@@ -239,6 +275,13 @@ fragment ModulesCollection on Modules {
         title
         content
       }
+    }
+    ... on ModulesModulesContentHubspotFormLayout {
+      layoutName
+      backgroundColor {
+        selectBackgroundColor
+      }
+      hubspotFormGuid
     }
     ... on ModulesModulesContentDemoLayout {
       layoutName

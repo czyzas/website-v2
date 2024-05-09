@@ -1,0 +1,155 @@
+---
+import type { ComponentProps } from 'astro/types';
+import { Icon } from 'astro-icon/components';
+import type { ModulesModulesContentListOfEventsLayout } from '@/__generated__/cms';
+import ArticleCard from '@/components/ArticleCard.astro';
+import ArticleTag from '@/components/ArticleTag.astro';
+import ButtonContainer from '@/components/ButtonContainer.astro';
+import ModuleContainer from '@/components/ModuleContainer.astro';
+import WordpressButtonLink from '@/components/WordpressButtonLink.astro';
+import Container from '@/components/ui/Container.astro';
+import Grid from '@/components/ui/Grid.astro';
+import { buildI18nPath } from '@/i18n/utils';
+import { fetchPostsModuleList } from '@/lib/fetchCMSData';
+import { getStore } from '@/scripts/store';
+import { cmsStore } from '@/stores/cmsStore';
+import { languageStore } from '@/stores/languageStore';
+import { TRANSLATIONS } from '@/constants';
+
+type Props = ModulesModulesContentListOfEventsLayout;
+type TagColor = ComponentProps<typeof ArticleTag>['color'];
+
+const { layoutName, backgroundColor, limitPosts, categoryFilter, ctaButton } =
+  Astro.props;
+
+const categorySlug = categoryFilter?.nodes?.[0]?.slug;
+// TODO: create useLanguage hook to get current lang from the store automatically
+const { currentLanguage } = getStore(languageStore);
+const store = getStore(cmsStore);
+// TODO: create useOptions hook to get options from the store
+const themeOptions = store.themeOptions?.themeOptionsAcf;
+
+const rawEvents = await fetchPostsModuleList('event', {
+  lang: currentLanguage.code,
+  categorySlug,
+  limit: limitPosts,
+});
+const events = (rawEvents?.events?.nodes ?? []).filter(Boolean);
+---
+
+{
+  events.length > 0 && (
+    <ModuleContainer name={layoutName!} bg={backgroundColor}>
+      <Container>
+        <Grid>
+          {events.map((event) => {
+            const {
+              uri,
+              eventAcf,
+              eventCategories,
+              subpageSettings,
+              eventTags: rawTags,
+            } = event;
+            const category = eventCategories?.nodes?.[0].name;
+            const image =
+              subpageSettings?.image ?? themeOptions?.eventDefaultTopImage;
+            const url = uri
+              ? { url: buildI18nPath(uri, currentLanguage.code) }
+              : undefined;
+            const tags = (rawTags?.nodes ?? []).filter(Boolean);
+            const eventDate = eventAcf?.eventDate;
+            let day;
+            let month;
+            if (eventDate) {
+              const parsedDate = new Date(eventDate);
+              day = parsedDate.toLocaleDateString(currentLanguage.code, {
+                day: '2-digit',
+              });
+              month = parsedDate.toLocaleDateString(currentLanguage.code, {
+                month: 'short',
+              });
+            }
+
+            return (
+              <ArticleCard
+                link={url}
+                image={image}
+                class="col-span-full md:col-span-6 lg:col-span-4"
+              >
+                {/* Content on image */}
+                {!!eventDate && !!month && !!day && (
+                  <Fragment slot="image-addition">
+                    <ArticleTag
+                      color="destructive"
+                      data-element="article-card-past-event-label"
+                      data-date={eventDate}
+                      aria-hidden="true"
+                      class="aria-hidden:invisible absolute top-4 sm:top-5 right-4 sm:right-5 flex items-center gap-0.5"
+                    >
+                      <Icon
+                        name="clock-countdown"
+                        class="text-sw-fire-500 text-lg"
+                      />
+                      {TRANSLATIONS.PAST_EVENT}
+                    </ArticleTag>
+                    <time
+                      datetime={eventDate}
+                      class="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 bg-white rounded-lg py-2 px-4 sm:px-6 text-center flex flex-col items-center justify-center"
+                    >
+                      <span class="uppercase font-bold text-base sm:text-lg text-sw-text-subdued">
+                        {month}
+                      </span>
+                      <span class="typography-h4 sm:typography-h2 leading-none">
+                        {day}
+                      </span>
+                    </time>
+                  </Fragment>
+                )}
+                {/* Content inside article */}
+                <span class="text-sw-text-subdued typography-card-title">
+                  {category}
+                </span>
+                <h3 class="typography-cards-bold-large text-pretty">
+                  {event.title}
+                </h3>
+
+                {tags.length > 0 && (
+                  <div class="tags mt-auto flex flex-wrap gap-2.5">
+                    {tags.map((tag) => {
+                      const color =
+                        (tag.tagTaxonomyAcf?.tagColor as TagColor) ?? 'gray';
+                      return <ArticleTag color={color}>{tag.name}</ArticleTag>;
+                    })}
+                  </div>
+                )}
+              </ArticleCard>
+            );
+          })}
+        </Grid>
+        <ButtonContainer>
+          <WordpressButtonLink data={ctaButton} secondary />
+        </ButtonContainer>
+      </Container>
+    </ModuleContainer>
+  )
+}
+
+<script>
+  const labels = document.querySelectorAll<HTMLSpanElement>(
+    '[data-element="article-card-past-event-label"]'
+  );
+  const showLabel = (el: HTMLElement) => {
+    el.ariaHidden = 'false';
+  };
+
+  for (const label of labels) {
+    const { date } = label.dataset;
+    if (!date) continue;
+    const eventDate = new Date(date).setHours(23, 59, 59);
+    const now = new Date().getTime();
+    const isPast = now - eventDate <= 0;
+    if (!isPast) {
+      showLabel(label);
+    }
+  }
+</script>

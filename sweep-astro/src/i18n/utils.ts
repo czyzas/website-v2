@@ -1,5 +1,5 @@
 import type { GetStaticPathsItem } from 'astro';
-import { trim } from 'lodash-es';
+import { castArray, trim } from 'lodash-es';
 import { locales, defaultLocale } from './config';
 
 /**
@@ -73,18 +73,18 @@ export const fixLangParams = (
 
 /**
  * Returns path with attached lang
- * @param cleanPath Path without lang
+ * @param pathWithoutLang Path (or array of paths) without language, use array to join multiple segments of uri, don't worry about trailing slashes
  */
 export const buildI18nPath = (
-  cleanPath = '/',
-  lang: string = defaultLocale
+  pathWithoutLang: string | string[],
+  lang: string
 ) => {
   const language = locales.includes(lang) ? lang : defaultLocale;
+  const path = castArray(pathWithoutLang).map((p) => trim(p, '/'));
 
-  // TODO: handle urls from WP
-  if (cleanPath === '/' && language !== defaultLocale) {
-    return `/${language}`;
+  if (pathWithoutLang === '/' && language !== defaultLocale) {
+    path.unshift(language);
   }
 
-  return cleanPath;
+  return `/${path.filter(Boolean).join('/')}`;
 };
