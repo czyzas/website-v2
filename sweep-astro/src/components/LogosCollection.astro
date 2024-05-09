@@ -73,7 +73,7 @@ const logos = (rawLogos ?? []).filter(Boolean);
     <div
       {...props}
       class={cn(
-        'logos-collection-swiper md:flex md:flex-wrap md:gap-2 md:items-center',
+        'logos-collection-swiper md:flex md:flex-wrap md:gap-2 md:items-center md:justify-center',
         className
       )}
     >
@@ -81,7 +81,7 @@ const logos = (rawLogos ?? []).filter(Boolean);
         {logos.map((logo) => (
           <div class="swiper-slide">
             <div
-              class={cn('logo p-3 flex items-center justify-center md:flex-1', {
+              class={cn('logo p-3 flex items-center justify-center md:flex-0', {
                 'md:basis-40': sizing === 'md',
                 'md:basis-25': sizing === 'sm',
               })}
