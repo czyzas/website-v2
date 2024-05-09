@@ -9,14 +9,14 @@ import {
   DemoPageDocument,
   HomepageDocument,
   IndustriesListDocument,
-  ListOfEventsModuleListDocument,
-  ListOfPostsModuleListDocument,
+  EventsModuleListDocument,
+  PostsModuleListDocument,
   SinglePageStaticPathsDocument,
 } from '@/__generated__/cms';
 import type {
   IndustriesListFragment,
-  ListOfEventsModuleListQuery,
-  ListOfPostsModuleListQuery,
+  EventsModuleListQuery,
+  PostsModuleListQuery,
 } from '@/__generated__/cms';
 import { defaultLocale } from '@/i18n/config';
 import { getUrlWithoutLang } from '@/i18n/utils';
@@ -78,28 +78,28 @@ export async function fetchIndustriesList(lang: string) {
     []) as unknown as IndustriesListFragment[];
 }
 
-interface ListOfPostsParams {
+interface PostsParams {
   lang: string;
   categorySlug?: string;
   limit?: number;
 }
 
-type ListOfPostsReturnType = Promise<
-  ListOfEventsModuleListQuery | ListOfPostsModuleListQuery | never[]
+type PostsReturnType = Promise<
+  EventsModuleListQuery | PostsModuleListQuery | never[]
 >;
 
-export async function fetchListOfPostsModuleList(
+export async function fetchPostsModuleList(
   postType: 'event',
-  params: ListOfPostsParams
-): Promise<ListOfEventsModuleListQuery>;
-export async function fetchListOfPostsModuleList(
+  params: PostsParams
+): Promise<EventsModuleListQuery>;
+export async function fetchPostsModuleList(
   postType: 'post',
-  params: ListOfPostsParams
-): Promise<ListOfPostsModuleListQuery>;
-export async function fetchListOfPostsModuleList(
+  params: PostsParams
+): Promise<PostsModuleListQuery>;
+export async function fetchPostsModuleList(
   postType: 'event' | 'post',
-  params: ListOfPostsParams
-): ListOfPostsReturnType {
+  params: PostsParams
+): PostsReturnType {
   const { lang, categorySlug, limit } = params;
 
   const options = {
@@ -114,14 +114,14 @@ export async function fetchListOfPostsModuleList(
     .digest('hex');
 
   if (postType === 'event') {
-    return await fetchData(ListOfEventsModuleListDocument, options, [
+    return await fetchData(EventsModuleListDocument, options, [
       CACHE_KEYS.LIST_OF_EVENTS_MODULE_LIST,
       hashedOptions,
     ]);
   }
 
   if (postType === 'post') {
-    return await fetchData(ListOfPostsModuleListDocument, options, [
+    return await fetchData(PostsModuleListDocument, options, [
       CACHE_KEYS.LIST_OF_POSTS_MODULE_LIST,
       hashedOptions,
     ]);

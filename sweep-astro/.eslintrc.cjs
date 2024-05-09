@@ -21,6 +21,7 @@ module.exports = {
     '@typescript-eslint/no-non-null-assertion': 'off',
     'no-underscore-dangle': ['error', { allow: ['__typename'] }],
     'import/no-extraneous-dependencies': ['error', { packageDir: '.' }],
+    'no-param-reassign': ['error', { props: false }],
   },
   settings: {
     'import/core-modules': ['astro:assets', 'astro:content'],

@@ -1,0 +1,33 @@
+query PostsModuleList($LIMIT: Int, $CATEGORY_SLUG: [String], $LANG: String!) {
+  posts(
+    first: $LIMIT
+    where: { language: $LANG, categorySlug: $CATEGORY_SLUG }
+  ) {
+    nodes {
+      ...PostsModulePost
+    }
+  }
+}
+
+fragment PostsModulePost on Post {
+  title
+  uri
+  subpageSettings {
+    image {
+      ...Image
+    }
+  }
+  categories {
+    nodes {
+      name
+    }
+  }
+  tags {
+    nodes {
+      name
+      tagTaxonomyAcf {
+        tagColor
+      }
+    }
+  }
+}

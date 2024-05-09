@@ -1,5 +1,11 @@
 fragment ThemeOptions on ThemeOptions {
   themeOptionsAcf {
+    eventDefaultTopImage {
+      ...Image
+    }
+    postDefaultTopImage {
+      ...Image
+    }
     bookDemoLink {
       ...Link
     }

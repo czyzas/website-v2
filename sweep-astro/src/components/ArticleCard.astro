@@ -6,14 +6,14 @@ import { cn } from '@/scripts/cn';
 import type { WithAttributes } from '@/types';
 import WordpressImage from './WordpressImage.astro';
 
-type Props = WithAttributes<
-  HTMLAttributes<'div'> & {
-    image?: UnparsedImage;
-    link?: UnparsedLink;
-  }
->;
-const { image, link, class: className, ...props } = Astro.props;
+type Props = WithAttributes<ArticleCardProps>;
+interface ArticleCardProps extends HTMLAttributes<'div'> {
+  image?: UnparsedImage;
+  link?: UnparsedLink;
+}
 
+// TODO: use this inside ColoredImageCards
+const { image, link, class: className, ...props } = Astro.props;
 const Tag = link ? 'a' : 'div';
 ---
 
@@ -27,16 +27,17 @@ const Tag = link ? 'a' : 'div';
     className
   )}
 >
-  <div class="image-container aspect-[16/9] sm:aspect-[28/19]">
+  <div class="image-container relative aspect-[16/9] sm:aspect-[28/19]">
     <WordpressImage
       data={image}
       preferredWidth={586}
       class="size-full object-cover"
     />
+    <slot name="image-addition" />
   </div>
   <div
     class={cn(
-      'content-container bg-white p-6 lg:max-xl:p-4 flex flex-col gap-4',
+      'content-container bg-white p-6 lg:max-xl:p-4 flex-1 flex flex-col gap-4',
       { 'transition-colors hover:bg-sw-surface-subdued': !!link }
     )}
   >
