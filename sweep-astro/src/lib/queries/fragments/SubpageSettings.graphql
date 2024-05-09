@@ -1,6 +1,7 @@
 fragment SubpageSettings on SubpageSettings {
   customTitle
   introduction
+  titleImageDistribution
   image {
     ...Image
   }

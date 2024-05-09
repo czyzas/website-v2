@@ -4,6 +4,7 @@ import { parseLink } from '@/scripts/data-parsers/parseLink';
 import type { UnparsedLink } from '@/scripts/data-parsers/parseLink';
 import { cn } from '@/scripts/cn';
 import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
+import type { ColumnSizes } from '@/types';
 import Container from '../ui/Container.astro';
 import Button from '../ui/Button.astro';
 import WordpressImage from '../WordpressImage.astro';
@@ -14,6 +15,7 @@ interface TopProps {
   content?: string;
   link?: UnparsedLink;
   image?: UnparsedImage;
+  size?: ColumnSizes;
 }
 
 type Props = HTMLAttributes<'section'> & TopProps;
@@ -24,10 +26,17 @@ const {
   link: unparsedLink,
   image,
   class: className,
+  size = '5-7',
   ...props
 } = Astro.props;
 
 const link = parseLink(unparsedLink);
+const sizes: Record<ColumnSizes, [string, string]> = {
+  '5-7': ['md:col-span-5', 'md:col-span-7'],
+  '6-6': ['md:col-span-6', 'md:col-span-6'],
+  '7-5': ['md:col-span-7', 'md:col-span-5'],
+};
+const [contentColumnSize, imageColumnSize] = sizes?.[size] ?? sizes['5-7'];
 ---
 
 <section
@@ -42,7 +51,9 @@ const link = parseLink(unparsedLink);
     <Grid class="gap-y-8">
       <div
         class={cn(
-          'col-span-full md:col-span-5 flex flex-col items-start justify-center gap-4'
+          'col-span-full',
+          contentColumnSize,
+          'flex flex-col items-start justify-center gap-4'
         )}
       >
         <h1 class="typography-h2 md:typography-h1" set:html={title ?? ''} />
@@ -63,9 +74,9 @@ const link = parseLink(unparsedLink);
           )
         }
       </div>
-      <div class="col-span-full md:col-span-7 flex justify-end">
+      <div class={cn('col-span-full', imageColumnSize, 'flex justify-end')}>
         <slot name="image">
-          <WordpressImage data={image} class="rounded-lg" />
+          <WordpressImage data={image} loading="eager" class="rounded-lg" />
         </slot>
       </div>
       {

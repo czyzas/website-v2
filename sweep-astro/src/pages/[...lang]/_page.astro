@@ -1,4 +1,5 @@
 ---
+import { castArray } from 'lodash-es';
 import ModulesIncluder from '@/components/ModulesIncluder.astro';
 import Top from '@/components/partials/Top.astro';
 import Layout from '@/layouts/Layout.astro';
@@ -6,6 +7,7 @@ import { updateStore } from '@/scripts/store';
 import { cmsStore } from '@/stores/cmsStore';
 import { languageStore } from '@/stores/languageStore';
 import type { DefaultPageQuery } from '@/__generated__/cms';
+import type { ColumnSizes } from '@/types';
 
 interface Props {
   data: DefaultPageQuery;
@@ -20,13 +22,21 @@ updateStore(cmsStore, 'primaryMenu', data.primaryMenu!);
 updateStore(cmsStore, 'themeOptions', data.themeOptions!);
 
 const { subpageSettings } = page;
+
 const pageTitle = page?.title ?? '';
 const title = subpageSettings?.customTitle || pageTitle || '';
 const content = subpageSettings?.introduction ?? '';
 const image = subpageSettings?.image;
+const [size] = castArray(subpageSettings?.titleImageDistribution);
 ---
 
 <Layout name="default" pageTitle={pageTitle}>
-  <Top title={title} content={content} image={image} class="py-25" />
+  <Top
+    title={title}
+    content={content}
+    image={image}
+    size={(size ?? '5-7') as ColumnSizes}
+    class="py-25"
+  />
   <ModulesIncluder data={page?.modules} />
 </Layout>
