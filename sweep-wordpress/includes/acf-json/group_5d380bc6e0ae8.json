@@ -461,6 +461,39 @@
                                     "parent_repeater": "field_6602e3d4b5d53"
                                 },
                                 {
+                                    "key": "field_663c956421d5d",
+                                    "label": "Title size",
+                                    "name": "title_size",
+                                    "aria-label": "",
+                                    "type": "select",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "25",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 2,
+                                    "choices": {
+                                        "smaller": "Smaller (24px)",
+                                        "default": "Default size (32px)",
+                                        "bigger": "Bigger (40px)"
+                                    },
+                                    "default_value": "default",
+                                    "return_format": "value",
+                                    "multiple": 0,
+                                    "allow_null": 0,
+                                    "ui": 0,
+                                    "show_in_graphql": 1,
+                                    "graphql_description": "",
+                                    "graphql_field_name": "titleCopy",
+                                    "graphql_non_null": 0,
+                                    "ajax": 0,
+                                    "placeholder": "",
+                                    "parent_repeater": "field_6602e3d4b5d53"
+                                },
+                                {
                                     "key": "field_6603ec848b784",
                                     "label": "Title",
                                     "name": "title",
@@ -470,7 +503,7 @@
                                     "required": 0,
                                     "conditional_logic": 0,
                                     "wrapper": {
-                                        "width": "",
+                                        "width": "75",
                                         "class": "",
                                         "id": ""
                                     },
@@ -3199,5 +3232,5 @@
         "Page",
         "Post"
     ],
-    "modified": 1715089777
+    "modified": 1715246638
 }
