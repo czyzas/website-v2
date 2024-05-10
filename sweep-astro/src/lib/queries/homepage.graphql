@@ -140,7 +140,7 @@ query Homepage($LANG: String!) {
         show
         selectedIndustries(first: 100) {
           nodes {
-            ...IndustriesList
+            ...ComponentIndustriesList
           }
         }
       }

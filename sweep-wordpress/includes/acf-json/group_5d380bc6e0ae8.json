@@ -3230,8 +3230,9 @@
     "graphql_field_name": "modules",
     "map_graphql_types_from_location_rules": 1,
     "graphql_types": [
+        "Industry",
         "Page",
         "Post"
     ],
-    "modified": 1715325736
+    "modified": 1715329214
 }

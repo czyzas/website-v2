@@ -1,6 +1,6 @@
 ---
 import type {
-  IndustriesListFragment,
+  ComponentIndustriesListFragment,
   ModulesModulesContentIndustriesLayout,
 } from '@/__generated__/cms';
 import IndustriesList from '@/components/IndustriesList.astro';
@@ -18,7 +18,7 @@ const {
 
 const showSelected = show === 'selected';
 const selectedIndustries =
-  rawSelectedIndustries?.nodes as unknown as IndustriesListFragment[];
+  rawSelectedIndustries?.nodes as unknown as ComponentIndustriesListFragment[];
 ---
 
 <ModuleContainer name={layoutName!} bg={backgroundColor}>

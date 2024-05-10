@@ -8,8 +8,8 @@ import {
 } from '@/lib/fetchCMSData';
 import { defaultLocale } from '@/i18n/config';
 import { cleanURI, compareURI } from '@/scripts/utils-uri';
-import Homepage from './_index.astro';
-import Page from './_page.astro';
+import Homepage from '@/templates/Homepage.astro';
+import DefaultPage from '@/templates/DefaultPage.astro';
 
 export const getStaticPaths = async () => {
   const finalPaths = [];
@@ -73,4 +73,4 @@ if (isHomepage) {
 }
 ---
 
-{isHomepage ? <Homepage data={data} /> : <Page data={data} />}
+{isHomepage ? <Homepage data={data} /> : <DefaultPage data={data} />}

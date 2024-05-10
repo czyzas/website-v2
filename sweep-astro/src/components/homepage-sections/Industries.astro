@@ -2,7 +2,7 @@
 import { cmsStore } from '@/stores/cmsStore';
 import { getStore } from '@/scripts/store';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
-import type { IndustriesListFragment } from '@/__generated__/cms';
+import type { ComponentIndustriesListFragment } from '@/__generated__/cms';
 import Container from '../ui/Container.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
 import Section from '../ui/Section.astro';
@@ -14,7 +14,7 @@ const data = store.homepage!;
 const acf = data.homepage!.industries!;
 const showSelected = (acf?.show ?? 'all') === 'selected';
 const selectedIndustries = acf.selectedIndustries
-  ?.nodes as IndustriesListFragment[];
+  ?.nodes as ComponentIndustriesListFragment[];
 ---
 
 <Section name="industries" bg="surface-subdued">

@@ -8,13 +8,16 @@ import {
   DefaultPagesStaticPathsDocument,
   DemoPageDocument,
   HomepageDocument,
-  IndustriesListDocument,
   EventsModuleListDocument,
   PostsModuleListDocument,
   SinglePageStaticPathsDocument,
+  SingleIndustryStaticPathsDocument,
+  ComponentIndustriesListDocument,
+  IndustryPagesStaticPathsDocument,
+  IndustrySingleDocument,
 } from '@/__generated__/cms';
 import type {
-  IndustriesListFragment,
+  ComponentIndustriesListFragment,
   EventsModuleListQuery,
   PostsModuleListQuery,
 } from '@/__generated__/cms';
@@ -59,75 +62,12 @@ const fetchData = async <Query, QueryVariables extends Variables = Variables>(
   return data;
 };
 
+// DEFAULT PAGES
 export function fetchHomepage(lang: string) {
   return fetchData(HomepageDocument, { LANG: lang }, [
     lang,
     CACHE_KEYS.HOMEPAGE,
   ]);
-}
-
-/**
- * **NOTE** - This function can be used at component-level
- */
-export async function fetchIndustriesList(lang: string) {
-  const fetched = await fetchData(IndustriesListDocument, { LANG: lang }, [
-    lang,
-    CACHE_KEYS.INDUSTRIES_LIST,
-  ]);
-  return (fetched.industries?.nodes ??
-    []) as unknown as IndustriesListFragment[];
-}
-
-interface PostsParams {
-  lang: string;
-  categorySlug?: string;
-  limit?: number;
-}
-
-type PostsReturnType = Promise<
-  EventsModuleListQuery | PostsModuleListQuery | never[]
->;
-
-export async function fetchPostsModuleList(
-  postType: 'event',
-  params: PostsParams
-): Promise<EventsModuleListQuery>;
-export async function fetchPostsModuleList(
-  postType: 'post',
-  params: PostsParams
-): Promise<PostsModuleListQuery>;
-export async function fetchPostsModuleList(
-  postType: 'event' | 'post',
-  params: PostsParams
-): PostsReturnType {
-  const { lang, categorySlug, limit } = params;
-
-  const options = {
-    LANG: lang,
-    CATEGORY_SLUG: categorySlug,
-    LIMIT: limit && limit > 0 ? limit : undefined,
-  };
-
-  const hashedOptions = crypto
-    .createHash('md5')
-    .update(JSON.stringify(omitBy(options, isNil)))
-    .digest('hex');
-
-  if (postType === 'event') {
-    return await fetchData(EventsModuleListDocument, options, [
-      CACHE_KEYS.LIST_OF_EVENTS_MODULE_LIST,
-      hashedOptions,
-    ]);
-  }
-
-  if (postType === 'post') {
-    return await fetchData(PostsModuleListDocument, options, [
-      CACHE_KEYS.LIST_OF_POSTS_MODULE_LIST,
-      hashedOptions,
-    ]);
-  }
-
-  return [];
 }
 
 export async function fetchDefaultPagesStaticPaths() {
@@ -146,7 +86,7 @@ export async function fetchSinglePageStaticPaths(uri: string) {
   const rawData = await fetchData(
     SinglePageStaticPathsDocument,
     { STATIC_PATH_URI: uri },
-    [CACHE_KEYS.STATIC_PATHS, CACHE_KEYS.CONTACT]
+    [CACHE_KEYS.STATIC_PATHS, CACHE_KEYS.PAGE]
   );
 
   if (!rawData?.page) return [];
@@ -174,4 +114,110 @@ export function fetchContactPage(lang: string = defaultLocale) {
 
 export function fetchDemoPage(lang: string = defaultLocale) {
   return fetchData(DemoPageDocument, { LANG: lang }, [lang, CACHE_KEYS.DEMO]);
+}
+
+// INDUSTRIES PAGES
+export async function fetchIndustryPagesStaticPaths() {
+  // TODO: handle more than 100 pages
+  return (
+    (
+      await fetchData(IndustryPagesStaticPathsDocument, undefined, [
+        CACHE_KEYS.STATIC_PATHS,
+        CACHE_KEYS.INDUSTRY,
+      ])
+    ).pages?.nodes ?? []
+  );
+}
+
+export async function fetchSingleIndustryStaticPaths(uri: string) {
+  const rawData = await fetchData(
+    SingleIndustryStaticPathsDocument,
+    { STATIC_PATH_URI: uri },
+    [CACHE_KEYS.STATIC_PATHS, getUrlWithoutLang(uri)]
+  );
+
+  if (!rawData?.page) return [];
+
+  return parseStaticPaths(rawData.page);
+}
+
+export function fetchIndustrySingle(uri: string, lang: string = defaultLocale) {
+  return fetchData(
+    IndustrySingleDocument,
+    {
+      URI: uri,
+      LANG: lang,
+    },
+    [lang, getUrlWithoutLang(uri)]
+  );
+}
+
+// MODULES
+interface PostsParams {
+  lang: string;
+  categorySlug?: string;
+  limit?: number;
+}
+
+type PostsReturnType = Promise<
+  EventsModuleListQuery | PostsModuleListQuery | never[]
+>;
+
+/**
+ * Posts module list
+ * */
+export async function fetchPostsModuleList(
+  postType: 'event',
+  params: PostsParams
+): Promise<EventsModuleListQuery>;
+export async function fetchPostsModuleList(
+  postType: 'post',
+  params: PostsParams
+): Promise<PostsModuleListQuery>;
+export async function fetchPostsModuleList(
+  postType: 'event' | 'post',
+  params: PostsParams
+): PostsReturnType {
+  const { lang, categorySlug, limit } = params;
+
+  const options = {
+    LANG: lang,
+    CATEGORY_SLUG: categorySlug,
+    LIMIT: limit && limit > 0 ? limit : undefined,
+  };
+
+  const hashedOptions = crypto
+    .createHash('md5')
+    .update(JSON.stringify(omitBy(options, isNil)))
+    .digest('hex');
+
+  if (postType === 'event') {
+    return await fetchData(EventsModuleListDocument, options, [
+      CACHE_KEYS.MODULE_LIST_OF_EVENTS,
+      hashedOptions,
+    ]);
+  }
+
+  if (postType === 'post') {
+    return await fetchData(PostsModuleListDocument, options, [
+      CACHE_KEYS.MODULE_LIST_OF_POSTS,
+      hashedOptions,
+    ]);
+  }
+
+  return [];
+}
+
+// COMPONENTS
+/**
+ * **NOTE** - This function can be used at component-level
+ */
+export async function fetchComponentIndustriesList(lang: string) {
+  const fetched = await fetchData(
+    ComponentIndustriesListDocument,
+    { LANG: lang },
+    [lang, CACHE_KEYS.COMPONENT_INDUSTRIES_LIST]
+  );
+  return (fetched.industries?.nodes ??
+    []) as unknown as ComponentIndustriesListFragment[];
 }
