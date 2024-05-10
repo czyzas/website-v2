@@ -12,6 +12,7 @@ import TabListItem from '@/components/ui/Tabs/TabListItem.astro';
 import TabPane from '@/components/ui/Tabs/TabPane.astro';
 import Tabs from '@/components/ui/Tabs/Tabs.astro';
 import { fixDoubleBr } from '@/scripts/fixDoubleBr';
+import Prose from '@/components/ui/Prose.astro';
 
 type Props = ModulesModulesContentLogosLayout;
 
@@ -61,6 +62,13 @@ const tabId = crypto.randomUUID();
 
               return (
                 <TabPane isActive={tabIndex === 0} id={`${tabId}-${tabIndex}`}>
+                  {!!tab.description && (
+                    <Prose
+                      tag="p"
+                      set:html={fixDoubleBr(tab.description)}
+                      class="w-full max-w-[37rem] mx-auto mb-8 md:mb-15"
+                    />
+                  )}
                   {layout === 'cards' && (
                     <LogosGrid columns={parseInt(columns)} logos={logos} />
                   )}
