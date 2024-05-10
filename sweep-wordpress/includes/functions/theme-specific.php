@@ -166,10 +166,6 @@ add_filter( 'parse_query', function ( $query ) {
 add_action( 'admin_bar_menu', 'add_item', 100 );
 function add_item( $admin_bar ) {
 	global $pagenow;
-	$ssr_domain = env( "SSR_HOME_DOMAIN" );
-	$wp_domain = env( "WP_HOME" );
-
-	if ( !$ssr_domain || !$wp_domain ) return;
 
 	if ( $pagenow == "post.php" ) {
 		$url = get_the_permalink();
@@ -177,14 +173,36 @@ function add_item( $admin_bar ) {
 		$url = home_url();
 	}
 
-	$url = str_replace( $wp_domain, $ssr_domain, $url );
+	$ssr_url = get_ssr_url($url);
+
 	$admin_bar->add_menu( [
 		'id'    => 'wp-admin-bar-view-ssr',
 		'title' => 'View SSR page',
-		'href'  => $url,
+		'href'  => $ssr_url,
 		'meta'  => [ 'target' => '_blank' ]
 	] );
 }
+
+function get_ssr_url($url){
+	$ssr_domain = env( "SSR_HOME_DOMAIN" );
+	$wp_domain = env( "WP_HOME" );
+
+	if ( !$ssr_domain || !$wp_domain ) return false;
+
+	return str_replace( $wp_domain, $ssr_domain, $url );
+}
+
+//Add "View SSR page" to page list items
+add_filter('page_row_actions', 'add_ssr_action_link', 10, 2);
+add_filter('post_row_actions', 'add_ssr_action_link', 10, 2);
+function add_ssr_action_link($actions, $page_object)
+{
+	$ssr_url = get_ssr_url(get_permalink($page_object->ID));
+	$actions['view'] = '<a href="' . $ssr_url . '" class="google_link" target="_blank">View SSR page</a>';
+
+	return $actions;
+}
+
 
 //Remove "View page" button from admin menu bar
 add_action( 'admin_bar_menu', function ( $wp_admin_bar ) {
