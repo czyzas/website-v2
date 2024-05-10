@@ -2,6 +2,8 @@
 import { imageShouldRender } from '@/scripts/data-parsers/parseImage';
 import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
 import { buildI18nPath } from '@/i18n/utils';
+import { languageStore } from '@/stores/languageStore';
+import { getStore } from '@/scripts/store';
 import Card from './ui/Card.astro';
 import WordpressImage from './WordpressImage.astro';
 import Button from './ui/Button.astro';
@@ -23,6 +25,9 @@ const {
   customerLogo,
   title,
 } = Astro.props;
+
+// TODO: create useLanguage hook to get current lang from the store automatically
+const { currentLanguage } = getStore(languageStore);
 ---
 
 <Fragment>
@@ -50,14 +55,18 @@ const {
   <h3 set:html={title} class="typography-cards-bold-large" />
 
   <div class="mt-auto pt-8">
-    <Button
-      asLink
-      trailingIcon="arrow-right"
-      href={buildI18nPath(uri)}
-      variant="secondary"
-      class="w-full md:w-auto"
-    >
-      {buttonLabel}
-    </Button>
+    {
+      !!uri && (
+        <Button
+          asLink
+          trailingIcon="arrow-right"
+          href={buildI18nPath(uri, currentLanguage.code)}
+          variant="secondary"
+          class="w-full md:w-auto"
+        >
+          {buttonLabel}
+        </Button>
+      )
+    }
   </div>
 </Fragment>

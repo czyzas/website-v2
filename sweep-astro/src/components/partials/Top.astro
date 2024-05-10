@@ -62,7 +62,7 @@ const [contentColumnSize, imageColumnSize] = sizes?.[size] ?? sizes['5-7'];
           set:html={content ?? ''}
         />
         {
-          link && link.shouldRender && (
+          link.shouldRender && (
             <Button
               asLink
               href={link.url}
