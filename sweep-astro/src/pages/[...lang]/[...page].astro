@@ -1,5 +1,6 @@
 ---
 import type { InferGetStaticParamsType } from 'astro';
+import { isString } from 'lodash-es';
 import { fixLangParams, getLangParam, getUrlWithoutLang } from '@/i18n/utils';
 import {
   fetchDefaultPage,
@@ -44,8 +45,7 @@ const { page: paramUri, lang: paramLang = defaultLocale } = fixLangParams(
   'page'
 ) as InferGetStaticParamsType<typeof getStaticPaths>;
 
-const lang =
-  paramLang && typeof paramLang === 'string' ? paramLang : defaultLocale;
+const lang = isString(paramLang) ? paramLang : defaultLocale;
 const uri = cleanURI(paramUri, lang, { defaultUri: '/' });
 const isHomepage = uri === '/';
 
