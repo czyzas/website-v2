@@ -7,8 +7,8 @@
             "label": "Title \/ image distribution",
             "name": "top_distribution",
             "aria-label": "",
-            "type": "select",
-            "instructions": "The width proportion of title and image sections",
+            "type": "button_group",
+            "instructions": "The width proportion of title and image sections, default: <code>5-7<\/code>",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -18,21 +18,18 @@
             },
             "wpml_cf_preferences": 1,
             "choices": {
-                "5-7": "5-7 (default)",
+                "5-7": "5-7",
                 "6-6": "6-6",
                 "7-5": "7-5"
             },
             "default_value": "5-7",
             "return_format": "value",
-            "multiple": 0,
             "allow_null": 0,
-            "ui": 1,
-            "ajax": 0,
+            "layout": "horizontal",
             "show_in_graphql": 1,
             "graphql_description": "",
-            "graphql_field_name": "titleImageDistribution",
-            "graphql_non_null": 0,
-            "placeholder": ""
+            "graphql_field_name": "topDistribution",
+            "graphql_non_null": 0
         },
         {
             "key": "field_6602d6ab344f5",
@@ -216,5 +213,5 @@
         "Partner",
         "Post"
     ],
-    "modified": 1715246221
+    "modified": 1715333000
 }

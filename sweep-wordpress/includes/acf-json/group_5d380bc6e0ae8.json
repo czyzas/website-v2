@@ -465,8 +465,8 @@
                                     "label": "Title size",
                                     "name": "title_size",
                                     "aria-label": "",
-                                    "type": "select",
-                                    "instructions": "",
+                                    "type": "button_group",
+                                    "instructions": "Font size of the card title, default: <code>32px<\/code>",
                                     "required": 0,
                                     "conditional_logic": 0,
                                     "wrapper": {
@@ -476,21 +476,18 @@
                                     },
                                     "wpml_cf_preferences": 1,
                                     "choices": {
-                                        "smaller": "Smaller (24px)",
-                                        "default": "Default size (32px)",
-                                        "bigger": "Bigger (40px)"
+                                        "smaller": "24px",
+                                        "default": "32px",
+                                        "bigger": "40px"
                                     },
                                     "default_value": "default",
                                     "return_format": "value",
-                                    "multiple": 0,
                                     "allow_null": 0,
-                                    "ui": 0,
+                                    "layout": "horizontal",
                                     "show_in_graphql": 1,
                                     "graphql_description": "",
                                     "graphql_field_name": "titleSize",
                                     "graphql_non_null": 0,
-                                    "ajax": 0,
-                                    "placeholder": "",
                                     "parent_repeater": "field_6602e3d4b5d53"
                                 },
                                 {
@@ -3234,5 +3231,5 @@
         "Page",
         "Post"
     ],
-    "modified": 1715329214
+    "modified": 1715333154
 }
