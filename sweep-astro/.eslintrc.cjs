@@ -14,6 +14,7 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   ignorePatterns: ['**/__generated__/*'],
   globals: {
+    NodeJS: true,
     astroHTML: true,
   },
   rules: {
