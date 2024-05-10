@@ -5,7 +5,9 @@ import { languageStore } from '@/stores/languageStore';
 import { buildI18nPath } from '@/i18n/utils';
 
 const id = `dropdown-${crypto.randomUUID().substring(16)}`;
-const { currentLanguage, languages } = getStore(languageStore);
+const { currentLanguage, languages: rawLanguages } = getStore(languageStore);
+
+const languages = (rawLanguages ?? []).filter(Boolean);
 ---
 
 <script>
@@ -63,11 +65,11 @@ const { currentLanguage, languages } = getStore(languageStore);
         {languages.map((lang) => (
           <li class="flex flex-col">
             <a
-              href={buildI18nPath('/', lang?.code)}
-              set:text={lang?.translated_name}
-              aria-label={lang?.translated_name}
+              href={buildI18nPath('/', lang.code)}
+              set:text={lang.translated_name}
+              aria-label={lang.translated_name}
               data-current={
-                lang?.code === currentLanguage.code ? 'true' : 'false'
+                lang.code === currentLanguage.code ? 'true' : 'false'
               }
               class="w-full text-center rounded transition-colors data-[current=true]:bg-sw-surface-subdued hover:bg-sw-surface-subdued py-1 px-2.5 font-medium"
             />

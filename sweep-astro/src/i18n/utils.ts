@@ -5,7 +5,7 @@ import { locales, defaultLocale } from './config';
 /**
  * Return undefined if provided language is the default one
  * @example
- * ```
+ * ```js
  * const french = getLangParam('fr'); // fr
  * const english = getLangParam('en'); // undefined
  * ```

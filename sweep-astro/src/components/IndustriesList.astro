@@ -1,7 +1,7 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
-import type { IndustriesListFragment } from '@/__generated__/cms';
-import { fetchIndustriesList } from '@/lib/fetchCMSData';
+import type { ComponentIndustriesListFragment } from '@/__generated__/cms';
+import { fetchComponentIndustriesList } from '@/lib/fetchCMSData';
 import { defaultLocale } from '@/i18n/config';
 import { getStore, updateStore } from '@/scripts/store';
 import { languageStore } from '@/stores/languageStore';
@@ -13,7 +13,7 @@ import Card from './ui/Card.astro';
 import WordpressImage from './WordpressImage.astro';
 
 interface IndustriesListProps {
-  industries?: IndustriesListFragment[];
+  industries?: ComponentIndustriesListFragment[];
 }
 type Props = WithAttributes<IndustriesListProps & HTMLAttributes<'div'>>;
 
@@ -26,7 +26,7 @@ const {
 // TODO: create useLanguage hook to get current lang from the store automatically
 const { currentLanguage } = getStore(languageStore);
 const showSelected = !!listOfIndustries;
-const industries: IndustriesListFragment[] = [];
+const industries: ComponentIndustriesListFragment[] = [];
 
 async function getAllIndustries() {
   // Use in-memory cache to prevent the industries being fetched again at the same page
@@ -36,7 +36,7 @@ async function getAllIndustries() {
       return cachedIndustries;
     }
 
-    const fetchedIndustries = await fetchIndustriesList(
+    const fetchedIndustries = await fetchComponentIndustriesList(
       currentLanguage.code ?? defaultLocale
     );
 

@@ -1,0 +1,17 @@
+query IndustrySingle($URI: String!, $LANG: String!) {
+  page: industryByLang(uri: $URI, lang: $LANG) {
+    title
+    slug
+    uri
+    language {
+      ...Languages
+    }
+    subpageSettings {
+      ...SubpageSettings
+    }
+    modules {
+      ...ModulesCollection
+    }
+  }
+  ...Essential
+}

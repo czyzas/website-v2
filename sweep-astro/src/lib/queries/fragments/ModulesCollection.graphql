@@ -59,11 +59,6 @@ fragment ModulesCollection on Modules {
       }
       layout
       columns
-      logos {
-        edges {
-          ...Image
-        }
-      }
       logosTabs {
         tabTitle
         description
@@ -159,7 +154,7 @@ fragment ModulesCollection on Modules {
       show
       selectedIndustries(first: 100) {
         nodes {
-          ...IndustriesList
+          ...ComponentIndustriesList
         }
       }
     }

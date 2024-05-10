@@ -1,16 +1,18 @@
 ---
-import { castArray } from 'lodash-es';
 import ModulesIncluder from '@/components/ModulesIncluder.astro';
 import Top from '@/components/partials/Top.astro';
 import Layout from '@/layouts/Layout.astro';
 import { updateStore } from '@/scripts/store';
 import { cmsStore } from '@/stores/cmsStore';
 import { languageStore } from '@/stores/languageStore';
-import type { DefaultPageQuery } from '@/__generated__/cms';
+import type {
+  DefaultPageQuery,
+  IndustrySingleQuery,
+} from '@/__generated__/cms';
 import type { ColumnSizes } from '@/types';
 
 interface Props {
-  data: DefaultPageQuery;
+  data: DefaultPageQuery | IndustrySingleQuery;
 }
 const { data } = Astro.props;
 
@@ -27,8 +29,8 @@ const pageTitle = page?.title ?? '';
 const title = subpageSettings?.customTitle || pageTitle || '';
 const content = subpageSettings?.introduction ?? '';
 const image = subpageSettings?.image;
-// TODO: replace select with radio/buttons group
-const [size] = castArray(subpageSettings?.titleImageDistribution);
+const link = subpageSettings?.topButtonLink;
+const size = subpageSettings?.topDistribution ?? '5-7';
 ---
 
 <Layout name="default" pageTitle={pageTitle}>
@@ -36,7 +38,8 @@ const [size] = castArray(subpageSettings?.titleImageDistribution);
     title={title}
     content={content}
     image={image}
-    size={(size ?? '5-7') as ColumnSizes}
+    size={size as ColumnSizes}
+    link={link}
     class="py-25"
   />
   <ModulesIncluder data={page?.modules} />

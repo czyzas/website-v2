@@ -10,9 +10,10 @@ export const CACHE_KEYS = {
   PAGE: 'page',
   CONTACT: 'contact',
   DEMO: 'demo',
-  INDUSTRIES_LIST: 'industries-list',
-  LIST_OF_EVENTS_MODULE_LIST: 'list-of-events-module-list',
-  LIST_OF_POSTS_MODULE_LIST: 'list-of-posts-module-list',
+  INDUSTRY: 'industry',
+  COMPONENT_INDUSTRIES_LIST: 'component/industries-list',
+  MODULE_LIST_OF_EVENTS: 'module/list-of-events',
+  MODULE_LIST_OF_POSTS: 'module/list-of-posts',
 } as const;
 
 export type CachePayload = string | string[];

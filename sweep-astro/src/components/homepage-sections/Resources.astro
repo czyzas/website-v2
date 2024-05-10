@@ -4,6 +4,7 @@ import { cmsStore } from '@/stores/cmsStore';
 import { getStore } from '@/scripts/store';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
 import { buildI18nPath } from '@/i18n/utils';
+import { languageStore } from '@/stores/languageStore';
 import Container from '../ui/Container.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
 import SwiperNavigation from '../SwiperNavigation.astro';
@@ -17,6 +18,8 @@ const data = store.homepage!;
 const acf = data.homepage!.resources!;
 
 const resources = acf.resources?.nodes ?? [];
+// TODO: create useLanguage hook to get current lang from the store automatically
+const { currentLanguage } = getStore(languageStore);
 ---
 
 <script>
@@ -76,12 +79,14 @@ const resources = acf.resources?.nodes ?? [];
           resources.map((resource) => {
             if (resource.__typename !== 'LibraryItem') return null;
 
+            if (!resource.uri) return null;
+
             return (
               <div class="swiper-slide">
                 <ArticleCard
                   image={resource.subpageSettings?.image}
                   link={{
-                    url: buildI18nPath(resource.uri),
+                    url: buildI18nPath(resource.uri, currentLanguage.code),
                   }}
                   class="size-full"
                 >

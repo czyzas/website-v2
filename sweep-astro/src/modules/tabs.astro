@@ -1,6 +1,5 @@
 ---
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
-import { castArray } from 'lodash-es';
 import type { ModulesModulesContentTabsLayout } from '@/__generated__/cms';
 import ButtonContainer from '@/components/ButtonContainer.astro';
 import CardWithBigImage from '@/components/CardWithBigImage.astro';
@@ -69,8 +68,7 @@ const ContentWrapper = layout in layouts ? layouts[layout] : layouts.side;
           )}
           <div class="tab-content">
             {tabs.map((tab, tabIndex) => {
-              // TODO: replace select with radio/buttons group
-              const [titleSizeValue = 'default'] = castArray(tab?.titleSize);
+              const titleSizeValue = tab?.titleSize ?? 'default';
               const titleSize =
                 titleSizes[titleSizeValue] ?? titleSizes.default;
               return (
