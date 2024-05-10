@@ -23,7 +23,7 @@ export const getStaticPaths = async () => {
     finalPaths.push({
       params: {
         lang: getLangParam(staticPath.languageCode),
-        industry: paramPath.replace('industry', ''),
+        industry: paramPath.replace('industry/', ''),
       },
       props: {
         uri: paramPath,
