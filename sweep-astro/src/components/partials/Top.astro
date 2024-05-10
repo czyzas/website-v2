@@ -74,7 +74,13 @@ const [contentColumnSize, imageColumnSize] = sizes?.[size] ?? sizes['5-7'];
           )
         }
       </div>
-      <div class={cn('col-span-full', imageColumnSize, 'flex justify-end')}>
+      <div
+        class={cn(
+          'col-span-full',
+          imageColumnSize,
+          'flex items-center justify-end'
+        )}
+      >
         <slot name="image">
           <WordpressImage data={image} loading="eager" class="rounded-lg" />
         </slot>
