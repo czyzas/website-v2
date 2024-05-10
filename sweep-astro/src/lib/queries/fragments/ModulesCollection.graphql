@@ -66,6 +66,7 @@ fragment ModulesCollection on Modules {
       }
       logosTabs {
         tabTitle
+        description
         logos {
           edges {
             ...Image
