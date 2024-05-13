@@ -186,6 +186,13 @@
                 "operator": "==",
                 "value": "event"
             }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "insigths"
+            }
         ]
     ],
     "menu_order": 0,
@@ -208,10 +215,11 @@
         "Customer",
         "Event",
         "Industry",
+        "InsightsItem",
         "LibraryItem",
         "Page",
         "Partner",
         "Post"
     ],
-    "modified": 1715333000
+    "modified": 1715600893
 }

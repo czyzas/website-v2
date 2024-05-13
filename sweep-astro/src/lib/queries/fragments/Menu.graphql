@@ -10,6 +10,31 @@ fragment Menu on Menu {
       url
       uri
       path
+      menuItemAcf {
+        relatedPostTitle
+        relatedPost {
+          node {
+            __typename
+            ... on InsightsItem {
+              title
+              uri
+              subpageSettings {
+                image {
+                  ...Image
+                }
+              }
+              insightsTags {
+                nodes {
+                  name
+                  tagTaxonomyAcf {
+                    tagColor
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

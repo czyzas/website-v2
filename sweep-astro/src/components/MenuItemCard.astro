@@ -1,0 +1,77 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/scripts/cn';
+import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
+import type { UnparsedLink } from '@/scripts/data-parsers/parseLink';
+import type { WithAttributes } from '@/types';
+import { parseTags } from '@/scripts/data-parsers/parseTag';
+import type { UnparsedTag } from '@/scripts/data-parsers/parseTag';
+import Card from './ui/Card.astro';
+import WordpressImage from './WordpressImage.astro';
+import WordpressButtonLink from './WordpressButtonLink.astro';
+import ArticleTag from './ArticleTag.astro';
+
+interface MenuItemCardProps extends HTMLAttributes<'div'> {
+  image?: UnparsedImage;
+  featuredTitle?: string;
+  title?: string;
+  link?: UnparsedLink;
+  tags?: UnparsedTag[];
+}
+
+type Props = WithAttributes<MenuItemCardProps>;
+
+const {
+  class: className,
+  image,
+  featuredTitle,
+  title,
+  link,
+  tags: rawTags,
+  ...props
+} = Astro.props;
+const tags = parseTags(rawTags);
+console.log(tags);
+---
+
+<Card
+  {...props}
+  class={cn('overflow-hidden h-full p-0 grid grid-cols-2', className)}
+>
+  <div
+    class={cn(
+      'content-column flex flex-col gap-4 self-start p-6 col-span-full md:col-span-1'
+    )}
+  >
+    <span
+      class="text-xs text-sw-sky-400 font-bold uppercase"
+      set:html={featuredTitle}
+    />
+    <span class="typography-cards-bold-large" set:html={title} />
+    <WordpressButtonLink
+      data={link}
+      arrow
+      secondary
+      class="py-1 px-3 self-start text-sm"
+    />
+    {
+      tags.length > 0 && (
+        <div class="tags mt-auto flex flex-wrap gap-2.5">
+          {tags.map((tag) =>
+            tag.shouldRender ? (
+              <ArticleTag color={tag.color}>{tag.name}</ArticleTag>
+            ) : null
+          )}
+        </div>
+      )
+    }
+  </div>
+
+  <div
+    class={cn(
+      'image-column aspect-[16/9] col-span-full md:aspect-auto md:col-span-1'
+    )}
+  >
+    <WordpressImage data={image} class="object-cover w-full h-full" />
+  </div>
+</Card>

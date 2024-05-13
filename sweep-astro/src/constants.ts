@@ -13,4 +13,5 @@ export const TRANSLATIONS = {
   TERMS_LINK_LABEL: 'TERMS LINK',
   PRIVCY_LINK_LABEL: 'PRIVACY LINK',
   PAST_EVENT: 'PAST EVENT',
+  READ_MORE: 'Read more',
 } as const;

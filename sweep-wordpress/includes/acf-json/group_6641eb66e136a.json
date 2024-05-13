@@ -1,0 +1,93 @@
+{
+    "key": "group_6641eb66e136a",
+    "title": "Menu Item",
+    "fields": [
+        {
+            "key": "field_6641ed18ca666",
+            "label": "Related post title",
+            "name": "related_post_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6641eb6eaa9f8",
+                        "operator": "!=empty"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 2,
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "relatedPostTitle",
+            "graphql_non_null": 0
+        },
+        {
+            "key": "field_6641eb6eaa9f8",
+            "label": "Related post",
+            "name": "related_post",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "Should be used only in top-level menu items",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 1,
+            "post_type": [
+                "insigths"
+            ],
+            "post_status": "",
+            "taxonomy": "",
+            "return_format": "object",
+            "multiple": 0,
+            "allow_null": 1,
+            "bidirectional": 0,
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "relatedPost",
+            "graphql_connection_type": "one_to_one",
+            "ui": 1,
+            "bidirectional_target": []
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "nav_menu_item",
+                "operator": "==",
+                "value": "all"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "acfml_field_group_mode": "translation",
+    "show_in_graphql": 1,
+    "graphql_field_name": "menuItemAcf",
+    "map_graphql_types_from_location_rules": 0,
+    "graphql_types": "",
+    "modified": 1715599837
+}
