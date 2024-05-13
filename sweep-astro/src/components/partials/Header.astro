@@ -6,13 +6,14 @@ import { buildI18nPath } from '@/i18n/utils';
 import Container from '../ui/Container.astro';
 import LanguageSwitcher from '../LanguageSwitcher.astro';
 import Button from '../ui/Button.astro';
+import MenuItem from '../MenuItem.astro';
 import Menu from './Menu.astro';
 
 const { currentLanguage } = getStore(languageStore);
 ---
 
 <header class="py-4 bg-white">
-  <Container class="flex items-center justify-between gap-28">
+  <Container class="flex items-center justify-between gap-6">
     <div class="logo-container">
       <a
         href={buildI18nPath('/', currentLanguage.code)}
@@ -26,14 +27,10 @@ const { currentLanguage } = getStore(languageStore);
       </a>
     </div>
     <Menu />
-    <div class="controls-container flex items-center gap-3.5">
+    <div class="controls-container flex items-center gap-8">
       <LanguageSwitcher />
-      <a href="https://flyhigh.pro" class="font-medium py-1.5 px-2.5 hidden">
-        Login
-      </a>
-      <Button asLink href="https://flyhigh.pro" target="_blank">
-        Book a demo
-      </Button>
+      <MenuItem external href="https://flyhigh.pro"> Login </MenuItem>
+      <Button asLink href="/demo">Book a demo</Button>
     </div>
   </Container>
 </header>

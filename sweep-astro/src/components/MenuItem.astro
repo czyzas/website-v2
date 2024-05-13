@@ -1,0 +1,43 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { Icon } from 'astro-icon/components';
+import type { WithAttributes } from '@/types';
+import { cn } from '@/scripts/cn';
+
+type ButtonProps = {
+  asButton?: boolean;
+  dropdown?: boolean;
+  external?: boolean;
+};
+
+type AttributesLink = HTMLAttributes<'a'>;
+type AttributesButton = HTMLAttributes<'button'>;
+type Attributes = AttributesButton & AttributesLink;
+
+type Props = WithAttributes<Attributes & ButtonProps>;
+
+const {
+  class: className,
+  asButton = false,
+  dropdown = false,
+  external = false,
+  target,
+  rel,
+  ...props
+} = Astro.props;
+const Tag = asButton ? 'button' : 'a';
+---
+
+<Tag
+  {...props}
+  rel={external ? 'noopener noreferrer' : rel}
+  target={external ? '_blank' : target}
+  class={cn(
+    'menu-item',
+    'inline-flex items-center justify-center gap-2 text-base font-medium w-full data-[current=true]:text-sw-sky-400 hover:text-sw-sky-400',
+    className
+  )}
+>
+  <slot />
+  {dropdown && <Icon name="caret-down" />}
+</Tag>

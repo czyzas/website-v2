@@ -1,0 +1,6 @@
+fragment Tag on Tag {
+  name
+  tagTaxonomyAcf {
+    tagColor
+  }
+}

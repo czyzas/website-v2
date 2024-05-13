@@ -10,6 +10,8 @@ type ButtonProps = {
   leadingIcon?: string;
   trailingIcon?: string;
   asLink?: boolean;
+  /** For links only */
+  external?: boolean;
 };
 
 type AttributesLink = HTMLAttributes<'a'>;
@@ -26,13 +28,21 @@ const {
   variant = 'primary',
   leadingIcon = '',
   trailingIcon = '',
+  external = false,
+  target,
+  rel,
   ...props
 } = Astro.props;
 
 const Tag = asLink ? 'a' : 'button';
 ---
 
-<Tag {...props} class={cn(buttonVariants({ variant }), className)}>
+<Tag
+  {...props}
+  rel={external ? 'noopener noreferrer' : rel}
+  target={external ? '_blank' : target}
+  class={cn(buttonVariants({ variant }), className)}
+>
   {!!leadingIcon && <Icon name={leadingIcon} class="w-[1.125em] h-[1.125em]" />}
   <slot />
   {

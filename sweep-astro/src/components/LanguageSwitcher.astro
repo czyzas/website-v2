@@ -3,11 +3,15 @@ import { Icon } from 'astro-icon/components';
 import { getStore } from '@/scripts/store';
 import { languageStore } from '@/stores/languageStore';
 import { buildI18nPath } from '@/i18n/utils';
+import MenuItem from './MenuItem.astro';
 
 const id = `dropdown-${crypto.randomUUID().substring(16)}`;
-const { currentLanguage, languages: rawLanguages } = getStore(languageStore);
 
+const { currentLanguage, languages: rawLanguages } = getStore(languageStore);
 const languages = (rawLanguages ?? []).filter(Boolean);
+
+// TODO: close popover when clicked outside
+// TODO: link to current page translation if possible
 ---
 
 <script>
@@ -44,34 +48,33 @@ const languages = (rawLanguages ?? []).filter(Boolean);
   }
 </script>
 
-<div class="language-switcher-container relative hidden">
-  <button
+<div class="language-switcher-container relative">
+  <MenuItem
+    asButton
     type="button"
-    class="switcher flex items-center gap-1 font-medium py-1.5 px-2.5 toggle"
     data-action="toggle-language-switcher"
     aria-controls={id}
     aria-pressed="false"
   >
     <span>{currentLanguage.code.toUpperCase()}</span>
     <Icon name="caret-down" />
-  </button>
+  </MenuItem>
   {
     languages && (
       <ul
         aria-hidden="true"
-        class="list absolute visible shadow-language-switcher rounded-lg p-2 transition-all duration-100 aria-hidden:-translate-y-1 aria-hidden:opacity-0 aria-hidden:invisible space-y-1"
+        class="list absolute visible bg-white shadow-menu rounded-lg p-6 transition-all duration-100 aria-hidden:-translate-y-1 aria-hidden:opacity-0 aria-hidden:invisible space-y-4"
         id={id}
       >
         {languages.map((lang) => (
           <li class="flex flex-col">
-            <a
+            <MenuItem
               href={buildI18nPath('/', lang.code)}
               set:text={lang.translated_name}
               aria-label={lang.translated_name}
               data-current={
                 lang.code === currentLanguage.code ? 'true' : 'false'
               }
-              class="w-full text-center rounded transition-colors data-[current=true]:bg-sw-surface-subdued hover:bg-sw-surface-subdued py-1 px-2.5 font-medium"
             />
           </li>
         ))}
