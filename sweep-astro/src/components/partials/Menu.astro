@@ -1,9 +1,117 @@
-<div class="navbar hidden">
-  <nav class="navbar-nav">
-    <ul class="main-menu">
-      <li>
-        <a href="https://flyhigh.pro" class="font-medium">MenuLink</a>
-      </li>
-    </ul>
-  </nav>
-</div>
+---
+import { Icon } from 'astro-icon/components';
+import { cn } from '@/scripts/cn';
+import { getStore } from '@/scripts/store';
+import { cmsStore } from '@/stores/cmsStore';
+
+const { primaryMenu } = getStore(cmsStore);
+const menu = (primaryMenu?.menuItems?.nodes ?? []).filter(Boolean);
+---
+
+{
+  menu.length > 0 && (
+    <div class="navbar flex-1 self-stretch">
+      <nav class="navbar-nav relative h-full">
+        <ul class="menu main-menu h-full flex justify-center items-center gap-8">
+          {menu.map((item) => {
+            if (item.parentDatabaseId !== 0) return null;
+            const children = menu.filter(
+              (child) => child.parentDatabaseId === item.databaseId
+            );
+            return (
+              <li>
+                <a
+                  href={item.uri}
+                  target={item.target}
+                  data-menu-item-id={item.databaseId}
+                  data-parent-item-id={item.parentDatabaseId}
+                  class={cn(
+                    'main-menu-item',
+                    'inline-flex items-center justify-center gap-2 text-center text-base font-medium hover:text-sw-sky-400'
+                  )}
+                >
+                  {item.label}
+                  {children.length > 0 && <Icon name="caret-down" />}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+        {menu.map((item) => {
+          if (item.parentDatabaseId !== 0) return null;
+          const children = menu.filter(
+            (child) => child.parentDatabaseId === item.databaseId
+          );
+          return (
+            <Fragment>
+              {children.length > 0 && (
+                <ul
+                  data-parent-id={item.databaseId}
+                  data-state="inactive"
+                  class={cn(
+                    'menu submenu absolute bg-white w-full top-full translate-y-8 shadow-menu p-6 rounded-lg grid grid-rows-5 grid-flow-col auto-cols-fr gap-x-15 gap-y-4',
+                    'invisible data-[state=active]:visible opacity-0 data-[state=active]:opacity-100'
+                  )}
+                >
+                  {children.map((child) => (
+                    <li>
+                      <a
+                        href={child.uri}
+                        target={child.target}
+                        class={cn(
+                          'inline-flex items-center justify-center gap-2 text-base font-medium hover:text-sw-sky-400'
+                        )}
+                      >
+                        {child.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </Fragment>
+          );
+        })}
+      </nav>
+    </div>
+  )
+}
+
+<script>
+  (function () {
+    const navbar = document.querySelector<HTMLElement>('.navbar');
+    if (!navbar) return;
+    const mainItems = navbar.querySelectorAll<HTMLAnchorElement>(
+      'ul.main-menu a.main-menu-item'
+    );
+
+    for (const mainItem of mainItems) {
+      const id = mainItem.dataset.menuItemId;
+      if (!id) continue;
+      const submenu = navbar.querySelector<HTMLUListElement>(
+        `ul[data-parent-id="${id}"].menu.submenu`
+      );
+      if (!submenu) continue;
+
+      let waiter: NodeJS.Timeout | null = null;
+
+      const handlePointerEnter = () => {
+        if (waiter) {
+          clearTimeout(waiter);
+        }
+        submenu.dataset.state = 'active';
+      };
+
+      const handlePointerLeave = () => {
+        waiter = setTimeout(() => {
+          submenu.dataset.state = 'inactive';
+        }, 250);
+      };
+
+      mainItem.addEventListener('pointerenter', handlePointerEnter);
+      submenu.addEventListener('pointerenter', handlePointerEnter);
+
+      mainItem.addEventListener('pointerleave', handlePointerLeave);
+      submenu.addEventListener('pointerleave', handlePointerLeave);
+    }
+  })();
+</script>

@@ -67,3 +67,30 @@ export function compareURI(routingURI?: string, cmsURI?: string) {
 
   return trim(routingURI, '/') === trim(cmsURI, '/');
 }
+
+/**
+ * Add prefix to the URI
+ * @example
+ * ```js
+ * prefixURI('assets-manager', 'industry'); // 'industry/assets-manager'
+ * ```
+ */
+export function prefixURI(uriWithoutPrefix: string, prefix: string) {
+  return [prefix, uriWithoutPrefix].filter(Boolean).join('/');
+}
+
+/**
+ * Remove prefix from the uri
+ * @example
+ * ```js
+ * unprefixURI('industry/assets-manager', 'industry'); // 'assets-manager'
+ * ```
+ */
+export function unprefixURI(uri: string, prefixToRemove: string) {
+  if (!prefixToRemove) return uri;
+
+  const prefix = `${trim(prefixToRemove, '/')}/`;
+  if (!uri.startsWith(prefix)) return uri;
+
+  return uri.replace(prefix, '');
+}
