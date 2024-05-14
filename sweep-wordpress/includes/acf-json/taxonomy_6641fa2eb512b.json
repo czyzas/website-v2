@@ -5,7 +5,7 @@
     "active": true,
     "taxonomy": "insights-category",
     "object_type": [
-        "insigths"
+        "insights"
     ],
     "advanced_configuration": 1,
     "import_source": "",
@@ -74,5 +74,5 @@
     "show_in_graphql": 1,
     "graphql_single_name": "insightsCategory",
     "graphql_plural_name": "insightsCategories",
-    "modified": 1715599988
+    "modified": 1715690345
 }

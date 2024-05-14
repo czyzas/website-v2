@@ -1,3 +1,4 @@
+# Page
 query DefaultPagesStaticPaths {
   pages(first: 100, where: { status: PUBLISH, language: "all" }) {
     nodes {
@@ -11,21 +12,6 @@ query DefaultPagesStaticPaths {
     }
   }
 }
-
-query IndustryPagesStaticPaths {
-  pages: industries(first: 100, where: { status: PUBLISH, language: "all" }) {
-    nodes {
-      template {
-        templateName
-      }
-      databaseId
-      slug
-      uri
-      languageCode
-    }
-  }
-}
-
 query SinglePageStaticPaths($STATIC_PATH_URI: String!) {
   page: pageByLang(uri: $STATIC_PATH_URI, lang: "en") {
     databaseId
@@ -41,13 +27,32 @@ query SinglePageStaticPaths($STATIC_PATH_URI: String!) {
   }
 }
 
-query SingleIndustryStaticPaths($STATIC_PATH_URI: String!) {
-  page: industryByLang(uri: $STATIC_PATH_URI, lang: "en") {
-    databaseId
-    slug
-    uri
-    languageCode
-    translations {
+# Industry
+query IndustryPagesStaticPaths {
+  pages: industries(first: 100, where: { status: PUBLISH, language: "all" }) {
+    nodes {
+      databaseId
+      slug
+      uri
+      languageCode
+    }
+  }
+}
+
+# Insights
+query InsightsTagsStaticPaths {
+  tags: insightsTags(first: 100, where: { language: "all" }) {
+    nodes {
+      databaseId
+      slug
+      uri
+      languageCode
+    }
+  }
+}
+query InsightsPagesStaticPaths {
+  pages: insights(first: 100, where: { status: PUBLISH, language: "all" }) {
+    nodes {
       databaseId
       slug
       uri

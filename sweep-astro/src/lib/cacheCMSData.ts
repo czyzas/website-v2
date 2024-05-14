@@ -11,6 +11,8 @@ export const CACHE_KEYS = {
   CONTACT: 'contact',
   DEMO: 'demo',
   INDUSTRY: 'industry',
+  INSIGHTS: 'insights',
+  TAGS: 'tag',
   COMPONENT_INDUSTRIES_LIST: 'component/industries-list',
   MODULE_LIST_OF_EVENTS: 'module/list-of-events',
   MODULE_LIST_OF_POSTS: 'module/list-of-posts',

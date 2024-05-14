@@ -1,0 +1,19 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { fetchSinglePageStaticPaths } from '@/lib/fetchCMSData';
+import { createSinglePageStaticPaths } from '@/scripts/utils-static-paths';
+
+export async function getStaticPaths() {
+  return createSinglePageStaticPaths(
+    await fetchSinglePageStaticPaths('/insights')
+  );
+}
+---
+
+<Layout
+  name="demo"
+  pageTitle="INSIGHTS"
+  class="py-8 md:py-18 bg-gradient-to-b from-sw-surface-subdued to-transparent"
+>
+  <h1>INSIGHTS LIST</h1>
+</Layout>

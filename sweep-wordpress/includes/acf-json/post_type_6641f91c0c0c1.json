@@ -3,7 +3,7 @@
     "title": "Insights",
     "menu_order": 0,
     "active": true,
-    "post_type": "insigths",
+    "post_type": "insights",
     "advanced_configuration": true,
     "import_source": "",
     "import_date": "",
@@ -83,5 +83,5 @@
     "show_in_graphql": 1,
     "graphql_single_name": "insightsItem",
     "graphql_plural_name": "insights",
-    "modified": 1715600486
+    "modified": 1715690289
 }

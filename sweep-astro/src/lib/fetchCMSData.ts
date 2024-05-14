@@ -11,10 +11,11 @@ import {
   EventsModuleListDocument,
   PostsModuleListDocument,
   SinglePageStaticPathsDocument,
-  SingleIndustryStaticPathsDocument,
   ComponentIndustriesListDocument,
   IndustryPagesStaticPathsDocument,
   IndustrySingleDocument,
+  InsightsPagesStaticPathsDocument,
+  InsightsTagsStaticPathsDocument,
 } from '@/__generated__/cms';
 import type {
   ComponentIndustriesListFragment,
@@ -129,18 +130,6 @@ export async function fetchIndustryPagesStaticPaths() {
   );
 }
 
-export async function fetchSingleIndustryStaticPaths(uri: string) {
-  const rawData = await fetchData(
-    SingleIndustryStaticPathsDocument,
-    { STATIC_PATH_URI: uri },
-    [CACHE_KEYS.STATIC_PATHS, getUrlWithoutLang(uri)]
-  );
-
-  if (!rawData?.page) return [];
-
-  return parseStaticPaths(rawData.page);
-}
-
 export function fetchIndustrySingle(uri: string, lang: string = defaultLocale) {
   return fetchData(
     IndustrySingleDocument,
@@ -149,6 +138,31 @@ export function fetchIndustrySingle(uri: string, lang: string = defaultLocale) {
       LANG: lang,
     },
     [lang, getUrlWithoutLang(uri)]
+  );
+}
+
+// INSIGHTS
+export async function fetchInsightsPagesStaticPaths() {
+  // TODO: handle more than 100 pages
+  return (
+    (
+      await fetchData(InsightsPagesStaticPathsDocument, undefined, [
+        CACHE_KEYS.STATIC_PATHS,
+        CACHE_KEYS.INSIGHTS,
+      ])
+    ).pages?.nodes ?? []
+  );
+}
+export async function fetchInsightsTagsStaticPaths() {
+  // TODO: handle more than 100 pages
+  return (
+    (
+      await fetchData(InsightsTagsStaticPathsDocument, undefined, [
+        CACHE_KEYS.STATIC_PATHS,
+        CACHE_KEYS.INSIGHTS,
+        CACHE_KEYS.TAGS,
+      ])
+    ).tags?.nodes ?? []
   );
 }
 

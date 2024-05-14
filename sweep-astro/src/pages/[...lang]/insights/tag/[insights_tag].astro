@@ -1,0 +1,34 @@
+---
+import { getLangParam, getUrlWithoutLang } from '@/i18n/utils';
+import Layout from '@/layouts/Layout.astro';
+import { fetchInsightsTagsStaticPaths } from '@/lib/fetchCMSData';
+import { unprefixURI } from '@/scripts/utils-uri';
+
+export const getStaticPaths = async () => {
+  const finalPaths = [];
+
+  const paths = await fetchInsightsTagsStaticPaths();
+  for (const staticPath of paths) {
+    if (!staticPath?.languageCode || !staticPath?.uri || !staticPath?.slug) {
+      continue;
+    }
+
+    finalPaths.push({
+      params: {
+        lang: getLangParam(staticPath.languageCode),
+        insights_tag: staticPath.slug,
+      },
+    });
+  }
+
+  return finalPaths;
+};
+---
+
+<Layout
+  name="insights"
+  pageTitle="INSIGHTS"
+  class="py-8 md:py-18 bg-gradient-to-b from-sw-surface-subdued to-transparent"
+>
+  <h1>INSIGHTS TAG</h1>
+</Layout>
