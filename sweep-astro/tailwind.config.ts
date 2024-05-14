@@ -100,6 +100,10 @@ export default {
           },
         },
       },
+      backgroundImage: {
+        'menu-split':
+          'linear-gradient(90deg, #fff 50% , #E0E0E0 50%, #E0E0E0 calc(50% + 1px),  #fff calc(50% + 1px), #fff 100%)',
+      },
       spacing: {
         '4.5': '1.125rem',
         15: '3.75rem',
