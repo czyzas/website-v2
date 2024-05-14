@@ -10,9 +10,28 @@ import MenuItem from '../MenuItem.astro';
 import Menu from './Menu.astro';
 
 const { currentLanguage } = getStore(languageStore);
+const menuId = `main-menu-${crypto.randomUUID().substring(16)}`;
 ---
 
-<header class="py-4 bg-white">
+<script>
+  const menuToggleButtons = document.querySelectorAll<HTMLButtonElement>(
+    'button[data-action="toggle-menu"]'
+  );
+  for (const button of menuToggleButtons) {
+    button.addEventListener('click', () => {
+      const menuId = button.getAttribute('aria-controls');
+      const relatedMenu = document.getElementById(menuId ?? '');
+      const state = button.ariaPressed === 'true';
+      const nextState = !state ? 'true' : 'false';
+      button.ariaPressed = nextState;
+      if (relatedMenu) {
+        relatedMenu.ariaHidden = state ? 'true' : 'false';
+      }
+    });
+  }
+</script>
+
+<header class="py-4 bg-white relative lg:static">
   <Container class="flex items-center justify-between gap-6">
     <div class="logo-container">
       <a
@@ -22,15 +41,24 @@ const { currentLanguage } = getStore(languageStore);
         <Icon
           name="logo"
           aria-label="Sweep logo"
-          class="w-36 h-12 text-sw-sky-400"
+          class="w-24 md:w-36 h-auto text-sw-sky-400"
         />
       </a>
     </div>
-    <Menu />
-    <div class="controls-container flex items-center gap-8">
+    <Menu id={menuId} />
+    <div class="controls-container flex items-center gap-4 md:gap-8">
       <LanguageSwitcher />
       <MenuItem external href="https://flyhigh.pro"> Login </MenuItem>
       <Button asLink href="/demo">Book a demo</Button>
+      <button
+        type="button"
+        data-action="toggle-menu"
+        aria-pressed="false"
+        aria-controls={menuId}
+        class="flex lg:hidden hover:text-sw-sky-400 aria-pressed:text-sw-sky-400"
+      >
+        <Icon name="bars-3" class="w-6 h-6" />
+      </button>
     </div>
   </Container>
 </header>

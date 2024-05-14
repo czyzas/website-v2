@@ -10,14 +10,11 @@ type TagColor = ComponentProps<typeof ArticleTag>['color'];
 export const tagShouldRender = (unparsed: UnparsedTag) => !!unparsed?.name;
 export const parseTag = (
   unparsed: UnparsedTag
-): { shouldRender: boolean } & ParsedTag => {
-  console.log(unparsed?.tagTaxonomyAcf?.tagColor);
-  return {
-    shouldRender: tagShouldRender(unparsed),
-    name: unparsed?.name ?? '',
-    color: (unparsed?.tagTaxonomyAcf?.tagColor ?? 'gray') as TagColor,
-  };
-};
+): { shouldRender: boolean } & ParsedTag => ({
+  shouldRender: tagShouldRender(unparsed),
+  name: unparsed?.name ?? '',
+  color: (unparsed?.tagTaxonomyAcf?.tagColor ?? 'gray') as TagColor,
+});
 
 export const parseTags = (
   unparsedTags: UnparsedTag[] | undefined

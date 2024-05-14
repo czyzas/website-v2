@@ -31,7 +31,6 @@ const {
   ...props
 } = Astro.props;
 const tags = parseTags(rawTags);
-console.log(tags);
 ---
 
 <Card
@@ -40,14 +39,17 @@ console.log(tags);
 >
   <div
     class={cn(
-      'content-column flex flex-col gap-4 self-start p-6 col-span-full md:col-span-1'
+      'content-column flex flex-col gap-4 self-start p-4 md:p-6 col-span-full md:col-span-1'
     )}
   >
     <span
       class="text-xs text-sw-sky-400 font-bold uppercase"
       set:html={featuredTitle}
     />
-    <span class="typography-cards-bold-large" set:html={title} />
+    <span
+      class="typography-card-title font-bold md:typography-cards-bold-large"
+      set:html={title}
+    />
     <WordpressButtonLink
       data={link}
       arrow

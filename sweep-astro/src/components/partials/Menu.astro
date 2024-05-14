@@ -8,6 +8,11 @@ import { TRANSLATIONS } from '@/constants';
 import MenuItem from '../MenuItem.astro';
 import MenuItemCard from '../MenuItemCard.astro';
 
+type Props = {
+  id: string;
+};
+const { id } = Astro.props;
+
 // TODO: create useLanguage hook to get current lang from the store automatically
 const { currentLanguage } = getStore(languageStore);
 const { primaryMenu } = getStore(cmsStore);
@@ -15,47 +20,126 @@ const { primaryMenu } = getStore(cmsStore);
 const menu = (primaryMenu?.menuItems?.nodes ?? []).filter(Boolean);
 ---
 
+<script>
+  import { computePosition, flip, shift, autoUpdate } from '@floating-ui/dom';
+
+  const navbar = document.querySelector<HTMLElement>('.navbar');
+
+  const mainItems =
+    navbar?.querySelectorAll<HTMLAnchorElement>(
+      'ul.main-menu a.main-menu-item'
+    ) ?? [];
+
+  const isMobileMedia = window.matchMedia('(max-width: 1023px)');
+  prepare(isMobileMedia.matches);
+  isMobileMedia.addEventListener('change', ({ matches }) => prepare(matches));
+
+  function prepare(isMobile: boolean) {
+    if (!navbar) return;
+
+    const menuTogglers =
+      document.querySelectorAll<HTMLButtonElement>(
+        'button[data-action="toggle-menu"]'
+      ) ?? [];
+
+    const wrappers =
+      navbar.querySelectorAll<HTMLElement>('.submenu-wrapper-wrapper') ?? [];
+    const links =
+      navbar.querySelectorAll<HTMLAnchorElement>(
+        'a.main-menu-item.menu-item-has-children'
+      ) ?? [];
+
+    if (isMobile) {
+      navbar.setAttribute('aria-hidden', 'true');
+
+      for (const toggler of menuTogglers) {
+        toggler.setAttribute('aria-pressed', 'false');
+      }
+      for (const wrapper of wrappers) {
+        wrapper.setAttribute('aria-hidden', 'true');
+      }
+      for (const link of links) {
+        link.setAttribute('aria-pressed', 'false');
+      }
+    } else {
+      navbar.removeAttribute('aria-hidden');
+
+      for (const toggler of menuTogglers) {
+        toggler.removeAttribute('aria-pressed');
+      }
+      for (const wrapper of wrappers) {
+        wrapper.removeAttribute('aria-hidden');
+      }
+      for (const link of links) {
+        link.removeAttribute('aria-pressed');
+      }
+    }
+  }
+
+  for (const mainItem of mainItems) {
+    const submenu = mainItem.nextElementSibling as HTMLElement;
+    if (!submenu) continue;
+
+    const handlePosition = () =>
+      autoUpdate(mainItem, submenu, () => {
+        computePosition(mainItem, submenu, {
+          placement: 'bottom',
+          middleware: [flip(), shift({ padding: 5 })],
+        }).then(({ x, y }) => {
+          submenu.style.setProperty('left', `${x}px`);
+          submenu.style.setProperty('top', `${y}px`);
+        });
+      });
+
+    let handler = !isMobileMedia.matches ? handlePosition() : null;
+    isMobileMedia.addEventListener('change', (event) => {
+      if (event.matches) {
+        handler?.();
+        handler = null;
+        submenu.style.setProperty('left', '');
+        submenu.style.setProperty('top', '');
+      } else {
+        handler = handlePosition();
+      }
+    });
+
+    mainItem.addEventListener('click', (event) => {
+      if (!isMobileMedia.matches) return;
+      event.preventDefault();
+
+      const state = mainItem.ariaPressed === 'true';
+      const nextState = !state ? 'true' : 'false';
+      mainItem.ariaPressed = nextState;
+      submenu.ariaHidden = state ? 'true' : 'false';
+    });
+  }
+</script>
+
 {
   menu.length > 0 && (
-    <div class="navbar flex-1 self-stretch">
-      <nav class="navbar-nav relative h-full">
-        <ul class="menu main-menu h-full flex justify-center items-center gap-8">
-          {menu.map((item) => {
-            if (item.parentDatabaseId !== 0) return null;
-            const children = menu.filter(
-              (child) => child.parentDatabaseId === item.databaseId
-            );
-            return (
-              <li>
-                <MenuItem
-                  href={item.uri}
-                  target={item.target}
-                  data-menu-item-id={item.databaseId}
-                  data-parent-item-id={item.parentDatabaseId}
-                  class={cn('main-menu-item text-center')}
-                  dropdown={children.length > 0}
-                >
-                  {item.label}
-                </MenuItem>
-              </li>
-            );
-          })}
-        </ul>
-        <div
-          data-state="inactive"
+    <div
+      id={id}
+      class={cn(
+        'navbar',
+        'lg:flex-1 lg:self-stretch',
+        'aria-hidden:hidden',
+        'absolute top-[calc(100%_+_0.5rem)] left-4 w-[calc(100%_-_2rem)] bg-white shadow-menu p-6 rounded-lg',
+        'lg:static lg:block lg:w-auto lg:left-0 lg:top-full lg:bg-none lg:shadow-none lg:p-0 lg:rounded-none'
+      )}
+    >
+      <nav class="navbar-nav h-full">
+        <ul
           class={cn(
-            'submenu-container absolute bg-white p-6 overflow-hidden w-full top-full translate-y-8 shadow-menu grid grid-cols-1 grid-rows-1 rounded-lg',
-            'invisible data-[state=active]:visible opacity-0 data-[state=active]:opacity-100'
+            'menu main-menu',
+            'flex flex-col gap-4 lg:gap-8',
+            'lg:h-full lg:flex-row lg:justify-center lg:items-center'
           )}
         >
           {menu.map((item) => {
             if (item.parentDatabaseId !== 0) return null;
-
             const children = menu.filter(
               (child) => child.parentDatabaseId === item.databaseId
             );
-
-            if (children.length === 0) return null;
 
             const relatedPost =
               item.menuItemAcf?.relatedPost?.node.__typename === 'InsightsItem'
@@ -63,110 +147,88 @@ const menu = (primaryMenu?.menuItems?.nodes ?? []).filter(Boolean);
                 : null;
             const relatedPostTitle = item.menuItemAcf?.relatedPostTitle ?? '';
 
+            const submenuItem = `submenu-item-${crypto.randomUUID().substring(16)}`;
+
             return (
-              <div
-                data-parent-id={item.databaseId}
-                class={cn(
-                  'submenu-wrapper',
-                  'col-span-full row-span-full',
-                  'invisible h-0 data-[state=active]:h-auto data-[state=active]:visible opacity-0 data-[state=active]:opacity-100',
-                  'flex items-start'
-                )}
-              >
-                <ul
-                  data-state="inactive"
-                  style={{ '--rows': Math.min(children.length, 5) }}
-                  class={cn(
-                    'menu submenu flex-1 bg-white grid grid-flow-col auto-cols-fr gap-x-15 gap-y-4',
-                    'grid-rows-[repeat(var(--rows),minmax(0,auto))]'
-                  )}
+              <li class="group">
+                <MenuItem
+                  href={item.uri}
+                  target={item.target}
+                  data-menu-item-id={item.databaseId}
+                  data-parent-item-id={item.parentDatabaseId}
+                  class={cn('main-menu-item justify-start lg:text-center', {
+                    'menu-item-has-children': children.length > 0,
+                  })}
+                  dropdown={children.length > 0}
+                  aria-controls={children.length > 0 ? submenuItem : undefined}
                 >
-                  {children.map((child) => (
-                    <li>
-                      <a
-                        href={child.uri}
-                        target={child.target}
+                  {item.label}
+                </MenuItem>
+                {children.length > 0 && (
+                  <div
+                    id={submenuItem}
+                    data-parent-id={item.databaseId}
+                    class={cn(
+                      'submenu-wrapper-wrapper',
+                      'lg:invisible lg:group-hover:visible lg:opacity-0 lg:group-hover:opacity-100',
+                      'lg:absolute lg:max-w-[min(100%,45.5rem)] lg:top-full lg:pt-8',
+                      'aria-hidden:hidden'
+                    )}
+                  >
+                    <div
+                      class={cn(
+                        'submenu-wrapper flex flex-col gap-4 lg:gap-0 items-start lg:flex-row pl-4 pt-2 lg:bg-white lg:p-6 lg:shadow-menu lg:rounded-lg lg:overflow-hidden'
+                      )}
+                    >
+                      <ul
+                        data-state="inactive"
+                        style={{ '--rows': Math.min(children.length, 5) }}
                         class={cn(
-                          'inline-flex items-center justify-center gap-2 text-base font-medium hover:text-sw-sky-400'
+                          'menu submenu flex-1 flex flex-col lg:grid lg:grid-flow-col lg:auto-cols-fr lg:gap-x-15 gap-y-4',
+                          'grid-rows-[repeat(var(--rows),minmax(0,auto))]',
+                          { 'lg:bg-menu-split': children.length > 5 }
                         )}
                       >
-                        {child.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-                {!!relatedPost && (
-                  <MenuItemCard
-                    class="flex-[2]"
-                    featuredTitle={relatedPostTitle}
-                    title={relatedPost.title}
-                    link={{
-                      url: relatedPost.uri
-                        ? buildI18nPath(relatedPost.uri, currentLanguage.code)
-                        : undefined,
-                      title: TRANSLATIONS.READ_MORE,
-                    }}
-                    tags={relatedPost.insightsTags?.nodes}
-                    image={relatedPost.subpageSettings?.image}
-                  />
+                        {children.map((child) => (
+                          <li>
+                            <a
+                              href={child.uri}
+                              target={child.target}
+                              class={cn(
+                                'inline-flex items-center justify-center gap-2 text-base font-medium hover:text-sw-sky-400'
+                              )}
+                            >
+                              {child.label}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                      {!!relatedPost && (
+                        <MenuItemCard
+                          class="flex-[2]"
+                          featuredTitle={relatedPostTitle}
+                          title={relatedPost.title}
+                          link={{
+                            url: relatedPost.uri
+                              ? buildI18nPath(
+                                  relatedPost.uri,
+                                  currentLanguage.code
+                                )
+                              : undefined,
+                            title: TRANSLATIONS.READ_MORE,
+                          }}
+                          tags={relatedPost.insightsTags?.nodes}
+                          image={relatedPost.subpageSettings?.image}
+                        />
+                      )}
+                    </div>
+                  </div>
                 )}
-              </div>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </nav>
     </div>
   )
 }
-
-<script>
-  (function () {
-    const navbar = document.querySelector<HTMLElement>('.navbar');
-    if (!navbar) return;
-    const mainItems = navbar.querySelectorAll<HTMLAnchorElement>(
-      'ul.main-menu a.main-menu-item'
-    );
-    const submenuContainer =
-      navbar.querySelector<HTMLElement>('.submenu-container');
-    if (!submenuContainer) return;
-
-    let containerWaiter: NodeJS.Timeout | null = null;
-
-    for (const mainItem of mainItems) {
-      const id = mainItem.dataset.menuItemId;
-      if (!id) continue;
-      const submenu = navbar.querySelector<HTMLElement>(
-        `.submenu-wrapper[data-parent-id="${id}"]`
-      );
-      if (!submenu) continue;
-
-      let waiter: NodeJS.Timeout | null = null;
-
-      const handlePointerEnter = () => {
-        if (waiter) {
-          clearTimeout(waiter);
-        }
-        if (containerWaiter) {
-          clearTimeout(containerWaiter);
-        }
-        submenu.dataset.state = 'active';
-        submenuContainer.dataset.state = 'active';
-      };
-
-      const handlePointerLeave = () => {
-        waiter = setTimeout(() => {
-          submenu.dataset.state = 'inactive';
-        }, 250);
-        containerWaiter = setTimeout(() => {
-          submenuContainer.dataset.state = 'inactive';
-        }, 250);
-      };
-
-      mainItem.addEventListener('pointerenter', handlePointerEnter);
-      submenu.addEventListener('pointerenter', handlePointerEnter);
-
-      mainItem.addEventListener('pointerleave', handlePointerLeave);
-      submenu.addEventListener('pointerleave', handlePointerLeave);
-    }
-  })();
-</script>
