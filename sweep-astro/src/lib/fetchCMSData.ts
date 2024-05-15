@@ -87,7 +87,7 @@ export async function fetchSinglePageStaticPaths(uri: string) {
   const rawData = await fetchData(
     SinglePageStaticPathsDocument,
     { STATIC_PATH_URI: uri },
-    [CACHE_KEYS.STATIC_PATHS, CACHE_KEYS.PAGE]
+    [CACHE_KEYS.STATIC_PATHS, CACHE_KEYS.PAGE, getUrlWithoutLang(uri)]
   );
 
   if (!rawData?.page) return [];

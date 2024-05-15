@@ -1,8 +1,7 @@
 ---
-import { getLangParam, getUrlWithoutLang } from '@/i18n/utils';
+import { getLangParam } from '@/i18n/utils';
 import Layout from '@/layouts/Layout.astro';
 import { fetchInsightsTagsStaticPaths } from '@/lib/fetchCMSData';
-import { unprefixURI } from '@/scripts/utils-uri';
 
 export const getStaticPaths = async () => {
   const finalPaths = [];
