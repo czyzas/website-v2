@@ -9,6 +9,7 @@ import WordpressImage from './WordpressImage.astro';
 type Props = WithAttributes<ArticleCardProps>;
 interface ArticleCardProps extends HTMLAttributes<'div'> {
   image?: UnparsedImage;
+  // TODO: use string here instead of UnparsedLink
   link?: UnparsedLink;
 }
 

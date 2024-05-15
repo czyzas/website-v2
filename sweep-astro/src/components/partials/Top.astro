@@ -9,6 +9,7 @@ import Container from '../ui/Container.astro';
 import Button from '../ui/Button.astro';
 import WordpressImage from '../WordpressImage.astro';
 import Grid from '../ui/Grid.astro';
+import Breadcrumbs from '../Breadcrumbs.astro';
 
 interface TopProps {
   title?: string;
@@ -16,6 +17,7 @@ interface TopProps {
   link?: UnparsedLink;
   image?: UnparsedImage;
   size?: ColumnSizes;
+  breadcrumbs?: [...UnparsedLink[], string];
 }
 
 type Props = HTMLAttributes<'section'> & TopProps;
@@ -25,8 +27,9 @@ const {
   content,
   link: unparsedLink,
   image,
-  class: className,
   size = '5-7',
+  breadcrumbs,
+  class: className,
   ...props
 } = Astro.props;
 
@@ -56,6 +59,11 @@ const [contentColumnSize, imageColumnSize] = sizes?.[size] ?? sizes['5-7'];
           'flex flex-col items-start justify-center gap-4'
         )}
       >
+        {
+          breadcrumbs && breadcrumbs.length > 0 && (
+            <Breadcrumbs breadcrumbs={breadcrumbs} />
+          )
+        }
         <h1 class="typography-h2 md:typography-h1" set:html={title ?? ''} />
         <div
           class="typography-body md:max-w-[22.125rem]"
@@ -99,4 +107,6 @@ const [contentColumnSize, imageColumnSize] = sizes?.[size] ?? sizes['5-7'];
       }
     </Grid>
   </Container>
+
+  <slot />
 </section>

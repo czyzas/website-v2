@@ -16,6 +16,7 @@ import {
   IndustrySingleDocument,
   InsightsPagesStaticPathsDocument,
   InsightsTagsStaticPathsDocument,
+  InsightsListPageDocument,
 } from '@/__generated__/cms';
 import type {
   ComponentIndustriesListFragment,
@@ -164,6 +165,12 @@ export async function fetchInsightsTagsStaticPaths() {
       ])
     ).tags?.nodes ?? []
   );
+}
+export function fetchInsightsListPage(lang: string = defaultLocale) {
+  return fetchData(InsightsListPageDocument, { LANG: lang }, [
+    lang,
+    CACHE_KEYS.INSIGHTS,
+  ]);
 }
 
 // MODULES

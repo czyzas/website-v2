@@ -1,0 +1,25 @@
+---
+type Props = {
+  url?: string;
+  last?: boolean;
+  label?: string;
+};
+
+const { last = false, url, label } = Astro.props;
+---
+
+{
+  !last ? (
+    <a
+      href={url}
+      aria-label={label}
+      class="breadcrumbs-item hover:text-sw-sky-400"
+    >
+      <slot />
+    </a>
+  ) : (
+    <span class="breadcrumbs-item font-bold tracking-[1px] cursor-default">
+      <slot />
+    </span>
+  )
+}

@@ -1,5 +1,4 @@
 ---
-import type { HTMLAttributes } from 'astro/types';
 import { cva } from 'class-variance-authority';
 import { cn } from '@/scripts/cn';
 import { sectionTitleShouldRender } from '@/scripts/data-parsers/parseSectionTitle';
@@ -11,8 +10,7 @@ interface SectionTitleProps {
   withMargin?: boolean;
 }
 
-type Props = HTMLAttributes<'div'> &
-  Omit<Partial<ParsedSectionTitle>, 'shouldRender'> &
+type Props = Omit<Partial<ParsedSectionTitle>, 'shouldRender'> &
   SectionTitleProps;
 
 const {

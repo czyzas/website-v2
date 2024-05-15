@@ -191,7 +191,7 @@
             {
                 "param": "post_type",
                 "operator": "==",
-                "value": "insigths"
+                "value": "insights"
             }
         ]
     ],
@@ -221,5 +221,5 @@
         "Partner",
         "Post"
     ],
-    "modified": 1715600893
+    "modified": 1715776258
 }

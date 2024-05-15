@@ -1,0 +1,213 @@
+---
+import { isNil } from 'lodash-es';
+import CardWithBigImage from '@/components/CardWithBigImage.astro';
+import WordpressButtonLink from '@/components/WordpressButtonLink.astro';
+import SectionTitle from '@/components/partials/SectionTitle.astro';
+import Top from '@/components/partials/Top.astro';
+import Card from '@/components/ui/Card.astro';
+import Container from '@/components/ui/Container.astro';
+import Grid from '@/components/ui/Grid.astro';
+import Prose from '@/components/ui/Prose.astro';
+import Section from '@/components/ui/Section.astro';
+import { TRANSLATIONS } from '@/constants';
+import { buildI18nPath } from '@/i18n/utils';
+import Layout from '@/layouts/Layout.astro';
+import { fetchInsightsListPage } from '@/lib/fetchCMSData';
+import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
+import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
+import { updateStore } from '@/scripts/store';
+import { cmsStore } from '@/stores/cmsStore';
+import { languageStore } from '@/stores/languageStore';
+import type { ColumnSizes } from '@/types';
+import ArticleCard from '@/components/ArticleCard.astro';
+import ArticleTag from '@/components/ArticleTag.astro';
+import { parseTags } from '@/scripts/data-parsers/parseTag';
+
+type Props = { tag?: string; lang: string };
+const { tag: filterTag = '', lang } = Astro.props;
+
+// TODO: add filtering by tag
+const data = await fetchInsightsListPage(lang);
+const page = data.page!;
+const posts = (data.insights?.edges ?? []).filter(Boolean);
+const tags = (data.tags?.nodes ?? []).filter(Boolean);
+// Add additional `All` tag to filters
+tags.unshift({ name: TRANSLATIONS.ALL, slug: '' });
+
+updateStore(languageStore, 'currentLanguage', page.language!);
+updateStore(languageStore, 'languages', data.languages);
+updateStore(cmsStore, 'primaryMenu', data.primaryMenu!);
+updateStore(cmsStore, 'themeOptions', data.themeOptions!);
+
+const { subpageSettings, insightsListAcf: acf } = page;
+// TODO: handle data passed to Layout and Top
+const pageTitle = page?.title ?? '';
+const title = subpageSettings?.customTitle || pageTitle || '';
+const content = subpageSettings?.introduction ?? '';
+const image = subpageSettings?.image;
+const size = subpageSettings?.topDistribution ?? '5-7';
+
+let featuredPost:
+  | {
+      uri?: string;
+      category?: string;
+      title?: string;
+      content?: string;
+      image?: UnparsedImage;
+    }
+  | undefined;
+if (
+  acf?.featuredInsightsItem &&
+  acf.featuredInsightsItem.node.__typename === 'InsightsItem'
+) {
+  featuredPost = {
+    uri: acf.featuredInsightsItem.node.uri,
+    category:
+      acf.featuredInsightsItem.node.insightsCategories?.nodes?.[0]?.name,
+    title: acf.featuredInsightsItem.node.title,
+    content: acf.featuredInsightsItem.node.subpageSettings?.introduction,
+    image: acf.featuredInsightsItem.node.subpageSettings?.image,
+  };
+}
+---
+
+<Layout
+  name="insights"
+  pageTitle={pageTitle}
+  class="py-8 md:py-18 bg-gradient-to-b from-sw-surface-subdued to-transparent"
+>
+  <Top
+    title={title}
+    content={content}
+    image={image}
+    size={size as ColumnSizes}
+    breadcrumbs={[
+      {
+        title: TRANSLATIONS.HOME,
+        url: buildI18nPath('/', lang),
+      },
+      pageTitle,
+    ]}
+    class="pb-12 md:pb-20"
+  >
+    {
+      !!featuredPost && (
+        <Container class="mt-15">
+          <SectionTitle
+            hasCustomStyle
+            displayAs="overline"
+            headline={acf?.featuredInsightsItemTitle}
+          />
+          <Grid class="mt-8 md:mt-15">
+            <CardWithBigImage
+              image={featuredPost.image}
+              class="col-span-full lg:col-start-2 lg:col-end-12"
+            >
+              <div class="flex flex-col items-start gap-4">
+                {/* TODO: Make CardCategory component */}
+                {!!featuredPost.category && (
+                  <div class="typography-card-title text-sw-text-subdued">
+                    {featuredPost.category}
+                  </div>
+                )}
+                {/* TODO: Make CardTitle component */}
+                {!!featuredPost.title && (
+                  <div class="typography-cards-bold-large">
+                    {featuredPost.title}
+                  </div>
+                )}
+                {!!featuredPost.content && (
+                  <Prose set:html={featuredPost.content} />
+                )}
+                {!!featuredPost.uri && (
+                  <WordpressButtonLink
+                    data={{
+                      url: buildI18nPath(featuredPost.uri, lang),
+                      title: TRANSLATIONS.READ_FULL_STORY,
+                    }}
+                    arrow
+                  />
+                )}
+              </div>
+            </CardWithBigImage>
+          </Grid>
+        </Container>
+      )
+    }
+  </Top>
+  <Section bg={'surface-background'} id="list">
+    <Container>
+      <SectionTitle
+        {...parseSectionTitle(acf?.listTitle?.selectSectionTitle)}
+      />
+      {
+        tags.length > 0 && (
+          <div class="filters my-8 md:mt-12 md:mb-20 grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-2">
+            {tags.map((tag) => {
+              if (isNil(tag.name) || isNil(tag.slug)) return null;
+
+              return (
+                <a
+                  href={buildI18nPath(
+                    tag.slug
+                      ? ['insights', 'tag', `${tag.slug}#list`]
+                      : 'insights#list',
+                    lang
+                  )}
+                  data-active={filterTag === tag.slug ? 'true' : 'false'}
+                  class="group"
+                >
+                  <Card class="h-full flex items-center justify-center transition-colors bg-white group-hover:bg-sw-surface-subdued group-data-[active=true]:bg-sw-sky-400 group-data-[active=true]:text-white group-data-[active=true]:border-transparent text-base font-medium p-3 text-center">
+                    {tag.name}
+                  </Card>
+                </a>
+              );
+            })}
+          </div>
+        )
+      }
+      {
+        posts.length > 0 && (
+          <Grid>
+            {posts.map(({ node: post }) => {
+              if (!post.uri) return null;
+              // TODO: Make CardTitle component
+              const categoryName =
+                post.insightsCategories?.nodes?.[0]?.name ?? '';
+              // TODO: make TagsCollection component to wrap tags
+              const postTags = parseTags(post.insightsTags?.nodes);
+              return (
+                <ArticleCard
+                  link={{ url: buildI18nPath(['insights', post.uri], lang) }}
+                  image={post.subpageSettings?.image}
+                  class="col-span-full md:col-span-4"
+                >
+                  {!!categoryName && (
+                    <div class="typography-card-title text-sw-text-subdued">
+                      {categoryName}
+                    </div>
+                  )}
+                  {!!post.title && (
+                    <div class="typography-cards-bold-large">{post.title}</div>
+                  )}
+                  {postTags.length > 0 && (
+                    <div class="tags mt-auto flex flex-wrap gap-2.5">
+                      {postTags.map((postTag) =>
+                        postTag.shouldRender ? (
+                          <ArticleTag color={postTag.color}>
+                            {postTag.name}
+                          </ArticleTag>
+                        ) : null
+                      )}
+                    </div>
+                  )}
+                </ArticleCard>
+              );
+            })}
+          </Grid>
+        )
+      }
+      <div class="pagination"></div>
+    </Container>
+  </Section>
+</Layout>
