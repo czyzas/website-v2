@@ -15,7 +15,7 @@ import Layout from '@/layouts/Layout.astro';
 import { fetchInsightsListPage } from '@/lib/fetchCMSData';
 import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
-import { updateStore } from '@/scripts/store';
+import { initializeStore } from '@/scripts/store';
 import { cmsStore } from '@/stores/cmsStore';
 import { languageStore } from '@/stores/languageStore';
 import type { ColumnSizes } from '@/types';
@@ -27,17 +27,22 @@ type Props = { tag?: string; lang: string };
 const { tag: filterTag = '', lang } = Astro.props;
 
 // TODO: add filtering by tag
-const data = await fetchInsightsListPage(lang);
+const data = await fetchInsightsListPage(lang, filterTag || undefined);
 const page = data.page!;
 const posts = (data.insights?.edges ?? []).filter(Boolean);
 const tags = (data.tags?.nodes ?? []).filter(Boolean);
 // Add additional `All` tag to filters
 tags.unshift({ name: TRANSLATIONS.ALL, slug: '' });
 
-updateStore(languageStore, 'currentLanguage', page.language!);
-updateStore(languageStore, 'languages', data.languages);
-updateStore(cmsStore, 'primaryMenu', data.primaryMenu!);
-updateStore(cmsStore, 'themeOptions', data.themeOptions!);
+initializeStore(cmsStore, {
+  primaryMenu: data.primaryMenu!,
+  themeOptions: data.themeOptions!,
+  subpageSettings: data.page?.subpageSettings,
+});
+initializeStore(languageStore, {
+  currentLanguage: data.page!.language!,
+  languages: data.languages,
+});
 
 const { subpageSettings, insightsListAcf: acf } = page;
 // TODO: handle data passed to Layout and Top
@@ -135,7 +140,7 @@ if (
       )
     }
   </Top>
-  <Section bg={'surface-background'} id="list">
+  <Section bg="surface-background" id="list">
     <Container>
       <SectionTitle
         {...parseSectionTitle(acf?.listTitle?.selectSectionTitle)}
@@ -176,11 +181,12 @@ if (
                 post.insightsCategories?.nodes?.[0]?.name ?? '';
               // TODO: make TagsCollection component to wrap tags
               const postTags = parseTags(post.insightsTags?.nodes);
+
               return (
                 <ArticleCard
-                  link={{ url: buildI18nPath(['insights', post.uri], lang) }}
+                  link={{ url: buildI18nPath(post.uri, lang) }}
                   image={post.subpageSettings?.image}
-                  class="col-span-full md:col-span-4"
+                  class="col-span-full sm:col-span-6 lg:col-span-4"
                 >
                   {!!categoryName && (
                     <div class="typography-card-title text-sw-text-subdued">
@@ -207,6 +213,7 @@ if (
           </Grid>
         )
       }
+      {/* TODO: IMPLEMENT PAGINATION */}
       <div class="pagination"></div>
     </Container>
   </Section>

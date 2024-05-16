@@ -6,7 +6,7 @@ import Prose from '@/components/ui/Prose.astro';
 import { defaultLocale } from '@/i18n/config';
 import Layout from '@/layouts/Layout.astro';
 import { fetchDemoPage, fetchSinglePageStaticPaths } from '@/lib/fetchCMSData';
-import { updateStore } from '@/scripts/store';
+import { initializeStore } from '@/scripts/store';
 import { createSinglePageStaticPaths } from '@/scripts/utils-static-paths';
 import { cmsStore } from '@/stores/cmsStore';
 import { languageStore } from '@/stores/languageStore';
@@ -25,10 +25,15 @@ const { lang = defaultLocale } = Astro.params;
 const data = await fetchDemoPage(lang as string);
 const page = data.page!;
 
-updateStore(languageStore, 'currentLanguage', page.language!);
-updateStore(languageStore, 'languages', data.languages);
-updateStore(cmsStore, 'primaryMenu', data.primaryMenu!);
-updateStore(cmsStore, 'themeOptions', data.themeOptions!);
+initializeStore(cmsStore, {
+  primaryMenu: data.primaryMenu!,
+  themeOptions: data.themeOptions!,
+  subpageSettings: data.page?.subpageSettings,
+});
+initializeStore(languageStore, {
+  currentLanguage: data.page!.language!,
+  languages: data.languages,
+});
 
 // TODO: handle data passed to Layout and Top
 const { subpageSettings, demoPageAcf: acf = {} } = page;

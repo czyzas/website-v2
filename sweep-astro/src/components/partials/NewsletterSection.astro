@@ -1,0 +1,39 @@
+---
+import { getStore } from '@/scripts/store';
+import { cmsStore } from '@/stores/cmsStore';
+import WordpressImage from '../WordpressImage.astro';
+import Grid from '../ui/Grid.astro';
+import Section from '../ui/Section.astro';
+import Container from '../ui/Container.astro';
+import NewsletterForm from '../hubspot-form/NewsletterForm.astro';
+
+const store = getStore(cmsStore);
+const enabled = store.subpageSettings?.hasNewsletterSection ?? false;
+const data = store.themeOptions?.themeOptionsAcf?.newsletterSection;
+const { title = '', content = '', image, hubspotFormGuid = '' } = data ?? {};
+---
+
+{
+  enabled && !!data && (
+    <Section>
+      <Container>
+        <Grid class="bg-sw-sea-500 rounded-lg p-0 grid-rows-1 text-white">
+          <div class="relative z-[2] row-start-1 row-end-2 col-start-1 col-end-13 lg:col-start-1 lg:col-end-6 p-14 pr-0 flex flex-col items-start gap-4">
+            <h2
+              class="text-inherit typography-h3 md:text-5xl md:leading-tight md:font-bold"
+              set:html={title}
+            />
+            <p set:html={content} />
+            <NewsletterForm formGuid={hubspotFormGuid} />
+          </div>
+          <div class="relative row-start-1 row-end-2 col-start-1 col-end-13 lg:col-start-5 lg:col-end-13 flex items-center justify-center">
+            <WordpressImage
+              data={image}
+              class="absolute left-0 top-0 size-full object-cover object-left-top"
+            />
+          </div>
+        </Grid>
+      </Container>
+    </Section>
+  )
+}

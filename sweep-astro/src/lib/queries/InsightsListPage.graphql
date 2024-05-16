@@ -79,7 +79,7 @@ query InsightsListPage($LANG: String!, $TAG_SLUG: [String]) {
       hasPreviousPage
     }
   }
-  tags: insightsTags(first: 100, where: { language: $LANG }) {
+  tags: insightsTags(first: 100, where: { language: $LANG, hideEmpty: true }) {
     nodes {
       name
       slug

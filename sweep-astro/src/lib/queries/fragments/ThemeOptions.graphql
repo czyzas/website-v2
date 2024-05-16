@@ -12,16 +12,12 @@ fragment ThemeOptions on ThemeOptions {
     loginLink {
       ...Link
     }
-    footerContent
-    footerLegalNote
-    footerLinks {
-      link {
-        ...Link
-      }
-    }
-    socials {
-      link {
-        ...Link
+    newsletterSection {
+      title
+      content
+      hubspotFormGuid
+      image {
+        ...Image
       }
     }
   }

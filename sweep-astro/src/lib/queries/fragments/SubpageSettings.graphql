@@ -8,4 +8,5 @@ fragment SubpageSettings on SubpageSettings {
   topButtonLink {
     ...Link
   }
+  hasNewsletterSection
 }

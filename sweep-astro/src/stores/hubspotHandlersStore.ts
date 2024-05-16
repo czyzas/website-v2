@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import type { IFieldProps } from '@/components/hubspot-form/shared';
 import { createStore } from '@/scripts/store';
 
-const defaultValues = {
+export const defaultValues = {
   checkbox: null,
   select: null,
   textarea: null,

@@ -41,7 +41,7 @@ query IndustryPagesStaticPaths {
 
 # Insights
 query InsightsTagsStaticPaths {
-  tags: insightsTags(first: 100, where: { language: "all" }) {
+  tags: insightsTags(first: 100, where: { language: "all", hideEmpty: true }) {
     nodes {
       databaseId
       slug

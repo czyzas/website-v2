@@ -8,16 +8,20 @@ export const createStore = <T extends object>(initialValues: T): Store<T> => {
   return ctx;
 };
 
+export const initializeStore = <T extends object>(store: Store<T>, data: T) => {
+  store.value = data;
+};
+
 export const getStore = <T extends object>(ctx: Store<T>) =>
   ({ ...ctx.value }) as const;
 
 export const updateStore = <T extends object>(
   ctx: Store<T>,
   property: keyof T,
-  val: T[keyof T],
+  val: T[keyof T]
 ) => {
   if (!(property in ctx.value)) {
-    throw new Error(`Property ${String(property)} doesn't exist in this store`);
+    console.warn(`Property ${String(property)} doesn't exist in this store`);
   }
 
   ctx.value[property] = val;

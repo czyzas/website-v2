@@ -23,7 +23,9 @@ export type CachePayload = string | string[];
 const CACHE_PATH = './.astro/cms-cache';
 
 const buildCacheFilename = (payload: CachePayload) => {
-  let filename = Array.isArray(payload) ? payload.join('/') : payload;
+  let filename = Array.isArray(payload)
+    ? payload.filter(Boolean).join('/')
+    : payload;
   if (filename.endsWith('/')) filename += 'index';
   return filename;
 };

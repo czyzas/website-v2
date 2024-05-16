@@ -17,6 +17,7 @@ import {
   InsightsPagesStaticPathsDocument,
   InsightsTagsStaticPathsDocument,
   InsightsListPageDocument,
+  InsightsSinglePageDocument,
 } from '@/__generated__/cms';
 import type {
   ComponentIndustriesListFragment,
@@ -166,11 +167,30 @@ export async function fetchInsightsTagsStaticPaths() {
     ).tags?.nodes ?? []
   );
 }
-export function fetchInsightsListPage(lang: string = defaultLocale) {
-  return fetchData(InsightsListPageDocument, { LANG: lang }, [
-    lang,
-    CACHE_KEYS.INSIGHTS,
-  ]);
+export function fetchInsightsListPage(
+  lang: string = defaultLocale,
+  tag?: string
+) {
+  return fetchData(
+    InsightsListPageDocument,
+    {
+      LANG: lang,
+      TAG_SLUG: tag,
+    },
+    tag
+      ? [lang, CACHE_KEYS.INSIGHTS, CACHE_KEYS.TAGS, tag]
+      : [lang, CACHE_KEYS.INSIGHTS]
+  );
+}
+export function fetchInsightsSingle(uri: string, lang: string = defaultLocale) {
+  return fetchData(
+    InsightsSinglePageDocument,
+    {
+      URI: uri,
+      LANG: lang,
+    },
+    [lang, getUrlWithoutLang(uri)]
+  );
 }
 
 // MODULES
