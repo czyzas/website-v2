@@ -1,0 +1,14 @@
+query InsightsSinglePage($URI: String!, $LANG: String!) {
+  page: insightsItemByLang(uri: $URI, lang: $LANG) {
+    title
+    slug
+    uri
+    language {
+      ...Languages
+    }
+    subpageSettings {
+      ...SubpageSettings
+    }
+  }
+  ...Essential
+}
