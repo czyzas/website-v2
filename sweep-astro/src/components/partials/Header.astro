@@ -7,29 +7,12 @@ import Container from '../ui/Container.astro';
 import LanguageSwitcher from '../LanguageSwitcher.astro';
 import Button from '../ui/Button.astro';
 import MenuItem from '../MenuItem.astro';
+import MenuHamburger from '../MenuHamburger.astro';
 import Menu from './Menu.astro';
 
 const { currentLanguage } = getStore(languageStore);
 const menuId = `main-menu-${crypto.randomUUID().substring(16)}`;
 ---
-
-<script>
-  const menuToggleButtons = document.querySelectorAll<HTMLButtonElement>(
-    'button[data-action="toggle-menu"]'
-  );
-  for (const button of menuToggleButtons) {
-    button.addEventListener('click', () => {
-      const menuId = button.getAttribute('aria-controls');
-      const relatedMenu = document.getElementById(menuId ?? '');
-      const state = button.ariaPressed === 'true';
-      const nextState = !state ? 'true' : 'false';
-      button.ariaPressed = nextState;
-      if (relatedMenu) {
-        relatedMenu.ariaHidden = state ? 'true' : 'false';
-      }
-    });
-  }
-</script>
 
 <header class="py-4 bg-white relative lg:static">
   <Container class="flex items-center justify-between gap-6">
@@ -50,15 +33,7 @@ const menuId = `main-menu-${crypto.randomUUID().substring(16)}`;
       <LanguageSwitcher />
       <MenuItem external href="https://flyhigh.pro"> Login </MenuItem>
       <Button asLink href="/demo">Book a demo</Button>
-      <button
-        type="button"
-        data-action="toggle-menu"
-        aria-pressed="false"
-        aria-controls={menuId}
-        class="flex lg:hidden hover:text-sw-sky-400 aria-pressed:text-sw-sky-400"
-      >
-        <Icon name="bars-3" class="w-6 h-6" />
-      </button>
+      <MenuHamburger menuId={menuId} />
     </div>
   </Container>
 </header>

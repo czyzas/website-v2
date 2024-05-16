@@ -205,7 +205,7 @@ const menu = (primaryMenu?.menuItems?.nodes ?? []).filter(Boolean);
                       </ul>
                       {!!relatedPost && (
                         <MenuItemCard
-                          class="flex-[2]"
+                          class="max-md:hidden flex-[2]"
                           featuredTitle={relatedPostTitle}
                           title={relatedPost.title}
                           link={{

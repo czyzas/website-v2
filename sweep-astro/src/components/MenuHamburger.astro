@@ -1,0 +1,52 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/scripts/cn';
+
+interface Props extends HTMLAttributes<'button'> {
+  menuId: string;
+}
+
+const { menuId } = Astro.props;
+---
+
+<script>
+  const menuToggleButtons = document.querySelectorAll<HTMLButtonElement>(
+    'button[data-action="toggle-menu"]'
+  );
+  for (const button of menuToggleButtons) {
+    button.addEventListener('click', () => {
+      const menuId = button.getAttribute('aria-controls');
+      const relatedMenu = document.getElementById(menuId ?? '');
+      const state = button.ariaPressed === 'true';
+      const nextState = !state ? 'true' : 'false';
+      button.ariaPressed = nextState;
+      if (relatedMenu) {
+        relatedMenu.ariaHidden = state ? 'true' : 'false';
+      }
+    });
+  }
+</script>
+
+<button
+  type="button"
+  data-action="toggle-menu"
+  aria-pressed="false"
+  aria-controls={menuId}
+  class="flex lg:hidden flex-col justify-center items-center gap-1 hover:text-sw-sky-400 aria-pressed:text-sw-sky-400 h-12 w-12 group"
+>
+  <span
+    class={cn(
+      'h-0.5 w-5 rounded-full bg-current transition ease transform duration-300',
+      'group-aria-pressed:rotate-45 group-aria-pressed:translate-y-1.5'
+    )}></span>
+  <span
+    class={cn(
+      'h-0.5 w-5 rounded-full bg-current transition ease transform duration-300',
+      'group-aria-pressed:opacity-0'
+    )}></span>
+  <span
+    class={cn(
+      'h-0.5 w-5 rounded-full bg-current transition ease transform duration-300',
+      'group-aria-pressed:-rotate-45 group-aria-pressed:-translate-y-1.5'
+    )}></span>
+</button>

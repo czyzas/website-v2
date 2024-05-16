@@ -1,0 +1,30 @@
+---
+import { defaultLocale } from '@/i18n/config';
+import { getLangParam } from '@/i18n/utils';
+import { fetchInsightsTagsStaticPaths } from '@/lib/fetchCMSData';
+import InsightsList from '@/templates/InsightsList.astro';
+
+export const getStaticPaths = async () => {
+  const finalPaths = [];
+
+  const paths = await fetchInsightsTagsStaticPaths();
+  for (const staticPath of paths) {
+    if (!staticPath?.languageCode || !staticPath?.uri || !staticPath?.slug) {
+      continue;
+    }
+
+    finalPaths.push({
+      params: {
+        lang: getLangParam(staticPath.languageCode),
+        insights_tag: staticPath.slug,
+      },
+    });
+  }
+
+  return finalPaths;
+};
+
+const { lang = defaultLocale, insights_tag: tag } = Astro.params;
+---
+
+<InsightsList lang={lang} tag={tag} />
