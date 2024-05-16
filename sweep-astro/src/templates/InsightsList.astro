@@ -27,7 +27,7 @@ type Props = { tag?: string; lang: string };
 const { tag: filterTag = '', lang } = Astro.props;
 
 // TODO: add filtering by tag
-const data = await fetchInsightsListPage(lang);
+const data = await fetchInsightsListPage(lang, filterTag || undefined);
 const page = data.page!;
 const posts = (data.insights?.edges ?? []).filter(Boolean);
 const tags = (data.tags?.nodes ?? []).filter(Boolean);
@@ -135,7 +135,7 @@ if (
       )
     }
   </Top>
-  <Section bg={'surface-background'} id="list">
+  <Section bg="surface-background" id="list">
     <Container>
       <SectionTitle
         {...parseSectionTitle(acf?.listTitle?.selectSectionTitle)}
@@ -176,11 +176,12 @@ if (
                 post.insightsCategories?.nodes?.[0]?.name ?? '';
               // TODO: make TagsCollection component to wrap tags
               const postTags = parseTags(post.insightsTags?.nodes);
+
               return (
                 <ArticleCard
-                  link={{ url: buildI18nPath(['insights', post.uri], lang) }}
+                  link={{ url: buildI18nPath(post.uri, lang) }}
                   image={post.subpageSettings?.image}
-                  class="col-span-full md:col-span-4"
+                  class="col-span-full sm:col-span-6 lg:col-span-4"
                 >
                   {!!categoryName && (
                     <div class="typography-card-title text-sw-text-subdued">
