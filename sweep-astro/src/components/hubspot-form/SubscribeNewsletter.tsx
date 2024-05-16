@@ -25,7 +25,7 @@ const SubscribeNewsletter = ({ form }: { form: IHubspotFormDefinition }) => {
               }}
               onSuccess={() => setIsSubmitSuccessful(true)}
             />
-            <Button form="newsletter-form" variant="secondary" type="submit">
+            <Button form="newsletter-form" variant="destructive" type="submit">
               {TRANSLATIONS.SIGN_UP}
             </Button>
           </div>

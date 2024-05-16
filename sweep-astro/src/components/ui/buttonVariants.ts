@@ -20,6 +20,12 @@ export const buttonVariants = cva(
           'text-black',
           'hover:bg-sw-surface-subdued',
         ],
+        destructive: [
+          'bg-sw-fire-400',
+          'text-white',
+          'hover:bg-sw-fire-500',
+          'shadow-button',
+        ],
       },
     },
   }
