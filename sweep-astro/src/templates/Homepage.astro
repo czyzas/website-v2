@@ -1,7 +1,7 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import { cmsStore } from '@/stores/cmsStore';
-import { updateStore } from '@/scripts/store';
+import { initializeStore } from '@/scripts/store';
 import Hero from '@/components/homepage-sections/Hero.astro';
 import CaseStudies from '@/components/homepage-sections/CaseStudies.astro';
 import Customers from '@/components/homepage-sections/Customers.astro';
@@ -22,11 +22,15 @@ interface Props {
 
 const { data } = Astro.props;
 
-updateStore(cmsStore, 'homepage', data.page!);
-updateStore(languageStore, 'currentLanguage', data.page!.language!);
-updateStore(languageStore, 'languages', data.languages);
-updateStore(cmsStore, 'primaryMenu', data.primaryMenu!);
-updateStore(cmsStore, 'themeOptions', data.themeOptions!);
+initializeStore(cmsStore, {
+  homepage: data.page!,
+  primaryMenu: data.primaryMenu!,
+  themeOptions: data.themeOptions!,
+});
+initializeStore(languageStore, {
+  currentLanguage: data.page!.language!,
+  languages: data.languages,
+});
 ---
 
 <Layout home name="homepage" pageTitle={data.page?.title ?? ''}>

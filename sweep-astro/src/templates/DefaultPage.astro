@@ -2,7 +2,7 @@
 import ModulesIncluder from '@/components/ModulesIncluder.astro';
 import Top from '@/components/partials/Top.astro';
 import Layout from '@/layouts/Layout.astro';
-import { updateStore } from '@/scripts/store';
+import { initializeStore } from '@/scripts/store';
 import { cmsStore } from '@/stores/cmsStore';
 import { languageStore } from '@/stores/languageStore';
 import type {
@@ -18,11 +18,15 @@ const { data } = Astro.props;
 
 const page = data.page!;
 
-updateStore(languageStore, 'currentLanguage', page.language!);
-updateStore(languageStore, 'languages', data.languages);
-updateStore(cmsStore, 'primaryMenu', data.primaryMenu!);
-updateStore(cmsStore, 'themeOptions', data.themeOptions!);
-updateStore(cmsStore, 'subpageSettings', data?.page?.subpageSettings);
+initializeStore(cmsStore, {
+  primaryMenu: data.primaryMenu!,
+  themeOptions: data.themeOptions!,
+  subpageSettings: data.page?.subpageSettings,
+});
+initializeStore(languageStore, {
+  currentLanguage: data.page!.language!,
+  languages: data.languages,
+});
 
 const { subpageSettings } = page;
 

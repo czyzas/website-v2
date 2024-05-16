@@ -15,7 +15,7 @@ import Layout from '@/layouts/Layout.astro';
 import { fetchInsightsListPage } from '@/lib/fetchCMSData';
 import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
-import { updateStore } from '@/scripts/store';
+import { initializeStore } from '@/scripts/store';
 import { cmsStore } from '@/stores/cmsStore';
 import { languageStore } from '@/stores/languageStore';
 import type { ColumnSizes } from '@/types';
@@ -34,11 +34,15 @@ const tags = (data.tags?.nodes ?? []).filter(Boolean);
 // Add additional `All` tag to filters
 tags.unshift({ name: TRANSLATIONS.ALL, slug: '' });
 
-updateStore(languageStore, 'currentLanguage', page.language!);
-updateStore(languageStore, 'languages', data.languages);
-updateStore(cmsStore, 'primaryMenu', data.primaryMenu!);
-updateStore(cmsStore, 'themeOptions', data.themeOptions!);
-updateStore(cmsStore, 'subpageSettings', data?.page?.subpageSettings);
+initializeStore(cmsStore, {
+  primaryMenu: data.primaryMenu!,
+  themeOptions: data.themeOptions!,
+  subpageSettings: data.page?.subpageSettings,
+});
+initializeStore(languageStore, {
+  currentLanguage: data.page!.language!,
+  languages: data.languages,
+});
 
 const { subpageSettings, insightsListAcf: acf } = page;
 // TODO: handle data passed to Layout and Top

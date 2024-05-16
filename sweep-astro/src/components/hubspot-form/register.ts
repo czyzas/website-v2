@@ -6,6 +6,8 @@ import { HubspotTextareaField } from './HubspotTextareaField';
 import { HubspotPhoneField } from './HubspotPhoneField';
 import { HubspotTextField } from './HubspotTextField';
 
+// TODO: maybe use React context?
+
 export function registerCheckboxField(): void {
   updateStore(hubspotHandlersStore, 'checkbox', HubspotCheckboxField);
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { TRANSLATIONS } from '@/constants';
 import { cn } from '@/scripts/cn';
-import { Button } from '../ui/Button.tsx';
+import { Button } from '../ui/Button';
 import { HubspotForm } from './HubspotForm';
 import type { IHubspotFormDefinition } from './shared';
 

@@ -6,6 +6,8 @@ import Footer from '@/components/partials/Footer.astro';
 import Header from '@/components/partials/Header.astro';
 import { cn } from '@/scripts/cn';
 import NewsletterSection from '@/components/partials/NewsletterSection.astro';
+import { initializeStore } from '@/scripts/store';
+import { cacheStore } from '@/stores/cacheStore';
 
 interface Props extends HTMLAttributes<'main'> {
   home?: boolean;
@@ -19,6 +21,11 @@ const siteTitle = 'Sweep';
 const description = 'Sweep description';
 
 const title = !home && pageTitle ? `${pageTitle} - ${siteTitle}` : siteTitle;
+
+// Initialize stores
+initializeStore(cacheStore, {
+  allIndustries: undefined,
+});
 ---
 
 <!doctype html>

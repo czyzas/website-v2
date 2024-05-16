@@ -4,7 +4,7 @@ import type { ComponentProps, ReactNode } from 'react';
 import { useCallback } from 'react';
 import { cn } from '@/scripts/cn';
 import { TRANSLATIONS } from '@/constants';
-import { Button } from '../ui/Button.tsx';
+import { Button } from '../ui/Button';
 import { HubspotFormGroup } from './HubspotFormGroup';
 import type {
   EventReporter,
