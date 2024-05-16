@@ -73,6 +73,14 @@ if (
     content: acf.featuredInsightsItem.node.subpageSettings?.introduction,
     image: acf.featuredInsightsItem.node.subpageSettings?.image,
   };
+} else if (posts?.[0] && !filterTag) {
+  featuredPost = {
+    uri: posts[0].node.uri,
+    category: posts[0].node.insightsCategories?.nodes?.[0]?.name,
+    title: posts[0].node.title,
+    content: posts[0].node.subpageSettings?.introduction,
+    image: posts[0].node.subpageSettings?.image,
+  };
 }
 ---
 

@@ -53,6 +53,7 @@ query InsightsListPage($LANG: String!, $TAG_SLUG: [String]) {
         title
         uri
         subpageSettings {
+          introduction
           image {
             ...Image
           }
