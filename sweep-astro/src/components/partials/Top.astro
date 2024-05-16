@@ -82,19 +82,23 @@ const [contentColumnSize, imageColumnSize] = sizes?.[size] ?? sizes['5-7'];
           )
         }
       </div>
-      <div
-        class={cn(
-          'col-span-full',
-          imageColumnSize,
-          'flex items-center justify-end'
-        )}
-      >
-        <slot name="image">
-          <WordpressImage data={image} loading="eager" class="rounded-lg" />
-        </slot>
-      </div>
       {
-        link && link.shouldRender && (
+        !!image && (
+          <div
+            class={cn(
+              'col-span-full',
+              imageColumnSize,
+              'flex items-center justify-end'
+            )}
+          >
+            <slot name="image">
+              <WordpressImage data={image} loading="eager" class="rounded-lg" />
+            </slot>
+          </div>
+        )
+      }
+      {
+        link.shouldRender && (
           <Button
             asLink
             href={link.url}
