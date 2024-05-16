@@ -201,6 +201,7 @@ export const HubspotForm = ({
               ReactHtmlParser(privacyPolicyText)
             ) : (
               <>
+                {/* TODO: Handle links and labels */}
                 <a href="/terms">{TRANSLATIONS.TERMS_LINK_LABEL}</a>
                 <a href="/privacy">{TRANSLATIONS.PRIVCY_LINK_LABEL}</a>
               </>

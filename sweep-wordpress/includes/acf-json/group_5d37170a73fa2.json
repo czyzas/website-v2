@@ -130,6 +130,31 @@
             "show_in_graphql": 1,
             "graphql_description": "",
             "graphql_field_name": ""
+        },
+        {
+            "key": "field_6645eaa9d04ac",
+            "label": "Has newsletter section?",
+            "name": "has_newsletter_section",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 0,
+            "message": "",
+            "default_value": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1,
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "hasNewsletterSection",
+            "graphql_non_null": 0
         }
     ],
     "location": [
@@ -221,5 +246,5 @@
         "Partner",
         "Post"
     ],
-    "modified": 1715776258
+    "modified": 1715858280
 }

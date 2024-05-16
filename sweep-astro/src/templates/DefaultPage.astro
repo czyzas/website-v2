@@ -22,6 +22,7 @@ updateStore(languageStore, 'currentLanguage', page.language!);
 updateStore(languageStore, 'languages', data.languages);
 updateStore(cmsStore, 'primaryMenu', data.primaryMenu!);
 updateStore(cmsStore, 'themeOptions', data.themeOptions!);
+updateStore(cmsStore, 'subpageSettings', data?.page?.subpageSettings);
 
 const { subpageSettings } = page;
 

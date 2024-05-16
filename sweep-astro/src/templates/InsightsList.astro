@@ -38,6 +38,7 @@ updateStore(languageStore, 'currentLanguage', page.language!);
 updateStore(languageStore, 'languages', data.languages);
 updateStore(cmsStore, 'primaryMenu', data.primaryMenu!);
 updateStore(cmsStore, 'themeOptions', data.themeOptions!);
+updateStore(cmsStore, 'subpageSettings', data?.page?.subpageSettings);
 
 const { subpageSettings, insightsListAcf: acf } = page;
 // TODO: handle data passed to Layout and Top
@@ -208,6 +209,7 @@ if (
           </Grid>
         )
       }
+      {/* TODO: IMPLEMENT PAGINATION */}
       <div class="pagination"></div>
     </Container>
   </Section>

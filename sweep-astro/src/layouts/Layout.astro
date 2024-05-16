@@ -5,6 +5,7 @@ import type { HTMLAttributes } from 'astro/types';
 import Footer from '@/components/partials/Footer.astro';
 import Header from '@/components/partials/Header.astro';
 import { cn } from '@/scripts/cn';
+import NewsletterSection from '@/components/partials/NewsletterSection.astro';
 
 interface Props extends HTMLAttributes<'main'> {
   home?: boolean;
@@ -39,6 +40,7 @@ const title = !home && pageTitle ? `${pageTitle} - ${siteTitle}` : siteTitle;
     <Header />
     <main {...props} class={cn({ subpage: !home }, name, 'flex-1', className)}>
       <slot />
+      <NewsletterSection />
     </main>
     <Footer />
   </body>
