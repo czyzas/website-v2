@@ -3,11 +3,31 @@ query InsightsSinglePage($URI: String!, $LANG: String!) {
     title
     slug
     uri
+    modified
+    insightsSingleAcf {
+      author {
+        node {
+          __typename
+          ... on PostAuthor {
+            title
+            authorAcf {
+              occupation
+              image {
+                ...Image
+              }
+            }
+          }
+        }
+      }
+    }
     language {
       ...Languages
     }
     subpageSettings {
       ...SubpageSettings
+    }
+    modules {
+      ...ModulesCollection
     }
   }
   ...Essential

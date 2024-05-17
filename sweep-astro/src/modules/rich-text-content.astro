@@ -1,0 +1,22 @@
+---
+import type { ModulesModulesContentRichTextContentLayout } from '@/__generated__/cms';
+import ModuleContainer from '@/components/ModuleContainer.astro';
+import Container from '@/components/ui/Container.astro';
+import Prose from '@/components/ui/Prose.astro';
+
+type Props = ModulesModulesContentRichTextContentLayout;
+
+const {
+  layoutName,
+  backgroundColor,
+  isColoredCard = false,
+  cardColor = 'white',
+  content = '',
+} = Astro.props;
+---
+
+<ModuleContainer name={layoutName!} bg={backgroundColor}>
+  <Container>
+    <Prose set:html={content} />
+  </Container>
+</ModuleContainer>
