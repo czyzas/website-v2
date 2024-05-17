@@ -212,7 +212,7 @@ add_action( 'admin_bar_menu', function ( $wp_admin_bar ) {
 add_filter( 'the_content', function ( $str ) {
 	$current_host = $_SERVER['HTTP_HOST'];
 	$URL_RE = sprintf( '/href=[\'"]https?:\/\/%s(\/.*[^\/])\/?[\'"]/', preg_quote( $current_host ) );
-	$str = preg_replace( $URL_RE, '"$1"', $str );
+	$str = preg_replace( $URL_RE, 'href="$1"', $str );
 
 	return $str;
 }, 9999 );
