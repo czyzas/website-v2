@@ -2,54 +2,52 @@
 import type { HTMLAttributes } from 'astro/types';
 import { cn } from '@/scripts/cn';
 import type { ParsedTag } from '@/scripts/data-parsers/parseTag';
-import { parseTags } from '@/scripts/data-parsers/parseTag';
+import type { WithAttributes } from '@/types';
 import ArticleSharing from './ArticleSharing.astro';
 import Container from './ui/Container.astro';
 import ArticleTag from './ArticleTag.astro';
 
 interface ArticleBarProps extends HTMLAttributes<'div'> {
-  details?: Record<string, string>;
-  tags?: ParsedTag[];
+  details?: Record<string, string | undefined>;
+  tags?: (ParsedTag & { shouldRender?: boolean })[];
   sharing?: boolean;
 }
 
-type Props = ArticleBarProps;
+type Props = WithAttributes<ArticleBarProps>;
 
-const {
-  class: className,
-  sharing,
-  tags: rawTags,
-  details,
-  ...props
-} = Astro.props;
-
-const tags = parseTags(rawTags);
+const { class: className, sharing, tags = [], details, ...props } = Astro.props;
 ---
 
-<div {...props} class={cn('article-bar', className)}>
-  <Container
-    class="border-t border-b border-gray-300 py-6 flex gap-8 items-center"
-  >
-    {
-      details &&
-        Object.entries(details).map(([key, value]) => (
-          <div class="typography-body">
-            <p class="text-black">{key}</p>
-            <span class="text-sw-text-subdued">{value}</span>
-          </div>
-        ))
-    }
-    {
-      tags.length > 0 && (
-        <div class="tags mt-auto flex flex-wrap gap-2.5">
-          {tags.map((tag) =>
-            tag.shouldRender ? (
-              <ArticleTag color={tag.color}>{tag.name}</ArticleTag>
-            ) : null
-          )}
-        </div>
-      )
-    }
-    {sharing && <ArticleSharing class="ml-auto" />}
-  </Container>
-</div>
+<Container
+  {...props}
+  class={cn(
+    'article-bar',
+    'border-y border-gray-300 py-6 flex gap-8 items-center',
+    className
+  )}
+>
+  {
+    details &&
+      Object.entries(details).map(([key, value]) => {
+        if (!value) return null;
+        return (
+          <dl class="typography-body">
+            <dt class="text-black">{key}</dt>
+            <dd>{value}</dd>
+          </dl>
+        );
+      })
+  }
+  {
+    tags.length > 0 && (
+      <div class="tags mt-auto flex flex-wrap gap-2.5">
+        {tags.map((tag) =>
+          tag.shouldRender ? (
+            <ArticleTag color={tag.color}>{tag.name}</ArticleTag>
+          ) : null
+        )}
+      </div>
+    )
+  }
+  {sharing && <ArticleSharing class="ml-auto" />}
+</Container>

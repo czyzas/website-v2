@@ -20,6 +20,19 @@ query InsightsSinglePage($URI: String!, $LANG: String!) {
         }
       }
     }
+    insightsCategories(first: 1) {
+      nodes {
+        name
+      }
+    }
+    insightsTags {
+      nodes {
+        name
+        tagTaxonomyAcf {
+          tagColor
+        }
+      }
+    }
     language {
       ...Languages
     }

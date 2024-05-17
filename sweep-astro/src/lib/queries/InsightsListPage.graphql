@@ -33,7 +33,7 @@ query InsightsListPage($LANG: String!, $TAG_SLUG: [String]) {
                 ...Image
               }
             }
-            insightsCategories {
+            insightsCategories(first: 1) {
               nodes {
                 name
               }
@@ -58,7 +58,7 @@ query InsightsListPage($LANG: String!, $TAG_SLUG: [String]) {
             ...Image
           }
         }
-        insightsCategories {
+        insightsCategories(first: 1) {
           nodes {
             name
           }

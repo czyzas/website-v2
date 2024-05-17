@@ -25,7 +25,9 @@ import Grid from '@/components/ui/Grid.astro';
 import Card from '@/components/ui/Card.astro';
 import { TRANSLATIONS } from '@/constants';
 import WordpressImage from '@/components/WordpressImage.astro';
+import { parseTags } from '@/scripts/data-parsers/parseTag';
 
+// TODO: use some kind of reusable function
 export const getStaticPaths = async () => {
   const finalPaths = [];
 
@@ -55,6 +57,7 @@ const lang = isString(paramLang) ? paramLang : defaultLocale;
 const rawUri = prefixURI(unprefixedURI, 'insights');
 const uri = cleanURI(rawUri, lang);
 
+// TODO: use some kind of reusable function
 if (!uri) {
   if (import.meta.env.SSR) {
     return Astro.redirect('/404');
@@ -65,6 +68,7 @@ if (!uri) {
 
 const data = await fetchInsightsSingle(uri, lang);
 
+// TODO: use some kind of reusable function
 if (!compareURI(uri, data.page?.uri)) {
   if (import.meta.env.SSR) {
     return Astro.redirect('/404');
@@ -90,35 +94,43 @@ const size = subpageSettings?.topDistribution ?? '5-7';
 const acf = page.insightsSingleAcf;
 const author =
   acf?.author?.node.__typename === 'PostAuthor' ? acf.author.node : undefined;
+const category = page.insightsCategories?.nodes?.[0]?.name;
+const lastUpdated = page.modified
+  ? new Date(page.modified).toLocaleDateString(lang === 'en' ? 'en-UK' : lang, {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric',
+    })
+  : undefined;
+
+const tags = parseTags(page.insightsTags?.nodes);
 ---
 
-<Layout
-  name="insights"
-  pageTitle={pageTitle}
-  class="py-8 md:py-18 bg-gradient-to-b from-sw-surface-subdued to-transparent"
->
+<Layout name="insights" pageTitle={pageTitle}>
   <Top
     title={title}
     image={image}
     size={size as ColumnSizes}
-    class="pt-18 pb-12"
-  />
-  {/* TODO: fill this data from WP */}
-  <ArticleBar
-    details={{
-      Category: 'Insight',
-      'Last updated': '11 March 2024',
-    }}
-    tags={[]}
-    sharing
-  />
+    class="py-8 md:pt-18 md:pb-14"
+  >
+    <ArticleBar
+      details={{
+        Category: category,
+        'Last updated': lastUpdated,
+      }}
+      tags={tags}
+      sharing
+      class="mt-8 md:mt-12"
+    />
+  </Top>
+
   <Container>
     <Grid>
       <div class="col-span-full md:col-start-2 md:col-end-9 order-2 md:order-1">
         <ModulesIncluder data={page?.modules} />
       </div>
       <aside
-        class="col-span-full md:col-start-10 md:col-end-13 order-1 md:order-2"
+        class="col-span-full md:col-start-10 md:col-end-13 order-1 md:order-2 flex flex-col gap-4 md:gap-6"
       >
         {
           !!author && (
