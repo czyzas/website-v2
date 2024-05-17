@@ -103,6 +103,7 @@ const author =
     size={size as ColumnSizes}
     class="pt-18 pb-12"
   />
+  {/* TODO: fill this data from WP */}
   <ArticleBar
     details={{
       Category: 'Insight',
@@ -125,8 +126,17 @@ const author =
               <span class="typography-small-box-title uppercase text-sw-sky-400">
                 {TRANSLATIONS.AUTHOR}
               </span>
-              <div class="flex gap-3.5">
-                <WordpressImage class="size-12 rounded-full object-cover" />
+              <div class="flex items-center gap-3.5">
+                <WordpressImage
+                  data={author.authorAcf?.image}
+                  class="size-12 rounded-full object-cover"
+                />
+                <div class="flex flex-col typography-body">
+                  <span class="text-black">{author.title}</span>
+                  {!!author.authorAcf?.occupation && (
+                    <span>{author.authorAcf.occupation}</span>
+                  )}
+                </div>
               </div>
             </Card>
           )
