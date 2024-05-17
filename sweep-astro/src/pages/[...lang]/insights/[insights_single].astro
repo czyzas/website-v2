@@ -19,6 +19,7 @@ import Layout from '@/layouts/Layout.astro';
 import Top from '@/components/partials/Top.astro';
 import ModulesIncluder from '@/components/ModulesIncluder.astro';
 import type { ColumnSizes } from '@/types';
+import ArticleBar from '@/components/ArticleBar.astro';
 
 export const getStaticPaths = async () => {
   const finalPaths = [];
@@ -88,7 +89,20 @@ const size = subpageSettings?.topDistribution ?? '5-7';
   pageTitle="INSIGHTS"
   class="py-8 md:py-18 bg-gradient-to-b from-sw-surface-subdued to-transparent"
 >
-  <Top title={title} image={image} size={size as ColumnSizes} class="py-25" />
+  <Top
+    title={title}
+    image={image}
+    size={size as ColumnSizes}
+    class="pt-18 pb-12"
+  />
+  <ArticleBar
+    details={{
+      Category: 'Insight',
+      'Last updated': '11 March 2024',
+    }}
+    tags={}
+    sharing={true}
+  />
   <ModulesIncluder data={page?.modules} />
   <h1>INSIGHTS SINGLE</h1>
 </Layout>

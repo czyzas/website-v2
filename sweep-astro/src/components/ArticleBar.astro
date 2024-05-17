@@ -1,0 +1,50 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import type { WithAttributes } from '@/types';
+import { cn } from '@/scripts/cn';
+import type { ParsedTag } from '@/scripts/data-parsers/parseTag';
+import { parseTags } from '@/scripts/data-parsers/parseTag';
+import ArticleSharing from './ArticleSharing.astro';
+import Container from './ui/Container.astro';
+import ArticleTag from './ArticleTag.astro';
+
+type ArticleBarProps = {
+  details?: Record<string, string>;
+  tags?: ParsedTag[];
+  sharing?: boolean;
+};
+
+type Props = WithAttributes<ArticleBarProps & HTMLAttributes<'div'>>;
+
+const { class: className, sharing, tags: rawTags, details } = Astro.props;
+
+const tags = parseTags(rawTags);
+---
+
+<section class={cn(['article-bar', className])}>
+  <Container
+    class="border-t border-b border-gray-300 py-6 flex gap-8 items-center"
+  >
+    {
+      details &&
+        Object.entries(details).map(([key, value]) => (
+          <div>
+            <p class="text-lg">{key}</p>
+            <span class="text-sw-text-subdued">{value}</span>
+          </div>
+        ))
+    }
+    {
+      tags.length > 0 && (
+        <div class="tags mt-auto flex flex-wrap gap-2.5">
+          {tags.map((tag) =>
+            tag.shouldRender ? (
+              <ArticleTag color={tag.color}>{tag.name}</ArticleTag>
+            ) : null
+          )}
+        </div>
+      )
+    }
+    {sharing && <ArticleSharing class="ml-auto" />}
+  </Container>
+</section>

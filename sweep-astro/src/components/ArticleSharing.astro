@@ -1,0 +1,75 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { HTMLAttributes } from 'astro/types';
+import type { WithAttributes } from '@/types';
+import { cn } from '@/scripts/cn';
+
+type SharingProps = {
+  sharer: string;
+  title: string;
+  url: string;
+  itemClass?: typeof className;
+}[];
+
+type Props = WithAttributes<HTMLAttributes<'div'>>;
+
+const { class: className } = Astro.props;
+
+const sharingLinks: SharingProps = [
+  {
+    sharer: 'twitter',
+    title: 'Twitter',
+    url: 'https://example.com',
+  },
+  {
+    sharer: 'whatsapp',
+    title: 'WhatsApp',
+    url: 'https://example.com',
+  },
+  {
+    sharer: 'linkedin',
+    title: 'Linkedin',
+    url: 'https://example.com',
+  },
+  {
+    sharer: 'files',
+    title: 'Email',
+    url: 'https://example.com',
+    itemClass: 'copy-link',
+  },
+  {
+    sharer: 'email',
+    title: 'Email',
+    url: 'https://example.com',
+  },
+];
+---
+
+<script src="sharer.js/sharer.min.js"></script>
+<script>
+  document.querySelector('.copy-link')?.addEventListener('click', (event) => {
+    event.preventDefault();
+    const url = document.location.href;
+
+    if (window.isSecureContext) {
+      navigator.clipboard.writeText(url);
+    }
+  });
+</script>
+<div class={cn(['sharing', 'flex gap-3.5', className])}>
+  {
+    sharingLinks.map(({ sharer, title, url, itemClass }) => (
+      <button
+        data-sharer={sharer}
+        data-title={title}
+        data-url={url}
+        class={cn([
+          'flex items-center justify-center w-11 h-11 rounded-full border border-sw-gray-400 hover:border-sw-sky-400 hover:text-sw-sky-400 transition-colors',
+          itemClass,
+        ])}
+      >
+        <Icon name={sharer} class="w-[1.125em] h-auto" />
+      </button>
+    ))
+  }
+</div>
