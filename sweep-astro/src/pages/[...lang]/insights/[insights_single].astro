@@ -20,6 +20,11 @@ import Top from '@/components/partials/Top.astro';
 import ModulesIncluder from '@/components/ModulesIncluder.astro';
 import type { ColumnSizes } from '@/types';
 import ArticleBar from '@/components/ArticleBar.astro';
+import Container from '@/components/ui/Container.astro';
+import Grid from '@/components/ui/Grid.astro';
+import Card from '@/components/ui/Card.astro';
+import { TRANSLATIONS } from '@/constants';
+import WordpressImage from '@/components/WordpressImage.astro';
 
 export const getStaticPaths = async () => {
   const finalPaths = [];
@@ -82,11 +87,14 @@ const pageTitle = page?.title ?? '';
 const title = subpageSettings?.customTitle || pageTitle || '';
 const image = subpageSettings?.image;
 const size = subpageSettings?.topDistribution ?? '5-7';
+const acf = page.insightsSingleAcf;
+const author =
+  acf?.author?.node.__typename === 'PostAuthor' ? acf.author.node : undefined;
 ---
 
 <Layout
   name="insights"
-  pageTitle="INSIGHTS"
+  pageTitle={pageTitle}
   class="py-8 md:py-18 bg-gradient-to-b from-sw-surface-subdued to-transparent"
 >
   <Top
@@ -100,9 +108,30 @@ const size = subpageSettings?.topDistribution ?? '5-7';
       Category: 'Insight',
       'Last updated': '11 March 2024',
     }}
-    tags={}
-    sharing={true}
+    tags={[]}
+    sharing
   />
-  <ModulesIncluder data={page?.modules} />
-  <h1>INSIGHTS SINGLE</h1>
+  <Container>
+    <Grid>
+      <div class="col-span-full md:col-start-2 md:col-end-9 order-2 md:order-1">
+        <ModulesIncluder data={page?.modules} />
+      </div>
+      <aside
+        class="col-span-full md:col-start-10 md:col-end-13 order-1 md:order-2"
+      >
+        {
+          !!author && (
+            <Card class="py-4 flex flex-col gap-3">
+              <span class="typography-small-box-title uppercase text-sw-sky-400">
+                {TRANSLATIONS.AUTHOR}
+              </span>
+              <div class="flex gap-3.5">
+                <WordpressImage class="size-12 rounded-full object-cover" />
+              </div>
+            </Card>
+          )
+        }
+      </aside>
+    </Grid>
+  </Container>
 </Layout>

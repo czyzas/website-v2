@@ -1,6 +1,5 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
-import type { WithAttributes } from '@/types';
 import { cn } from '@/scripts/cn';
 import type { ParsedTag } from '@/scripts/data-parsers/parseTag';
 import { parseTags } from '@/scripts/data-parsers/parseTag';
@@ -8,28 +7,34 @@ import ArticleSharing from './ArticleSharing.astro';
 import Container from './ui/Container.astro';
 import ArticleTag from './ArticleTag.astro';
 
-type ArticleBarProps = {
+interface ArticleBarProps extends HTMLAttributes<'div'> {
   details?: Record<string, string>;
   tags?: ParsedTag[];
   sharing?: boolean;
-};
+}
 
-type Props = WithAttributes<ArticleBarProps & HTMLAttributes<'div'>>;
+type Props = ArticleBarProps;
 
-const { class: className, sharing, tags: rawTags, details } = Astro.props;
+const {
+  class: className,
+  sharing,
+  tags: rawTags,
+  details,
+  ...props
+} = Astro.props;
 
 const tags = parseTags(rawTags);
 ---
 
-<section class={cn(['article-bar', className])}>
+<div {...props} class={cn('article-bar', className)}>
   <Container
     class="border-t border-b border-gray-300 py-6 flex gap-8 items-center"
   >
     {
       details &&
         Object.entries(details).map(([key, value]) => (
-          <div>
-            <p class="text-lg">{key}</p>
+          <div class="typography-body">
+            <p class="text-black">{key}</p>
             <span class="text-sw-text-subdued">{value}</span>
           </div>
         ))
@@ -47,4 +52,4 @@ const tags = parseTags(rawTags);
     }
     {sharing && <ArticleSharing class="ml-auto" />}
   </Container>
-</section>
+</div>

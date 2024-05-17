@@ -21,4 +21,5 @@ export const TRANSLATIONS = {
   NEWSLETTER_SECTION: {
     FORM_SUCCESS_MESSAGE: 'SUBMISSION SUCCESS',
   },
+  AUTHOR: 'Author',
 } as const;

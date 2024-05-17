@@ -199,6 +199,11 @@ export default {
           fontSize: '1.625rem',
           lineHeight: theme('lineHeight.snug'),
         },
+        '.typography-small-box-title': {
+          fontSize: theme('fontSize.xs'),
+          lineHeight: theme('lineHeight.normal'),
+          fontWeight: theme('fontWeight.bold'),
+        },
       });
     }),
   ],
