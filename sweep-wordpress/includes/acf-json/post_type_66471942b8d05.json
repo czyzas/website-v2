@@ -43,7 +43,7 @@
         "item_link_description": "A link to a author."
     },
     "description": "",
-    "public": false,
+    "public": true,
     "hierarchical": false,
     "exclude_from_search": false,
     "publicly_queryable": false,
@@ -83,5 +83,5 @@
     "show_in_graphql": 1,
     "graphql_single_name": "postAuthor",
     "graphql_plural_name": "postAuthors",
-    "modified": 1715936000
+    "modified": 1715939215
 }

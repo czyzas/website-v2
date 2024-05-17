@@ -18,6 +18,15 @@ fragment ModulesCollection on Modules {
         }
       }
     }
+    ... on ModulesModulesContentRichTextContentLayout {
+      layoutName
+      backgroundColor {
+        selectBackgroundColor
+      }
+      isColoredCard
+      cardColor
+      content
+    }
     ... on ModulesModulesContentBreakLayout {
       layoutName
       backgroundColor {

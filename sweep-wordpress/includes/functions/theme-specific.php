@@ -173,7 +173,7 @@ function add_item( $admin_bar ) {
 		$url = home_url();
 	}
 
-	$ssr_url = get_ssr_url($url);
+	$ssr_url = get_ssr_url( $url );
 
 	$admin_bar->add_menu( [
 		'id'    => 'wp-admin-bar-view-ssr',
@@ -183,7 +183,7 @@ function add_item( $admin_bar ) {
 	] );
 }
 
-function get_ssr_url($url){
+function get_ssr_url( $url ) {
 	$ssr_domain = env( "SSR_HOME_DOMAIN" );
 	$wp_domain = env( "WP_HOME" );
 
@@ -193,11 +193,10 @@ function get_ssr_url($url){
 }
 
 //Add "View SSR page" to page list items
-add_filter('page_row_actions', 'add_ssr_action_link', 10, 2);
-add_filter('post_row_actions', 'add_ssr_action_link', 10, 2);
-function add_ssr_action_link($actions, $page_object)
-{
-	$ssr_url = get_ssr_url(get_permalink($page_object->ID));
+add_filter( 'page_row_actions', 'add_ssr_action_link', 10, 2 );
+add_filter( 'post_row_actions', 'add_ssr_action_link', 10, 2 );
+function add_ssr_action_link( $actions, $page_object ) {
+	$ssr_url = get_ssr_url( get_permalink( $page_object->ID ) );
 	$actions['view'] = '<a href="' . $ssr_url . '" class="google_link" target="_blank">View SSR page</a>';
 
 	return $actions;
@@ -212,7 +211,7 @@ add_action( 'admin_bar_menu', function ( $wp_admin_bar ) {
 // Replace current host url with internal url
 add_filter( 'the_content', function ( $str ) {
 	$current_host = $_SERVER['HTTP_HOST'];
-	$URL_RE = sprintf( '/[\'"]https?:\/\/%s(\/.*[^\/])\/?[\'"]/', preg_quote( $current_host ) );
+	$URL_RE = sprintf( '/href=[\'"]https?:\/\/%s(\/.*[^\/])\/?[\'"]/', preg_quote( $current_host ) );
 	$str = preg_replace( $URL_RE, '"$1"', $str );
 
 	return $str;
