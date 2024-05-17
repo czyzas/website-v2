@@ -1,0 +1,94 @@
+---
+import type { InferGetStaticParamsType } from 'astro';
+import { isString } from 'lodash-es';
+import { defaultLocale } from '@/i18n/config';
+import { getLangParam, getUrlWithoutLang } from '@/i18n/utils';
+import {
+  fetchInsightsPagesStaticPaths,
+  fetchInsightsSingle,
+} from '@/lib/fetchCMSData';
+import {
+  cleanURI,
+  compareURI,
+  prefixURI,
+  unprefixURI,
+} from '@/scripts/utils-uri';
+import { initializeStore } from '@/scripts/store';
+import { cmsStore } from '@/stores/cmsStore';
+import Layout from '@/layouts/Layout.astro';
+import Top from '@/components/partials/Top.astro';
+import ModulesIncluder from '@/components/ModulesIncluder.astro';
+import type { ColumnSizes } from '@/types';
+
+export const getStaticPaths = async () => {
+  const finalPaths = [];
+
+  const paths = await fetchInsightsPagesStaticPaths();
+  for (const staticPath of paths) {
+    if (!staticPath?.languageCode || !staticPath?.uri) {
+      continue;
+    }
+
+    const paramPath = getUrlWithoutLang(staticPath.uri);
+
+    finalPaths.push({
+      params: {
+        lang: getLangParam(staticPath.languageCode),
+        insights_single: unprefixURI(paramPath, 'insights'),
+      },
+    });
+  }
+
+  return finalPaths;
+};
+
+const { insights_single: unprefixedURI, lang: paramLang = defaultLocale } =
+  Astro.params as InferGetStaticParamsType<typeof getStaticPaths>;
+
+const lang = isString(paramLang) ? paramLang : defaultLocale;
+const rawUri = prefixURI(unprefixedURI, 'insights');
+const uri = cleanURI(rawUri, lang);
+
+if (!uri) {
+  if (import.meta.env.SSR) {
+    return Astro.redirect('/404');
+  }
+
+  throw new Error(`Page with uri '${rawUri}' does not exists`);
+}
+
+const data = await fetchInsightsSingle(uri, lang);
+
+if (!compareURI(uri, data.page?.uri)) {
+  if (import.meta.env.SSR) {
+    return Astro.redirect('/404');
+  }
+
+  throw new Error(`Page with uri '${rawUri}' does not exists`);
+}
+
+const page = data.page!;
+
+initializeStore(cmsStore, {
+  primaryMenu: data.primaryMenu!,
+  themeOptions: data.themeOptions!,
+  subpageSettings: data.page?.subpageSettings,
+});
+
+const { subpageSettings } = page;
+
+const pageTitle = page?.title ?? '';
+const title = subpageSettings?.customTitle || pageTitle || '';
+const image = subpageSettings?.image;
+const size = subpageSettings?.topDistribution ?? '5-7';
+---
+
+<Layout
+  name="insights"
+  pageTitle="INSIGHTS"
+  class="py-8 md:py-18 bg-gradient-to-b from-sw-surface-subdued to-transparent"
+>
+  <Top title={title} image={image} size={size as ColumnSizes} class="py-25" />
+  <ModulesIncluder data={page?.modules} />
+  <h1>INSIGHTS SINGLE</h1>
+</Layout>
