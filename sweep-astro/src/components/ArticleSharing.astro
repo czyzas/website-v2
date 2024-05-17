@@ -1,20 +1,20 @@
 ---
 import { Icon } from 'astro-icon/components';
 import type { HTMLAttributes } from 'astro/types';
-import type { WithAttributes } from '@/types';
 import { cn } from '@/scripts/cn';
 
 type SharingProps = {
   sharer: string;
   title: string;
   url: string;
-  itemClass?: typeof className;
+  itemClass?: string;
 }[];
 
-type Props = WithAttributes<HTMLAttributes<'div'>>;
+type Props = HTMLAttributes<'div'>;
 
-const { class: className } = Astro.props;
+const { class: className, ...props } = Astro.props;
 
+// TODO: replace example.com with current url
 const sharingLinks: SharingProps = [
   {
     sharer: 'twitter',
@@ -45,10 +45,10 @@ const sharingLinks: SharingProps = [
 ];
 ---
 
-<script src="sharer.js/sharer.min.js"></script>
 <script>
-  document.querySelector('.copy-link')?.addEventListener('click', (event) => {
-    event.preventDefault();
+  import 'sharer.js/sharer.min';
+
+  document.querySelector('.copy-link')?.addEventListener('click', () => {
     const url = document.location.href;
 
     if (window.isSecureContext) {
@@ -56,17 +56,18 @@ const sharingLinks: SharingProps = [
     }
   });
 </script>
-<div class={cn(['sharing', 'flex gap-3.5', className])}>
+<div {...props} class={cn('sharing', 'flex items-center gap-3.5', className)}>
   {
     sharingLinks.map(({ sharer, title, url, itemClass }) => (
       <button
+        type="button"
         data-sharer={sharer}
         data-title={title}
         data-url={url}
-        class={cn([
-          'flex items-center justify-center w-11 h-11 rounded-full border border-sw-gray-400 hover:border-sw-sky-400 hover:text-sw-sky-400 transition-colors',
-          itemClass,
-        ])}
+        class={cn(
+          'flex items-center justify-center size-11 rounded-full border border-sw-gray-400 hover:border-sw-sky-400 hover:text-sw-sky-400 transition-colors',
+          itemClass
+        )}
       >
         <Icon name={sharer} class="w-[1.125em] h-auto" />
       </button>
