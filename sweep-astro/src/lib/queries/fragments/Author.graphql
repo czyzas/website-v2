@@ -1,0 +1,10 @@
+fragment Author on PostAuthor {
+  __typename
+  title
+  authorAcf {
+    occupation
+    image {
+      ...Image
+    }
+  }
+}

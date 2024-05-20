@@ -1,0 +1,40 @@
+---
+import type { WithAttributes } from '@/types';
+import { cn } from '@/scripts/cn';
+import Card from '../ui/Card.astro';
+
+interface SidebarCardProps {
+  title?: string;
+  collapsible?: boolean;
+}
+
+type Props = WithAttributes<SidebarCardProps>;
+
+const { title, collapsible = false } = Astro.props;
+
+const Wrapper = collapsible ? 'details' : Fragment;
+const Heading = collapsible ? 'summary' : 'div';
+---
+
+<Card class={cn('p-0', { collapsible })}>
+  <Wrapper class="group">
+    {
+      (collapsible || (!collapsible && title)) && (
+        <Heading
+          class={cn(
+            'px-6 py-4 typography-small-box-title uppercase text-sw-sky-400',
+            {
+              'pb-3': !collapsible,
+              'group-open:pb-3': collapsible,
+            }
+          )}
+        >
+          {title}
+        </Heading>
+      )
+    }
+    <div class={cn('content px-6 pb-4', { 'pt-4': !title })}>
+      <slot />
+    </div>
+  </Wrapper>
+</Card>

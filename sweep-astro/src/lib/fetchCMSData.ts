@@ -18,7 +18,6 @@ import {
   InsightsTagsStaticPathsDocument,
   InsightsListPageDocument,
   InsightsSinglePageDocument,
-  InsightsListItemDocument,
 } from '@/__generated__/cms';
 import type {
   ComponentIndustriesListFragment,
