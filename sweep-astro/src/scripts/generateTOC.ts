@@ -29,5 +29,5 @@ export const combineModulesToTOC = (modules: AllModules) => {
 
 export const generateTOC = (html: string) => {
   const root = parseHTML(html);
-  console.log(root);
+  // console.log(root);
 };

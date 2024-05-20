@@ -18,6 +18,7 @@ import {
   InsightsTagsStaticPathsDocument,
   InsightsListPageDocument,
   InsightsSinglePageDocument,
+  InsightsListItemDocument,
 } from '@/__generated__/cms';
 import type {
   ComponentIndustriesListFragment,
@@ -192,7 +193,6 @@ export function fetchInsightsSingle(uri: string, lang: string = defaultLocale) {
     [lang, getUrlWithoutLang(uri)]
   );
 }
-
 // MODULES
 interface PostsParams {
   lang: string;

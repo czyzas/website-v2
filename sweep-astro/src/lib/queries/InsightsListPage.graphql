@@ -50,27 +50,7 @@ query InsightsListPage($LANG: String!, $TAG_SLUG: [String]) {
     edges {
       cursor
       node {
-        title
-        uri
-        subpageSettings {
-          introduction
-          image {
-            ...Image
-          }
-        }
-        insightsCategories(first: 1) {
-          nodes {
-            name
-          }
-        }
-        insightsTags {
-          nodes {
-            name
-            tagTaxonomyAcf {
-              tagColor
-            }
-          }
-        }
+        ...InsightsListItem
       }
     }
     pageInfo {

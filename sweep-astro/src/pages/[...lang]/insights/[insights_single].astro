@@ -27,6 +27,9 @@ import { TRANSLATIONS } from '@/constants';
 import WordpressImage from '@/components/WordpressImage.astro';
 import { parseTags } from '@/scripts/data-parsers/parseTag';
 import { combineModulesToTOC, generateTOC } from '@/scripts/generateTOC';
+import SectionTitle from '@/components/partials/SectionTitle.astro';
+import ArticlesGrid from '@/components/ArticlesGrid.astro';
+import Section from '@/components/ui/Section.astro';
 
 // TODO: use some kind of reusable function
 export const getStaticPaths = async () => {
@@ -110,6 +113,11 @@ const modules = page?.modules?.modulesContent ?? [];
 
 const modulesHTML = combineModulesToTOC(modules);
 generateTOC(modulesHTML);
+
+const insights = (data?.insights?.nodes ?? []).filter(Boolean);
+const filteredInsights = insights
+  .filter((insight) => insight.uri !== data.page?.uri)
+  .slice(0, 3);
 ---
 
 <Layout name="insights" pageTitle={pageTitle}>
@@ -167,4 +175,10 @@ generateTOC(modulesHTML);
       </aside>
     </Grid>
   </Container>
+  <Section bg="surface-background">
+    <Container>
+      <SectionTitle withMargin headline={TRANSLATIONS.MORE_STORIES} />
+      <ArticlesGrid posts={filteredInsights} lang={lang} />
+    </Container>
+  </Section>
 </Layout>

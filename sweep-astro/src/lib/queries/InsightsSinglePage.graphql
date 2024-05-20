@@ -43,5 +43,10 @@ query InsightsSinglePage($URI: String!, $LANG: String!) {
       ...ModulesCollection
     }
   }
+  insights(first: 4, where: { status: PUBLISH, language: $LANG }) {
+    nodes {
+      ...InsightsListItem
+    }
+  }
   ...Essential
 }
