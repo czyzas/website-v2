@@ -21,5 +21,8 @@ export const TRANSLATIONS = {
   NEWSLETTER_SECTION: {
     FORM_SUCCESS_MESSAGE: 'SUBMISSION SUCCESS',
   },
-  AUTHOR: 'Author',
+  SIDEBAR: {
+    AUTHOR: 'Author',
+    TOC: 'Contents',
+  },
 } as const;

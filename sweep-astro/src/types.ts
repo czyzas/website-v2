@@ -8,3 +8,10 @@ export type ReplaceTypenameLiteral<ObjType extends object> = {
 };
 
 export type ColumnSizes = '5-7' | '6-6' | '7-5';
+
+export type ITableOfContentsEntry = {
+  level: number;
+  id: string;
+  label: string;
+  children?: ITableOfContentsEntry[];
+};

@@ -1,0 +1,33 @@
+---
+import type { AuthorFragment } from '@/__generated__/cms';
+import { TRANSLATIONS } from '@/constants';
+import WordpressImage from '../WordpressImage.astro';
+import SidebarCard from './SidebarCard.astro';
+
+interface AuthorProps {
+  author?: AuthorFragment;
+}
+
+type Props = AuthorProps;
+
+const { author } = Astro.props;
+---
+
+{
+  !!author && (
+    <SidebarCard title={TRANSLATIONS.SIDEBAR.AUTHOR}>
+      <div class="flex items-center gap-3.5">
+        <WordpressImage
+          data={author.authorAcf?.image}
+          class="size-12 rounded-full object-cover"
+        />
+        <div class="flex flex-col typography-body">
+          <span class="text-black">{author.title}</span>
+          {!!author.authorAcf?.occupation && (
+            <span>{author.authorAcf.occupation}</span>
+          )}
+        </div>
+      </div>
+    </SidebarCard>
+  )
+}

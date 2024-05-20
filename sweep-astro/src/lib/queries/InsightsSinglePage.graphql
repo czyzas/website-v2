@@ -7,16 +7,7 @@ query InsightsSinglePage($URI: String!, $LANG: String!) {
     insightsSingleAcf {
       author {
         node {
-          __typename
-          ... on PostAuthor {
-            title
-            authorAcf {
-              occupation
-              image {
-                ...Image
-              }
-            }
-          }
+          ...Author
         }
       }
     }

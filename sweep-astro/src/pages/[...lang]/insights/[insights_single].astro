@@ -22,11 +22,12 @@ import type { ColumnSizes } from '@/types';
 import ArticleBar from '@/components/ArticleBar.astro';
 import Container from '@/components/ui/Container.astro';
 import Grid from '@/components/ui/Grid.astro';
-import Card from '@/components/ui/Card.astro';
-import { TRANSLATIONS } from '@/constants';
-import WordpressImage from '@/components/WordpressImage.astro';
 import { parseTags } from '@/scripts/data-parsers/parseTag';
-import { combineModulesToTOC, generateTOC } from '@/scripts/generateTOC';
+import SidebarCardAuthor from '@/components/sidebar/SidebarCardAuthor.astro';
+import SidebarCardTableOfContents from '@/components/sidebar/SidebarCardTableOfContents.astro';
+import Sidebar from '@/components/sidebar/Sidebar.astro';
+import { overwriteWYSIWYGContent } from '@/scripts/overwriteWYSIWYGContent';
+import { buildTOC } from '@/scripts/buildTOC';
 
 // TODO: use some kind of reusable function
 export const getStaticPaths = async () => {
@@ -87,12 +88,12 @@ initializeStore(cmsStore, {
 });
 
 const { subpageSettings } = page;
-
 const pageTitle = page?.title ?? '';
 const title = subpageSettings?.customTitle || pageTitle || '';
 const image = subpageSettings?.image;
 const size = subpageSettings?.topDistribution ?? '5-7';
 const acf = page.insightsSingleAcf;
+const tags = parseTags(page.insightsTags?.nodes);
 const author =
   acf?.author?.node.__typename === 'PostAuthor' ? acf.author.node : undefined;
 const category = page.insightsCategories?.nodes?.[0]?.name;
@@ -104,12 +105,11 @@ const lastUpdated = page.modified
     })
   : undefined;
 
-const tags = parseTags(page.insightsTags?.nodes);
+overwriteWYSIWYGContent(page.modules?.modulesContent, {
+  RICH_TEXT_CONTENT_HEADINGS_IDS: true,
+});
 
-const modules = page?.modules?.modulesContent ?? [];
-
-const modulesHTML = combineModulesToTOC(modules);
-generateTOC(modulesHTML);
+const toc = buildTOC(page.modules?.modulesContent);
 ---
 
 <Layout name="insights" pageTitle={pageTitle}>
@@ -138,33 +138,13 @@ generateTOC(modulesHTML);
       >
         <ModulesIncluder category="article" data={page?.modules} />
       </div>
-      <aside
-        class="col-span-full md:col-start-10 md:col-end-13 order-1 md:order-2 flex flex-col gap-4 md:gap-6"
+      <Sidebar
+        sticky
+        class="col-span-full md:col-start-10 md:col-end-13 order-1 md:order-2"
       >
-        <div class="sticky top-8">
-          {
-            !!author && (
-              <Card class="py-4 flex flex-col gap-3">
-                <span class="typography-small-box-title uppercase text-sw-sky-400">
-                  {TRANSLATIONS.AUTHOR}
-                </span>
-                <div class="flex items-center gap-3.5">
-                  <WordpressImage
-                    data={author.authorAcf?.image}
-                    class="size-12 rounded-full object-cover"
-                  />
-                  <div class="flex flex-col typography-body">
-                    <span class="text-black">{author.title}</span>
-                    {!!author.authorAcf?.occupation && (
-                      <span>{author.authorAcf.occupation}</span>
-                    )}
-                  </div>
-                </div>
-              </Card>
-            )
-          }
-        </div>
-      </aside>
+        <SidebarCardAuthor author={author} />
+        <SidebarCardTableOfContents toc={toc} />
+      </Sidebar>
     </Grid>
   </Container>
 </Layout>

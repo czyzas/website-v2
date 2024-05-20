@@ -1,0 +1,25 @@
+---
+import { TRANSLATIONS } from '@/constants';
+import type { ITableOfContentsEntry } from '@/types';
+import SidebarCard from './SidebarCard.astro';
+
+type Props = {
+  toc?: ITableOfContentsEntry[];
+};
+// Note: if toc is empty, you probably should use this component AFTER using Prose (because those items are added inside <Prose /> component)
+const { toc } = Astro.props;
+---
+
+{
+  toc && toc.length > 0 && (
+    <SidebarCard collapsible title={TRANSLATIONS.SIDEBAR.TOC}>
+      <ul>
+        {toc.map((entry) => (
+          <li>
+            <a href={`#${entry.id}`}>{entry.label}</a>
+          </li>
+        ))}
+      </ul>
+    </SidebarCard>
+  )
+}
