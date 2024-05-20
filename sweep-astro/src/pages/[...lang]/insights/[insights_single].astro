@@ -26,6 +26,7 @@ import Card from '@/components/ui/Card.astro';
 import { TRANSLATIONS } from '@/constants';
 import WordpressImage from '@/components/WordpressImage.astro';
 import { parseTags } from '@/scripts/data-parsers/parseTag';
+import { combineModulesToTOC, generateTOC } from '@/scripts/generateTOC';
 
 // TODO: use some kind of reusable function
 export const getStaticPaths = async () => {
@@ -104,6 +105,11 @@ const lastUpdated = page.modified
   : undefined;
 
 const tags = parseTags(page.insightsTags?.nodes);
+
+const modules = page?.modules?.modulesContent ?? [];
+
+const modulesHTML = combineModulesToTOC(modules);
+generateTOC(modulesHTML);
 ---
 
 <Layout name="insights" pageTitle={pageTitle}>
@@ -127,33 +133,37 @@ const tags = parseTags(page.insightsTags?.nodes);
 
   <Container>
     <Grid>
-      <div class="col-span-full md:col-start-2 md:col-end-9 order-2 md:order-1">
-        <ModulesIncluder data={page?.modules} />
+      <div
+        class="col-span-full md:col-start-2 md:col-end-9 order-2 md:order-1 flex flex-col gap-8 md:gap-14"
+      >
+        <ModulesIncluder category="article" data={page?.modules} />
       </div>
       <aside
         class="col-span-full md:col-start-10 md:col-end-13 order-1 md:order-2 flex flex-col gap-4 md:gap-6"
       >
-        {
-          !!author && (
-            <Card class="py-4 flex flex-col gap-3">
-              <span class="typography-small-box-title uppercase text-sw-sky-400">
-                {TRANSLATIONS.AUTHOR}
-              </span>
-              <div class="flex items-center gap-3.5">
-                <WordpressImage
-                  data={author.authorAcf?.image}
-                  class="size-12 rounded-full object-cover"
-                />
-                <div class="flex flex-col typography-body">
-                  <span class="text-black">{author.title}</span>
-                  {!!author.authorAcf?.occupation && (
-                    <span>{author.authorAcf.occupation}</span>
-                  )}
+        <div class="sticky top-8">
+          {
+            !!author && (
+              <Card class="py-4 flex flex-col gap-3">
+                <span class="typography-small-box-title uppercase text-sw-sky-400">
+                  {TRANSLATIONS.AUTHOR}
+                </span>
+                <div class="flex items-center gap-3.5">
+                  <WordpressImage
+                    data={author.authorAcf?.image}
+                    class="size-12 rounded-full object-cover"
+                  />
+                  <div class="flex flex-col typography-body">
+                    <span class="text-black">{author.title}</span>
+                    {!!author.authorAcf?.occupation && (
+                      <span>{author.authorAcf.occupation}</span>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </Card>
-          )
-        }
+              </Card>
+            )
+          }
+        </div>
       </aside>
     </Grid>
   </Container>

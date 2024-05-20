@@ -147,154 +147,6 @@
                     "min": "",
                     "max": ""
                 },
-                "layout_664727d7fd0b6": {
-                    "key": "layout_664727d7fd0b6",
-                    "name": "rich-text-content",
-                    "label": "Rich Text Content",
-                    "display": "block",
-                    "sub_fields": [
-                        {
-                            "key": "field_664738b40b8e1",
-                            "label": "Background color",
-                            "name": "background_color",
-                            "aria-label": "",
-                            "type": "group",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "invisible-group",
-                                "id": ""
-                            },
-                            "wpml_cf_preferences": 1,
-                            "layout": "block",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "backgroundColor",
-                            "graphql_non_null": 0,
-                            "sub_fields": [
-                                {
-                                    "key": "field_664738b40b8e3",
-                                    "label": "Background color",
-                                    "name": "background_color",
-                                    "aria-label": "",
-                                    "type": "clone",
-                                    "instructions": "",
-                                    "required": 0,
-                                    "conditional_logic": 0,
-                                    "wrapper": {
-                                        "width": "",
-                                        "class": "",
-                                        "id": ""
-                                    },
-                                    "wpml_cf_preferences": 1,
-                                    "clone": [
-                                        "field_6602daa862d57"
-                                    ],
-                                    "display": "seamless",
-                                    "layout": "block",
-                                    "prefix_label": 0,
-                                    "prefix_name": 0
-                                }
-                            ]
-                        },
-                        {
-                            "key": "field_664729befd0bb",
-                            "label": "Colored card?",
-                            "name": "is_colored_card",
-                            "aria-label": "",
-                            "type": "true_false",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "25",
-                                "class": "",
-                                "id": ""
-                            },
-                            "wpml_cf_preferences": 1,
-                            "message": "",
-                            "default_value": 0,
-                            "ui_on_text": "",
-                            "ui_off_text": "",
-                            "ui": 1,
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "isColoredCard",
-                            "graphql_non_null": 0
-                        },
-                        {
-                            "key": "field_66472a1cfd0bc",
-                            "label": "Card color",
-                            "name": "card_color",
-                            "aria-label": "",
-                            "type": "radio",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": [
-                                [
-                                    {
-                                        "field": "field_664729befd0bb",
-                                        "operator": "==",
-                                        "value": "1"
-                                    }
-                                ]
-                            ],
-                            "wrapper": {
-                                "width": "75",
-                                "class": "",
-                                "id": ""
-                            },
-                            "wpml_cf_preferences": 1,
-                            "choices": {
-                                "white": "White",
-                                "blue": "Blue",
-                                "green": "Green",
-                                "purple": "Purple",
-                                "yellow": "Yellow",
-                                "red": "Red"
-                            },
-                            "default_value": "white",
-                            "return_format": "value",
-                            "allow_null": 0,
-                            "other_choice": 0,
-                            "layout": "vertical",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "cardColor",
-                            "graphql_non_null": 0,
-                            "save_other_choice": 0
-                        },
-                        {
-                            "key": "field_664729b1fd0ba",
-                            "label": "Content",
-                            "name": "content",
-                            "aria-label": "",
-                            "type": "wysiwyg",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "wpml_cf_preferences": 2,
-                            "default_value": "",
-                            "tabs": "all",
-                            "toolbar": "full",
-                            "media_upload": 1,
-                            "delay": 0,
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "content",
-                            "graphql_non_null": 0
-                        }
-                    ],
-                    "min": "",
-                    "max": ""
-                },
                 "layout_66262c3157e91": {
                     "key": "layout_66262c3157e91",
                     "name": "break",
@@ -3325,6 +3177,108 @@
                     ],
                     "min": "",
                     "max": ""
+                },
+                "layout_664727d7fd0b6": {
+                    "key": "layout_664727d7fd0b6",
+                    "name": "rich-text-content",
+                    "label": "Rich Text Content (Article only)",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_664729befd0bb",
+                            "label": "Colored card?",
+                            "name": "is_colored_card",
+                            "aria-label": "",
+                            "type": "true_false",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "25",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "message": "",
+                            "default_value": 0,
+                            "ui_on_text": "",
+                            "ui_off_text": "",
+                            "ui": 1,
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "isColoredCard",
+                            "graphql_non_null": 0
+                        },
+                        {
+                            "key": "field_66472a1cfd0bc",
+                            "label": "Card color",
+                            "name": "card_color",
+                            "aria-label": "",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_664729befd0bb",
+                                        "operator": "==",
+                                        "value": "1"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "75",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "choices": {
+                                "white": "White",
+                                "blue": "Blue",
+                                "green": "Green",
+                                "purple": "Purple",
+                                "yellow": "Yellow",
+                                "red": "Red"
+                            },
+                            "default_value": "white",
+                            "return_format": "value",
+                            "allow_null": 0,
+                            "other_choice": 0,
+                            "layout": "vertical",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "cardColor",
+                            "graphql_non_null": 0,
+                            "save_other_choice": 0
+                        },
+                        {
+                            "key": "field_664729b1fd0ba",
+                            "label": "Content",
+                            "name": "content",
+                            "aria-label": "",
+                            "type": "wysiwyg",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 2,
+                            "default_value": "",
+                            "tabs": "all",
+                            "toolbar": "full",
+                            "media_upload": 1,
+                            "delay": 0,
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "content",
+                            "graphql_non_null": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
                 }
             },
             "min": "",
@@ -3387,5 +3341,5 @@
         "Page",
         "Post"
     ],
-    "modified": 1715943685
+    "modified": 1716193219
 }

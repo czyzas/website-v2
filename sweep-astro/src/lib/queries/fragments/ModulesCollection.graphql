@@ -20,9 +20,6 @@ fragment ModulesCollection on Modules {
     }
     ... on ModulesModulesContentRichTextContentLayout {
       layoutName
-      backgroundColor {
-        selectBackgroundColor
-      }
       isColoredCard
       cardColor
       content

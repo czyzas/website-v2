@@ -5,11 +5,25 @@ import type { ModulesCollectionFragment } from '@/__generated__/cms';
 
 type Props = {
   data?: ModulesCollectionFragment;
+  /** @default 'default' */
+  category?: ModuleCategory;
 };
-const { data } = Astro.props;
+type ModuleCategory = 'all' | 'default' | 'article';
+const { data, category = 'default' } = Astro.props;
 const modulesContent = data?.modulesContent;
 
-const modulesComponents = await Astro.glob('../modules/*.astro');
+const getCategoryModules = (category: ModuleCategory) => {
+  switch (category) {
+    case 'all':
+      return Astro.glob('../modules/**/*.astro');
+    case 'article':
+      return Astro.glob('../modules/article/*.astro');
+    default:
+      return Astro.glob('../modules/*.astro');
+  }
+};
+
+const modulesComponents = await getCategoryModules(category);
 const components: Record<string, AstroComponentFactory> = {};
 for (const component of modulesComponents) {
   const componentBaseName = path.parse(component.file).name;
@@ -20,7 +34,7 @@ for (const component of modulesComponents) {
 
 {
   !!modulesContent && (
-    <div class="modules">
+    <Fragment>
       {modulesContent.map((module) => {
         const layoutName = module?.layoutName ?? '';
         if (!layoutName) return null;
@@ -29,6 +43,6 @@ for (const component of modulesComponents) {
         if (!Component) return null;
         return <Component {...module} />;
       })}
-    </div>
+    </Fragment>
   )
 }

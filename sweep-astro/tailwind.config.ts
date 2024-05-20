@@ -204,6 +204,16 @@ export default {
           lineHeight: theme('lineHeight.normal'),
           fontWeight: theme('fontWeight.bold'),
         },
+        '.typography-article-header': {
+          fontSize: theme('fontSize.2xl'),
+          lineHeight: theme('lineHeight.snug'),
+          fontWeight: theme('fontWeight.bold'),
+        },
+        '.typography-article-subheader': {
+          fontSize: theme('fontSize.lg'),
+          lineHeight: theme('lineHeight.snug'),
+          fontWeight: theme('fontWeight.bold'),
+        },
       });
     }),
   ],

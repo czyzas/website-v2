@@ -4,7 +4,8 @@ import { cn } from '../cn';
 export type AvailableBgColor =
   | 'surface-background'
   | 'surface-subdued'
-  | 'white';
+  | 'white'
+  | 'none';
 
 export function getBgColor(color: AvailableBgColor) {
   switch (color) {
@@ -12,15 +13,17 @@ export function getBgColor(color: AvailableBgColor) {
       return cn('bg-sw-surface-background');
     case 'surface-subdued':
       return cn('bg-sw-surface-subdued');
-    default:
+    case 'white':
       return cn('bg-white');
+    default:
+      return '';
   }
 }
 
 export function parseBgColor(
   unparsedBackground?: ModulesModulesContentBackgroundColor
 ) {
-  const bg = unparsedBackground?.selectBackgroundColor ?? 'white';
+  const bg = unparsedBackground?.selectBackgroundColor ?? 'none';
 
   return bg as AvailableBgColor;
 }

@@ -92,26 +92,27 @@ if (Astro.slots.has('default')) {
     }
 
     :global(:where(h2, h3, h4)) {
-      @apply mt-8 mb-3;
+      @apply text-black mt-8 mb-3;
     }
 
     :global(:where(h2 + *, h3 + *, h4 + *)) {
       @apply mt-0;
     }
 
-    :global(:where(h2)),
+    :global(:where(h2)) {
+      @apply typography-article-header;
+    }
+
+    :global(:where(h3)) {
+      @apply typography-article-subheader;
+    }
+
     :global(:is(.as-h2)) {
       @apply typography-h2;
     }
 
-    :global(:where(h3)),
     :global(:is(.as-h3)) {
       @apply typography-h3;
-    }
-
-    :global(:where(h4)),
-    :global(:is(.as-h4)) {
-      @apply typography-h4;
     }
 
     :global(:where(:first-child)) {
