@@ -21,6 +21,7 @@ import {
   NewsroomListPageDocument,
   NewsroomTagsStaticPathsDocument,
   NewsroomSinglePageDocument,
+  NewsroomPagesStaticPathsDocument,
 } from '@/__generated__/cms';
 import type {
   ComponentIndustriesListFragment,
@@ -201,9 +202,9 @@ export async function fetchNewsroomPagesStaticPaths() {
   // TODO: handle more than 100 pages
   return (
     (
-      await fetchData(InsightsPagesStaticPathsDocument, undefined, [
+      await fetchData(NewsroomPagesStaticPathsDocument, undefined, [
         CACHE_KEYS.STATIC_PATHS,
-        CACHE_KEYS.INSIGHTS,
+        CACHE_KEYS.NEWSROOM,
       ])
     ).pages?.nodes ?? []
   );

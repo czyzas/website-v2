@@ -19,7 +19,7 @@ export const getStaticPaths = async () => {
     finalPaths.push({
       params: {
         lang: getLangParam(staticPath.languageCode),
-        insights_single: unprefixURI(paramPath, 'insights'),
+        newsroom_single: unprefixURI(paramPath, 'newsroom'),
       },
     });
   }
