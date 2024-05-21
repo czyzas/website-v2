@@ -9,7 +9,7 @@ import {
   DemoPageDocument,
   HomepageDocument,
   EventsModuleListDocument,
-  PostsModuleListDocument,
+  NewsroomModuleListDocument,
   SinglePageStaticPathsDocument,
   ComponentIndustriesListDocument,
   IndustryPagesStaticPathsDocument,
@@ -22,7 +22,7 @@ import {
 import type {
   ComponentIndustriesListFragment,
   EventsModuleListQuery,
-  PostsModuleListQuery,
+  NewsroomModuleListQuery,
 } from '@/__generated__/cms';
 import { defaultLocale } from '@/i18n/config';
 import { getUrlWithoutLang } from '@/i18n/utils';
@@ -200,7 +200,7 @@ interface PostsParams {
 }
 
 type PostsReturnType = Promise<
-  EventsModuleListQuery | PostsModuleListQuery | never[]
+  EventsModuleListQuery | NewsroomModuleListQuery | never[]
 >;
 
 /**
@@ -211,11 +211,11 @@ export async function fetchPostsModuleList(
   params: PostsParams
 ): Promise<EventsModuleListQuery>;
 export async function fetchPostsModuleList(
-  postType: 'post',
+  postType: 'newsroom',
   params: PostsParams
-): Promise<PostsModuleListQuery>;
+): Promise<NewsroomModuleListQuery>;
 export async function fetchPostsModuleList(
-  postType: 'event' | 'post',
+  postType: 'event' | 'newsroom',
   params: PostsParams
 ): PostsReturnType {
   const { lang, categorySlug, limit } = params;
@@ -238,8 +238,8 @@ export async function fetchPostsModuleList(
     ]);
   }
 
-  if (postType === 'post') {
-    return await fetchData(PostsModuleListDocument, options, [
+  if (postType === 'newsroom') {
+    return await fetchData(NewsroomModuleListDocument, options, [
       CACHE_KEYS.MODULE_LIST_OF_POSTS,
       hashedOptions,
     ]);
