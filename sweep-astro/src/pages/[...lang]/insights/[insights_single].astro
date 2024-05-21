@@ -140,15 +140,15 @@ const toc = buildTOC(page.modules?.modulesContent);
   </Top>
   <Section bg="white" class="pt-0 md:pt-0">
     <Container>
-      <Grid>
+      <Grid class="gap-y-8">
         <div
-          class="col-span-full md:col-start-2 md:col-end-9 order-2 md:order-1 flex flex-col gap-8 md:gap-14"
+          class="col-span-full md:col-start-1 lg:col-start-2 md:col-end-9 order-2 md:order-1 flex flex-col gap-8 md:gap-14"
         >
           <ModulesIncluder category="article" data={page?.modules} />
         </div>
         <Sidebar
           sticky
-          class="col-span-full md:col-start-10 md:col-end-13 order-1 md:order-2"
+          class="col-span-full md:col-start-9 lg:col-start-10 md:col-end-13 order-1 md:order-2"
         >
           <SidebarCardAuthor author={author} />
           <SidebarCardTableOfContents toc={toc} />

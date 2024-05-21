@@ -56,7 +56,10 @@ const sharingLinks: SharingProps = [
     }
   });
 </script>
-<div {...props} class={cn('sharing', 'flex items-center gap-3.5', className)}>
+<div
+  {...props}
+  class={cn('sharing', 'flex items-center gap-3.5 flex-wrap', className)}
+>
   {
     sharingLinks.map(({ sharer, title, url, itemClass }) => (
       <button
@@ -65,7 +68,7 @@ const sharingLinks: SharingProps = [
         data-title={title}
         data-url={url}
         class={cn(
-          'flex items-center justify-center size-11 rounded-full border border-sw-gray-400 hover:border-sw-sky-400 hover:text-sw-sky-400 transition-colors',
+          'shrink-0 flex items-center justify-center size-11 rounded-full border border-sw-gray-400 hover:border-sw-sky-400 hover:text-sw-sky-400 transition-colors',
           itemClass
         )}
       >
