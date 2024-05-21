@@ -3,6 +3,35 @@
     "title": "Subpage settings",
     "fields": [
         {
+            "key": "field_5d371718e93ec",
+            "label": "Image",
+            "name": "image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 1,
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "image"
+        },
+        {
             "key": "field_663c93d7fc5e8",
             "label": "Title \/ image distribution",
             "name": "top_distribution",
@@ -10,9 +39,16 @@
             "type": "button_group",
             "instructions": "The width proportion of title and image sections, default: <code>5-7<\/code>",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5d371718e93ec",
+                        "operator": "!=empty"
+                    }
+                ]
+            ],
             "wrapper": {
-                "width": "",
+                "width": "66",
                 "class": "",
                 "id": ""
             },
@@ -103,35 +139,6 @@
             "graphql_non_null": 0
         },
         {
-            "key": "field_5d371718e93ec",
-            "label": "Image",
-            "name": "image",
-            "aria-label": "",
-            "type": "image",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "wpml_cf_preferences": 1,
-            "return_format": "array",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": "",
-            "preview_size": "medium",
-            "show_in_graphql": 1,
-            "graphql_description": "",
-            "graphql_field_name": ""
-        },
-        {
             "key": "field_6645eaa9d04ac",
             "label": "Has newsletter section?",
             "name": "has_newsletter_section",
@@ -145,7 +152,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 0,
+            "wpml_cf_preferences": 1,
             "message": "",
             "default_value": 0,
             "ui_on_text": "",
@@ -218,6 +225,13 @@
                 "operator": "==",
                 "value": "insights"
             }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "newsroom"
+            }
         ]
     ],
     "menu_order": 0,
@@ -242,9 +256,10 @@
         "Industry",
         "InsightsItem",
         "LibraryItem",
+        "NewsroomItem",
         "Page",
         "Partner",
         "Post"
     ],
-    "modified": 1715858280
+    "modified": 1716278521
 }
