@@ -56,7 +56,9 @@ const languages = (rawLanguages ?? []).filter(Boolean);
     aria-controls={id}
     aria-pressed="false"
   >
-    <span>{currentLanguage.code.toUpperCase()}</span>
+    <span class="text-sm sm:text-base">
+      {currentLanguage.code.toUpperCase()}
+    </span>
     <Icon name="caret-down" />
   </MenuItem>
   {

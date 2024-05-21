@@ -15,7 +15,7 @@ const menuId = `main-menu-${crypto.randomUUID().substring(16)}`;
 ---
 
 <header class="py-4 bg-white relative lg:static">
-  <Container class="flex items-center justify-between gap-6">
+  <Container class="flex items-center justify-between gap-4 sm:gap-6">
     <div class="logo-container">
       <a
         href={buildI18nPath('/', currentLanguage.code)}
@@ -24,15 +24,23 @@ const menuId = `main-menu-${crypto.randomUUID().substring(16)}`;
         <Icon
           name="logo"
           aria-label="Sweep logo"
-          class="w-24 md:w-36 h-auto text-sw-sky-400"
+          class="w-20 sm:w-24 md:w-36 h-auto text-sw-sky-400"
         />
       </a>
     </div>
     <Menu id={menuId} />
-    <div class="controls-container flex items-center gap-4 md:gap-8">
-      <LanguageSwitcher />
-      <MenuItem external href="https://flyhigh.pro"> Login </MenuItem>
-      <Button asLink href="/demo">Book a demo</Button>
+    <div class="controls-container flex items-center gap-2 sm:gap-4 md:gap-8">
+      <LanguageSwitcher class="text-sm sm:text-base" />
+      <MenuItem
+        external
+        href="https://flyhigh.pro"
+        class="text-sm sm:text-base sm:w-full w-auto"
+      >
+        Login
+      </MenuItem>
+      <Button asLink href="/demo" class="text-sm sm:text-base xs:block hidden"
+        >Book a demo</Button
+      >
       <MenuHamburger menuId={menuId} />
     </div>
   </Container>
