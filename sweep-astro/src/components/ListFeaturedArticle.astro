@@ -1,49 +1,36 @@
 ---
-import type { SubpageSettingsFragment } from '@/__generated__/cms';
+import type { HTMLAttributes } from 'astro/types';
+import type {
+  InsightsListItemFragment,
+  NewsroomListItemFragment,
+} from '@/__generated__/cms';
 import { buildI18nPath } from '@/i18n/utils';
 import { TRANSLATIONS } from '@/constants';
 import { getStore } from '@/scripts/store';
 import { languageStore } from '@/stores/languageStore';
+import type { WithAttributes } from '@/types';
+import { cn } from '@/scripts/cn';
+import { parseTags } from '@/scripts/data-parsers/parseTag';
 import WordpressButtonLink from './WordpressButtonLink.astro';
 import Prose from './ui/Prose.astro';
+import CardWithMergedImage from './CardWithMergedImage.astro';
 import CardWithBigImage from './CardWithBigImage.astro';
+import ArticleTag from './ArticleTag.astro';
 
-// TODO: Refactor this
-type UnparsedArticle = {
-  __typename: string;
-  title?: string | undefined;
-  uri?: string | undefined;
-  subpageSettings?: SubpageSettingsFragment;
-  categories?:
-    | {
-        __typename?: string;
-        nodes: Array<{
-          __typename?: string;
-          name?: string | undefined;
-        }>;
-      }
-    | undefined;
-  tags?:
-    | {
-        __typename?: string;
-        nodes: Array<{
-          __typename?: string;
-          name?: string | undefined;
-          tagTaxonomyAcf?:
-            | {
-                __typename?: string;
-                tagColor?: string | undefined;
-              }
-            | undefined;
-        }>;
-      }
-    | undefined;
-};
+type UnparsedArticle = InsightsListItemFragment | NewsroomListItemFragment;
 
-type Props = {
+interface ListFeaturedArticleProps extends HTMLAttributes<'div'> {
   data?: UnparsedArticle;
-};
-const { data } = Astro.props;
+  layout?: CardLayout;
+}
+type Props = WithAttributes<ListFeaturedArticleProps>;
+
+const {
+  class: className,
+  data,
+  layout = 'overlapping',
+  ...props
+} = Astro.props;
 
 const { currentLanguage } = getStore(languageStore);
 const lang = currentLanguage.code;
@@ -55,24 +42,37 @@ const featuredPost = data
       title: data.title,
       content: data.subpageSettings?.introduction,
       image: data.subpageSettings?.image,
+      tags: parseTags(data.tags?.nodes),
     }
   : undefined;
+
+type CardLayout = keyof typeof layouts;
+
+const layouts = {
+  // side: CardWithSideImage,
+  overlapping: CardWithBigImage,
+  // spaced: CardWithImageSpaced,
+  merged: CardWithMergedImage,
+} as const;
+
+const ContentWrapper =
+  layout in layouts ? layouts[layout as CardLayout] : layouts.overlapping;
 ---
 
 {
   !!featuredPost && (
-    <CardWithBigImage
+    <ContentWrapper
+      {...props}
       image={featuredPost.image}
-      class="col-span-full lg:col-start-2 lg:col-end-12"
+      size={layout === 'merged' ? 'lg' : undefined}
+      class={cn('list-featured-article', className)}
     >
-      <div class="flex flex-col items-start gap-4">
-        {/* TODO: Make CardCategory component */}
+      <div class="flex-1 flex flex-col items-start gap-4">
         {!!featuredPost.category && (
           <div class="typography-card-title text-sw-text-subdued">
             {featuredPost.category}
           </div>
         )}
-        {/* TODO: Make CardTitle component */}
         {!!featuredPost.title && (
           <div class="typography-cards-bold-large">{featuredPost.title}</div>
         )}
@@ -86,7 +86,16 @@ const featuredPost = data
             arrow
           />
         )}
+        {featuredPost.tags.length > 0 && (
+          <div class="tags mt-auto flex flex-wrap gap-2.5">
+            {featuredPost.tags.map((tag) =>
+              tag.shouldRender ? (
+                <ArticleTag color={tag.color}>{tag.name}</ArticleTag>
+              ) : null
+            )}
+          </div>
+        )}
       </div>
-    </CardWithBigImage>
+    </ContentWrapper>
   )
 }

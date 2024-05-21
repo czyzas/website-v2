@@ -12,9 +12,6 @@ import { initializeStore } from '@/scripts/store';
 import { cmsStore } from '@/stores/cmsStore';
 import { languageStore } from '@/stores/languageStore';
 import type { ColumnSizes } from '@/types';
-import ArticleCard from '@/components/ArticleCard.astro';
-import ArticleTag from '@/components/ArticleTag.astro';
-import { parseTags } from '@/scripts/data-parsers/parseTag';
 import ListTagFilter from '@/components/ListTagFilter.astro';
 import Pagination from '@/components/Pagination.astro';
 import type {
@@ -22,6 +19,8 @@ import type {
   NewsroomListPageQuery,
 } from '@/__generated__/cms';
 import ListFeaturedArticle from '@/components/ListFeaturedArticle.astro';
+import ArticlesGrid from '@/components/ArticlesGrid.astro';
+import { cn } from '@/scripts/cn';
 
 type InsightsListProps = {
   postType: 'insights';
@@ -47,7 +46,7 @@ const {
 } = Astro.props;
 
 const page = data.page!;
-const posts = (data.articles?.edges ?? []).filter(Boolean);
+const posts = (data.articles?.edges ?? []).filter(Boolean).map((p) => p.node);
 
 // TAGS
 const tags = (data.filterTags?.nodes ?? []).filter(Boolean);
@@ -90,7 +89,7 @@ if (
 }
 
 if (!rawFeaturedPost && posts?.[0] && !filterTag) {
-  rawFeaturedPost = posts.at(0)?.node;
+  rawFeaturedPost = posts.at(0);
 }
 ---
 
@@ -122,7 +121,16 @@ if (!rawFeaturedPost && posts?.[0] && !filterTag) {
             headline={acf?.featuredItemTitle}
           />
           <Grid class="mt-8 md:mt-15">
-            <ListFeaturedArticle data={rawFeaturedPost} />
+            <div
+              class={cn('col-span-full', {
+                'lg:col-start-2 lg:col-end-12': postType === 'insights',
+              })}
+            >
+              <ListFeaturedArticle
+                layout={postType === 'newsroom' ? 'merged' : 'overlapping'}
+                data={rawFeaturedPost}
+              />
+            </div>
           </Grid>
         </Container>
       )
@@ -140,47 +148,7 @@ if (!rawFeaturedPost && posts?.[0] && !filterTag) {
         class="my-8 md:mt-12 md:mb-20"
       />
 
-      {
-        posts.length > 0 && (
-          <Grid>
-            {posts.map(({ node: post }) => {
-              if (!post.uri) return null;
-              // TODO: Make CardTitle component
-              const categoryName = post.categories?.nodes?.[0]?.name ?? '';
-              // TODO: make TagsCollection component to wrap tags
-              const postTags = parseTags(post.tags?.nodes);
-
-              return (
-                <ArticleCard
-                  link={{ url: buildI18nPath(post.uri, lang) }}
-                  image={post.subpageSettings?.image}
-                  class="col-span-full sm:col-span-6 lg:col-span-4"
-                >
-                  {!!categoryName && (
-                    <div class="typography-card-title text-sw-text-subdued">
-                      {categoryName}
-                    </div>
-                  )}
-                  {!!post.title && (
-                    <div class="typography-cards-bold-large">{post.title}</div>
-                  )}
-                  {postTags.length > 0 && (
-                    <div class="tags mt-auto flex flex-wrap gap-2.5">
-                      {postTags.map((postTag) =>
-                        postTag.shouldRender ? (
-                          <ArticleTag color={postTag.color}>
-                            {postTag.name}
-                          </ArticleTag>
-                        ) : null
-                      )}
-                    </div>
-                  )}
-                </ArticleCard>
-              );
-            })}
-          </Grid>
-        )
-      }
+      <ArticlesGrid posts={posts} />
       <Pagination />
     </Container>
   </Section>

@@ -3,18 +3,24 @@ import type { WithAttributes } from '@/types';
 import { buildI18nPath } from '@/i18n/utils';
 import ArticleCard from '@/components/ArticleCard.astro';
 import { parseTags } from '@/scripts/data-parsers/parseTag';
-import type { InsightsListItemFragment } from '@/__generated__/cms';
+import type {
+  InsightsListItemFragment,
+  NewsroomListItemFragment,
+} from '@/__generated__/cms';
+import { getStore } from '@/scripts/store';
+import { languageStore } from '@/stores/languageStore';
 import Grid from './ui/Grid.astro';
 import ArticleTag from './ArticleTag.astro';
 
 interface ArticlesGridProps {
-  posts: InsightsListItemFragment[];
-  lang: string;
+  posts: (InsightsListItemFragment | NewsroomListItemFragment)[];
 }
 
 type Props = WithAttributes<ArticlesGridProps>;
 
-const { posts, lang } = Astro.props;
+const { posts } = Astro.props;
+const { currentLanguage } = getStore(languageStore);
+const lang = currentLanguage.code;
 ---
 
 {

@@ -10,58 +10,7 @@ query InsightsListPage($LANG: String!, $TAG_SLUG: [String]) {
       ...SubpageSettings
     }
     articlesListAcf {
-      postType
-      listTitle {
-        selectSectionTitle {
-          customStyle
-          displayAs
-          headline
-          headlineType
-          overline
-          textUnder
-        }
-      }
-      featuredItemTitle
-      featuredInsightsItem {
-        node {
-          __typename
-          ... on InsightsItem {
-            title
-            uri
-            subpageSettings {
-              introduction
-              image {
-                ...Image
-              }
-            }
-            categories: insightsCategories(first: 1) {
-              nodes {
-                name
-              }
-            }
-          }
-        }
-      }
-      featuredNewsroomItem {
-        node {
-          __typename
-          ... on NewsroomItem {
-            title
-            uri
-            subpageSettings {
-              introduction
-              image {
-                ...Image
-              }
-            }
-            categories: newsroomCategories(first: 1) {
-              nodes {
-                name
-              }
-            }
-          }
-        }
-      }
+      ...ArticlesListAcf
     }
   }
   articles: insights(
