@@ -142,35 +142,6 @@
             "graphql_field_name": "eventDefaultTopImage"
         },
         {
-            "key": "field_664c5a93179c9",
-            "label": "Customers default top image",
-            "name": "customers_default_top_image",
-            "aria-label": "",
-            "type": "image",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "wpml_cf_preferences": 1,
-            "return_format": "array",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": "",
-            "preview_size": "medium",
-            "show_in_graphql": 1,
-            "graphql_description": "",
-            "graphql_field_name": "customersDefaultTopImage"
-        },
-        {
             "key": "field_664c62b167fb4",
             "label": "Case studies default top image",
             "name": "case_studies_default_top_image",
@@ -831,5 +802,5 @@
     "graphql_field_name": "themeOptionsAcf",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1716282107
+    "modified": 1716289071
 }
