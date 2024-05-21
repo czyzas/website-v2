@@ -1,0 +1,187 @@
+---
+import SectionTitle from '@/components/partials/SectionTitle.astro';
+import Top from '@/components/partials/Top.astro';
+import Container from '@/components/ui/Container.astro';
+import Grid from '@/components/ui/Grid.astro';
+import Section from '@/components/ui/Section.astro';
+import { TRANSLATIONS } from '@/constants';
+import { buildI18nPath } from '@/i18n/utils';
+import Layout from '@/layouts/Layout.astro';
+import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
+import { initializeStore } from '@/scripts/store';
+import { cmsStore } from '@/stores/cmsStore';
+import { languageStore } from '@/stores/languageStore';
+import type { ColumnSizes } from '@/types';
+import ArticleCard from '@/components/ArticleCard.astro';
+import ArticleTag from '@/components/ArticleTag.astro';
+import { parseTags } from '@/scripts/data-parsers/parseTag';
+import ListTagFilter from '@/components/ListTagFilter.astro';
+import Pagination from '@/components/Pagination.astro';
+import type {
+  InsightsListPageQuery,
+  NewsroomListPageQuery,
+} from '@/__generated__/cms';
+import ListFeaturedArticle from '@/components/ListFeaturedArticle.astro';
+
+type InsightsListProps = {
+  postType: 'insights';
+  data: InsightsListPageQuery;
+};
+type NewsroomListProps = {
+  postType: 'newsroom';
+  data: NewsroomListPageQuery;
+};
+interface ArticleListProps {
+  prefix?: string;
+  tag?: string;
+  lang: string;
+}
+type Props = (InsightsListProps | NewsroomListProps) & ArticleListProps;
+
+const {
+  postType,
+  tag: filterTag = '',
+  prefix = postType,
+  data,
+  lang,
+} = Astro.props;
+
+const page = data.page!;
+const posts = (data.articles?.edges ?? []).filter(Boolean);
+
+// TAGS
+const tags = (data.filterTags?.nodes ?? []).filter(Boolean);
+// Add additional `All` tag to filters
+tags.unshift({ name: TRANSLATIONS.ALL, slug: '' });
+
+initializeStore(cmsStore, {
+  primaryMenu: data.primaryMenu!,
+  themeOptions: data.themeOptions!,
+  subpageSettings: data.page?.subpageSettings,
+});
+initializeStore(languageStore, {
+  currentLanguage: data.page!.language!,
+  languages: data.languages,
+});
+
+const { subpageSettings, articlesListAcf: acf } = page;
+// TODO: handle data passed to Layout and Top
+const pageTitle = page?.title ?? '';
+const title = subpageSettings?.customTitle || pageTitle || '';
+const content = subpageSettings?.introduction ?? '';
+const image = subpageSettings?.image;
+const size = subpageSettings?.topDistribution ?? '5-7';
+
+let rawFeaturedPost;
+
+if (
+  postType === 'insights' &&
+  acf?.featuredInsightsItem &&
+  acf.featuredInsightsItem.node.__typename === 'InsightsItem'
+) {
+  rawFeaturedPost = acf.featuredInsightsItem.node;
+}
+if (
+  postType === 'newsroom' &&
+  acf?.featuredNewsroomItem &&
+  acf.featuredNewsroomItem.node.__typename === 'NewsroomItem'
+) {
+  rawFeaturedPost = acf.featuredNewsroomItem.node;
+}
+
+if (!rawFeaturedPost && posts?.[0] && !filterTag) {
+  rawFeaturedPost = posts.at(0)?.node;
+}
+---
+
+<Layout
+  name="insights"
+  pageTitle={pageTitle}
+  class="py-8 md:py-18 bg-gradient-to-b from-sw-surface-subdued to-transparent"
+>
+  <Top
+    title={title}
+    content={content}
+    image={image}
+    size={size as ColumnSizes}
+    breadcrumbs={[
+      {
+        title: TRANSLATIONS.HOME,
+        url: buildI18nPath('/', lang),
+      },
+      pageTitle,
+    ]}
+    class="pb-12 md:pb-20"
+  >
+    {
+      !!rawFeaturedPost && (
+        <Container class="mt-15">
+          <SectionTitle
+            hasCustomStyle
+            displayAs="overline"
+            headline={acf?.featuredItemTitle}
+          />
+          <Grid class="mt-8 md:mt-15">
+            <ListFeaturedArticle data={rawFeaturedPost} />
+          </Grid>
+        </Container>
+      )
+    }
+  </Top>
+  <Section bg="surface-background" id="list">
+    <Container>
+      <SectionTitle
+        {...parseSectionTitle(acf?.listTitle?.selectSectionTitle)}
+      />
+      <ListTagFilter
+        tags={tags}
+        activeTag={filterTag}
+        prefix={prefix}
+        class="my-8 md:mt-12 md:mb-20"
+      />
+
+      {
+        posts.length > 0 && (
+          <Grid>
+            {posts.map(({ node: post }) => {
+              if (!post.uri) return null;
+              // TODO: Make CardTitle component
+              const categoryName = post.categories?.nodes?.[0]?.name ?? '';
+              // TODO: make TagsCollection component to wrap tags
+              const postTags = parseTags(post.tags?.nodes);
+
+              return (
+                <ArticleCard
+                  link={{ url: buildI18nPath(post.uri, lang) }}
+                  image={post.subpageSettings?.image}
+                  class="col-span-full sm:col-span-6 lg:col-span-4"
+                >
+                  {!!categoryName && (
+                    <div class="typography-card-title text-sw-text-subdued">
+                      {categoryName}
+                    </div>
+                  )}
+                  {!!post.title && (
+                    <div class="typography-cards-bold-large">{post.title}</div>
+                  )}
+                  {postTags.length > 0 && (
+                    <div class="tags mt-auto flex flex-wrap gap-2.5">
+                      {postTags.map((postTag) =>
+                        postTag.shouldRender ? (
+                          <ArticleTag color={postTag.color}>
+                            {postTag.name}
+                          </ArticleTag>
+                        ) : null
+                      )}
+                    </div>
+                  )}
+                </ArticleCard>
+              );
+            })}
+          </Grid>
+        )
+      }
+      <Pagination />
+    </Container>
+  </Section>
+</Layout>

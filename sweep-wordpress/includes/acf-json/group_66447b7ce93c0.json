@@ -1,11 +1,11 @@
 {
     "key": "group_66447b7ce93c0",
-    "title": "Insights List",
+    "title": "Articles List",
     "fields": [
         {
             "key": "field_66447b806b953",
-            "label": "Featured insights item - title",
-            "name": "featured_insights_item_title",
+            "label": "Featured item - title",
+            "name": "featured_item_title",
             "aria-label": "",
             "type": "text",
             "instructions": "",
@@ -24,8 +24,38 @@
             "append": "",
             "show_in_graphql": 1,
             "graphql_description": "",
-            "graphql_field_name": "featuredInsightsItemTitle",
+            "graphql_field_name": "featuredItemTitle",
             "graphql_non_null": 0
+        },
+        {
+            "key": "field_664c75fb5982f",
+            "label": "Post type",
+            "name": "post_type",
+            "aria-label": "",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 1,
+            "choices": {
+                "insights": "Insights",
+                "newsroom": "Newsroom"
+            },
+            "default_value": "",
+            "return_format": "value",
+            "allow_null": 0,
+            "other_choice": 0,
+            "layout": "vertical",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "postType",
+            "graphql_non_null": 0,
+            "save_other_choice": 0
         },
         {
             "key": "field_66447be36b954",
@@ -35,9 +65,17 @@
             "type": "post_object",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_664c75fb5982f",
+                        "operator": "==",
+                        "value": "insights"
+                    }
+                ]
+            ],
             "wrapper": {
-                "width": "",
+                "width": "66",
                 "class": "",
                 "id": ""
             },
@@ -59,6 +97,45 @@
             "bidirectional_target": []
         },
         {
+            "key": "field_664c766559830",
+            "label": "Featured newsroom item",
+            "name": "featured_newsroom_item",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_664c75fb5982f",
+                        "operator": "==",
+                        "value": "newsroom"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "66",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 1,
+            "post_type": [
+                "newsroom"
+            ],
+            "post_status": "",
+            "taxonomy": "",
+            "return_format": "object",
+            "multiple": 0,
+            "allow_null": 1,
+            "bidirectional": 0,
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "featuredNewsroomItem",
+            "graphql_connection_type": "one_to_one",
+            "ui": 1,
+            "bidirectional_target": []
+        },
+        {
             "key": "field_66447c2d6b955",
             "label": "List title",
             "name": "list_title",
@@ -69,7 +146,7 @@
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
-                "class": "invisible-group",
+                "class": "",
                 "id": ""
             },
             "wpml_cf_preferences": 1,
@@ -111,7 +188,7 @@
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "templates\/template-insights-list.php"
+                "value": "templates\/template-articles-list.php"
             }
         ]
     ],
@@ -128,11 +205,10 @@
     "show_in_rest": 0,
     "acfml_field_group_mode": "translation",
     "show_in_graphql": 1,
-    "graphql_field_name": "insightsListAcf",
+    "graphql_field_name": "articlesListAcf",
     "map_graphql_types_from_location_rules": 1,
     "graphql_types": [
-        "Page",
-        "Template_InsightsList"
+        "Page"
     ],
-    "modified": 1715766819
+    "modified": 1716290737
 }

@@ -22,8 +22,8 @@ const { posts, lang } = Astro.props;
     <Grid>
       {posts.map((post) => {
         if (!post.uri) return null;
-        const categoryName = post.insightsCategories?.nodes?.[0]?.name ?? '';
-        const postTags = parseTags(post.insightsTags?.nodes ?? []);
+        const categoryName = post.categories?.nodes?.[0]?.name ?? '';
+        const postTags = parseTags(post.tags?.nodes ?? []);
         return (
           <ArticleCard
             link={{ url: buildI18nPath(post.uri, lang) }}

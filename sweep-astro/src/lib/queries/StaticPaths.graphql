@@ -60,3 +60,28 @@ query InsightsPagesStaticPaths {
     }
   }
 }
+
+# Newsroom
+query NewsroomTagsStaticPaths {
+  tags: newsroomTags(first: 100, where: { language: "all", hideEmpty: true }) {
+    nodes {
+      databaseId
+      slug
+      uri
+      languageCode
+    }
+  }
+}
+query NewsroomPagesStaticPaths {
+  pages: newsroomItems(
+    first: 100
+    where: { status: PUBLISH, language: "all" }
+  ) {
+    nodes {
+      databaseId
+      slug
+      uri
+      languageCode
+    }
+  }
+}

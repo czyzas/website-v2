@@ -2,14 +2,14 @@
 import type { HTMLAttributes } from 'astro/types';
 import { cn } from '@/scripts/cn';
 import type { ParsedTag } from '@/scripts/data-parsers/parseTag';
-import type { WithAttributes } from '@/types';
+import type { WithAttributes, WithShouldRender } from '@/types';
 import ArticleSharing from './ArticleSharing.astro';
 import Container from './ui/Container.astro';
 import ArticleTag from './ArticleTag.astro';
 
 interface ArticleBarProps extends HTMLAttributes<'div'> {
   details?: Record<string, string | undefined>;
-  tags?: (ParsedTag & { shouldRender?: boolean })[];
+  tags?: WithShouldRender<ParsedTag>[];
   sharing?: boolean;
 }
 

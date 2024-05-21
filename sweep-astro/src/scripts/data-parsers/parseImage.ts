@@ -1,5 +1,5 @@
 import type { ImageFragment } from '@/__generated__/cms';
-import type { ReplaceTypenameLiteral } from '@/types';
+import type { ReplaceTypenameLiteral, WithShouldRender } from '@/types';
 
 export type UnparsedImage = ReplaceTypenameLiteral<ImageFragment> | undefined;
 
@@ -16,7 +16,7 @@ export const imageShouldRender = (unparsed: UnparsedImage) =>
 
 export const parseImage = (
   unparsed: UnparsedImage
-): { shouldRender: boolean } & ParsedImage => {
+): WithShouldRender<ParsedImage> => {
   const DEFAULT_SIZE = 375;
   return {
     shouldRender: imageShouldRender(unparsed),

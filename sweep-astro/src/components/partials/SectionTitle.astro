@@ -10,8 +10,7 @@ interface SectionTitleProps {
   withMargin?: boolean;
 }
 
-type Props = Omit<Partial<ParsedSectionTitle>, 'shouldRender'> &
-  SectionTitleProps;
+type Props = Partial<ParsedSectionTitle> & SectionTitleProps;
 
 const {
   tag = 'h2',

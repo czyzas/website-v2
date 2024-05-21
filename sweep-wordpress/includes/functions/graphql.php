@@ -112,7 +112,7 @@ add_action( 'graphql_register_types', function () {
 add_action( 'graphql_register_types', function () {
 	// Register the field in the "where" clause.
 	try {
-		$post_types = [ 'Event', 'Post', 'InsightsItem' ];
+		$post_types = [ 'Event', 'Post', 'InsightsItem', 'NewsroomItem' ];
 		foreach ( $post_types as $post_type ) {
 			register_graphql_fields( 'RootQueryTo' . $post_type . 'ConnectionWhereArgs', [
 				'categorySlug' => [
@@ -145,6 +145,7 @@ add_filter( 'graphql_post_object_connection_query_args', function (
 		in_array( 'event', $post_type ) => 'event-category',
 		in_array( 'post', $post_type ) => 'category',
 		in_array( 'insights', $post_type ) => 'insights-category',
+		in_array( 'newsroom', $post_type ) => 'newsroom-category',
 		default => null
 	};
 
@@ -178,6 +179,7 @@ add_filter( 'graphql_post_object_connection_query_args', function (
 		in_array( 'event', $post_type ) => 'event-tag',
 		in_array( 'post', $post_type ) => 'tag',
 		in_array( 'insights', $post_type ) => 'insights-tag',
+		in_array( 'newsroom', $post_type ) => 'newsroom-tag',
 		default => null
 	};
 

@@ -1,20 +1,20 @@
 ---
 import { defaultLocale } from '@/i18n/config';
 import {
-  fetchInsightsListPage,
+  fetchNewsroomListPage,
   fetchSinglePageStaticPaths,
 } from '@/lib/fetchCMSData';
 import { createSinglePageStaticPaths } from '@/scripts/utils-static-paths';
-import InsightsList from '@/templates/ArticlesList.astro';
+import ArticlesList from '@/templates/ArticlesList.astro';
 
 export async function getStaticPaths() {
   return createSinglePageStaticPaths(
-    await fetchSinglePageStaticPaths('/insights')
+    await fetchSinglePageStaticPaths('/newsroom')
   );
 }
 
 const { lang = defaultLocale } = Astro.params;
-const data = await fetchInsightsListPage(lang);
+const data = await fetchNewsroomListPage(lang);
 ---
 
-<InsightsList postType="insights" data={data} lang={lang} />
+<ArticlesList postType="newsroom" data={data} lang={lang} />

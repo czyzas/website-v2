@@ -13,8 +13,16 @@ interface Props extends HTMLAttributes<'main'> {
   home?: boolean;
   name: string;
   pageTitle: string;
+  htmlClassName?: string;
 }
-const { home, name, pageTitle, class: className, ...props } = Astro.props;
+const {
+  home,
+  name,
+  pageTitle,
+  class: className,
+  htmlClassName,
+  ...props
+} = Astro.props;
 
 // TODO: Update SEO
 const siteTitle = 'Sweep';
@@ -29,7 +37,7 @@ initializeStore(cacheStore, {
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth scroll-p-4">
+<html lang="en" class={cn(htmlClassName)}>
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />

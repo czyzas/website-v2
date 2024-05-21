@@ -18,6 +18,9 @@ import {
   InsightsTagsStaticPathsDocument,
   InsightsListPageDocument,
   InsightsSinglePageDocument,
+  NewsroomListPageDocument,
+  NewsroomTagsStaticPathsDocument,
+  NewsroomSinglePageDocument,
 } from '@/__generated__/cms';
 import type {
   ComponentIndustriesListFragment,
@@ -185,6 +188,56 @@ export function fetchInsightsListPage(
 export function fetchInsightsSingle(uri: string, lang: string = defaultLocale) {
   return fetchData(
     InsightsSinglePageDocument,
+    {
+      URI: uri,
+      LANG: lang,
+    },
+    [lang, getUrlWithoutLang(uri)]
+  );
+}
+
+// NEWSROOM
+export async function fetchNewsroomPagesStaticPaths() {
+  // TODO: handle more than 100 pages
+  return (
+    (
+      await fetchData(InsightsPagesStaticPathsDocument, undefined, [
+        CACHE_KEYS.STATIC_PATHS,
+        CACHE_KEYS.INSIGHTS,
+      ])
+    ).pages?.nodes ?? []
+  );
+}
+export async function fetchNewsroomTagsStaticPaths() {
+  // TODO: handle more than 100 pages
+  return (
+    (
+      await fetchData(NewsroomTagsStaticPathsDocument, undefined, [
+        CACHE_KEYS.STATIC_PATHS,
+        CACHE_KEYS.NEWSROOM,
+        CACHE_KEYS.TAGS,
+      ])
+    ).tags?.nodes ?? []
+  );
+}
+export function fetchNewsroomListPage(
+  lang: string = defaultLocale,
+  tag?: string
+) {
+  return fetchData(
+    NewsroomListPageDocument,
+    {
+      LANG: lang,
+      TAG_SLUG: tag,
+    },
+    tag
+      ? [lang, CACHE_KEYS.NEWSROOM, CACHE_KEYS.TAGS, tag]
+      : [lang, CACHE_KEYS.NEWSROOM]
+  );
+}
+export function fetchNewsroomSingle(uri: string, lang: string = defaultLocale) {
+  return fetchData(
+    NewsroomSinglePageDocument,
     {
       URI: uri,
       LANG: lang,

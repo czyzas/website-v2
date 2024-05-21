@@ -1,0 +1,37 @@
+---
+import { getUrlWithoutLang, getLangParam } from '@/i18n/utils';
+import Layout from '@/layouts/Layout.astro';
+import { fetchNewsroomPagesStaticPaths } from '@/lib/fetchCMSData';
+import { unprefixURI } from '@/scripts/utils-uri';
+
+// TODO: use some kind of reusable function
+export const getStaticPaths = async () => {
+  const finalPaths = [];
+
+  const paths = await fetchNewsroomPagesStaticPaths();
+  for (const staticPath of paths) {
+    if (!staticPath?.languageCode || !staticPath?.uri) {
+      continue;
+    }
+
+    const paramPath = getUrlWithoutLang(staticPath.uri);
+
+    finalPaths.push({
+      params: {
+        lang: getLangParam(staticPath.languageCode),
+        insights_single: unprefixURI(paramPath, 'insights'),
+      },
+    });
+  }
+
+  return finalPaths;
+};
+---
+
+<Layout
+  name="newsroom"
+  pageTitle={'NEWSROOM'}
+  htmlClassName="scroll-smooth scroll-p-4"
+>
+  NEWSROOM SINGLE
+</Layout>

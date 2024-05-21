@@ -23,7 +23,7 @@ fragment Menu on Menu {
                   ...Image
                 }
               }
-              insightsTags {
+              tags: insightsTags {
                 nodes {
                   name
                   tagTaxonomyAcf {

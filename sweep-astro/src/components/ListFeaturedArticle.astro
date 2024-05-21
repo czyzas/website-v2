@@ -1,0 +1,92 @@
+---
+import type { SubpageSettingsFragment } from '@/__generated__/cms';
+import { buildI18nPath } from '@/i18n/utils';
+import { TRANSLATIONS } from '@/constants';
+import { getStore } from '@/scripts/store';
+import { languageStore } from '@/stores/languageStore';
+import WordpressButtonLink from './WordpressButtonLink.astro';
+import Prose from './ui/Prose.astro';
+import CardWithBigImage from './CardWithBigImage.astro';
+
+// TODO: Refactor this
+type UnparsedArticle = {
+  __typename: string;
+  title?: string | undefined;
+  uri?: string | undefined;
+  subpageSettings?: SubpageSettingsFragment;
+  categories?:
+    | {
+        __typename?: string;
+        nodes: Array<{
+          __typename?: string;
+          name?: string | undefined;
+        }>;
+      }
+    | undefined;
+  tags?:
+    | {
+        __typename?: string;
+        nodes: Array<{
+          __typename?: string;
+          name?: string | undefined;
+          tagTaxonomyAcf?:
+            | {
+                __typename?: string;
+                tagColor?: string | undefined;
+              }
+            | undefined;
+        }>;
+      }
+    | undefined;
+};
+
+type Props = {
+  data?: UnparsedArticle;
+};
+const { data } = Astro.props;
+
+const { currentLanguage } = getStore(languageStore);
+const lang = currentLanguage.code;
+
+const featuredPost = data
+  ? {
+      uri: data.uri,
+      category: data.categories?.nodes?.[0]?.name,
+      title: data.title,
+      content: data.subpageSettings?.introduction,
+      image: data.subpageSettings?.image,
+    }
+  : undefined;
+---
+
+{
+  !!featuredPost && (
+    <CardWithBigImage
+      image={featuredPost.image}
+      class="col-span-full lg:col-start-2 lg:col-end-12"
+    >
+      <div class="flex flex-col items-start gap-4">
+        {/* TODO: Make CardCategory component */}
+        {!!featuredPost.category && (
+          <div class="typography-card-title text-sw-text-subdued">
+            {featuredPost.category}
+          </div>
+        )}
+        {/* TODO: Make CardTitle component */}
+        {!!featuredPost.title && (
+          <div class="typography-cards-bold-large">{featuredPost.title}</div>
+        )}
+        {!!featuredPost.content && <Prose set:html={featuredPost.content} />}
+        {!!featuredPost.uri && (
+          <WordpressButtonLink
+            data={{
+              url: buildI18nPath(featuredPost.uri, lang),
+              title: TRANSLATIONS.READ_FULL_STORY,
+            }}
+            arrow
+          />
+        )}
+      </div>
+    </CardWithBigImage>
+  )
+}

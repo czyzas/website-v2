@@ -1,16 +1,14 @@
-import type { ComponentProps } from 'astro/types';
 import type { TagFragment } from '@/__generated__/cms';
-import type ArticleTag from '@/components/ArticleTag.astro';
-import type { ReplaceTypenameLiteral } from '@/types';
+import type { ReplaceTypenameLiteral, WithShouldRender } from '@/types';
+import type { TagColor } from '@/styles/tagVariants';
 
 export type UnparsedTag = ReplaceTypenameLiteral<TagFragment> | undefined;
 export type ParsedTag = { name: string; color: TagColor };
-type TagColor = ComponentProps<typeof ArticleTag>['color'];
 
 export const tagShouldRender = (unparsed: UnparsedTag) => !!unparsed?.name;
 export const parseTag = (
   unparsed: UnparsedTag
-): { shouldRender: boolean } & ParsedTag => ({
+): WithShouldRender<ParsedTag> => ({
   shouldRender: tagShouldRender(unparsed),
   name: unparsed?.name ?? '',
   color: (unparsed?.tagTaxonomyAcf?.tagColor ?? 'gray') as TagColor,
@@ -18,7 +16,7 @@ export const parseTag = (
 
 export const parseTags = (
   unparsedTags: UnparsedTag[] | undefined
-): ({ shouldRender: boolean } & ParsedTag)[] => {
+): WithShouldRender<ParsedTag>[] => {
   if (!unparsedTags) return [];
 
   return unparsedTags.filter(Boolean).map(parseTag);

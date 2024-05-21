@@ -97,10 +97,10 @@ const title = subpageSettings?.customTitle || pageTitle || '';
 const image = subpageSettings?.image;
 const size = subpageSettings?.topDistribution ?? '5-7';
 const acf = page.insightsSingleAcf;
-const tags = parseTags(page.insightsTags?.nodes);
+const tags = parseTags(page.tags?.nodes);
 const author =
   acf?.author?.node.__typename === 'PostAuthor' ? acf.author.node : undefined;
-const category = page.insightsCategories?.nodes?.[0]?.name;
+const category = page.categories?.nodes?.[0]?.name;
 const lastUpdated = page.modified
   ? new Date(page.modified).toLocaleDateString(lang === 'en' ? 'en-UK' : lang, {
       day: '2-digit',
@@ -120,7 +120,11 @@ const filteredInsights = insights
 const toc = buildTOC(page.modules?.modulesContent);
 ---
 
-<Layout name="insights" pageTitle={pageTitle}>
+<Layout
+  name="insights"
+  pageTitle={pageTitle}
+  htmlClassName="scroll-smooth scroll-p-4"
+>
   <Top
     title={title}
     titleSize="h2"
