@@ -13,7 +13,7 @@
     "labels": {
         "name": "Insights tags",
         "singular_name": "Insights tag",
-        "menu_name": "Insights tags",
+        "menu_name": "Tags",
         "all_items": "All Insights tags",
         "edit_item": "Edit Insights tag",
         "view_item": "View Insights tag",
@@ -74,5 +74,5 @@
     "show_in_graphql": 1,
     "graphql_single_name": "insightsTag",
     "graphql_plural_name": "insightsTags",
-    "modified": 1715690356
+    "modified": 1716297789
 }
