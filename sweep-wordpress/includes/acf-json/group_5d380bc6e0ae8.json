@@ -1788,8 +1788,8 @@
                 },
                 "layout_663a102f92e0c": {
                     "key": "layout_663a102f92e0c",
-                    "name": "list-of-posts",
-                    "label": "List of posts",
+                    "name": "list-of-newsroom-items",
+                    "label": "List of Newsroom items",
                     "display": "block",
                     "sub_fields": [
                         {
@@ -3349,5 +3349,5 @@
         "Page",
         "Post"
     ],
-    "modified": 1716276263
+    "modified": 1716282691
 }
