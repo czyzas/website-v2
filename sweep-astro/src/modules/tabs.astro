@@ -1,5 +1,4 @@
 ---
-import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 import type { ModulesModulesContentTabsLayout } from '@/__generated__/cms';
 import ButtonContainer from '@/components/ButtonContainer.astro';
 import CardWithBigImage from '@/components/CardWithBigImage.astro';
@@ -17,6 +16,7 @@ import UITabs from '@/components/ui/Tabs/Tabs.astro';
 import { cn } from '@/scripts/cn';
 import { linkShouldRender } from '@/scripts/data-parsers/parseLink';
 import { fixDoubleBr } from '@/scripts/fixDoubleBr';
+import CardWithMergedImage from '@/components/CardWithMergedImage.astro';
 
 type Props = ModulesModulesContentTabsLayout;
 
@@ -31,19 +31,23 @@ const {
 const tabId = crypto.randomUUID();
 const layout = contentLayout ?? 'side';
 
-const layouts: Record<string, AstroComponentFactory> = {
-  side: CardWithSideImage,
-  overlapping: CardWithBigImage,
-  spaced: CardWithImageSpaced,
-} as const;
-
 const titleSizes: Record<string, string> = {
   smaller: 'typography-cards-bold-large',
   default: 'typography-h3',
   bigger: 'typography-h2',
 } as const;
 
-const ContentWrapper = layout in layouts ? layouts[layout] : layouts.side;
+type CardLayout = 'side' | 'overlapping' | 'spaced' | 'merged';
+
+const layouts = {
+  side: CardWithSideImage,
+  overlapping: CardWithBigImage,
+  spaced: CardWithImageSpaced,
+  merged: CardWithMergedImage,
+} as const;
+
+const ContentWrapper =
+  layout in layouts ? layouts[layout as CardLayout] : layouts.side;
 ---
 
 {

@@ -17,6 +17,7 @@ export const TRANSLATIONS = {
   READ_MORE: 'Read more',
   MORE_STORIES: 'More stories',
   READ_FULL_STORY: 'Read the full story',
+  VIEW_CASE_STUDY: 'View Case Study',
   ALL: 'All',
   SIGN_UP: 'Sign up',
   NEWSLETTER_SECTION: {
