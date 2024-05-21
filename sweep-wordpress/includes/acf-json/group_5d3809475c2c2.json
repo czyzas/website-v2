@@ -113,37 +113,6 @@
             "graphql_field_name": "postDefaultTopImage"
         },
         {
-            "key": "field_6639f3529a66e",
-            "label": "Posts list",
-            "name": "post_posts_list",
-            "aria-label": "",
-            "type": "post_object",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "wpml_cf_preferences": 1,
-            "post_type": [
-                "page"
-            ],
-            "post_status": "",
-            "taxonomy": "",
-            "return_format": "object",
-            "multiple": 0,
-            "allow_null": 1,
-            "bidirectional": 0,
-            "show_in_graphql": 1,
-            "graphql_description": "",
-            "graphql_field_name": "postPostsList",
-            "graphql_connection_type": "one_to_one",
-            "ui": 1,
-            "bidirectional_target": []
-        },
-        {
             "key": "field_6639f03bc3089",
             "label": "Event default top image",
             "name": "event_default_top_image",
@@ -173,11 +142,11 @@
             "graphql_field_name": "eventDefaultTopImage"
         },
         {
-            "key": "field_635b6fbf0ccf7",
-            "label": "Events list",
-            "name": "event_posts_list",
+            "key": "field_664c5a93179c9",
+            "label": "Customers default top image",
+            "name": "customers_default_top_image",
             "aria-label": "",
-            "type": "post_object",
+            "type": "image",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -187,21 +156,135 @@
                 "id": ""
             },
             "wpml_cf_preferences": 1,
-            "post_type": [
-                "page"
-            ],
-            "post_status": "",
-            "taxonomy": "",
-            "return_format": "object",
-            "multiple": 0,
-            "allow_null": 1,
-            "bidirectional": 0,
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium",
             "show_in_graphql": 1,
             "graphql_description": "",
-            "graphql_field_name": "eventPostsList",
-            "graphql_connection_type": "one_to_one",
-            "ui": 1,
-            "bidirectional_target": []
+            "graphql_field_name": "customersDefaultTopImage"
+        },
+        {
+            "key": "field_664c5aaf179ca",
+            "label": "Industries default top image",
+            "name": "industries_default_top_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 1,
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "industriesDefaultTopImage"
+        },
+        {
+            "key": "field_664c5ac0179cb",
+            "label": "Insights default top image",
+            "name": "insights_default_top_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 1,
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "insightsDefaultTopImage"
+        },
+        {
+            "key": "field_664c5ad1179cc",
+            "label": "Newsroom default top image",
+            "name": "newsroom_default_top_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 1,
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "newsroomDefaultTopImage"
+        },
+        {
+            "key": "field_664c5adb179cd",
+            "label": "Partners default top image",
+            "name": "partners_default_top_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 1,
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "partnersDefaultTopImage"
         },
         {
             "key": "field_635b6f3d0ccf6",
@@ -535,7 +618,7 @@
                 "id": ""
             },
             "graphql_field_name": "newsletterSection",
-            "wpml_cf_preferences": 0,
+            "wpml_cf_preferences": 1,
             "placement": "top",
             "endpoint": 0
         },
@@ -553,7 +636,7 @@
                 "class": "invisible-group",
                 "id": ""
             },
-            "wpml_cf_preferences": 0,
+            "wpml_cf_preferences": 1,
             "layout": "block",
             "show_in_graphql": 1,
             "graphql_description": "",
@@ -574,7 +657,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 0,
+                    "wpml_cf_preferences": 2,
                     "default_value": "",
                     "maxlength": "",
                     "placeholder": "",
@@ -599,7 +682,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 0,
+                    "wpml_cf_preferences": 2,
                     "default_value": "",
                     "maxlength": "",
                     "rows": 4,
@@ -625,7 +708,7 @@
                         "id": ""
                     },
                     "graphql_field_name": "hubspotFormGuid",
-                    "wpml_cf_preferences": 0,
+                    "wpml_cf_preferences": 2,
                     "default_value": "",
                     "maxlength": "",
                     "placeholder": "Eg. 550e8400-e29b-41d4-a716-446655440000",
@@ -649,7 +732,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 0,
+                    "wpml_cf_preferences": 1,
                     "return_format": "array",
                     "library": "all",
                     "min_width": "",
@@ -690,5 +773,5 @@
     "graphql_field_name": "themeOptionsAcf",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1715859367
+    "modified": 1716280042
 }
