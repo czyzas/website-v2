@@ -136,7 +136,7 @@ fragment ModulesCollection on Modules {
         ...Link
       }
     }
-    ... on ModulesModulesContentListOfPostsLayout {
+    ... on ModulesModulesContentListOfNewsroomItemsLayout {
       layoutName
       backgroundColor {
         selectBackgroundColor
