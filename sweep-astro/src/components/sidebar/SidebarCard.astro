@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components';
 import type { WithAttributes } from '@/types';
 import { cn } from '@/scripts/cn';
 import Card from '../ui/Card.astro';
@@ -25,11 +26,18 @@ const Heading = collapsible ? 'summary' : 'div';
             'px-6 py-4 typography-small-box-title uppercase text-sw-sky-400',
             {
               'pb-3': !collapsible,
-              'group-open:pb-3': collapsible,
+              'cursor-pointer group-open:pb-3 flex items-center justify-between':
+                collapsible,
             }
           )}
         >
           {title}
+          {collapsible && (
+            <Icon
+              name="caret-down"
+              class="text-base text-sw-text-subdued transform group-open:rotate-180"
+            />
+          )}
         </Heading>
       )
     }

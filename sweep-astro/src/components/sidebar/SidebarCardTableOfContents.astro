@@ -1,6 +1,7 @@
 ---
 import { TRANSLATIONS } from '@/constants';
 import type { ITableOfContentsEntry } from '@/types';
+import { cn } from '@/scripts/cn';
 import SidebarCard from './SidebarCard.astro';
 
 type Props = {
@@ -15,8 +16,15 @@ const { toc } = Astro.props;
     <SidebarCard collapsible title={TRANSLATIONS.SIDEBAR.TOC}>
       <ul>
         {toc.map((entry) => (
-          <li>
-            <a href={`#${entry.id}`}>{entry.label}</a>
+          <li class={cn('mt-1.5', { 'mt-0.5': entry.level > 2 })}>
+            <a
+              href={`#${entry.id}`}
+              class={cn('hover:underline', {
+                'ml-4 text-sw-text-subdued': entry.level > 2,
+              })}
+            >
+              {entry.label}
+            </a>
           </li>
         ))}
       </ul>
