@@ -1,0 +1,112 @@
+query InsightsListPage($LANG: String!, $TAG_SLUG: [String]) {
+  page: pageByLang(uri: "insights", lang: $LANG) {
+    title
+    slug
+    uri
+    language {
+      ...Languages
+    }
+    subpageSettings {
+      ...SubpageSettings
+    }
+    articlesListAcf {
+      ...ArticlesListAcf
+    }
+  }
+  articles: insights(
+    first: 6
+    where: { status: PUBLISH, language: $LANG, tagSlug: $TAG_SLUG }
+  ) {
+    edges {
+      cursor
+      node {
+        ...InsightsListItem
+      }
+    }
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+      hasPreviousPage
+    }
+  }
+  filterTags: insightsTags(
+    first: 100
+    where: { language: $LANG, hideEmpty: true }
+  ) {
+    nodes {
+      name
+      slug
+    }
+  }
+  ...Essential
+}
+
+query InsightsSinglePage($URI: String!, $LANG: String!) {
+  page: insightsItemByLang(uri: $URI, lang: $LANG) {
+    title
+    slug
+    uri
+    modified
+    insightsSingleAcf {
+      author {
+        node {
+          ...Author
+        }
+      }
+    }
+    categories: insightsCategories(first: 1) {
+      nodes {
+        name
+      }
+    }
+    tags: insightsTags {
+      nodes {
+        name
+        tagTaxonomyAcf {
+          tagColor
+        }
+      }
+    }
+    language {
+      ...Languages
+    }
+    subpageSettings {
+      ...SubpageSettings
+    }
+    modules {
+      ...ModulesCollection
+    }
+  }
+  insights(first: 4, where: { status: PUBLISH, language: $LANG }) {
+    nodes {
+      ...InsightsListItem
+    }
+  }
+  ...Essential
+}
+
+fragment InsightsListItem on InsightsItem {
+  __typename
+  title
+  uri
+  subpageSettings {
+    introduction
+    image {
+      ...Image
+    }
+  }
+  categories: insightsCategories(first: 1) {
+    nodes {
+      name
+    }
+  }
+  tags: insightsTags {
+    nodes {
+      name
+      tagTaxonomyAcf {
+        tagColor
+      }
+    }
+  }
+}

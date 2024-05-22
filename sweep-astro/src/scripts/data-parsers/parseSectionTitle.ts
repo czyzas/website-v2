@@ -1,12 +1,11 @@
 import type { ReusableFieldsSelectSectionTitle } from '@/__generated__/cms';
-import type { ReplaceTypenameLiteral } from '@/types';
+import type { ReplaceTypenameLiteral, WithShouldRender } from '@/types';
 
 export type UnparsedSectionTitle =
   | ReplaceTypenameLiteral<ReusableFieldsSelectSectionTitle>
   | undefined;
 
 export type ParsedSectionTitle = {
-  shouldRender: boolean;
   tag: string;
   hasCustomStyle: boolean;
   displayAs: string;
@@ -20,7 +19,7 @@ export const sectionTitleShouldRender = (unparsed: UnparsedSectionTitle) =>
 
 export const parseSectionTitle = (
   unparsed: UnparsedSectionTitle
-): ParsedSectionTitle => ({
+): WithShouldRender<ParsedSectionTitle> => ({
   shouldRender: sectionTitleShouldRender(unparsed),
   tag: unparsed?.headlineType ?? 'h2',
   hasCustomStyle: unparsed?.customStyle ?? false,

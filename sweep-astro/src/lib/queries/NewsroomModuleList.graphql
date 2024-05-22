@@ -1,0 +1,30 @@
+query NewsroomModuleList($LIMIT: Int, $LANG: String!) {
+  newsroomItems(first: $LIMIT, where: { language: $LANG }) {
+    nodes {
+      ...NewsroomModulePost
+    }
+  }
+}
+
+fragment NewsroomModulePost on NewsroomItem {
+  title
+  uri
+  subpageSettings {
+    image {
+      ...Image
+    }
+  }
+  categories: newsroomCategories {
+    nodes {
+      name
+    }
+  }
+  tags: newsroomTags {
+    nodes {
+      name
+      tagTaxonomyAcf {
+        tagColor
+      }
+    }
+  }
+}

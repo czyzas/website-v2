@@ -3,16 +3,18 @@ import type { HTMLAttributes } from 'astro/types';
 import type { ModulesModulesContentBackgroundColor } from '@/__generated__/cms';
 import { parseBgColor } from '@/scripts/data-parsers/parseBgColor';
 import type { WithAttributes } from '@/types';
+import { cn } from '@/scripts/cn';
 import Section from './ui/Section.astro';
 
 type Props = WithAttributes<
   {
     name: string;
     bg?: ModulesModulesContentBackgroundColor;
+    padding?: boolean;
   } & HTMLAttributes<'div'>
 >;
 
-const { name, bg, ...props } = Astro.props;
+const { name, bg, padding = true, ...props } = Astro.props;
 ---
 
 <style>
@@ -32,12 +34,12 @@ const { name, bg, ...props } = Astro.props;
       @apply pt-2.5;
     }
 
-    & + section.module:not(.break) {
+    & + section.module:not(.no-padding) {
       @apply pt-12;
     }
   }
 
-  section.module.break {
+  section.module.no-padding {
     @apply p-0;
   }
 </style>
@@ -46,7 +48,8 @@ const { name, bg, ...props } = Astro.props;
   {...props}
   padding={false}
   name={`module ${name}`}
-  bg={parseBgColor(bg)}
+  bg={bg ? parseBgColor(bg) : 'none'}
+  class={cn({ 'no-padding': !padding })}
 >
   <slot />
 </Section>

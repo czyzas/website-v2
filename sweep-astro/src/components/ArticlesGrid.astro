@@ -1,0 +1,63 @@
+---
+import type { WithAttributes } from '@/types';
+import { buildI18nPath } from '@/i18n/utils';
+import ArticleCard from '@/components/ArticleCard.astro';
+import { parseTags } from '@/scripts/data-parsers/parseTag';
+import type {
+  InsightsListItemFragment,
+  NewsroomListItemFragment,
+} from '@/__generated__/cms';
+import { getStore } from '@/scripts/store';
+import { languageStore } from '@/stores/languageStore';
+import Grid from './ui/Grid.astro';
+import ArticleTag from './ArticleTag.astro';
+
+interface ArticlesGridProps {
+  posts: (InsightsListItemFragment | NewsroomListItemFragment)[];
+}
+
+type Props = WithAttributes<ArticlesGridProps>;
+
+const { posts } = Astro.props;
+const { currentLanguage } = getStore(languageStore);
+const lang = currentLanguage.code;
+---
+
+{
+  posts.length > 0 && (
+    <Grid>
+      {posts.map((post) => {
+        if (!post.uri) return null;
+        const categoryName = post.categories?.nodes?.[0]?.name ?? '';
+        const postTags = parseTags(post.tags?.nodes ?? []);
+        return (
+          <ArticleCard
+            link={{ url: buildI18nPath(post.uri, lang) }}
+            image={post.subpageSettings?.image}
+            class="col-span-full sm:col-span-6 lg:col-span-4"
+          >
+            {!!categoryName && (
+              <div class="typography-card-title text-sw-text-subdued">
+                {categoryName}
+              </div>
+            )}
+            {!!post.title && (
+              <div class="typography-cards-bold-large">{post.title}</div>
+            )}
+            {postTags.length > 0 && (
+              <div class="tags mt-auto flex flex-wrap gap-2.5">
+                {postTags.map((postTag) =>
+                  postTag.shouldRender ? (
+                    <ArticleTag color={postTag.color}>
+                      {postTag.name}
+                    </ArticleTag>
+                  ) : null
+                )}
+              </div>
+            )}
+          </ArticleCard>
+        );
+      })}
+    </Grid>
+  )
+}

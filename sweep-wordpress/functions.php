@@ -16,3 +16,4 @@ require_once "includes/functions/enqueue-assets.php";
 require_once "includes/translations/translations.php";
 require_once "includes/functions/register-dashboard-widget.php";
 require_once "includes/functions/graphql.php";
+require_once "includes/functions/remove_posts.php";

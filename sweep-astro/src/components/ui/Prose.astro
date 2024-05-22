@@ -1,5 +1,7 @@
 ---
+import { getImage } from 'astro:assets';
 import type { HTMLAttributes, HTMLTag } from 'astro/types';
+import { parse as parseHTML } from 'node-html-parser';
 import { cn } from '@/scripts/cn';
 import type { WithAttributes } from '@/types';
 
@@ -9,6 +11,31 @@ interface ProseProps extends HTMLAttributes<'div'> {
 type Props = WithAttributes<ProseProps>;
 
 const { class: className, tag: Tag = 'div', ...props } = Astro.props;
+let updatedContent = '';
+if (Astro.slots.has('default')) {
+  try {
+    const renderedSlot = await Astro.slots.render('default');
+    const root = parseHTML(renderedSlot);
+    const imgs = root.querySelectorAll('img');
+    for (const img of imgs) {
+      const src = img.getAttribute('src');
+      const width = img.getAttribute('width');
+      const height = img.getAttribute('height');
+      if (!src) continue;
+
+      const optimizedImage = await getImage({
+        src,
+        width,
+        height,
+        format: src.endsWith('svg') ? 'svg' : 'webp',
+      });
+
+      img.setAttribute('src', optimizedImage.src);
+    }
+
+    updatedContent = root.toString();
+  } catch {}
+}
 ---
 
 <style>
@@ -31,6 +58,10 @@ const { class: className, tag: Tag = 'div', ...props } = Astro.props;
 
     :global(:where(ol, ul)) {
       @apply ml-6;
+    }
+
+    :global(:where(img)) {
+      @apply w-full h-auto rounded-lg;
     }
 
     :global(:where(ol)) {
@@ -62,26 +93,27 @@ const { class: className, tag: Tag = 'div', ...props } = Astro.props;
     }
 
     :global(:where(h2, h3, h4)) {
-      @apply mt-8 mb-3;
+      @apply text-black mt-8 mb-3;
     }
 
     :global(:where(h2 + *, h3 + *, h4 + *)) {
       @apply mt-0;
     }
 
-    :global(:where(h2)),
+    :global(:where(h2)) {
+      @apply typography-article-header;
+    }
+
+    :global(:where(h3)) {
+      @apply typography-article-subheader;
+    }
+
     :global(:is(.as-h2)) {
       @apply typography-h2;
     }
 
-    :global(:where(h3)),
     :global(:is(.as-h3)) {
       @apply typography-h3;
-    }
-
-    :global(:where(h4)),
-    :global(:is(.as-h4)) {
-      @apply typography-h4;
     }
 
     :global(:where(:first-child)) {
@@ -93,7 +125,7 @@ const { class: className, tag: Tag = 'div', ...props } = Astro.props;
 {
   Astro.slots.has('default') && (
     <Tag {...props} class={cn('prose-content typography-body', className)}>
-      <slot />
+      <Fragment set:html={updatedContent} />
     </Tag>
   )
 }

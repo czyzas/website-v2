@@ -1,6 +1,8 @@
 export type WithAttributes<T> = astroHTML.JSX.IntrinsicAttributes & T;
 type StringLiteralToString<T> = T extends string ? string : T;
 
+export type WithShouldRender<T> = { shouldRender: boolean } & T;
+
 export type ReplaceTypenameLiteral<ObjType extends object> = {
   [KeyType in keyof ObjType]: ObjType[KeyType] extends object
     ? ReplaceTypenameLiteral<ObjType[KeyType]>
@@ -8,3 +10,15 @@ export type ReplaceTypenameLiteral<ObjType extends object> = {
 };
 
 export type ColumnSizes = '5-7' | '6-6' | '7-5';
+
+export type ITableOfContentsEntry = {
+  level: number;
+  id: string;
+  label: string;
+  children?: ITableOfContentsEntry[];
+};
+
+export interface FilterTag {
+  name?: string;
+  slug?: string;
+}

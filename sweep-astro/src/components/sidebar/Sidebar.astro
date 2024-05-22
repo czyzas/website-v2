@@ -1,0 +1,20 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/scripts/cn';
+
+interface SidebarProps extends HTMLAttributes<'aside'> {
+  sticky?: boolean;
+}
+
+type Props = SidebarProps;
+
+const { class: className, sticky = false, ...props } = Astro.props;
+---
+
+<aside {...props} class={cn(className)}>
+  <div
+    class={cn('flex flex-col gap-4 md:gap-6', { 'md:sticky md:top-8': sticky })}
+  >
+    <slot />
+  </div>
+</aside>

@@ -1,5 +1,4 @@
 ---
-import type { ComponentProps } from 'astro/types';
 import { Icon } from 'astro-icon/components';
 import type { ModulesModulesContentListOfEventsLayout } from '@/__generated__/cms';
 import ArticleCard from '@/components/ArticleCard.astro';
@@ -15,9 +14,9 @@ import { getStore } from '@/scripts/store';
 import { cmsStore } from '@/stores/cmsStore';
 import { languageStore } from '@/stores/languageStore';
 import { TRANSLATIONS } from '@/constants';
+import { parseTags } from '@/scripts/data-parsers/parseTag';
 
 type Props = ModulesModulesContentListOfEventsLayout;
-type TagColor = ComponentProps<typeof ArticleTag>['color'];
 
 const { layoutName, backgroundColor, limitPosts, categoryFilter, ctaButton } =
   Astro.props;
@@ -46,17 +45,17 @@ const events = (rawEvents?.events?.nodes ?? []).filter(Boolean);
             const {
               uri,
               eventAcf,
-              eventCategories,
+              categories,
               subpageSettings,
-              eventTags: rawTags,
+              tags: rawTags,
             } = event;
-            const category = eventCategories?.nodes?.[0].name;
+            const category = categories?.nodes?.[0].name;
             const image =
               subpageSettings?.image ?? themeOptions?.eventDefaultTopImage;
             const url = uri
               ? { url: buildI18nPath(uri, currentLanguage.code) }
               : undefined;
-            const tags = (rawTags?.nodes ?? []).filter(Boolean);
+            const tags = parseTags(rawTags?.nodes);
             const eventDate = eventAcf?.eventDate;
             let day;
             let month;
@@ -115,11 +114,11 @@ const events = (rawEvents?.events?.nodes ?? []).filter(Boolean);
 
                 {tags.length > 0 && (
                   <div class="tags mt-auto flex flex-wrap gap-2.5">
-                    {tags.map((tag) => {
-                      const color =
-                        (tag.tagTaxonomyAcf?.tagColor as TagColor) ?? 'gray';
-                      return <ArticleTag color={color}>{tag.name}</ArticleTag>;
-                    })}
+                    {tags.map((tag) =>
+                      tag.shouldRender ? (
+                        <ArticleTag color={tag.color}>{tag.name}</ArticleTag>
+                      ) : null
+                    )}
                   </div>
                 )}
               </ArticleCard>

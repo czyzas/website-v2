@@ -1,0 +1,49 @@
+---
+import { cva } from 'class-variance-authority';
+import type { VariantProps } from 'class-variance-authority';
+import type { ModulesModulesContentRichTextContentLayout } from '@/__generated__/cms';
+import ModuleContainer from '@/components/ModuleContainer.astro';
+import Card from '@/components/ui/Card.astro';
+import Container from '@/components/ui/Container.astro';
+import Prose from '@/components/ui/Prose.astro';
+import { cn } from '@/scripts/cn';
+
+type Props = ModulesModulesContentRichTextContentLayout;
+
+const {
+  layoutName,
+  isColoredCard = false,
+  cardColor = 'white',
+  content = '',
+} = Astro.props;
+
+const Wrapper = isColoredCard ? Card : Fragment;
+
+const coloredCardVariant = cva([], {
+  variants: {
+    color: {
+      white: [],
+      blue: ['border-sw-sky-400', 'bg-sw-glacier-100'],
+      green: ['border-sw-grass-500', 'bg-sw-grass-100'],
+      purple: ['border-sw-coral-400', 'bg-sw-coral-100'],
+      yellow: ['border-sw-crop-500', 'bg-sw-crop-100'],
+      red: ['border-sw-fire-400', 'bg-sw-fire-100'],
+    },
+  },
+});
+
+type AvailableColor = VariantProps<typeof coloredCardVariant>['color'];
+---
+
+<ModuleContainer name={layoutName!} padding={false}>
+  <Container>
+    <Wrapper
+      class={cn({
+        [coloredCardVariant({ color: cardColor as AvailableColor })]:
+          isColoredCard,
+      })}
+    >
+      <Prose class={cn({ 'text-black': isColoredCard })} set:html={content} />
+    </Wrapper>
+  </Container>
+</ModuleContainer>

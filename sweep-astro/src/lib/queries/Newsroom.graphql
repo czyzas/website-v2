@@ -1,0 +1,100 @@
+query NewsroomListPage($LANG: String!, $TAG_SLUG: [String]) {
+  page: pageByLang(uri: "newsroom", lang: $LANG) {
+    title
+    slug
+    uri
+    language {
+      ...Languages
+    }
+    subpageSettings {
+      ...SubpageSettings
+    }
+    articlesListAcf {
+      ...ArticlesListAcf
+    }
+  }
+  articles: newsroomItems(
+    first: 6
+    where: { status: PUBLISH, language: $LANG, tagSlug: $TAG_SLUG }
+  ) {
+    edges {
+      cursor
+      node {
+        ...NewsroomListItem
+      }
+    }
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+      hasPreviousPage
+    }
+  }
+  filterTags: newsroomTags(
+    first: 100
+    where: { language: $LANG, hideEmpty: true }
+  ) {
+    nodes {
+      name
+      slug
+    }
+  }
+  ...Essential
+}
+
+query NewsroomSinglePage($URI: String!, $LANG: String!) {
+  page: newsroomItemByLang(uri: $URI, lang: $LANG) {
+    title
+    slug
+    uri
+    modified
+    categories: newsroomCategories(first: 1) {
+      nodes {
+        name
+      }
+    }
+    tags: newsroomTags {
+      nodes {
+        name
+        tagTaxonomyAcf {
+          tagColor
+        }
+      }
+    }
+    language {
+      ...Languages
+    }
+    subpageSettings {
+      ...SubpageSettings
+    }
+    modules {
+      ...ModulesCollection
+    }
+  }
+  ...Essential
+}
+
+fragment NewsroomListItem on NewsroomItem {
+  __typename
+  title
+  uri
+  subpageSettings {
+    introduction
+    image {
+      ...Image
+    }
+  }
+  categories: newsroomCategories(first: 1) {
+    nodes {
+      name
+    }
+  }
+  tags: newsroomTags {
+    nodes {
+      name
+      tagTaxonomyAcf {
+        tagColor
+      }
+    }
+  }
+}

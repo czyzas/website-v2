@@ -1,0 +1,47 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
+import { cn } from '@/scripts/cn';
+import type { WithAttributes } from '@/types';
+import WordpressImage from './WordpressImage.astro';
+import Card from './ui/Card.astro';
+
+interface CardWithMergedImage extends HTMLAttributes<'div'> {
+  image?: UnparsedImage;
+  size?: 'md' | 'lg';
+}
+type Props = WithAttributes<CardWithMergedImage>;
+
+const { class: className, image, size = 'md', ...props } = Astro.props;
+---
+
+<Card
+  {...props}
+  class={cn(
+    'card-with-merged-image',
+    'overflow-hidden h-full p-0 bg-sw-surface-subdued',
+    'grid lg:min-h-[26.25rem] grid-cols-2',
+    {
+      'lg:grid-cols-12': size === 'lg',
+    },
+    className
+  )}
+>
+  <div
+    class={cn('content-column flex flex-col p-6 col-span-full md:col-span-1', {
+      'lg:col-span-4': size === 'lg',
+    })}
+  >
+    <slot />
+  </div>
+  <div
+    class={cn(
+      'image-column aspect-[16/9] col-span-full md:aspect-auto md:col-span-1',
+      {
+        'lg:col-span-8': size === 'lg',
+      }
+    )}
+  >
+    <WordpressImage data={image} class="object-cover w-full h-full" />
+  </div>
+</Card>

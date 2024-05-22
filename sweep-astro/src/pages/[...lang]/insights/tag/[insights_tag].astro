@@ -1,8 +1,11 @@
 ---
 import { defaultLocale } from '@/i18n/config';
 import { getLangParam } from '@/i18n/utils';
-import { fetchInsightsTagsStaticPaths } from '@/lib/fetchCMSData';
-import InsightsList from '@/templates/InsightsList.astro';
+import {
+  fetchInsightsListPage,
+  fetchInsightsTagsStaticPaths,
+} from '@/lib/fetchCMSData';
+import ArticlesList from '@/templates/ArticlesList.astro';
 
 export const getStaticPaths = async () => {
   const finalPaths = [];
@@ -25,6 +28,7 @@ export const getStaticPaths = async () => {
 };
 
 const { lang = defaultLocale, insights_tag: tag } = Astro.params;
+const data = await fetchInsightsListPage(lang, tag);
 ---
 
-<InsightsList lang={lang} tag={tag} />
+<ArticlesList postType="insights" lang={lang} tag={tag} data={data} />

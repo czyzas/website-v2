@@ -15,10 +15,16 @@ export const TRANSLATIONS = {
   PRIVCY_LINK_LABEL: 'PRIVACY LINK',
   PAST_EVENT: 'PAST EVENT',
   READ_MORE: 'Read more',
+  MORE_STORIES: 'More stories',
   READ_FULL_STORY: 'Read the full story',
+  VIEW_CASE_STUDY: 'View Case Study',
   ALL: 'All',
   SIGN_UP: 'Sign up',
   NEWSLETTER_SECTION: {
     FORM_SUCCESS_MESSAGE: 'SUBMISSION SUCCESS',
+  },
+  SIDEBAR: {
+    AUTHOR: 'Author',
+    TOC: 'Contents',
   },
 } as const;

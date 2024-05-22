@@ -18,6 +18,12 @@ fragment ModulesCollection on Modules {
         }
       }
     }
+    ... on ModulesModulesContentRichTextContentLayout {
+      layoutName
+      isColoredCard
+      cardColor
+      content
+    }
     ... on ModulesModulesContentBreakLayout {
       layoutName
       backgroundColor {
@@ -130,7 +136,7 @@ fragment ModulesCollection on Modules {
         ...Link
       }
     }
-    ... on ModulesModulesContentListOfPostsLayout {
+    ... on ModulesModulesContentListOfNewsroomItemsLayout {
       layoutName
       backgroundColor {
         selectBackgroundColor

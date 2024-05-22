@@ -9,7 +9,7 @@ import {
   DemoPageDocument,
   HomepageDocument,
   EventsModuleListDocument,
-  PostsModuleListDocument,
+  NewsroomModuleListDocument,
   SinglePageStaticPathsDocument,
   ComponentIndustriesListDocument,
   IndustryPagesStaticPathsDocument,
@@ -18,11 +18,15 @@ import {
   InsightsTagsStaticPathsDocument,
   InsightsListPageDocument,
   InsightsSinglePageDocument,
+  NewsroomListPageDocument,
+  NewsroomTagsStaticPathsDocument,
+  NewsroomSinglePageDocument,
+  NewsroomPagesStaticPathsDocument,
 } from '@/__generated__/cms';
 import type {
   ComponentIndustriesListFragment,
   EventsModuleListQuery,
-  PostsModuleListQuery,
+  NewsroomModuleListQuery,
 } from '@/__generated__/cms';
 import { defaultLocale } from '@/i18n/config';
 import { getUrlWithoutLang } from '@/i18n/utils';
@@ -193,6 +197,55 @@ export function fetchInsightsSingle(uri: string, lang: string = defaultLocale) {
   );
 }
 
+// NEWSROOM
+export async function fetchNewsroomPagesStaticPaths() {
+  // TODO: handle more than 100 pages
+  return (
+    (
+      await fetchData(NewsroomPagesStaticPathsDocument, undefined, [
+        CACHE_KEYS.STATIC_PATHS,
+        CACHE_KEYS.NEWSROOM,
+      ])
+    ).pages?.nodes ?? []
+  );
+}
+export async function fetchNewsroomTagsStaticPaths() {
+  // TODO: handle more than 100 pages
+  return (
+    (
+      await fetchData(NewsroomTagsStaticPathsDocument, undefined, [
+        CACHE_KEYS.STATIC_PATHS,
+        CACHE_KEYS.NEWSROOM,
+        CACHE_KEYS.TAGS,
+      ])
+    ).tags?.nodes ?? []
+  );
+}
+export function fetchNewsroomListPage(
+  lang: string = defaultLocale,
+  tag?: string
+) {
+  return fetchData(
+    NewsroomListPageDocument,
+    {
+      LANG: lang,
+      TAG_SLUG: tag,
+    },
+    tag
+      ? [lang, CACHE_KEYS.NEWSROOM, CACHE_KEYS.TAGS, tag]
+      : [lang, CACHE_KEYS.NEWSROOM]
+  );
+}
+export function fetchNewsroomSingle(uri: string, lang: string = defaultLocale) {
+  return fetchData(
+    NewsroomSinglePageDocument,
+    {
+      URI: uri,
+      LANG: lang,
+    },
+    [lang, getUrlWithoutLang(uri)]
+  );
+}
 // MODULES
 interface PostsParams {
   lang: string;
@@ -201,7 +254,7 @@ interface PostsParams {
 }
 
 type PostsReturnType = Promise<
-  EventsModuleListQuery | PostsModuleListQuery | never[]
+  EventsModuleListQuery | NewsroomModuleListQuery | never[]
 >;
 
 /**
@@ -212,11 +265,11 @@ export async function fetchPostsModuleList(
   params: PostsParams
 ): Promise<EventsModuleListQuery>;
 export async function fetchPostsModuleList(
-  postType: 'post',
+  postType: 'newsroom',
   params: PostsParams
-): Promise<PostsModuleListQuery>;
+): Promise<NewsroomModuleListQuery>;
 export async function fetchPostsModuleList(
-  postType: 'event' | 'post',
+  postType: 'event' | 'newsroom',
   params: PostsParams
 ): PostsReturnType {
   const { lang, categorySlug, limit } = params;
@@ -239,8 +292,8 @@ export async function fetchPostsModuleList(
     ]);
   }
 
-  if (postType === 'post') {
-    return await fetchData(PostsModuleListDocument, options, [
+  if (postType === 'newsroom') {
+    return await fetchData(NewsroomModuleListDocument, options, [
       CACHE_KEYS.MODULE_LIST_OF_POSTS,
       hashedOptions,
     ]);

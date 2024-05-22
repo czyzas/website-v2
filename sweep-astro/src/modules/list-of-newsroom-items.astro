@@ -1,6 +1,5 @@
 ---
-import type { ComponentProps } from 'astro/types';
-import type { ModulesModulesContentListOfPostsLayout } from '@/__generated__/cms';
+import type { ModulesModulesContentListOfNewsroomItemsLayout } from '@/__generated__/cms';
 import ArticleCard from '@/components/ArticleCard.astro';
 import ArticleTag from '@/components/ArticleTag.astro';
 import ButtonContainer from '@/components/ButtonContainer.astro';
@@ -13,25 +12,23 @@ import { fetchPostsModuleList } from '@/lib/fetchCMSData';
 import { getStore } from '@/scripts/store';
 import { cmsStore } from '@/stores/cmsStore';
 import { languageStore } from '@/stores/languageStore';
+import { parseTags } from '@/scripts/data-parsers/parseTag';
 
-type Props = ModulesModulesContentListOfPostsLayout;
-type TagColor = ComponentProps<typeof ArticleTag>['color'];
+type Props = ModulesModulesContentListOfNewsroomItemsLayout;
 
-const { layoutName, backgroundColor, limitPosts, categoryFilter, ctaButton } =
-  Astro.props;
-const categorySlug = categoryFilter?.nodes?.[0]?.slug;
+const { layoutName, backgroundColor, limitPosts, ctaButton } = Astro.props;
+// const categorySlug = categoryFilter?.nodes?.[0]?.slug;
 // TODO: create useLanguage hook to get current lang from the store automatically
 const { currentLanguage } = getStore(languageStore);
 const store = getStore(cmsStore);
 // TODO: create useOptions hook to get options from the store
 const themeOptions = store.themeOptions?.themeOptionsAcf;
 
-const rawPosts = await fetchPostsModuleList('post', {
+const rawPosts = await fetchPostsModuleList('newsroom', {
   lang: currentLanguage.code,
-  categorySlug,
   limit: limitPosts,
 });
-const posts = (rawPosts?.posts?.nodes ?? []).filter(Boolean);
+const posts = (rawPosts?.newsroomItems?.nodes ?? []).filter(Boolean);
 ---
 
 {
@@ -47,7 +44,7 @@ const posts = (rawPosts?.posts?.nodes ?? []).filter(Boolean);
             const url = uri
               ? { url: buildI18nPath(uri, currentLanguage.code) }
               : undefined;
-            const tags = (rawTags?.nodes ?? []).filter(Boolean);
+            const tags = parseTags(rawTags?.nodes);
 
             return (
               <ArticleCard
@@ -61,14 +58,13 @@ const posts = (rawPosts?.posts?.nodes ?? []).filter(Boolean);
                 <h3 class="typography-cards-bold-large text-pretty">
                   {post.title}
                 </h3>
-
                 {tags.length > 0 && (
                   <div class="tags mt-auto flex flex-wrap gap-2.5">
-                    {tags.map((tag) => {
-                      const color =
-                        (tag.tagTaxonomyAcf?.tagColor as TagColor) ?? 'gray';
-                      return <ArticleTag color={color}>{tag.name}</ArticleTag>;
-                    })}
+                    {tags.map((tag) =>
+                      tag.shouldRender ? (
+                        <ArticleTag color={tag.color}>{tag.name}</ArticleTag>
+                      ) : null
+                    )}
                   </div>
                 )}
               </ArticleCard>

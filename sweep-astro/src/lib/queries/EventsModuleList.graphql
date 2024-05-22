@@ -26,12 +26,12 @@ fragment EventsModuleEvent on Event {
       ...Image
     }
   }
-  eventCategories {
+  categories: eventCategories {
     nodes {
       name
     }
   }
-  eventTags {
+  tags: eventTags {
     nodes {
       name
       tagTaxonomyAcf {

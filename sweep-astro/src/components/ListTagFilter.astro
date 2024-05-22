@@ -1,0 +1,60 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { isNil } from 'lodash-es';
+import { cn } from '@/scripts/cn';
+import type { FilterTag } from '@/types';
+import { buildI18nPath } from '@/i18n/utils';
+import { getStore } from '@/scripts/store';
+import { languageStore } from '@/stores/languageStore';
+import Card from './ui/Card.astro';
+
+interface ListTagFilterProps extends HTMLAttributes<'div'> {
+  tags?: FilterTag[];
+  activeTag?: string;
+  prefix?: string;
+}
+type Props = ListTagFilterProps;
+
+const {
+  class: className,
+  tags: rawTags,
+  prefix = '',
+  activeTag = '',
+  ...props
+} = Astro.props;
+const { currentLanguage } = getStore(languageStore);
+const lang = currentLanguage.code;
+
+const tags = (rawTags ?? []).filter(
+  (tag) => tag && !isNil(tag.name) && !isNil(tag.slug)
+);
+---
+
+<div {...props} class={cn('')}>
+  {
+    tags.length > 0 && (
+      <div
+        class={cn(
+          'list-tag-filter',
+          'grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-2',
+          className
+        )}
+      >
+        {tags.map((tag) => (
+          <a
+            href={buildI18nPath(
+              tag.slug ? [prefix, 'tag', `${tag.slug}#list`] : `${prefix}#list`,
+              lang
+            )}
+            data-active={activeTag === tag.slug ? 'true' : 'false'}
+            class="group"
+          >
+            <Card class="h-full flex items-center justify-center transition-colors bg-white group-hover:bg-sw-surface-subdued group-data-[active=true]:bg-sw-sky-400 group-data-[active=true]:text-white group-data-[active=true]:border-transparent text-base font-medium p-3 text-center">
+              {tag.name}
+            </Card>
+          </a>
+        ))}
+      </div>
+    )
+  }
+</div>

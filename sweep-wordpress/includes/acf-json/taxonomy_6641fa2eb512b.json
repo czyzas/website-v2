@@ -13,7 +13,7 @@
     "labels": {
         "name": "Insights categories",
         "singular_name": "Insights category",
-        "menu_name": "Insights categories",
+        "menu_name": "Categories",
         "all_items": "All Insights categories",
         "edit_item": "Edit Insights category",
         "view_item": "View Insights category",
@@ -74,5 +74,5 @@
     "show_in_graphql": 1,
     "graphql_single_name": "insightsCategory",
     "graphql_plural_name": "insightsCategories",
-    "modified": 1715690345
+    "modified": 1716297784
 }

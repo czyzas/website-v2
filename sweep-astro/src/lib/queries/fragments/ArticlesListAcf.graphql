@@ -1,0 +1,26 @@
+fragment ArticlesListAcf on ArticlesListAcf {
+  postType
+  listTitle {
+    selectSectionTitle {
+      customStyle
+      displayAs
+      headline
+      headlineType
+      overline
+      textUnder
+    }
+  }
+  featuredItemTitle
+  featuredInsightsItem {
+    node {
+      __typename
+      ...InsightsListItem
+    }
+  }
+  featuredNewsroomItem {
+    node {
+      __typename
+      ...NewsroomListItem
+    }
+  }
+}
