@@ -1,49 +1,24 @@
 ---
 import type { InferGetStaticParamsType } from 'astro';
-import { isString } from 'lodash-es';
 import { defaultLocale } from '@/i18n/config';
-import { getUrlWithoutLang, getLangParam } from '@/i18n/utils';
 import {
   fetchNewsroomPagesStaticPaths,
   fetchNewsroomSingle,
 } from '@/lib/fetchCMSData';
-import {
-  cleanURI,
-  compareURI,
-  prefixURI,
-  unprefixURI,
-} from '@/scripts/utils-uri';
+import { cleanURI, compareURI, prefixURI } from '@/scripts/utils-uri';
 import ArticlePage from '@/templates/ArticlePage.astro';
+import { createPagesStaticPaths } from '@/scripts/utils-static-paths';
 
-// TODO: use some kind of reusable function
 export const getStaticPaths = async () => {
-  const finalPaths = [];
-
   const paths = await fetchNewsroomPagesStaticPaths();
-  for (const staticPath of paths) {
-    if (!staticPath?.languageCode || !staticPath?.uri) {
-      continue;
-    }
-
-    const paramPath = getUrlWithoutLang(staticPath.uri);
-
-    finalPaths.push({
-      params: {
-        lang: getLangParam(staticPath.languageCode),
-        newsroom_single: unprefixURI(paramPath, 'newsroom'),
-      },
-    });
-  }
-
-  return finalPaths;
+  return createPagesStaticPaths(paths, {
+    paramKey: 'newsroom_single',
+    paramValueType: 'slug',
+  });
 };
 
 const params = Astro.params as InferGetStaticParamsType<typeof getStaticPaths>;
-
-const { newsroom_single: unprefixedURI, lang: paramLang = defaultLocale } =
-  params;
-
-const lang = isString(paramLang) ? paramLang : defaultLocale;
+const { newsroom_single: unprefixedURI, lang = defaultLocale } = params;
 const rawUri = prefixURI(unprefixedURI, 'newsroom');
 const uri = cleanURI(rawUri, lang);
 

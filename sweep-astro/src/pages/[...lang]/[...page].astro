@@ -1,7 +1,6 @@
 ---
 import type { InferGetStaticParamsType } from 'astro';
-import { isString } from 'lodash-es';
-import { fixLangParams, getLangParam, getUrlWithoutLang } from '@/i18n/utils';
+import { fixLangParams } from '@/i18n/utils';
 import {
   fetchDefaultPage,
   fetchDefaultPagesStaticPaths,
@@ -11,41 +10,25 @@ import { defaultLocale } from '@/i18n/config';
 import { cleanURI, compareURI } from '@/scripts/utils-uri';
 import Homepage from '@/templates/Homepage.astro';
 import DefaultPage from '@/templates/DefaultPage.astro';
+import { createPagesStaticPaths } from '@/scripts/utils-static-paths';
 
 export const getStaticPaths = async () => {
-  const finalPaths = [];
-
   const paths = await fetchDefaultPagesStaticPaths();
-  for (const staticPath of paths) {
-    if (
+  return createPagesStaticPaths(paths, {
+    paramKey: 'page',
+    paramValueType: 'uri',
+    customValidator: (staticPath) =>
       !['Default', 'Homepage'].includes(
         staticPath.template?.templateName ?? ''
-      ) ||
-      !staticPath?.languageCode ||
-      !staticPath?.uri
-    ) {
-      continue;
-    }
-
-    const paramPath = getUrlWithoutLang(staticPath.uri);
-
-    finalPaths.push({
-      params: {
-        lang: getLangParam(staticPath.languageCode),
-        page: paramPath || undefined,
-      },
-    });
-  }
-
-  return finalPaths;
+      ),
+  });
 };
 
-const { page: paramUri, lang: paramLang = defaultLocale } = fixLangParams(
+const { page: paramUri, lang = defaultLocale } = fixLangParams(
   Astro.params,
   'page'
 ) as InferGetStaticParamsType<typeof getStaticPaths>;
 
-const lang = isString(paramLang) ? paramLang : defaultLocale;
 const uri = cleanURI(paramUri, lang, { defaultUri: '/' });
 const isHomepage = uri === '/';
 
