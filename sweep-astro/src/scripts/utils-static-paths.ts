@@ -1,15 +1,18 @@
 import { cloneDeep, omit } from 'lodash-es';
 import { getLangParam } from '@/i18n/utils';
 
-export type IRawStaticPaths = {
+export type RawDefaultPageStaticPaths = {
   __typename?: string;
   databaseId?: number;
   slug?: string | undefined;
   uri?: string | undefined;
   languageCode?: string | undefined;
-  translations?: (IRawStaticPaths | undefined)[];
+  translations?: (RawDefaultPageStaticPaths | undefined)[];
 };
-export type IParsedStaticPaths = Omit<IRawStaticPaths, 'translations'>[];
+export type DefaultPageStaticPaths = Omit<
+  RawDefaultPageStaticPaths,
+  'translations'
+>[];
 /**
  * Take raw page (page object + translations[]) from WP and return array of all pages
  * @example
@@ -28,8 +31,8 @@ export type IParsedStaticPaths = Omit<IRawStaticPaths, 'translations'>[];
  * ```
  */
 export function parseStaticPaths(
-  rawStaticPaths: IRawStaticPaths
-): IParsedStaticPaths {
+  rawStaticPaths: RawDefaultPageStaticPaths
+): DefaultPageStaticPaths {
   const translations = rawStaticPaths?.translations ?? [];
   const originalPage = cloneDeep(omit(rawStaticPaths, 'translations'));
 
@@ -39,9 +42,11 @@ export function parseStaticPaths(
 /**
  * Create static paths for single default page
  */
-export function createSinglePageStaticPaths(fetcher: IParsedStaticPaths) {
+export function createSingleDefaultPageStaticPaths(
+  staticPaths: DefaultPageStaticPaths
+) {
   const finalPaths = [];
-  const staticPaths = fetcher;
+
   for (const staticPath of staticPaths) {
     if (!staticPath?.languageCode || !staticPath?.uri) {
       continue;
