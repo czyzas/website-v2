@@ -255,6 +255,25 @@ fragment ModulesCollection on Modules {
         }
       }
     }
+    ... on ModulesModulesContentQuotationsLayout {
+      layoutName
+      backgroundColor {
+        selectBackgroundColor
+      }
+      theme
+      quotations {
+        quotation {
+          selectQuotation {
+            quote
+            authorImage {
+              ...Image
+            }
+            authorName
+            authorOccupation
+          }
+        }
+      }
+    }
     ... on ModulesModulesContentQuotationWithCardsLayout {
       layoutName
       backgroundColor {

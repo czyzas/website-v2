@@ -1,0 +1,111 @@
+---
+import 'swiper/swiper-bundle.css';
+import type { ModulesModulesContentQuotationsLayout } from '@/__generated__/cms';
+import ModuleContainer from '@/components/ModuleContainer.astro';
+import Container from '@/components/ui/Container.astro';
+import UIQuotation from '@/components/Quotation.astro';
+import SwiperNavigation from '@/components/SwiperNavigation.astro';
+import Grid from '@/components/ui/Grid.astro';
+import SwiperPagination from '@/components/SwiperPagination.astro';
+
+type Props = ModulesModulesContentQuotationsLayout;
+
+const {
+  layoutName,
+  backgroundColor,
+  theme = 'light',
+  quotations = [],
+} = Astro.props;
+
+const quotationsArray = (quotations ?? []).filter(Boolean).map((quotation) => {
+  const { quote, authorImage, authorName, authorOccupation } =
+    quotation?.quotation?.selectQuotation ?? {};
+  return { quote, authorImage, authorName, authorOccupation };
+});
+---
+
+<script>
+  import Swiper from 'swiper';
+  import { Navigation, Pagination } from 'swiper/modules';
+
+  const swiperContainers =
+    document.querySelectorAll<HTMLDivElement>('.quotations-swiper');
+
+  for (const swiperContainer of swiperContainers) {
+    const prevButton = swiperContainer?.querySelector<HTMLButtonElement>(
+      '.swiper-navigation-prev'
+    );
+    const nextButton = swiperContainer?.querySelector<HTMLButtonElement>(
+      '.swiper-navigation-next'
+    );
+    const swiperPagination =
+      swiperContainer?.querySelector<HTMLDivElement>('.swiper-pagination');
+
+    new Swiper(swiperContainer, {
+      modules: [Navigation, Pagination],
+      slidesPerView: 'auto',
+      spaceBetween: 16,
+      navigation: {
+        prevEl: prevButton,
+        nextEl: nextButton,
+      },
+      pagination: {
+        el: swiperPagination,
+        type: 'fraction',
+      },
+    });
+  }
+</script>
+
+<style>
+  .swiper {
+    @apply overflow-visible;
+  }
+
+  .swiper-slide {
+    width: 37.5rem;
+    @apply max-w-full;
+  }
+</style>
+
+{
+  quotationsArray.length > 0 && (
+    <ModuleContainer name={layoutName!} bg={backgroundColor}>
+      <div class="overflow-hidden pb-11">
+        <Container>
+          <Grid>
+            <div class="quotations-swiper col-span-full lg:col-start-2 lg:col-end-12">
+              <div class="swiper-wrapper">
+                {quotationsArray.map((quotation) => {
+                  const { quote, authorName, authorImage, authorOccupation } =
+                    quotation;
+                  return (
+                    <div class="swiper-slide">
+                      <UIQuotation
+                        theme={
+                          theme === 'light' || theme === 'dark'
+                            ? theme
+                            : 'light'
+                        }
+                        avatarSize={theme === 'dark' ? 'sm' : 'md'}
+                        quoteSize={theme === 'dark' ? 'sm' : 'md'}
+                        authorName={authorName}
+                        authorImage={authorImage}
+                        authorOccupation={authorOccupation}
+                        set:html={quote}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+              <div class="flex items-center gap-4 text-xl">
+                <SwiperPagination />
+                <SwiperNavigation class="w-fit" />
+              </div>
+            </div>
+          </Grid>
+        </Container>
+      </div>
+    </ModuleContainer>
+  )
+}
