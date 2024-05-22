@@ -36,6 +36,9 @@ export function parseStaticPaths(
   return [originalPage, ...translations].filter(Boolean);
 }
 
+/**
+ * Create static paths for single default page
+ */
 export function createSinglePageStaticPaths(fetcher: IParsedStaticPaths) {
   const finalPaths = [];
   const staticPaths = fetcher;

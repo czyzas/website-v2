@@ -48,12 +48,8 @@ query InsightsSinglePage($URI: String!, $LANG: String!) {
     slug
     uri
     modified
-    insightsSingleAcf {
-      author {
-        node {
-          ...Author
-        }
-      }
+    articleAcf {
+      ...ArticlePageAcf
     }
     categories: insightsCategories(first: 1) {
       nodes {
@@ -78,7 +74,7 @@ query InsightsSinglePage($URI: String!, $LANG: String!) {
       ...ModulesCollection
     }
   }
-  insights(first: 4, where: { status: PUBLISH, language: $LANG }) {
+  articles: insights(first: 4, where: { status: PUBLISH, language: $LANG }) {
     nodes {
       ...InsightsListItem
     }
