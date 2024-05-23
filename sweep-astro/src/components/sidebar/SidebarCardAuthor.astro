@@ -4,11 +4,11 @@ import { TRANSLATIONS } from '@/constants';
 import WordpressImage from '../WordpressImage.astro';
 import SidebarCard from './SidebarCard.astro';
 
-interface AuthorProps {
+interface SidebarCardAuthorProps {
   author?: AuthorFragment;
 }
 
-type Props = AuthorProps;
+type Props = SidebarCardAuthorProps;
 
 const { author } = Astro.props;
 ---

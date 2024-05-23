@@ -17,6 +17,7 @@ import Top from '@/components/partials/Top.astro';
 import Sidebar from '@/components/sidebar/Sidebar.astro';
 import SidebarCardAuthor from '@/components/sidebar/SidebarCardAuthor.astro';
 import SidebarCardTableOfContents from '@/components/sidebar/SidebarCardTableOfContents.astro';
+import SidebarEventCTA from '@/components/sidebar/SidebarEventCTA.astro';
 import Container from '@/components/ui/Container.astro';
 import Grid from '@/components/ui/Grid.astro';
 import Section from '@/components/ui/Section.astro';
@@ -148,6 +149,11 @@ if (postType === 'insights' || postType === 'newsroom') {
               (postType === 'newsroom' && (
                 <SidebarCardTableOfContents toc={toc} />
               ))
+          }
+          {
+            page.__typename === 'Event' && (
+              <SidebarEventCTA location={page.eventAcf?.eventLocation} />
+            )
           }
         </Sidebar>
       </Grid>
