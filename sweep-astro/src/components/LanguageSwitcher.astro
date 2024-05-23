@@ -3,6 +3,7 @@ import { Icon } from 'astro-icon/components';
 import { getStore } from '@/scripts/store';
 import { languageStore } from '@/stores/languageStore';
 import { buildI18nPath } from '@/i18n/utils';
+import { cn } from '@/scripts/cn';
 import MenuItem from './MenuItem.astro';
 
 const id = `dropdown-${crypto.randomUUID().substring(16)}`;
@@ -37,18 +38,11 @@ const languages = (rawLanguages ?? []).filter(Boolean);
       };
 
       autoUpdate(button, relatedDropdown, updatePosition);
-
-      button.addEventListener('click', () => {
-        const state = button.ariaPressed === 'true';
-        const nextState = !state ? 'true' : 'false';
-        button.ariaPressed = nextState;
-        relatedDropdown.ariaHidden = state ? 'true' : 'false';
-      });
     }
   }
 </script>
 
-<div class="language-switcher-container relative">
+<div class="language-switcher-container relative group">
   <MenuItem
     asButton
     type="button"
@@ -63,24 +57,28 @@ const languages = (rawLanguages ?? []).filter(Boolean);
   </MenuItem>
   {
     languages && (
-      <ul
-        aria-hidden="true"
-        class="list absolute visible bg-white shadow-menu rounded-lg p-6 transition-all duration-100 aria-hidden:-translate-y-1 aria-hidden:opacity-0 aria-hidden:invisible space-y-4"
-        id={id}
+      <div
+        class={cn(
+          'lg:pt-8 pt-4',
+          'absolute invisible opacity-0 transition-all duration-100 z-10',
+          'group-hover:translate-y-1 group-hover:opacity-100 group-hover:visible'
+        )}
       >
-        {languages.map((lang) => (
-          <li class="flex flex-col">
-            <MenuItem
-              href={buildI18nPath('/', lang.code)}
-              set:text={lang.translated_name}
-              aria-label={lang.translated_name}
-              data-current={
-                lang.code === currentLanguage.code ? 'true' : 'false'
-              }
-            />
-          </li>
-        ))}
-      </ul>
+        <ul class="list bg-white rounded-lg p-6 space-y-4 shadow-menu" id={id}>
+          {languages.map((lang) => (
+            <li class="flex flex-col">
+              <MenuItem
+                href={buildI18nPath('/', lang.code)}
+                set:text={lang.translated_name}
+                aria-label={lang.translated_name}
+                data-current={
+                  lang.code === currentLanguage.code ? 'true' : 'false'
+                }
+              />
+            </li>
+          ))}
+        </ul>
+      </div>
     )
   }
 </div>
