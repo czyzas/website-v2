@@ -13,6 +13,7 @@ export const TRANSLATIONS = {
   FORM_SUBMISSION_FAILED_MESSAGE: 'SUBMISSION FAILED',
   TERMS_LINK_LABEL: 'TERMS LINK',
   PRIVCY_LINK_LABEL: 'PRIVACY LINK',
+  EVENT: 'EVENT',
   PAST_EVENT: 'PAST EVENT',
   READ_MORE: 'Read more',
   MORE_STORIES: 'More stories',
@@ -26,5 +27,12 @@ export const TRANSLATIONS = {
   SIDEBAR: {
     AUTHOR: 'Author',
     TOC: 'Contents',
+    JOIN_US_LIVE: 'Join us live in {location}',
+  },
+  EVENT_INFORMATION: {
+    location: 'Location',
+    date: 'Date',
+    time: 'Time',
+    language: 'Language',
   },
 } as const;

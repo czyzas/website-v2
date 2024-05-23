@@ -1,0 +1,47 @@
+query EventSinglePage($URI: String!, $LANG: String!) {
+  page: eventByLang(uri: $URI, lang: $LANG) {
+    __typename
+    title
+    slug
+    uri
+    eventAcf {
+      eventDate
+      eventLanguage
+      eventLocation
+      registerFormTitle {
+        selectSectionTitle {
+          customStyle
+          displayAs
+          headline
+          headlineType
+          overline
+          textUnder
+        }
+      }
+      registerFormGuid
+    }
+    categories: eventCategories(first: 1) {
+      nodes {
+        name
+      }
+    }
+    tags: eventTags {
+      nodes {
+        name
+        tagTaxonomyAcf {
+          tagColor
+        }
+      }
+    }
+    language {
+      ...Languages
+    }
+    subpageSettings {
+      ...SubpageSettings
+    }
+    modules {
+      ...ModulesCollection
+    }
+  }
+  ...Essential
+}

@@ -1,3 +1,7 @@
 export const defaultLocale = 'en';
-export const locales = ['en', 'fr', 'de'] as const;
-export type Locales = (typeof locales)[number];
+export const languages = ['en', 'fr', 'de'] as const;
+export const locales: Record<string, string> = {
+  en: 'en-UK',
+  fr: 'fr-FR',
+  de: 'de-DE',
+} as const;

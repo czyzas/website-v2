@@ -85,3 +85,15 @@ query NewsroomPagesStaticPaths {
     }
   }
 }
+
+# Event
+query EventPagesStaticPaths {
+  pages: events(first: 100, where: { status: PUBLISH, language: "all" }) {
+    nodes {
+      databaseId
+      slug
+      uri
+      languageCode
+    }
+  }
+}
