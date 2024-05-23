@@ -3438,6 +3438,41 @@
                     ],
                     "min": "",
                     "max": ""
+                },
+                "layout_664f1c751c6a5": {
+                    "key": "layout_664f1c751c6a5",
+                    "name": "gated",
+                    "label": "Gated",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_664f1cab2bc2d",
+                            "label": "Hubspot Form GUID",
+                            "name": "hubspot_form_guid",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 2,
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "Eg. 550e8400-e29b-41d4-a716-446655440000",
+                            "prepend": "",
+                            "append": "",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "hubspotFormGuid",
+                            "graphql_non_null": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": "1"
                 }
             },
             "min": "",
@@ -3484,6 +3519,13 @@
                 "operator": "==",
                 "value": "newsroom"
             }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "event"
+            }
         ]
     ],
     "menu_order": 1,
@@ -3502,11 +3544,12 @@
     "graphql_field_name": "modules",
     "map_graphql_types_from_location_rules": 1,
     "graphql_types": [
+        "Event",
         "Industry",
         "InsightsItem",
         "NewsroomItem",
         "Page",
         "Post"
     ],
-    "modified": 1716380245
+    "modified": 1716460770
 }
