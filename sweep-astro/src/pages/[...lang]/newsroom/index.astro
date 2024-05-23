@@ -4,11 +4,11 @@ import {
   fetchNewsroomListPage,
   fetchSinglePageStaticPaths,
 } from '@/lib/fetchCMSData';
-import { createSinglePageStaticPaths } from '@/scripts/utils-static-paths';
+import { createSingleDefaultPageStaticPaths } from '@/scripts/utils-static-paths';
 import ArticlesList from '@/templates/ArticlesList.astro';
 
 export async function getStaticPaths() {
-  return createSinglePageStaticPaths(
+  return createSingleDefaultPageStaticPaths(
     await fetchSinglePageStaticPaths('/newsroom')
   );
 }

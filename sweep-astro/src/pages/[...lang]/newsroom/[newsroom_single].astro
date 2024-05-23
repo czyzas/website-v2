@@ -1,37 +1,46 @@
 ---
-import { getUrlWithoutLang, getLangParam } from '@/i18n/utils';
-import Layout from '@/layouts/Layout.astro';
-import { fetchNewsroomPagesStaticPaths } from '@/lib/fetchCMSData';
-import { unprefixURI } from '@/scripts/utils-uri';
+import type { InferGetStaticParamsType } from 'astro';
+import { defaultLocale } from '@/i18n/config';
+import {
+  fetchNewsroomPagesStaticPaths,
+  fetchNewsroomSingle,
+} from '@/lib/fetchCMSData';
+import { cleanURI, compareURI, prefixURI } from '@/scripts/utils-uri';
+import ArticlePage from '@/templates/ArticlePage.astro';
+import { createPagesStaticPaths } from '@/scripts/utils-static-paths';
+
+export const getStaticPaths = async () => {
+  const paths = await fetchNewsroomPagesStaticPaths();
+  return createPagesStaticPaths(paths, {
+    paramKey: 'newsroom_single',
+    paramValueType: 'slug',
+  });
+};
+
+const params = Astro.params as InferGetStaticParamsType<typeof getStaticPaths>;
+const { newsroom_single: unprefixedURI, lang = defaultLocale } = params;
+const rawUri = prefixURI(unprefixedURI, 'newsroom');
+const uri = cleanURI(rawUri, lang);
 
 // TODO: use some kind of reusable function
-export const getStaticPaths = async () => {
-  const finalPaths = [];
-
-  const paths = await fetchNewsroomPagesStaticPaths();
-  for (const staticPath of paths) {
-    if (!staticPath?.languageCode || !staticPath?.uri) {
-      continue;
-    }
-
-    const paramPath = getUrlWithoutLang(staticPath.uri);
-
-    finalPaths.push({
-      params: {
-        lang: getLangParam(staticPath.languageCode),
-        newsroom_single: unprefixURI(paramPath, 'newsroom'),
-      },
-    });
+if (!uri) {
+  if (import.meta.env.SSR) {
+    return Astro.redirect('/404');
   }
 
-  return finalPaths;
-};
+  throw new Error(`Page with uri '${rawUri}' does not exists`);
+}
+
+const data = await fetchNewsroomSingle(uri, lang);
+
+// TODO: use some kind of reusable function
+if (!compareURI(uri, data.page?.uri)) {
+  if (import.meta.env.SSR) {
+    return Astro.redirect('/404');
+  }
+
+  throw new Error(`Page with uri '${rawUri}' does not exists`);
+}
 ---
 
-<Layout
-  name="newsroom"
-  pageTitle={'NEWSROOM'}
-  htmlClassName="scroll-smooth scroll-p-4"
->
-  NEWSROOM SINGLE
-</Layout>
+<ArticlePage postType="newsroom" lang={lang} data={data} />

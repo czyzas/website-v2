@@ -1,0 +1,7 @@
+fragment ArticlePageAcf on ArticleAcf {
+  author {
+    node {
+      ...Author
+    }
+  }
+}

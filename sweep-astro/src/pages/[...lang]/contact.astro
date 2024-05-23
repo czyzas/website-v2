@@ -21,11 +21,11 @@ import { linkShouldRender } from '@/scripts/data-parsers/parseLink';
 import ArticleCard from '@/components/ArticleCard.astro';
 import Prose from '@/components/ui/Prose.astro';
 import { defaultLocale } from '@/i18n/config';
-import { createSinglePageStaticPaths } from '@/scripts/utils-static-paths';
+import { createSingleDefaultPageStaticPaths } from '@/scripts/utils-static-paths';
 import type { ColumnSizes } from '@/types';
 
 export async function getStaticPaths() {
-  return createSinglePageStaticPaths(
+  return createSingleDefaultPageStaticPaths(
     await fetchSinglePageStaticPaths('/contact')
   );
 }

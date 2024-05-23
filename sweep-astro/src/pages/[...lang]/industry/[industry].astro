@@ -1,46 +1,24 @@
 ---
 import type { InferGetStaticParamsType } from 'astro';
-import { isString } from 'lodash-es';
 import { defaultLocale } from '@/i18n/config';
-import { getLangParam, getUrlWithoutLang } from '@/i18n/utils';
 import {
   fetchIndustryPagesStaticPaths,
   fetchIndustrySingle,
 } from '@/lib/fetchCMSData';
-import {
-  cleanURI,
-  compareURI,
-  prefixURI,
-  unprefixURI,
-} from '@/scripts/utils-uri';
+import { cleanURI, compareURI, prefixURI } from '@/scripts/utils-uri';
 import DefaultPage from '@/templates/DefaultPage.astro';
+import { createPagesStaticPaths } from '@/scripts/utils-static-paths';
 
 export const getStaticPaths = async () => {
-  const finalPaths = [];
-
   const paths = await fetchIndustryPagesStaticPaths();
-  for (const staticPath of paths) {
-    if (!staticPath?.languageCode || !staticPath?.uri) {
-      continue;
-    }
-
-    const paramPath = getUrlWithoutLang(staticPath.uri);
-
-    finalPaths.push({
-      params: {
-        lang: getLangParam(staticPath.languageCode),
-        industry: unprefixURI(paramPath, 'industry'),
-      },
-    });
-  }
-
-  return finalPaths;
+  return createPagesStaticPaths(paths, {
+    paramKey: 'industry',
+    paramValueType: 'slug',
+  });
 };
 
-const { industry: unprefixedURI, lang: paramLang = defaultLocale } =
-  Astro.params as InferGetStaticParamsType<typeof getStaticPaths>;
-
-const lang = isString(paramLang) ? paramLang : defaultLocale;
+const params = Astro.params as InferGetStaticParamsType<typeof getStaticPaths>;
+const { industry: unprefixedURI, lang = defaultLocale } = params;
 const rawUri = prefixURI(unprefixedURI, 'industry');
 const uri = cleanURI(rawUri, lang);
 

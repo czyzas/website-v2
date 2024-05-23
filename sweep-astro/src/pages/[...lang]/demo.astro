@@ -7,7 +7,7 @@ import { defaultLocale } from '@/i18n/config';
 import Layout from '@/layouts/Layout.astro';
 import { fetchDemoPage, fetchSinglePageStaticPaths } from '@/lib/fetchCMSData';
 import { initializeStore } from '@/scripts/store';
-import { createSinglePageStaticPaths } from '@/scripts/utils-static-paths';
+import { createSingleDefaultPageStaticPaths } from '@/scripts/utils-static-paths';
 import { cmsStore } from '@/stores/cmsStore';
 import { languageStore } from '@/stores/languageStore';
 import Quotation from '@/components/Quotation.astro';
@@ -17,7 +17,9 @@ import Form from '@/components/hubspot-form/Form.astro';
 import { fixDoubleBr } from '@/scripts/fixDoubleBr';
 
 export async function getStaticPaths() {
-  return createSinglePageStaticPaths(await fetchSinglePageStaticPaths('/demo'));
+  return createSingleDefaultPageStaticPaths(
+    await fetchSinglePageStaticPaths('/demo')
+  );
 }
 
 const { lang = defaultLocale } = Astro.params;

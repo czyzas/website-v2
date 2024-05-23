@@ -48,6 +48,9 @@ query NewsroomSinglePage($URI: String!, $LANG: String!) {
     slug
     uri
     modified
+    articleAcf {
+      ...ArticlePageAcf
+    }
     categories: newsroomCategories(first: 1) {
       nodes {
         name
@@ -69,6 +72,14 @@ query NewsroomSinglePage($URI: String!, $LANG: String!) {
     }
     modules {
       ...ModulesCollection
+    }
+  }
+  articles: newsroomItems(
+    first: 4
+    where: { status: PUBLISH, language: $LANG }
+  ) {
+    nodes {
+      ...NewsroomListItem
     }
   }
   ...Essential

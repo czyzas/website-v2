@@ -1,34 +1,22 @@
 ---
 import { defaultLocale } from '@/i18n/config';
-import { getLangParam } from '@/i18n/utils';
 import {
   fetchInsightsListPage,
   fetchInsightsTagsStaticPaths,
 } from '@/lib/fetchCMSData';
+import { createPagesStaticPaths } from '@/scripts/utils-static-paths';
 import ArticlesList from '@/templates/ArticlesList.astro';
 
 export const getStaticPaths = async () => {
-  const finalPaths = [];
-
   const paths = await fetchInsightsTagsStaticPaths();
-  for (const staticPath of paths) {
-    if (!staticPath?.languageCode || !staticPath?.uri || !staticPath?.slug) {
-      continue;
-    }
-
-    finalPaths.push({
-      params: {
-        lang: getLangParam(staticPath.languageCode),
-        insights_tag: staticPath.slug,
-      },
-    });
-  }
-
-  return finalPaths;
+  return createPagesStaticPaths(paths, {
+    paramKey: 'insights_tag',
+    paramValueType: 'slug',
+  });
 };
 
 const { lang = defaultLocale, insights_tag: tag } = Astro.params;
 const data = await fetchInsightsListPage(lang, tag);
 ---
 
-<ArticlesList postType="insights" lang={lang} tag={tag} data={data} />
+<ArticlesList postType="insights" data={data} lang={lang} tag={tag} />

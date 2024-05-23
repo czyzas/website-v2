@@ -2,13 +2,13 @@
 query DefaultPagesStaticPaths {
   pages(first: 100, where: { status: PUBLISH, language: "all" }) {
     nodes {
-      template {
-        templateName
-      }
       databaseId
       slug
       uri
       languageCode
+      template {
+        templateName
+      }
     }
   }
 }

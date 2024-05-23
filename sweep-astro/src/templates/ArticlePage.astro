@@ -1,0 +1,132 @@
+---
+import type {
+  InsightsListItemFragment,
+  InsightsSinglePageQuery,
+  NewsroomListItemFragment,
+  NewsroomSinglePageQuery,
+} from '@/__generated__/cms';
+import ArticleBar from '@/components/ArticleBar.astro';
+import ArticlesGrid from '@/components/ArticlesGrid.astro';
+import ModulesIncluder from '@/components/ModulesIncluder.astro';
+import SectionTitle from '@/components/partials/SectionTitle.astro';
+import Top from '@/components/partials/Top.astro';
+import Sidebar from '@/components/sidebar/Sidebar.astro';
+import SidebarCardAuthor from '@/components/sidebar/SidebarCardAuthor.astro';
+import SidebarCardTableOfContents from '@/components/sidebar/SidebarCardTableOfContents.astro';
+import Container from '@/components/ui/Container.astro';
+import Grid from '@/components/ui/Grid.astro';
+import Section from '@/components/ui/Section.astro';
+import { TRANSLATIONS } from '@/constants';
+import Layout from '@/layouts/Layout.astro';
+import { buildTOC } from '@/scripts/buildTOC';
+import { parseTags } from '@/scripts/data-parsers/parseTag';
+import { overwriteWYSIWYGContent } from '@/scripts/overwriteWYSIWYGContent';
+import { initializeStore } from '@/scripts/store';
+import { cmsStore } from '@/stores/cmsStore';
+import type { ColumnSizes } from '@/types';
+
+type InsightsSingleProps = {
+  postType: 'insights';
+  data: InsightsSinglePageQuery;
+};
+type NewsroomSingleProps = {
+  postType: 'newsroom';
+  data: NewsroomSinglePageQuery;
+};
+interface ArticlePageProps {
+  lang: string;
+}
+type Props = (InsightsSingleProps | NewsroomSingleProps) & ArticlePageProps;
+
+const { postType, data, lang } = Astro.props;
+
+const page = data.page!;
+
+initializeStore(cmsStore, {
+  primaryMenu: data.primaryMenu!,
+  themeOptions: data.themeOptions!,
+  subpageSettings: data.page?.subpageSettings,
+});
+
+const { subpageSettings } = page;
+const pageTitle = page?.title ?? '';
+const title = subpageSettings?.customTitle || pageTitle || '';
+const image = subpageSettings?.image;
+const size = (subpageSettings?.topDistribution ?? '5-7') as ColumnSizes;
+const tags = parseTags(page.tags?.nodes);
+const category = page.categories?.nodes?.[0]?.name;
+const lastUpdated = page.modified
+  ? new Date(page.modified).toLocaleDateString(lang === 'en' ? 'en-UK' : lang, {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric',
+    })
+  : undefined;
+const acf = page.articleAcf;
+const author =
+  acf?.author?.node.__typename === 'PostAuthor' ? acf.author.node : undefined;
+
+overwriteWYSIWYGContent(page.modules?.modulesContent, {
+  RICH_TEXT_CONTENT_HEADINGS_IDS: true,
+});
+const toc = buildTOC(page.modules?.modulesContent);
+
+let posts: (InsightsListItemFragment | NewsroomListItemFragment)[] = [];
+if (postType === 'insights') {
+  posts = (data?.articles?.nodes ?? []).filter(Boolean);
+}
+
+if (postType === 'newsroom') {
+  posts = (data?.articles?.nodes ?? []).filter(Boolean);
+}
+
+posts = posts.filter((post) => post.uri !== data.page?.uri).slice(0, 3);
+---
+
+<Layout
+  name={postType}
+  pageTitle={pageTitle}
+  htmlClassName="scroll-smooth scroll-p-4"
+>
+  <Top
+    title={title}
+    titleSize="h2"
+    image={image}
+    size={size}
+    class="py-8 md:pt-18 md:pb-14"
+  >
+    <ArticleBar
+      details={{
+        Category: category,
+        'Last updated': lastUpdated,
+      }}
+      tags={tags}
+      sharing
+      class="mt-8 md:mt-12"
+    />
+  </Top>
+  <Section bg="white" class="pt-0 md:pt-0">
+    <Container>
+      <Grid class="gap-y-8">
+        <div
+          class="col-span-full md:col-start-1 lg:col-start-2 md:col-end-9 order-2 md:order-1 flex flex-col gap-8 md:gap-14"
+        >
+          <ModulesIncluder category="article" data={page?.modules} />
+        </div>
+        <Sidebar
+          sticky
+          class="col-span-full md:col-start-9 lg:col-start-10 md:col-end-13 order-1 md:order-2"
+        >
+          {(<SidebarCardAuthor author={author} />)}
+          <SidebarCardTableOfContents toc={toc} />
+        </Sidebar>
+      </Grid>
+    </Container>
+  </Section>
+  <Section bg="surface-background">
+    <Container>
+      <SectionTitle withMargin headline={TRANSLATIONS.MORE_STORIES} />
+      {(<ArticlesGrid posts={posts} />)}
+    </Container>
+  </Section>
+</Layout>

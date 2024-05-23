@@ -1,0 +1,16 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/scripts/cn';
+
+type Props = HTMLAttributes<'div'>;
+
+const { class: className } = Astro.props;
+---
+
+<style>
+  .swiper-pagination {
+    @apply static w-fit;
+  }
+</style>
+
+<div class={cn('swiper-pagination', 'tabular-nums', className)}></div>
