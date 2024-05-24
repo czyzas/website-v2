@@ -9,6 +9,9 @@ export type ReplaceTypenameLiteral<ObjType extends object> = {
     : StringLiteralToString<ObjType[KeyType]>;
 };
 
+// eslint-disable-next-line @typescript-eslint/ban-types -- Use `string & {}` for strings with autocomplete (src: https://stackoverflow.com/a/75265010)
+export type StringAutocomplete<T extends string> = T | (string & {});
+
 export type ColumnSizes = '5-7' | '6-6' | '7-5';
 
 export type ITableOfContentsEntry = {
