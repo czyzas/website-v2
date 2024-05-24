@@ -59,27 +59,29 @@ const quotationsArray = (quotations ?? []).filter(Boolean).map((quotation) => {
 </script>
 
 <style>
-  .swiper {
+  .quotations-swiper {
     @apply overflow-visible;
-  }
 
-  .swiper-slide {
-    width: 37.5rem;
-    @apply max-w-full;
+    .swiper-slide {
+      @apply w-[37.5rem] max-w-full;
+    }
   }
 </style>
 
 {
   quotationsArray.length > 0 && (
-    <ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
-      <div class="overflow-hidden pb-11">
-        <Grid>
-          <div class="quotations-swiper col-span-full lg:col-start-2 lg:col-end-12">
+    <ModuleContainer
+      meta={__meta__}
+      name={layoutName!}
+      bg={backgroundColor}
+      class={'overflow-hidden'}
+    >
+      <Grid>
+        <div class="col-span-full lg:col-start-2 lg:col-end-12">
+          <div class="quotations-swiper">
             <div class="swiper-wrapper">
-              {quotationsArray.map((quotation) => {
-                const { quote, authorName, authorImage, authorOccupation } =
-                  quotation;
-                return (
+              {quotationsArray.map(
+                ({ quote, authorName, authorImage, authorOccupation }) => (
                   <div class="swiper-slide">
                     <UIQuotation
                       theme={
@@ -93,16 +95,16 @@ const quotationsArray = (quotations ?? []).filter(Boolean).map((quotation) => {
                       set:html={quote}
                     />
                   </div>
-                );
-              })}
+                )
+              )}
             </div>
-            <div class="flex items-center gap-4 text-xl">
+            <div class="flex items-center gap-4 text-xl mt-9">
               <SwiperPagination />
               <SwiperNavigation class="w-fit" />
             </div>
           </div>
-        </Grid>
-      </div>
+        </div>
+      </Grid>
     </ModuleContainer>
   )
 }

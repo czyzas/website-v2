@@ -18,6 +18,7 @@ type Props = WithAttributes<
 >;
 
 const {
+  class: className,
   meta,
   name,
   bg,
@@ -28,9 +29,11 @@ const {
 
 let padding = rawPadding;
 let background = bg;
+let containerSize: 'default' | 'full' = 'default';
 if (meta.moduleType === 'article') {
   padding = false;
   background = undefined;
+  containerSize = 'full';
 }
 ---
 
@@ -66,9 +69,13 @@ if (meta.moduleType === 'article') {
   padding={false}
   name={`module ${name}`}
   bg={background ? parseBgColor(bg) : 'none'}
-  class={cn({ 'no-padding': !padding })}
+  class={cn({ 'no-padding': !padding }, className)}
 >
-  <Container class={cn(containerClass)}>
+  <Container
+    size={containerSize}
+    margin={meta.moduleType === 'default'}
+    class={cn(containerClass)}
+  >
     <slot />
   </Container>
 </Section>
