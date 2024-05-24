@@ -84,12 +84,12 @@ const rows: Array<{
   rows.length > 0 && (
     <Card {...props} class={cn('event-information', 'py-3', className)}>
       <div class="grid grid-cols-[auto,auto,1fr]">
-        {rows.map((row) => {
+        {rows.map((row, index) => {
           if (!row.value) return null;
           const label = TRANSLATIONS.EVENT_INFORMATION[row.type];
-          const rowStyles = cn(
-            'flex shrink-0 py-2 items-center border-b border-b-sw-border'
-          );
+          const rowStyles = cn('flex shrink-0 py-2 items-center', {
+            'border-b border-b-sw-border': index !== rows.length - 1,
+          });
           return (
             <>
               <div class={cn(rowStyles, 'text-sw-text-subdued pr-1.5')}>
