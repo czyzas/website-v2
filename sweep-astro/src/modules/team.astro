@@ -3,6 +3,7 @@ import type { ModulesModulesContentTeamLayout } from '@/__generated__/cms';
 import ModuleContainer from '@/components/ModuleContainer.astro';
 import WordpressImage from '@/components/WordpressImage.astro';
 import Container from '@/components/ui/Container.astro';
+import { fixDoubleBr } from '@/scripts/fixDoubleBr';
 
 type Props = ModulesModulesContentTeamLayout;
 
@@ -24,9 +25,10 @@ const team = (rawTeam ?? []).filter(Boolean);
               />
               {!!person?.name && <div class="typography-h4">{person.name}</div>}
               {!!person?.position && (
-                <div class="typography-body text-sw-text-subdued mt-1.5">
-                  {person.position}
-                </div>
+                <div
+                  class="typography-body text-sw-text-subdued mt-1.5"
+                  set:html={fixDoubleBr(person.position)}
+                />
               )}
             </div>
           ))}
