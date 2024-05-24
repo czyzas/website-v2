@@ -22,7 +22,6 @@ export const TRANSLATIONS = {
   EVENT: 'EVENT',
   PAST_EVENT: 'PAST EVENT',
   READ_MORE: 'Read more',
-  MORE_STORIES: 'More stories',
   READ_FULL_STORY: 'Read the full story',
   VIEW_CASE_STUDY: 'View Case Study',
   ALL: 'All',
@@ -36,5 +35,9 @@ export const TRANSLATIONS = {
     date: 'Date',
     time: 'Time',
     language: 'Language',
+  },
+  ARTICLE: {
+    MORE_STORIES: 'More stories',
+    MORE_EVENTS: 'More events',
   },
 } as const;

@@ -1,6 +1,7 @@
 ---
 import type {
   AuthorFragment,
+  EventListItemFragment,
   EventSinglePageQuery,
   InsightsListItemFragment,
   InsightsSinglePageQuery,
@@ -77,7 +78,6 @@ const category = page.categories?.nodes?.[0]?.name;
 const toc = buildTOC(page.modules?.modulesContent);
 let lastUpdated: string | undefined;
 let author: AuthorFragment | undefined;
-let posts: (InsightsListItemFragment | NewsroomListItemFragment)[] = [];
 
 if (page.__typename === 'InsightsItem' || page.__typename === 'NewsroomItem') {
   if (page.modified) {
@@ -93,9 +93,23 @@ if (page.__typename === 'InsightsItem' || page.__typename === 'NewsroomItem') {
   }
 }
 
-if (postType === 'insights' || postType === 'newsroom') {
-  posts = (data?.articles?.nodes ?? []).filter(Boolean);
-  posts = posts.filter((post) => post.uri !== data.page?.uri).slice(0, 3);
+let posts: (
+  | InsightsListItemFragment
+  | NewsroomListItemFragment
+  | EventListItemFragment
+)[] = (data?.articles?.nodes ?? []).filter(Boolean);
+posts = posts.filter((post) => post.uri !== data.page?.uri).slice(0, 3);
+
+let postsTitle = '';
+switch (postType) {
+  case 'event':
+    postsTitle = TRANSLATIONS.ARTICLE.MORE_EVENTS;
+    break;
+  case 'insights':
+  case 'newsroom':
+  default:
+    postsTitle = TRANSLATIONS.ARTICLE.MORE_STORIES;
+    break;
 }
 
 let registerFormTitle;
@@ -183,8 +197,8 @@ if (page.__typename === 'Event') {
     posts.length > 0 && (
       <Section bg="surface-background">
         <Container>
-          <SectionTitle withMargin headline={TRANSLATIONS.MORE_STORIES} />
-          <ArticlesGrid posts={posts} />
+          <SectionTitle withMargin headline={postsTitle} />
+          <ArticlesGrid postType={postType} posts={posts} />
         </Container>
       </Section>
     )
