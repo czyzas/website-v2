@@ -12,6 +12,8 @@ import ArticleBar from '@/components/ArticleBar.astro';
 import ArticlesGrid from '@/components/ArticlesGrid.astro';
 import EventInformation from '@/components/EventInformation.astro';
 import ModulesIncluder from '@/components/ModulesIncluder.astro';
+import Form from '@/components/hubspot-form/Form.astro';
+import FormContainer from '@/components/hubspot-form/FormContainer.astro';
 import SectionTitle from '@/components/partials/SectionTitle.astro';
 import Top from '@/components/partials/Top.astro';
 import Sidebar from '@/components/sidebar/Sidebar.astro';
@@ -25,6 +27,7 @@ import { TRANSLATIONS } from '@/constants';
 import { getLocale } from '@/i18n/utils';
 import Layout from '@/layouts/Layout.astro';
 import { buildTOC } from '@/scripts/buildTOC';
+import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
 import { parseTags } from '@/scripts/data-parsers/parseTag';
 import { overwriteWYSIWYGContent } from '@/scripts/overwriteWYSIWYGContent';
 import { initializeStore } from '@/scripts/store';
@@ -94,6 +97,11 @@ if (postType === 'insights' || postType === 'newsroom') {
   posts = (data?.articles?.nodes ?? []).filter(Boolean);
   posts = posts.filter((post) => post.uri !== data.page?.uri).slice(0, 3);
 }
+
+let registerFormTitle;
+if (page.__typename === 'Event') {
+  registerFormTitle = page.eventAcf?.registerFormTitle?.selectSectionTitle;
+}
 ---
 
 <Layout
@@ -135,7 +143,7 @@ if (postType === 'insights' || postType === 'newsroom') {
     <Container>
       <Grid class="gap-y-8">
         <div
-          class="col-span-full md:col-start-1 lg:col-start-2 md:col-end-9 order-2 md:order-1 flex flex-col gap-8 md:gap-14"
+          class="col-span-full md:col-start-1 lg:col-start-2 md:col-end-9 order-2 md:order-1 space-y-8 md:space-y-14 [&_.module.article-title+.module]:mt-6"
         >
           <ModulesIncluder category="article" data={page?.modules} />
         </div>
@@ -159,6 +167,18 @@ if (postType === 'insights' || postType === 'newsroom') {
       </Grid>
     </Container>
   </Section>
+  {
+    page.__typename === 'Event' && page.eventAcf?.registerFormGuid && (
+      <Section bg="surface-subdued">
+        <Container>
+          <SectionTitle withMargin {...parseSectionTitle(registerFormTitle)} />
+          <FormContainer>
+            <Form formGuid={page.eventAcf?.registerFormGuid} />
+          </FormContainer>
+        </Container>
+      </Section>
+    )
+  }
   {
     posts.length > 0 && (
       <Section bg="surface-background">
