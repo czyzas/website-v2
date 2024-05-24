@@ -124,7 +124,7 @@ export const HubspotForm = ({
         ) : (
           <div>
             {options.defaultSuccessMessage ||
-              TRANSLATIONS.FORM_MESSAGE_THANK_YOU}
+              TRANSLATIONS.HUBSPOT_FORM.FORM_MESSAGE_THANK_YOU}
           </div>
         )}
       </div>
@@ -137,12 +137,12 @@ export const HubspotForm = ({
 
   const submitText =
     status === 'Submitting'
-      ? TRANSLATIONS.SUBMITTING
+      ? TRANSLATIONS.HUBSPOT_FORM.SUBMITTING
       : formDefinition.submitText ??
         options.defaultSubmitText ??
-        TRANSLATIONS.SUBMIT;
+        TRANSLATIONS.HUBSPOT_FORM.SUBMIT;
 
-  let privacyPolicyText: string = TRANSLATIONS.PRIVACY_POLICY_TEXT;
+  let privacyPolicyText: string = TRANSLATIONS.HUBSPOT_FORM.PRIVACY_POLICY_TEXT;
   try {
     const legalConsentOptionsKV = formDefinition.metaData?.find(
       (meta) => meta?.name === 'legalConsentOptions'
@@ -202,8 +202,12 @@ export const HubspotForm = ({
             ) : (
               <>
                 {/* TODO: Handle links and labels */}
-                <a href="/terms">{TRANSLATIONS.TERMS_LINK_LABEL}</a>
-                <a href="/privacy">{TRANSLATIONS.PRIVCY_LINK_LABEL}</a>
+                <a href="/terms">
+                  {TRANSLATIONS.HUBSPOT_FORM.TERMS_LINK_LABEL}
+                </a>
+                <a href="/privacy">
+                  {TRANSLATIONS.HUBSPOT_FORM.PRIVCY_LINK_LABEL}
+                </a>
               </>
             )}
           </div>
@@ -231,7 +235,7 @@ export const HubspotForm = ({
         <>
           {/* TODO: HANDLE ERROR */}
           <div className="flash">
-            <p>{TRANSLATIONS.FORM_SUBMISSION_FAILED_MESSAGE}</p>
+            <p>{TRANSLATIONS.HUBSPOT_FORM.FORM_SUBMISSION_FAILED_MESSAGE}</p>
           </div>
         </>
       )}
