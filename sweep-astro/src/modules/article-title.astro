@@ -1,0 +1,22 @@
+---
+import ModuleContainer from '@/components/ModuleContainer.astro';
+import { cn } from '@/scripts/cn';
+import type { WithModuleMeta } from '@/types';
+import type { ModulesModulesContentArticleTitleLayout } from '@/__generated__/cms';
+import { fixDoubleBr } from '@/scripts/fixDoubleBr';
+
+type Props = WithModuleMeta<ModulesModulesContentArticleTitleLayout>;
+
+const { __meta__, layoutName, size = 'h2', content = '' } = Astro.props;
+const Tag = size as 'h2' | 'h3';
+---
+
+<ModuleContainer meta={__meta__} name={layoutName!}>
+  <Tag
+    class={cn('text-black', {
+      'typography-article-header': size === 'h2',
+      'typography-article-subheader': size === 'h3',
+    })}
+    set:html={fixDoubleBr(content)}
+  />
+</ModuleContainer>

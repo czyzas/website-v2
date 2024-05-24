@@ -24,6 +24,11 @@ fragment ModulesCollection on Modules {
       cardColor
       content
     }
+    ... on ModulesModulesContentArticleTitleLayout {
+      layoutName
+      size
+      content
+    }
     ... on ModulesModulesContentGatedLayout {
       layoutName
       hubspotFormGuid
@@ -221,12 +226,17 @@ fragment ModulesCollection on Modules {
       backgroundColor {
         selectBackgroundColor
       }
+      look
+      columns
       team {
         image {
           ...Image
         }
         name
         position
+        logo {
+          ...Image
+        }
       }
     }
     ... on ModulesModulesContentSourcedInfoLayout {
@@ -234,6 +244,8 @@ fragment ModulesCollection on Modules {
       backgroundColor {
         selectBackgroundColor
       }
+      layout
+      showSourcePrefix
       image {
         ...Image
       }

@@ -7,6 +7,7 @@ import Grid from '@/components/ui/Grid.astro';
 import Link from '@/components/ui/Link.astro';
 import Prose from '@/components/ui/Prose.astro';
 import { TRANSLATIONS } from '@/constants';
+import { cn } from '@/scripts/cn';
 import { parseLink } from '@/scripts/data-parsers/parseLink';
 import type { WithModuleMeta } from '@/types';
 
@@ -16,25 +17,36 @@ const {
   __meta__,
   layoutName,
   backgroundColor,
+  layout: rawLayout,
+  showSourcePrefix: rawShowSourcePrefix = true,
   content,
   image,
   sourceLink: rawSourceLink,
 } = Astro.props;
 
 const sourceLink = parseLink(rawSourceLink);
+const layout = (rawLayout ?? 'horizontal') as 'vertical' | 'horizontal';
+const showSourcePrefix =
+  rawShowSourcePrefix === null ? true : rawShowSourcePrefix;
 ---
 
 <ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
   <Grid>
     <Card
-      class="col-span-full lg:col-start-2 lg:col-end-12 p-0 overflow-hidden flex flex-col md:flex-row"
+      class={cn('col-span-full p-0 overflow-hidden flex flex-col', {
+        'lg:col-start-2 lg:col-end-12 md:flex-row': layout === 'horizontal',
+      })}
     >
       <div
-        class="column column-image md:grow-0 md:shrink-0 md:basis-1/3 md:aspect-auto"
+        class={cn('column column-image', {
+          'md:grow-0 md:shrink-0 md:basis-1/3': layout === 'horizontal',
+        })}
       >
         <WordpressImage
           data={image}
-          class="aspect-video md:aspect-auto w-full md:size-full object-cover"
+          class={cn('aspect-video w-full object-cover', {
+            'md:aspect-auto md:size-full': layout === 'horizontal',
+          })}
         />
       </div>
       <div class="column column-content grow p-6 flex flex-col">
@@ -45,7 +57,7 @@ const sourceLink = parseLink(rawSourceLink);
         {
           sourceLink.shouldRender && (
             <div class="sm:typography-body text-sw-text-subdued mt-auto pt-4">
-              {TRANSLATIONS.SOURCE}:{' '}
+              {showSourcePrefix && `${TRANSLATIONS.SOURCE}: `}
               <Link
                 to={sourceLink.url}
                 target={sourceLink?.target}
