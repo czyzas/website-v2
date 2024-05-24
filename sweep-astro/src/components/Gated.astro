@@ -1,15 +1,23 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
 import type { WithAttributes } from '@/types';
+import { fetchHubspotForm } from '@/lib/fetchHubspotForm';
+import UseGatedContent from './Gated';
 
 interface GatedProps extends HTMLAttributes<'div'> {
-  hubspotFormGuid?: string;
+  hubspotFormGuid: string;
 }
 
 type Props = WithAttributes<GatedProps>;
 
 const { hubspotFormGuid } = Astro.props;
+const form = await fetchHubspotForm(hubspotFormGuid);
 ---
 
-{hubspotFormGuid}
-<slot />
+{
+  form && (
+    <UseGatedContent id="2" form={form} client:visible>
+      <slot />
+    </UseGatedContent>
+  )
+}
