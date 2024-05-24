@@ -1,7 +1,11 @@
 ---
 import path from 'node:path';
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
-import type { ModulesCollectionFragment } from '@/__generated__/cms';
+import type {
+  ModulesCollectionFragment,
+  ModulesModulesContentGatedLayout,
+} from '@/__generated__/cms';
+import Gated from '@/components/Gated.astro';
 
 type Props = {
   data?: ModulesCollectionFragment;
@@ -30,6 +34,11 @@ for (const component of modulesComponents) {
 
   components[componentBaseName] = component.default;
 }
+
+const ungatedComponents: AstroComponentFactory[] = [];
+const gatedComponents: AstroComponentFactory[] = [];
+let isGated = false;
+let gatedInformation: ModulesModulesContentGatedLayout | undefined;
 ---
 
 {
@@ -41,8 +50,18 @@ for (const component of modulesComponents) {
 
         const Component = components?.[layoutName];
         if (!Component) return null;
-        return <Component {...module} />;
+
+        if (layoutName === 'gated') {
+          isGated = true;
+          gatedInformation = module as ModulesModulesContentGatedLayout;
+        }
+        if (isGated) gatedComponents.push(<Component {...module} />);
+        else ungatedComponents.push(<Component {...module} />);
+
+        return null;
       })}
+      {ungatedComponents}
+      {isGated && <Gated {...gatedInformation}>{gatedComponents}</Gated>}
     </Fragment>
   )
 }
