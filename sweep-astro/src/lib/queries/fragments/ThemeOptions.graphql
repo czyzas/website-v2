@@ -1,10 +1,24 @@
 fragment ThemeOptions on ThemeOptions {
   themeOptionsAcf {
-    eventDefaultTopImage {
-      ...Image
-    }
-    postDefaultTopImage {
-      ...Image
+    defaultTopImages {
+      partner {
+        ...Image
+      }
+      newsroomItem {
+        ...Image
+      }
+      insightsItem {
+        ...Image
+      }
+      industries {
+        ...Image
+      }
+      event {
+        ...Image
+      }
+      caseStudy {
+        ...Image
+      }
     }
     bookDemoLink {
       ...Link
