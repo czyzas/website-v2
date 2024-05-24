@@ -1,0 +1,15 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import type { WithAttributes } from '@/types';
+
+interface GatedProps extends HTMLAttributes<'div'> {
+  hubspotFormGuid?: string;
+}
+
+type Props = WithAttributes<GatedProps>;
+
+const { hubspotFormGuid } = Astro.props;
+---
+
+{hubspotFormGuid}
+<slot />

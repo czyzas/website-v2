@@ -24,6 +24,10 @@ fragment ModulesCollection on Modules {
       cardColor
       content
     }
+    ... on ModulesModulesContentGatedLayout {
+      layoutName
+      hubspotFormGuid
+    }
     ... on ModulesModulesContentBreakLayout {
       layoutName
       backgroundColor {
