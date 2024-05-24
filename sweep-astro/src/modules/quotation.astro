@@ -1,7 +1,6 @@
 ---
 import type { ModulesModulesContentQuotationLayout } from '@/__generated__/cms';
 import ModuleContainer from '@/components/ModuleContainer.astro';
-import Container from '@/components/ui/Container.astro';
 import UIQuotation from '@/components/Quotation.astro';
 import Grid from '@/components/ui/Grid.astro';
 import type { WithModuleMeta } from '@/types';
@@ -21,19 +20,17 @@ const { quote, authorImage, authorName, authorOccupation } =
 ---
 
 <ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
-  <Container>
-    <Grid>
-      <div class="col-span-full lg:col-start-2 lg:col-end-12">
-        <UIQuotation
-          theme={theme === 'light' || theme === 'dark' ? theme : 'light'}
-          avatarSize={theme === 'dark' ? 'sm' : 'md'}
-          quoteSize={theme === 'dark' ? 'sm' : 'md'}
-          authorName={authorName}
-          authorImage={authorImage}
-          authorOccupation={authorOccupation}
-          set:html={quote}
-        />
-      </div>
-    </Grid>
-  </Container>
+  <Grid>
+    <div class="col-span-full lg:col-start-2 lg:col-end-12">
+      <UIQuotation
+        theme={theme === 'light' || theme === 'dark' ? theme : 'light'}
+        avatarSize={theme === 'dark' ? 'sm' : 'md'}
+        quoteSize={theme === 'dark' ? 'sm' : 'md'}
+        authorName={authorName}
+        authorImage={authorImage}
+        authorOccupation={authorOccupation}
+        set:html={quote}
+      />
+    </div>
+  </Grid>
 </ModuleContainer>

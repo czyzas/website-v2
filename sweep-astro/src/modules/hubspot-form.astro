@@ -2,7 +2,6 @@
 import type { ModulesModulesContentHubspotFormLayout } from '@/__generated__/cms';
 import ModuleContainer from '@/components/ModuleContainer.astro';
 import Form from '@/components/hubspot-form/Form.astro';
-import Container from '@/components/ui/Container.astro';
 import Grid from '@/components/ui/Grid.astro';
 import type { WithModuleMeta } from '@/types';
 
@@ -14,13 +13,11 @@ const { __meta__, layoutName, backgroundColor, hubspotFormGuid } = Astro.props;
 {
   !!hubspotFormGuid && (
     <ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
-      <Container>
-        <Grid>
-          <div class="form-container col-span-full lg:col-start-3 lg:col-end-11">
-            <Form formGuid={hubspotFormGuid} />
-          </div>
-        </Grid>
-      </Container>
+      <Grid>
+        <div class="form-container col-span-full lg:col-start-3 lg:col-end-11">
+          <Form formGuid={hubspotFormGuid} />
+        </div>
+      </Grid>
     </ModuleContainer>
   )
 }

@@ -4,19 +4,28 @@ import { cn } from '@/scripts/cn';
 
 export interface Props extends HTMLAttributes<'div'> {
   size?: 'default' | 'full';
+  /** @default true */
+  margin?: boolean;
 }
 
-const { size = 'default', class: className, ...props } = Astro.props;
+const {
+  class: className,
+  size = 'default',
+  margin = true,
+  ...props
+} = Astro.props;
 ---
 
 <style>
   :where(.container) {
+    --container-max-width: 77.5rem;
+    --container-margin: 1rem;
     margin-left: auto;
     margin-right: auto;
     width: 100%;
     max-width: min(
-      100% - (2 * var(--container-margin, 1rem)),
-      var(--container-max-width, 77.5rem)
+      100% - (2 * var(--container-margin)),
+      var(--container-max-width)
     );
   }
 
@@ -25,11 +34,19 @@ const { size = 'default', class: className, ...props } = Astro.props;
     --container-margin: 1rem;
   }
 
-  .container .container:not(.nested-with-margin) {
+  .container.no-margin {
     --container-margin: 0px;
   }
 </style>
 
-<div {...props} class={cn(['container', `container-${size}`, className])}>
+<div
+  {...props}
+  class={cn([
+    'container',
+    `container-${size}`,
+    { 'no-margin': margin },
+    className,
+  ])}
+>
   <slot />
 </div>

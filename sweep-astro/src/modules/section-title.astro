@@ -2,7 +2,6 @@
 import type { ModulesModulesContentSectionTitleLayout } from '@/__generated__/cms';
 import ModuleContainer from '@/components/ModuleContainer.astro';
 import UISectionTitle from '@/components/partials/SectionTitle.astro';
-import Container from '@/components/ui/Container.astro';
 import { cn } from '@/scripts/cn';
 import {
   parseSectionTitle,
@@ -29,9 +28,7 @@ const parsed = parseSectionTitle(data);
         'display-as-overline': parsed.displayAs === 'overline',
       })}
     >
-      <Container>
-        <UISectionTitle {...parsed} />
-      </Container>
+      <UISectionTitle {...parsed} />
     </ModuleContainer>
   )
 }

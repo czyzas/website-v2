@@ -1,7 +1,6 @@
 ---
 import type { ModulesModulesContentBigNumbersLayout } from '@/__generated__/cms';
 import ModuleContainer from '@/components/ModuleContainer.astro';
-import Container from '@/components/ui/Container.astro';
 import { fixDoubleBr } from '@/scripts/fixDoubleBr';
 import { cn } from '@/scripts/cn';
 import Grid from '@/components/ui/Grid.astro';
@@ -33,45 +32,43 @@ const columnClassName: Record<number, string> = {
 ---
 
 <ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
-  <Container>
-    <Grid>
-      {
-        numbers.map((number) => {
-          const link = parseLink(number.link);
-          return (
-            <Card
-              class={cn(
-                'number',
-                columnClassName?.[parseInt(columns)] ?? 'col-span-full',
-                'flex flex-col gap-2'
-              )}
-            >
-              {number.number ? (
-                <CountNumber
-                  value={number.number}
-                  class="typography-number-stats"
-                />
-              ) : null}
-              <p
-                class="typography-body-large"
-                set:html={fixDoubleBr(number.content)}
+  <Grid>
+    {
+      numbers.map((number) => {
+        const link = parseLink(number.link);
+        return (
+          <Card
+            class={cn(
+              'number',
+              columnClassName?.[parseInt(columns)] ?? 'col-span-full',
+              'flex flex-col gap-2'
+            )}
+          >
+            {number.number ? (
+              <CountNumber
+                value={number.number}
+                class="typography-number-stats"
               />
-              {link.shouldRender && (
-                <div class="typography-body text-sw-text-subdued">
-                  <span>
-                    {TRANSLATIONS.SOURCE}:{' '}
-                    <Link
-                      to={link.url}
-                      target={link?.target}
-                      set:html={link.title}
-                    />
-                  </span>
-                </div>
-              )}
-            </Card>
-          );
-        })
-      }
-    </Grid>
-  </Container>
+            ) : null}
+            <p
+              class="typography-body-large"
+              set:html={fixDoubleBr(number.content)}
+            />
+            {link.shouldRender && (
+              <div class="typography-body text-sw-text-subdued">
+                <span>
+                  {TRANSLATIONS.SOURCE}:{' '}
+                  <Link
+                    to={link.url}
+                    target={link?.target}
+                    set:html={link.title}
+                  />
+                </span>
+              </div>
+            )}
+          </Card>
+        );
+      })
+    }
+  </Grid>
 </ModuleContainer>

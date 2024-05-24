@@ -4,7 +4,6 @@ import type { VariantProps } from 'class-variance-authority';
 import type { ModulesModulesContentRichTextContentLayout } from '@/__generated__/cms';
 import ModuleContainer from '@/components/ModuleContainer.astro';
 import Card from '@/components/ui/Card.astro';
-import Container from '@/components/ui/Container.astro';
 import Prose from '@/components/ui/Prose.astro';
 import { cn } from '@/scripts/cn';
 import type { WithModuleMeta } from '@/types';
@@ -38,14 +37,12 @@ type AvailableColor = VariantProps<typeof coloredCardVariant>['color'];
 ---
 
 <ModuleContainer meta={__meta__} name={layoutName!}>
-  <Container>
-    <Wrapper
-      class={cn({
-        [coloredCardVariant({ color: cardColor as AvailableColor })]:
-          isColoredCard,
-      })}
-    >
-      <Prose class={cn({ 'text-black': isColoredCard })} set:html={content} />
-    </Wrapper>
-  </Container>
+  <Wrapper
+    class={cn({
+      [coloredCardVariant({ color: cardColor as AvailableColor })]:
+        isColoredCard,
+    })}
+  >
+    <Prose class={cn({ 'text-black': isColoredCard })} set:html={content} />
+  </Wrapper>
 </ModuleContainer>

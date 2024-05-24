@@ -5,6 +5,7 @@ import { parseBgColor } from '@/scripts/data-parsers/parseBgColor';
 import type { ModuleMeta, WithAttributes } from '@/types';
 import { cn } from '@/scripts/cn';
 import Section from './ui/Section.astro';
+import Container from './ui/Container.astro';
 
 type Props = WithAttributes<
   {
@@ -12,10 +13,18 @@ type Props = WithAttributes<
     name: string;
     bg?: ModulesModulesContentBackgroundColor;
     padding?: boolean;
+    containerClass?: string;
   } & HTMLAttributes<'div'>
 >;
 
-const { meta, name, bg, padding: rawPadding = true, ...props } = Astro.props;
+const {
+  meta,
+  name,
+  bg,
+  padding: rawPadding = true,
+  containerClass,
+  ...props
+} = Astro.props;
 
 let padding = rawPadding;
 let background = bg;
@@ -59,5 +68,7 @@ if (meta.moduleType === 'article') {
   bg={background ? parseBgColor(bg) : 'none'}
   class={cn({ 'no-padding': !padding })}
 >
-  <slot />
+  <Container class={cn(containerClass)}>
+    <slot />
+  </Container>
 </Section>

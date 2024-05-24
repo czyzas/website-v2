@@ -2,7 +2,6 @@
 import type { ModulesModulesContentTeamLayout } from '@/__generated__/cms';
 import ModuleContainer from '@/components/ModuleContainer.astro';
 import WordpressImage from '@/components/WordpressImage.astro';
-import Container from '@/components/ui/Container.astro';
 import { fixDoubleBr } from '@/scripts/fixDoubleBr';
 import type { WithModuleMeta } from '@/types';
 
@@ -16,25 +15,23 @@ const team = (rawTeam ?? []).filter(Boolean);
 {
   team.length > 0 && (
     <ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
-      <Container>
-        <div class="grid grid-cols-[repeat(auto-fit,minmax(0,12.5rem))] sm:grid-cols-[repeat(auto-fit,minmax(0,13.75rem))] justify-center gap-x-4 gap-y-14">
-          {team.map((person) => (
-            <div class="person">
-              <WordpressImage
-                data={person.image}
-                class="aspect-[220/169] object-cover rounded-lg border border-sw-text-disabled mb-4.5"
+      <div class="grid grid-cols-[repeat(auto-fit,minmax(0,12.5rem))] sm:grid-cols-[repeat(auto-fit,minmax(0,13.75rem))] justify-center gap-x-4 gap-y-14">
+        {team.map((person) => (
+          <div class="person">
+            <WordpressImage
+              data={person.image}
+              class="aspect-[220/169] object-cover rounded-lg border border-sw-text-disabled mb-4.5"
+            />
+            {!!person?.name && <div class="typography-h4">{person.name}</div>}
+            {!!person?.position && (
+              <div
+                class="typography-body text-sw-text-subdued mt-1.5"
+                set:html={fixDoubleBr(person.position)}
               />
-              {!!person?.name && <div class="typography-h4">{person.name}</div>}
-              {!!person?.position && (
-                <div
-                  class="typography-body text-sw-text-subdued mt-1.5"
-                  set:html={fixDoubleBr(person.position)}
-                />
-              )}
-            </div>
-          ))}
-        </div>
-      </Container>
+            )}
+          </div>
+        ))}
+      </div>
     </ModuleContainer>
   )
 }

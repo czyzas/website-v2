@@ -1,7 +1,6 @@
 ---
 import type { ModulesModulesContentQuotationWithCardsLayout } from '@/__generated__/cms';
 import ModuleContainer from '@/components/ModuleContainer.astro';
-import Container from '@/components/ui/Container.astro';
 import Quotation from '@/components/Quotation.astro';
 import CardsGrid from '@/components/CardsGrid.astro';
 import type { WithModuleMeta } from '@/types';
@@ -22,13 +21,11 @@ const cards = rawCards ? rawCards.filter(Boolean) : [];
 ---
 
 <ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
-  <Container>
-    <Quotation
-      authorName={authorName}
-      authorImage={authorImage}
-      authorOccupation={authorOccupation}
-      set:html={quote}
-    />
-    <CardsGrid columns={4} cards={cards} class="mt-8 md:mt-15" />
-  </Container>
+  <Quotation
+    authorName={authorName}
+    authorImage={authorImage}
+    authorOccupation={authorOccupation}
+    set:html={quote}
+  />
+  <CardsGrid columns={4} cards={cards} class="mt-8 md:mt-15" />
 </ModuleContainer>
