@@ -14,6 +14,12 @@ export type StringAutocomplete<T extends string> = T | (string & {});
 
 export type ColumnSizes = '5-7' | '6-6' | '7-5';
 
+export type ModuleMeta = {
+  index: number;
+  moduleType: 'default' | 'article';
+};
+export type WithModuleMeta<T> = { __meta__: ModuleMeta } & T;
+
 export type ITableOfContentsEntry = {
   level: number;
   id: string;

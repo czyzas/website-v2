@@ -13,10 +13,12 @@ import { getStore } from '@/scripts/store';
 import { cmsStore } from '@/stores/cmsStore';
 import { languageStore } from '@/stores/languageStore';
 import { parseTags } from '@/scripts/data-parsers/parseTag';
+import type { WithModuleMeta } from '@/types';
 
-type Props = ModulesModulesContentListOfNewsroomItemsLayout;
+type Props = WithModuleMeta<ModulesModulesContentListOfNewsroomItemsLayout>;
 
-const { layoutName, backgroundColor, limitPosts, ctaButton } = Astro.props;
+const { __meta__, layoutName, backgroundColor, limitPosts, ctaButton } =
+  Astro.props;
 // const categorySlug = categoryFilter?.nodes?.[0]?.slug;
 // TODO: create useLanguage hook to get current lang from the store automatically
 const { currentLanguage } = getStore(languageStore);
@@ -33,7 +35,7 @@ const posts = (rawPosts?.newsroomItems?.nodes ?? []).filter(Boolean);
 
 {
   posts.length > 0 && (
-    <ModuleContainer name={layoutName!} bg={backgroundColor}>
+    <ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
       <Container>
         <Grid>
           {posts.map((post) => {

@@ -15,11 +15,18 @@ import { cmsStore } from '@/stores/cmsStore';
 import { languageStore } from '@/stores/languageStore';
 import { TRANSLATIONS } from '@/constants';
 import { parseTags } from '@/scripts/data-parsers/parseTag';
+import type { WithModuleMeta } from '@/types';
 
-type Props = ModulesModulesContentListOfEventsLayout;
+type Props = WithModuleMeta<ModulesModulesContentListOfEventsLayout>;
 
-const { layoutName, backgroundColor, limitPosts, categoryFilter, ctaButton } =
-  Astro.props;
+const {
+  __meta__,
+  layoutName,
+  backgroundColor,
+  limitPosts,
+  categoryFilter,
+  ctaButton,
+} = Astro.props;
 
 const categorySlug = categoryFilter?.nodes?.[0]?.slug;
 // TODO: create useLanguage hook to get current lang from the store automatically
@@ -38,7 +45,7 @@ const events = (rawEvents?.events?.nodes ?? []).filter(Boolean);
 
 {
   events.length > 0 && (
-    <ModuleContainer name={layoutName!} bg={backgroundColor}>
+    <ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
       <Container>
         <Grid>
           {events.map((event) => {

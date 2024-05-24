@@ -13,10 +13,12 @@ import TabPane from '@/components/ui/Tabs/TabPane.astro';
 import Tabs from '@/components/ui/Tabs/Tabs.astro';
 import { fixDoubleBr } from '@/scripts/fixDoubleBr';
 import Prose from '@/components/ui/Prose.astro';
+import type { WithModuleMeta } from '@/types';
 
-type Props = ModulesModulesContentLogosLayout;
+type Props = WithModuleMeta<ModulesModulesContentLogosLayout>;
 
 const {
+  __meta__,
   layoutName,
   backgroundColor,
   layout = 'cards',
@@ -33,7 +35,7 @@ const tabId = crypto.randomUUID();
 
 {
   tabs.length > 0 ? (
-    <ModuleContainer name={layoutName!} bg={backgroundColor}>
+    <ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
       <Container>
         <Tabs>
           {tabs.length > 1 && (

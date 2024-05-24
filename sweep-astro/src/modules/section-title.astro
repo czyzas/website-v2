@@ -8,10 +8,11 @@ import {
   parseSectionTitle,
   sectionTitleShouldRender,
 } from '@/scripts/data-parsers/parseSectionTitle';
+import type { WithModuleMeta } from '@/types';
 
-type Props = ModulesModulesContentSectionTitleLayout;
+type Props = WithModuleMeta<ModulesModulesContentSectionTitleLayout>;
 
-const { layoutName, backgroundColor, sectionTitle, addBottomSpace } =
+const { __meta__, layoutName, backgroundColor, sectionTitle, addBottomSpace } =
   Astro.props;
 const data = sectionTitle?.selectSectionTitle;
 const parsed = parseSectionTitle(data);
@@ -20,6 +21,7 @@ const parsed = parseSectionTitle(data);
 {
   sectionTitleShouldRender(data) && (
     <ModuleContainer
+      meta={__meta__}
       name={layoutName!}
       bg={backgroundColor}
       class={cn({

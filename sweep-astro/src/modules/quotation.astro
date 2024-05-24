@@ -4,16 +4,23 @@ import ModuleContainer from '@/components/ModuleContainer.astro';
 import Container from '@/components/ui/Container.astro';
 import UIQuotation from '@/components/Quotation.astro';
 import Grid from '@/components/ui/Grid.astro';
+import type { WithModuleMeta } from '@/types';
 
-type Props = ModulesModulesContentQuotationLayout;
+type Props = WithModuleMeta<ModulesModulesContentQuotationLayout>;
 
-const { layoutName, backgroundColor, quotation, theme = 'light' } = Astro.props;
+const {
+  __meta__,
+  layoutName,
+  backgroundColor,
+  quotation,
+  theme = 'light',
+} = Astro.props;
 
 const { quote, authorImage, authorName, authorOccupation } =
   quotation?.selectQuotation ?? {};
 ---
 
-<ModuleContainer name={layoutName!} bg={backgroundColor}>
+<ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
   <Container>
     <Grid>
       <div class="col-span-full lg:col-start-2 lg:col-end-12">

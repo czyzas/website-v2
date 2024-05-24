@@ -4,17 +4,24 @@ import ModuleContainer from '@/components/ModuleContainer.astro';
 import Container from '@/components/ui/Container.astro';
 import Quotation from '@/components/Quotation.astro';
 import CardsGrid from '@/components/CardsGrid.astro';
+import type { WithModuleMeta } from '@/types';
 
-type Props = ModulesModulesContentQuotationWithCardsLayout;
+type Props = WithModuleMeta<ModulesModulesContentQuotationWithCardsLayout>;
 
-const { layoutName, backgroundColor, quotation, cards: rawCards } = Astro.props;
+const {
+  __meta__,
+  layoutName,
+  backgroundColor,
+  quotation,
+  cards: rawCards,
+} = Astro.props;
 
 const { quote, authorImage, authorName, authorOccupation } =
   quotation?.selectQuotation ?? {};
 const cards = rawCards ? rawCards.filter(Boolean) : [];
 ---
 
-<ModuleContainer name={layoutName!} bg={backgroundColor}>
+<ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
   <Container>
     <Quotation
       authorName={authorName}

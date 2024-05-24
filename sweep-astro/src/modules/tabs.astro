@@ -17,10 +17,12 @@ import { cn } from '@/scripts/cn';
 import { linkShouldRender } from '@/scripts/data-parsers/parseLink';
 import { fixDoubleBr } from '@/scripts/fixDoubleBr';
 import CardWithMergedImage from '@/components/CardWithMergedImage.astro';
+import type { WithModuleMeta } from '@/types';
 
-type Props = ModulesModulesContentTabsLayout;
+type Props = WithModuleMeta<ModulesModulesContentTabsLayout>;
 
 const {
+  __meta__,
   layoutName,
   backgroundColor,
   contentLayout,
@@ -52,7 +54,7 @@ const ContentWrapper =
 
 {
   tabs && tabs.length > 0 ? (
-    <ModuleContainer name={layoutName!} bg={backgroundColor}>
+    <ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
       <Container>
         <UITabs>
           {tabs.length > 1 && (

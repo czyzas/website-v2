@@ -7,10 +7,12 @@ import UIQuotation from '@/components/Quotation.astro';
 import SwiperNavigation from '@/components/SwiperNavigation.astro';
 import Grid from '@/components/ui/Grid.astro';
 import SwiperPagination from '@/components/SwiperPagination.astro';
+import type { WithModuleMeta } from '@/types';
 
-type Props = ModulesModulesContentQuotationsLayout;
+type Props = WithModuleMeta<ModulesModulesContentQuotationsLayout>;
 
 const {
+  __meta__,
   layoutName,
   backgroundColor,
   theme = 'light',
@@ -70,7 +72,7 @@ const quotationsArray = (quotations ?? []).filter(Boolean).map((quotation) => {
 
 {
   quotationsArray.length > 0 && (
-    <ModuleContainer name={layoutName!} bg={backgroundColor}>
+    <ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
       <div class="overflow-hidden pb-11">
         <Container>
           <Grid>

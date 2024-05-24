@@ -9,10 +9,12 @@ import Link from '@/components/ui/Link.astro';
 import Prose from '@/components/ui/Prose.astro';
 import { TRANSLATIONS } from '@/constants';
 import { parseLink } from '@/scripts/data-parsers/parseLink';
+import type { WithModuleMeta } from '@/types';
 
-type Props = ModulesModulesContentSourcedInfoLayout;
+type Props = WithModuleMeta<ModulesModulesContentSourcedInfoLayout>;
 
 const {
+  __meta__,
   layoutName,
   backgroundColor,
   content,
@@ -23,7 +25,7 @@ const {
 const sourceLink = parseLink(rawSourceLink);
 ---
 
-<ModuleContainer name={layoutName!} bg={backgroundColor}>
+<ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
   <Container>
     <Grid>
       <Card

@@ -3,14 +3,20 @@ import type { ModulesModulesContentSegmentsLayout } from '@/__generated__/cms';
 import ColoredImageCards from '@/components/ColoredImageCards.astro';
 import ModuleContainer from '@/components/ModuleContainer.astro';
 import Container from '@/components/ui/Container.astro';
+import type { WithModuleMeta } from '@/types';
 
-type Props = ModulesModulesContentSegmentsLayout;
+type Props = WithModuleMeta<ModulesModulesContentSegmentsLayout>;
 
-const { layoutName, backgroundColor, segmentsCards: cards } = Astro.props;
+const {
+  __meta__,
+  layoutName,
+  backgroundColor,
+  segmentsCards: cards,
+} = Astro.props;
 const filteredCards = (cards ?? []).filter(Boolean);
 ---
 
-<ModuleContainer name={layoutName!} bg={backgroundColor}>
+<ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
   <Container>
     <ColoredImageCards cards={filteredCards} />
   </Container>

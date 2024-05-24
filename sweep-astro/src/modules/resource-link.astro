@@ -8,14 +8,22 @@ import Container from '@/components/ui/Container.astro';
 import Grid from '@/components/ui/Grid.astro';
 import { linkShouldRender } from '@/scripts/data-parsers/parseLink';
 import { fixDoubleBr } from '@/scripts/fixDoubleBr';
+import type { WithModuleMeta } from '@/types';
 
-type Props = ModulesModulesContentResourceLinkLayout;
+type Props = WithModuleMeta<ModulesModulesContentResourceLinkLayout>;
 
-const { layoutName, backgroundColor, title, overline, button, image } =
-  Astro.props;
+const {
+  __meta__,
+  layoutName,
+  backgroundColor,
+  title,
+  overline,
+  button,
+  image,
+} = Astro.props;
 ---
 
-<ModuleContainer name={layoutName!} bg={backgroundColor}>
+<ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
   <Container>
     <Grid>
       <Card

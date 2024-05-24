@@ -9,10 +9,12 @@ import PartnersList from '@/components/PartnersList.astro';
 import WordpressButtonLink from '@/components/WordpressButtonLink.astro';
 import Container from '@/components/ui/Container.astro';
 import { linkShouldRender } from '@/scripts/data-parsers/parseLink';
+import type { WithModuleMeta } from '@/types';
 
-type Props = ModulesModulesContentPartnersLayout;
+type Props = WithModuleMeta<ModulesModulesContentPartnersLayout>;
 
 const {
+  __meta__,
   layoutName,
   backgroundColor,
   partners: rawPartners,
@@ -24,7 +26,7 @@ const partners = rawPartners?.nodes ?? [];
 
 {
   partners.length > 0 && (
-    <ModuleContainer name={layoutName!} bg={backgroundColor}>
+    <ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
       <Container>
         <PartnersList
           partners={partners as unknown as PartnersListFragment[]}

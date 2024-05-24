@@ -10,10 +10,12 @@ import { TRANSLATIONS } from '@/constants';
 import Link from '@/components/ui/Link.astro';
 import { parseLink } from '@/scripts/data-parsers/parseLink';
 import CountNumber from '@/components/CountNumber.astro';
+import type { WithModuleMeta } from '@/types';
 
-type Props = ModulesModulesContentBigNumbersLayout;
+type Props = WithModuleMeta<ModulesModulesContentBigNumbersLayout>;
 
 const {
+  __meta__,
   layoutName,
   backgroundColor,
   columns = '1',
@@ -30,7 +32,7 @@ const columnClassName: Record<number, string> = {
 };
 ---
 
-<ModuleContainer name={layoutName!} bg={backgroundColor}>
+<ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
   <Container>
     <Grid>
       {
