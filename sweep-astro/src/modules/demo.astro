@@ -1,17 +1,16 @@
 ---
 import type { ModulesModulesContentDemoLayout } from '@/__generated__/cms';
 import ModuleContainer from '@/components/ModuleContainer.astro';
-import Container from '@/components/ui/Container.astro';
 import DemoComponent from '@/components/Demo.astro';
 import { fixDoubleBr } from '@/scripts/fixDoubleBr';
+import type { WithModuleMeta } from '@/types';
 
-type Props = ModulesModulesContentDemoLayout;
+type Props = WithModuleMeta<ModulesModulesContentDemoLayout>;
 
-const { layoutName, backgroundColor, title, image, button } = Astro.props;
+const { __meta__, layoutName, backgroundColor, title, image, button } =
+  Astro.props;
 ---
 
-<ModuleContainer name={layoutName!} bg={backgroundColor}>
-  <Container>
-    <DemoComponent title={fixDoubleBr(title)} image={image} button={button} />
-  </Container>
+<ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
+  <DemoComponent title={fixDoubleBr(title)} image={image} button={button} />
 </ModuleContainer>

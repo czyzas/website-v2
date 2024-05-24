@@ -4,46 +4,51 @@ import ModuleContainer from '@/components/ModuleContainer.astro';
 import WordpressButtonLink from '@/components/WordpressButtonLink.astro';
 import WordpressImage from '@/components/WordpressImage.astro';
 import Card from '@/components/ui/Card.astro';
-import Container from '@/components/ui/Container.astro';
 import Grid from '@/components/ui/Grid.astro';
 import { linkShouldRender } from '@/scripts/data-parsers/parseLink';
 import { fixDoubleBr } from '@/scripts/fixDoubleBr';
+import type { WithModuleMeta } from '@/types';
 
-type Props = ModulesModulesContentResourceLinkLayout;
+type Props = WithModuleMeta<ModulesModulesContentResourceLinkLayout>;
 
-const { layoutName, backgroundColor, title, overline, button, image } =
-  Astro.props;
+const {
+  __meta__,
+  layoutName,
+  backgroundColor,
+  title,
+  overline,
+  button,
+  image,
+} = Astro.props;
 ---
 
-<ModuleContainer name={layoutName!} bg={backgroundColor}>
-  <Container>
-    <Grid>
-      <Card
-        class="col-span-full lg:col-start-2 lg:col-end-12 grid grid-cols-1 lg:grid-cols-10 p-0 overflow-hidden"
+<ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
+  <Grid>
+    <Card
+      class="col-span-full lg:col-start-2 lg:col-end-12 grid grid-cols-1 lg:grid-cols-10 p-0 overflow-hidden"
+    >
+      <div
+        class="column-content order-2 lg:order-1 col-span-full lg:col-span-4 p-6 lg:min-h-[21.375rem] flex flex-col gap-4.5"
       >
-        <div
-          class="column-content order-2 lg:order-1 col-span-full lg:col-span-4 p-6 lg:min-h-[21.375rem] flex flex-col gap-4.5"
-        >
-          <p class="typography-card-title text-sw-text-subdued">{overline}</p>
-          <h3 class="typography-h4" set:html={fixDoubleBr(title)} />
-          {
-            linkShouldRender(button) ? (
-              <div class="mt-auto">
-                <WordpressButtonLink data={button} />
-              </div>
-            ) : null
-          }
-        </div>
+        <p class="typography-card-title text-sw-text-subdued">{overline}</p>
+        <h3 class="typography-h4" set:html={fixDoubleBr(title)} />
+        {
+          linkShouldRender(button) ? (
+            <div class="mt-auto">
+              <WordpressButtonLink data={button} />
+            </div>
+          ) : null
+        }
+      </div>
 
-        <div
-          class="column-image order-1 lg:order-2 col-span-full lg:col-span-6 relative"
-        >
-          <WordpressImage
-            data={image}
-            class="w-full lg:absolute lg:left-0 lg:top-0 lg:size-full lg:object-cover"
-          />
-        </div>
-      </Card>
-    </Grid>
-  </Container>
+      <div
+        class="column-image order-1 lg:order-2 col-span-full lg:col-span-6 relative"
+      >
+        <WordpressImage
+          data={image}
+          class="w-full lg:absolute lg:left-0 lg:top-0 lg:size-full lg:object-cover"
+        />
+      </div>
+    </Card>
+  </Grid>
 </ModuleContainer>

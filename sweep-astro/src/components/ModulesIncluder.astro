@@ -6,28 +6,17 @@ import type {
   ModulesModulesContentGatedLayout,
 } from '@/__generated__/cms';
 import Gated from '@/components/Gated.astro';
+import type { ModuleMeta } from '@/types';
 
 type Props = {
   data?: ModulesCollectionFragment;
   /** @default 'default' */
-  category?: ModuleCategory;
+  category?: ModuleMeta['moduleType'];
 };
-type ModuleCategory = 'all' | 'default' | 'article';
 const { data, category = 'default' } = Astro.props;
 const modulesContent = data?.modulesContent;
 
-const getCategoryModules = (category: ModuleCategory) => {
-  switch (category) {
-    case 'all':
-      return Astro.glob('../modules/**/*.astro');
-    case 'article':
-      return Astro.glob('../modules/article/*.astro');
-    default:
-      return Astro.glob('../modules/*.astro');
-  }
-};
-
-const modulesComponents = await getCategoryModules(category);
+const modulesComponents = await Astro.glob('../modules/*.astro');
 const components: Record<string, AstroComponentFactory> = {};
 for (const component of modulesComponents) {
   const componentBaseName = path.parse(component.file).name;
@@ -44,19 +33,25 @@ let gatedInformation: ModulesModulesContentGatedLayout | undefined;
 {
   !!modulesContent && (
     <Fragment>
-      {modulesContent.map((module) => {
+      {modulesContent.map((module, index) => {
         const layoutName = module?.layoutName ?? '';
         if (!layoutName) return null;
 
         const Component = components?.[layoutName];
         if (!Component) return null;
 
+        const meta: ModuleMeta = {
+          index,
+          moduleType: category,
+        };
+
         if (layoutName === 'gated') {
           isGated = true;
           gatedInformation = module as ModulesModulesContentGatedLayout;
         }
-        if (isGated) gatedComponents.push(<Component {...module} />);
-        else ungatedComponents.push(<Component {...module} />);
+        if (isGated)
+          gatedComponents.push(<Component __meta__={meta} {...module} />);
+        else ungatedComponents.push(<Component __meta__={meta} {...module} />);
 
         return null;
       })}

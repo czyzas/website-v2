@@ -43,5 +43,35 @@ query EventSinglePage($URI: String!, $LANG: String!) {
       ...ModulesCollection
     }
   }
+  articles: events(first: 4, where: { status: PUBLISH, language: $LANG }) {
+    nodes {
+      ...EventListItem
+    }
+  }
   ...Essential
+}
+
+fragment EventListItem on Event {
+  __typename
+  title
+  uri
+  subpageSettings {
+    introduction
+    image {
+      ...Image
+    }
+  }
+  categories: eventCategories(first: 1) {
+    nodes {
+      name
+    }
+  }
+  tags: eventTags {
+    nodes {
+      name
+      tagTaxonomyAcf {
+        tagColor
+      }
+    }
+  }
 }

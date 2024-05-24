@@ -1,32 +1,36 @@
 ---
 import type { ModulesModulesContentQuotationLayout } from '@/__generated__/cms';
 import ModuleContainer from '@/components/ModuleContainer.astro';
-import Container from '@/components/ui/Container.astro';
 import UIQuotation from '@/components/Quotation.astro';
 import Grid from '@/components/ui/Grid.astro';
+import type { WithModuleMeta } from '@/types';
 
-type Props = ModulesModulesContentQuotationLayout;
+type Props = WithModuleMeta<ModulesModulesContentQuotationLayout>;
 
-const { layoutName, backgroundColor, quotation, theme = 'light' } = Astro.props;
+const {
+  __meta__,
+  layoutName,
+  backgroundColor,
+  quotation,
+  theme = 'light',
+} = Astro.props;
 
 const { quote, authorImage, authorName, authorOccupation } =
   quotation?.selectQuotation ?? {};
 ---
 
-<ModuleContainer name={layoutName!} bg={backgroundColor}>
-  <Container>
-    <Grid>
-      <div class="col-span-full lg:col-start-2 lg:col-end-12">
-        <UIQuotation
-          theme={theme === 'light' || theme === 'dark' ? theme : 'light'}
-          avatarSize={theme === 'dark' ? 'sm' : 'md'}
-          quoteSize={theme === 'dark' ? 'sm' : 'md'}
-          authorName={authorName}
-          authorImage={authorImage}
-          authorOccupation={authorOccupation}
-          set:html={quote}
-        />
-      </div>
-    </Grid>
-  </Container>
+<ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
+  <Grid>
+    <div class="col-span-full lg:col-start-2 lg:col-end-12">
+      <UIQuotation
+        theme={theme === 'light' || theme === 'dark' ? theme : 'light'}
+        avatarSize={theme === 'dark' ? 'sm' : 'md'}
+        quoteSize={theme === 'dark' ? 'sm' : 'md'}
+        authorName={authorName}
+        authorImage={authorImage}
+        authorOccupation={authorOccupation}
+        set:html={quote}
+      />
+    </div>
+  </Grid>
 </ModuleContainer>

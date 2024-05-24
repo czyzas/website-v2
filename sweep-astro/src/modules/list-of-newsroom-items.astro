@@ -5,7 +5,6 @@ import ArticleTag from '@/components/ArticleTag.astro';
 import ButtonContainer from '@/components/ButtonContainer.astro';
 import ModuleContainer from '@/components/ModuleContainer.astro';
 import WordpressButtonLink from '@/components/WordpressButtonLink.astro';
-import Container from '@/components/ui/Container.astro';
 import Grid from '@/components/ui/Grid.astro';
 import { buildI18nPath } from '@/i18n/utils';
 import { fetchPostsModuleList } from '@/lib/fetchCMSData';
@@ -13,10 +12,12 @@ import { getStore } from '@/scripts/store';
 import { cmsStore } from '@/stores/cmsStore';
 import { languageStore } from '@/stores/languageStore';
 import { parseTags } from '@/scripts/data-parsers/parseTag';
+import type { WithModuleMeta } from '@/types';
 
-type Props = ModulesModulesContentListOfNewsroomItemsLayout;
+type Props = WithModuleMeta<ModulesModulesContentListOfNewsroomItemsLayout>;
 
-const { layoutName, backgroundColor, limitPosts, ctaButton } = Astro.props;
+const { __meta__, layoutName, backgroundColor, limitPosts, ctaButton } =
+  Astro.props;
 // const categorySlug = categoryFilter?.nodes?.[0]?.slug;
 // TODO: create useLanguage hook to get current lang from the store automatically
 const { currentLanguage } = getStore(languageStore);
@@ -33,48 +34,46 @@ const posts = (rawPosts?.newsroomItems?.nodes ?? []).filter(Boolean);
 
 {
   posts.length > 0 && (
-    <ModuleContainer name={layoutName!} bg={backgroundColor}>
-      <Container>
-        <Grid>
-          {posts.map((post) => {
-            const { uri, categories, subpageSettings, tags: rawTags } = post;
-            const category = categories?.nodes?.[0].name;
-            const image =
-              subpageSettings?.image ?? themeOptions?.postDefaultTopImage;
-            const url = uri
-              ? { url: buildI18nPath(uri, currentLanguage.code) }
-              : undefined;
-            const tags = parseTags(rawTags?.nodes);
+    <ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
+      <Grid>
+        {posts.map((post) => {
+          const { uri, categories, subpageSettings, tags: rawTags } = post;
+          const category = categories?.nodes?.[0].name;
+          const image =
+            subpageSettings?.image ?? themeOptions?.postDefaultTopImage;
+          const url = uri
+            ? { url: buildI18nPath(uri, currentLanguage.code) }
+            : undefined;
+          const tags = parseTags(rawTags?.nodes);
 
-            return (
-              <ArticleCard
-                link={url}
-                image={image}
-                class="col-span-full md:col-span-3"
-              >
-                <span class="text-sw-text-subdued typography-card-title">
-                  {category}
-                </span>
-                <h3 class="typography-cards-bold-large text-pretty">
-                  {post.title}
-                </h3>
-                {tags.length > 0 && (
-                  <div class="tags mt-auto flex flex-wrap gap-2.5">
-                    {tags.map((tag) =>
-                      tag.shouldRender ? (
-                        <ArticleTag color={tag.color}>{tag.name}</ArticleTag>
-                      ) : null
-                    )}
-                  </div>
-                )}
-              </ArticleCard>
-            );
-          })}
-        </Grid>
-        <ButtonContainer>
-          <WordpressButtonLink data={ctaButton} secondary />
-        </ButtonContainer>
-      </Container>
+          return (
+            <ArticleCard
+              link={url}
+              image={image}
+              class="col-span-full md:col-span-3"
+            >
+              <span class="text-sw-text-subdued typography-card-title">
+                {category}
+              </span>
+              <h3 class="typography-cards-bold-large text-pretty">
+                {post.title}
+              </h3>
+              {tags.length > 0 && (
+                <div class="tags mt-auto flex flex-wrap gap-2.5">
+                  {tags.map((tag) =>
+                    tag.shouldRender ? (
+                      <ArticleTag color={tag.color}>{tag.name}</ArticleTag>
+                    ) : null
+                  )}
+                </div>
+              )}
+            </ArticleCard>
+          );
+        })}
+      </Grid>
+      <ButtonContainer>
+        <WordpressButtonLink data={ctaButton} secondary />
+      </ButtonContainer>
     </ModuleContainer>
   )
 }

@@ -4,6 +4,7 @@ import { buildI18nPath } from '@/i18n/utils';
 import ArticleCard from '@/components/ArticleCard.astro';
 import { parseTags } from '@/scripts/data-parsers/parseTag';
 import type {
+  EventListItemFragment,
   InsightsListItemFragment,
   NewsroomListItemFragment,
 } from '@/__generated__/cms';
@@ -12,9 +13,14 @@ import { languageStore } from '@/stores/languageStore';
 import Grid from './ui/Grid.astro';
 import ArticleTag from './ArticleTag.astro';
 
-interface ArticlesGridProps {
-  posts: (InsightsListItemFragment | NewsroomListItemFragment)[];
-}
+type ArticlesGridProps = {
+  postType: 'insights' | 'newsroom' | 'event';
+  posts: (
+    | InsightsListItemFragment
+    | NewsroomListItemFragment
+    | EventListItemFragment
+  )[];
+};
 
 type Props = WithAttributes<ArticlesGridProps>;
 
@@ -30,6 +36,7 @@ const lang = currentLanguage.code;
         if (!post.uri) return null;
         const categoryName = post.categories?.nodes?.[0]?.name ?? '';
         const postTags = parseTags(post.tags?.nodes ?? []);
+        // const postType = post.__typename;
         return (
           <ArticleCard
             link={{ url: buildI18nPath(post.uri, lang) }}

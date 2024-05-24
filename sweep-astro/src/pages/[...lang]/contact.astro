@@ -23,6 +23,7 @@ import Prose from '@/components/ui/Prose.astro';
 import { defaultLocale } from '@/i18n/config';
 import { createSingleDefaultPageStaticPaths } from '@/scripts/utils-static-paths';
 import type { ColumnSizes } from '@/types';
+import FormContainer from '@/components/hubspot-form/FormContainer.astro';
 
 export async function getStaticPaths() {
   return createSingleDefaultPageStaticPaths(
@@ -76,11 +77,9 @@ const officesCards = offices?.cards ?? [];
     formGuid ? (
       <Section bg="surface-subdued" class="md:py-15">
         <Container>
-          <Grid>
-            <div class="form-container col-span-full lg:col-start-3 lg:col-end-11">
-              <Form formGuid={formGuid} />
-            </div>
-          </Grid>
+          <FormContainer>
+            <Form formGuid={formGuid} />
+          </FormContainer>
         </Container>
       </Section>
     ) : null

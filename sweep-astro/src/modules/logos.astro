@@ -5,7 +5,6 @@ import LogosCollection from '@/components/LogosCollection.astro';
 import LogosGrid from '@/components/LogosGrid.astro';
 import ModuleContainer from '@/components/ModuleContainer.astro';
 import WordpressButtonLink from '@/components/WordpressButtonLink.astro';
-import Container from '@/components/ui/Container.astro';
 import { linkShouldRender } from '@/scripts/data-parsers/parseLink';
 import TabList from '@/components/ui/Tabs/TabList.astro';
 import TabListItem from '@/components/ui/Tabs/TabListItem.astro';
@@ -13,10 +12,12 @@ import TabPane from '@/components/ui/Tabs/TabPane.astro';
 import Tabs from '@/components/ui/Tabs/Tabs.astro';
 import { fixDoubleBr } from '@/scripts/fixDoubleBr';
 import Prose from '@/components/ui/Prose.astro';
+import type { WithModuleMeta } from '@/types';
 
-type Props = ModulesModulesContentLogosLayout;
+type Props = WithModuleMeta<ModulesModulesContentLogosLayout>;
 
 const {
+  __meta__,
   layoutName,
   backgroundColor,
   layout = 'cards',
@@ -33,58 +34,56 @@ const tabId = crypto.randomUUID();
 
 {
   tabs.length > 0 ? (
-    <ModuleContainer name={layoutName!} bg={backgroundColor}>
-      <Container>
-        <Tabs>
-          {tabs.length > 1 && (
-            <TabList class="mb-10">
-              {tabs.map((tab, tabIndex) => {
-                const { logos } = tab;
-
-                if (!logos || logos.length === 0) return null;
-
-                return (
-                  <TabListItem
-                    isActive={tabIndex === 0}
-                    id={`${tabId}-${tabIndex}`}
-                  >
-                    <Fragment set:html={fixDoubleBr(tab?.tabTitle)} />
-                  </TabListItem>
-                );
-              })}
-            </TabList>
-          )}
-          <div class="tab-content">
+    <ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
+      <Tabs>
+        {tabs.length > 1 && (
+          <TabList class="mb-10">
             {tabs.map((tab, tabIndex) => {
               const { logos } = tab;
 
               if (!logos || logos.length === 0) return null;
 
               return (
-                <TabPane isActive={tabIndex === 0} id={`${tabId}-${tabIndex}`}>
-                  {!!tab.description && (
-                    <Prose
-                      tag="p"
-                      set:html={fixDoubleBr(tab.description)}
-                      class="w-full max-w-[37rem] mx-auto mb-8 md:mb-15"
-                    />
-                  )}
-                  {layout === 'cards' && (
-                    <LogosGrid columns={parseInt(columns)} logos={logos} />
-                  )}
-                  {layout === 'collection' && <LogosCollection logos={logos} />}
-                </TabPane>
+                <TabListItem
+                  isActive={tabIndex === 0}
+                  id={`${tabId}-${tabIndex}`}
+                >
+                  <Fragment set:html={fixDoubleBr(tab?.tabTitle)} />
+                </TabListItem>
               );
             })}
-          </div>
-        </Tabs>
-
-        {linkShouldRender(ctaButton) && (
-          <ButtonContainer class="md:mt-12">
-            <WordpressButtonLink data={ctaButton} arrow />
-          </ButtonContainer>
+          </TabList>
         )}
-      </Container>
+        <div class="tab-content">
+          {tabs.map((tab, tabIndex) => {
+            const { logos } = tab;
+
+            if (!logos || logos.length === 0) return null;
+
+            return (
+              <TabPane isActive={tabIndex === 0} id={`${tabId}-${tabIndex}`}>
+                {!!tab.description && (
+                  <Prose
+                    tag="p"
+                    set:html={fixDoubleBr(tab.description)}
+                    class="w-full max-w-[37rem] mx-auto mb-8 md:mb-15"
+                  />
+                )}
+                {layout === 'cards' && (
+                  <LogosGrid columns={parseInt(columns)} logos={logos} />
+                )}
+                {layout === 'collection' && <LogosCollection logos={logos} />}
+              </TabPane>
+            );
+          })}
+        </div>
+      </Tabs>
+
+      {linkShouldRender(ctaButton) && (
+        <ButtonContainer class="md:mt-12">
+          <WordpressButtonLink data={ctaButton} arrow />
+        </ButtonContainer>
+      )}
     </ModuleContainer>
   ) : null
 }
