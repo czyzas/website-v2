@@ -16,7 +16,7 @@ type Props = {
 const { data, category = 'default' } = Astro.props;
 const modulesContent = data?.modulesContent;
 
-const modulesComponents = await Astro.glob('../modules/**/*.astro');
+const modulesComponents = await Astro.glob('../modules/*.astro');
 const components: Record<string, AstroComponentFactory> = {};
 for (const component of modulesComponents) {
   const componentBaseName = path.parse(component.file).name;
