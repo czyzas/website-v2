@@ -1,17 +1,17 @@
 import type { ReactNode } from 'react';
 import { Fragment, useEffect, useMemo, useState } from 'react';
-import { useLocalStorageGlobalState } from '@/lib/useLocalStorageState';
+import { useLocalStorageGlobalState } from '@/scripts/react-hooks/useLocalStorageState';
 import { TRANSLATIONS } from '@/constants';
 import { HubspotForm } from './hubspot-form/HubspotForm';
 import type { IHubspotFormDefinition } from './hubspot-form/shared';
 
-type UseGatedContentArgs = {
+type GatedProps = {
   form: IHubspotFormDefinition;
   children: ReactNode;
-  guid?: string;
+  guid: string;
 };
 
-const UseGatedContent = ({ form, children, guid }: UseGatedContentArgs) => {
+const Gated = ({ form, children, guid }: GatedProps) => {
   const [isGated, setGated] = useState(true);
   const [isClient, setIsClient] = useState(false);
 
@@ -65,4 +65,4 @@ const UseGatedContent = ({ form, children, guid }: UseGatedContentArgs) => {
   );
 };
 
-export default UseGatedContent;
+export default Gated;
