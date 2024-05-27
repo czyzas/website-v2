@@ -55,6 +55,9 @@ fragment EventListItem on Event {
   __typename
   title
   uri
+  eventAcf {
+    eventDate
+  }
   subpageSettings {
     introduction
     image {

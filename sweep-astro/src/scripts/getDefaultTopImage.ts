@@ -1,6 +1,5 @@
 import { cmsStore } from '@/stores/cmsStore';
 import { getStore } from './store';
-import { parseImage } from './data-parsers/parseImage';
 import type { UnparsedImage } from './data-parsers/parseImage';
 
 export type ContentTypeWithFront =
@@ -11,9 +10,8 @@ export type ContentTypeWithFront =
   | 'NewsroomItem'
   | 'Partner';
 
-export const getDefaultImage = (postType: ContentTypeWithFront) => {
-  const { subpageSettings, themeOptions } = getStore(cmsStore);
-  const topImage = subpageSettings?.image;
+export const getDefaultTopImage = (postType?: ContentTypeWithFront) => {
+  const { themeOptions } = getStore(cmsStore);
   const defaultTopImages = themeOptions?.themeOptionsAcf?.defaultTopImages;
 
   let defaultTop: UnparsedImage;
@@ -38,9 +36,9 @@ export const getDefaultImage = (postType: ContentTypeWithFront) => {
       defaultTop = defaultTopImages?.partner;
       break;
     default:
-      defaultTop = defaultTopImages?.insightsItem;
+      defaultTop = undefined;
       break;
   }
 
-  return parseImage(topImage || defaultTop);
+  return defaultTop;
 };

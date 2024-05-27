@@ -12,6 +12,7 @@ import { getStore } from '@/scripts/store';
 import { languageStore } from '@/stores/languageStore';
 import Grid from './ui/Grid.astro';
 import ArticleTag from './ArticleTag.astro';
+import ArticleEventDetails from './ArticleEventDetails.astro';
 
 type ArticlesGridProps = {
   postType: 'insights' | 'newsroom' | 'event';
@@ -36,13 +37,19 @@ const lang = currentLanguage.code;
         if (!post.uri) return null;
         const categoryName = post.categories?.nodes?.[0]?.name ?? '';
         const postTags = parseTags(post.tags?.nodes ?? []);
-        // const postType = post.__typename;
+        const eventDate =
+          post.__typename === 'Event' ? post.eventAcf?.eventDate : undefined;
         return (
           <ArticleCard
             link={{ url: buildI18nPath(post.uri, lang) }}
             image={post.subpageSettings?.image}
+            postType={post.__typename}
             class="col-span-full sm:col-span-6 lg:col-span-4"
           >
+            {post.__typename === 'Event' && !!eventDate && (
+              <ArticleEventDetails slot="image-addition" date={eventDate} />
+            )}
+
             {!!categoryName && (
               <div class="typography-card-title text-sw-text-subdued">
                 {categoryName}

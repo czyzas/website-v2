@@ -4,6 +4,8 @@ import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
 import type { UnparsedLink } from '@/scripts/data-parsers/parseLink';
 import { cn } from '@/scripts/cn';
 import type { WithAttributes } from '@/types';
+import { getDefaultTopImage } from '@/scripts/getDefaultTopImage';
+import type { ContentTypeWithFront } from '@/scripts/getDefaultTopImage';
 import WordpressImage from './WordpressImage.astro';
 
 type Props = WithAttributes<ArticleCardProps>;
@@ -11,10 +13,12 @@ interface ArticleCardProps extends HTMLAttributes<'div'> {
   image?: UnparsedImage;
   // TODO: use string here instead of UnparsedLink
   link?: UnparsedLink;
+  postType?: ContentTypeWithFront;
 }
 
 // TODO: use this inside ColoredImageCards
-const { image, link, class: className, ...props } = Astro.props;
+const { image, link, postType, class: className, ...props } = Astro.props;
+const topImage = image || getDefaultTopImage(postType);
 const Tag = link ? 'a' : 'div';
 ---
 
@@ -30,7 +34,7 @@ const Tag = link ? 'a' : 'div';
 >
   <div class="image-container relative aspect-[16/9] sm:aspect-[28/19]">
     <WordpressImage
-      data={image}
+      data={topImage}
       preferredWidth={586}
       class="size-full object-cover"
     />
