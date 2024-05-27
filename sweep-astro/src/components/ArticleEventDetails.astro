@@ -3,8 +3,7 @@ import type { HTMLAttributes } from 'astro/types';
 import { Icon } from 'astro-icon/components';
 import { cn } from '@/scripts/cn';
 import { TRANSLATIONS } from '@/constants';
-import { languageStore } from '@/stores/languageStore';
-import { getStore } from '@/scripts/store';
+import EventDate from '@/components/EventDate.astro';
 import ArticleTag from './ArticleTag.astro';
 
 interface ArticleEventDetailsProps extends HTMLAttributes<'div'> {
@@ -14,12 +13,6 @@ interface ArticleEventDetailsProps extends HTMLAttributes<'div'> {
 type Props = ArticleEventDetailsProps;
 
 const { class: className, date, ...props } = Astro.props;
-const { currentLanguage } = getStore(languageStore);
-const lang = currentLanguage.code;
-
-const parsedDate = new Date(date);
-const day = parsedDate.toLocaleDateString(lang, { day: '2-digit' });
-const month = parsedDate.toLocaleDateString(lang, { month: 'short' });
 ---
 
 <script>
@@ -52,15 +45,8 @@ const month = parsedDate.toLocaleDateString(lang, { month: 'short' });
     <Icon name="clock-countdown" class="text-sw-fire-500 text-lg" />
     {TRANSLATIONS.PAST_EVENT}
   </ArticleTag>
-  <time
-    datetime={date}
-    class="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 bg-white rounded-lg py-2 px-4 sm:px-6 text-center flex flex-col items-center justify-center"
-  >
-    <span class="uppercase font-bold text-base sm:text-lg text-sw-text-subdued">
-      {month}
-    </span>
-    <span class="typography-h4 sm:typography-h2 leading-none">
-      {day}
-    </span>
-  </time>
+  <EventDate
+    date={date}
+    class="absolute bottom-4 sm:bottom-6 left-4 sm:left-6"
+  />
 </div>
