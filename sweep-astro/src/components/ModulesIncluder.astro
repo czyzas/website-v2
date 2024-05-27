@@ -24,8 +24,8 @@ for (const component of modulesComponents) {
   components[componentBaseName] = component.default;
 }
 
-const ungatedComponents: AstroComponentFactory[] = [];
-const gatedComponents: AstroComponentFactory[] = [];
+const ungatedComponents: ModulesCollectionFragment[] = [];
+const gatedComponents: ModulesCollectionFragment[] = [];
 let isGated = false;
 let gatedInformation: ModulesModulesContentGatedLayout | undefined;
 ---
