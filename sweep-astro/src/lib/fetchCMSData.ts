@@ -320,7 +320,7 @@ export async function fetchPostsModuleList(
 
   if (postType === 'newsroom') {
     return await fetchData(NewsroomModuleListDocument, options, [
-      CACHE_KEYS.MODULE_LIST_OF_POSTS,
+      CACHE_KEYS.MODULE_LIST_OF_NEWSROOM,
       hashedOptions,
     ]);
   }
