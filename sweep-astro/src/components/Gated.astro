@@ -21,7 +21,11 @@ const form = await fetchHubspotForm(
 
 {
   form && (
-    <UseGatedContent guid={hubspotFormGuid} form={form} client:visible>
+    <UseGatedContent
+      guid={hubspotFormGuid || TRANSLATIONS.GATED_CONTENT.GATED_FORM_GUID}
+      form={form}
+      client:visible
+    >
       <slot />
     </UseGatedContent>
   )
