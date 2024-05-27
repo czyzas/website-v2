@@ -167,10 +167,9 @@ if (page.__typename === 'Event') {
         >
           <SidebarCardAuthor author={author} />
           {
-            postType === 'insights' ||
-              (postType === 'newsroom' && (
-                <SidebarCardTableOfContents toc={toc} />
-              ))
+            (postType === 'insights' || postType === 'newsroom') && (
+              <SidebarCardTableOfContents toc={toc} />
+            )
           }
           {
             page.__typename === 'Event' && (
