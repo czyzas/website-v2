@@ -1,7 +1,8 @@
 import type { ReactNode } from 'react';
 import { Fragment, useEffect, useMemo, useState } from 'react';
-import { useLocalStorageGlobalState } from '@/scripts/react-hooks/useLocalStorageState';
 import { TRANSLATIONS } from '@/constants';
+import { useLocalStorageGlobalState } from '@/scripts/client/hooks/useLocalStorageState';
+import { $gated } from '@/scripts/client/atoms/gated';
 import { HubspotForm } from './hubspot-form/HubspotForm';
 import type { IHubspotFormDefinition } from './hubspot-form/shared';
 
@@ -24,10 +25,11 @@ const Gated = ({ form, children, guid }: GatedProps) => {
   useEffect(() => {
     setIsClient(true);
     setGated(storedGated);
+    $gated.set(storedGated);
   }, []);
 
   const contentToShow = useMemo(() => {
-    // TODO check if google bot working
+    // TODO: check if google bot working
     const isGoogle =
       isClient && navigator?.userAgent.toLowerCase().includes('googlebot');
 
@@ -56,6 +58,7 @@ const Gated = ({ form, children, guid }: GatedProps) => {
             onSuccess={() => {
               setStoredGated(false);
               setGated(false);
+              $gated.set(false);
             }}
           />
         </div>
