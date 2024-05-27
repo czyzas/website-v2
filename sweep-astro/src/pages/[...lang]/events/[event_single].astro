@@ -13,14 +13,13 @@ export const getStaticPaths = async () => {
   const paths = await fetchEventPagesStaticPaths();
   return createPagesStaticPaths(paths, {
     paramKey: 'event_single',
-    paramValueType: 'prefixed-uri',
-    uriPrefix: 'event',
+    paramValueType: 'slug',
   });
 };
 
 const params = Astro.params as InferGetStaticParamsType<typeof getStaticPaths>;
 const { event_single: unprefixedURI, lang = defaultLocale } = params;
-const rawUri = prefixURI(unprefixedURI, 'event');
+const rawUri = prefixURI(unprefixedURI, 'events');
 const uri = cleanURI(rawUri, lang);
 
 // TODO: use some kind of reusable function
