@@ -88,7 +88,10 @@ query NewsroomPagesStaticPaths {
 
 # Event
 query EventTagsStaticPaths {
-  tags: eventTags(first: 100, where: { language: "all", hideEmpty: true }) {
+  tags: eventCategories(
+    first: 100
+    where: { language: "all", hideEmpty: true }
+  ) {
     nodes {
       databaseId
       slug

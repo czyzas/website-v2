@@ -18,7 +18,7 @@ query EventsListPage($LANG: String!, $TAG_SLUG: [String]) {
     where: {
       status: PUBLISH
       language: $LANG
-      tagSlug: $TAG_SLUG
+      categorySlug: $TAG_SLUG
       metaKey: "event_date"
       metaType: DATE
       orderby: { order: DESC, field: META_VALUE }
@@ -37,7 +37,7 @@ query EventsListPage($LANG: String!, $TAG_SLUG: [String]) {
       hasPreviousPage
     }
   }
-  filterTags: eventTags(
+  filterTags: eventCategories(
     first: 100
     where: { language: $LANG, hideEmpty: true }
   ) {
