@@ -24,6 +24,8 @@ import {
   NewsroomPagesStaticPathsDocument,
   EventPagesStaticPathsDocument,
   EventSinglePageDocument,
+  EventsListPageDocument,
+  EventTagsStaticPathsDocument,
 } from '@/__generated__/cms';
 import type {
   ComponentIndustriesListFragment,
@@ -256,9 +258,36 @@ export async function fetchEventPagesStaticPaths() {
     (
       await fetchData(EventPagesStaticPathsDocument, undefined, [
         CACHE_KEYS.STATIC_PATHS,
-        CACHE_KEYS.EVENT,
+        CACHE_KEYS.EVENTS,
       ])
     ).pages?.nodes ?? []
+  );
+}
+export async function fetchEventTagsStaticPaths() {
+  // TODO: handle more than 100 pages
+  return (
+    (
+      await fetchData(EventTagsStaticPathsDocument, undefined, [
+        CACHE_KEYS.STATIC_PATHS,
+        CACHE_KEYS.EVENTS,
+        CACHE_KEYS.TAG,
+      ])
+    ).tags?.nodes ?? []
+  );
+}
+export function fetchEventsListPage(
+  lang: string = defaultLocale,
+  tag?: string
+) {
+  return fetchData(
+    EventsListPageDocument,
+    {
+      LANG: lang,
+      TAG_SLUG: tag,
+    },
+    tag
+      ? [lang, CACHE_KEYS.EVENTS, CACHE_KEYS.TAG, tag]
+      : [lang, CACHE_KEYS.EVENTS]
   );
 }
 export function fetchEventSingle(uri: string, lang: string = defaultLocale) {

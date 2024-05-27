@@ -1,0 +1,20 @@
+---
+import { defaultLocale } from '@/i18n/config';
+import {
+  fetchEventsListPage,
+  fetchSinglePageStaticPaths,
+} from '@/lib/fetchCMSData';
+import { createSingleDefaultPageStaticPaths } from '@/scripts/utils-static-paths';
+import ArticlesList from '@/templates/ArticlesList.astro';
+
+export async function getStaticPaths() {
+  return createSingleDefaultPageStaticPaths(
+    await fetchSinglePageStaticPaths('/events')
+  );
+}
+
+const { lang = defaultLocale } = Astro.params;
+const data = await fetchEventsListPage(lang);
+---
+
+<ArticlesList postType="event" prefix="events" data={data} lang={lang} />

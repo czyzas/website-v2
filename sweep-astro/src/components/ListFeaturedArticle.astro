@@ -1,6 +1,7 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
 import type {
+  EventListItemFragment,
   InsightsListItemFragment,
   NewsroomListItemFragment,
 } from '@/__generated__/cms';
@@ -17,7 +18,10 @@ import CardWithMergedImage from './CardWithMergedImage.astro';
 import CardWithBigImage from './CardWithBigImage.astro';
 import ArticleTag from './ArticleTag.astro';
 
-type UnparsedArticle = InsightsListItemFragment | NewsroomListItemFragment;
+type UnparsedArticle =
+  | InsightsListItemFragment
+  | NewsroomListItemFragment
+  | EventListItemFragment;
 
 interface ListFeaturedArticleProps extends HTMLAttributes<'div'> {
   data?: UnparsedArticle;

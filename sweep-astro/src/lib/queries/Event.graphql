@@ -1,3 +1,47 @@
+query EventsListPage($LANG: String!, $TAG_SLUG: [String]) {
+  page: pageByLang(uri: "events", lang: $LANG) {
+    title
+    slug
+    uri
+    language {
+      ...Languages
+    }
+    subpageSettings {
+      ...SubpageSettings
+    }
+    articlesListAcf {
+      ...ArticlesListAcf
+    }
+  }
+  articles: events(
+    first: 6
+    where: { status: PUBLISH, language: $LANG, tagSlug: $TAG_SLUG }
+  ) {
+    edges {
+      cursor
+      node {
+        ...EventListItem
+      }
+    }
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+      hasPreviousPage
+    }
+  }
+  filterTags: eventTags(
+    first: 100
+    where: { language: $LANG, hideEmpty: true }
+  ) {
+    nodes {
+      name
+      slug
+    }
+  }
+  ...Essential
+}
+
 query EventSinglePage($URI: String!, $LANG: String!) {
   page: eventByLang(uri: $URI, lang: $LANG) {
     __typename
