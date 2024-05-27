@@ -1,30 +1,33 @@
 import type { ReactNode } from 'react';
 import { Fragment, useEffect, useMemo, useState } from 'react';
 import { useLocalStorageGlobalState } from '@/lib/useLocalStorageState';
+import { TRANSLATIONS } from '@/constants';
 import { HubspotForm } from './hubspot-form/HubspotForm';
 import type { IHubspotFormDefinition } from './hubspot-form/shared';
-import Section from './ui/Section.astro';
 
 type UseGatedContentArgs = {
-  id: string;
   form: IHubspotFormDefinition;
   children: ReactNode;
+  guid?: string;
 };
 
-const UseGatedContent = ({ id, form, children }: UseGatedContentArgs) => {
+const UseGatedContent = ({ form, children, guid }: UseGatedContentArgs) => {
+  const [isGated, setGated] = useState(true);
   const [isClient, setIsClient] = useState(false);
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  const [isGated, setGated, removeGateInLocalStorage] =
+  const [storedGated, setStoredGated, removeGateInLocalStorage] =
     useLocalStorageGlobalState({
-      key: `${id}-gate`,
+      key: `${guid}-gate`,
       initialValue: Boolean(form),
     });
 
+  useEffect(() => {
+    setIsClient(true);
+    setGated(storedGated);
+  }, []);
+
   const contentToShow = useMemo(() => {
+    // TODO check if google bot working
     const isGoogle =
       isClient && navigator?.userAgent.toLowerCase().includes('googlebot');
 
@@ -43,13 +46,18 @@ const UseGatedContent = ({ id, form, children }: UseGatedContentArgs) => {
         <div className="box-shadow relative">
           <div className="absolute bottom-full h-60 w-full bg-gradient-to-b from-white/20 to-white"></div>
           <p className="text-center text-sw-text-subdued font-medium">
-            We’d love to know a little more about you. Enter your details to
-            unlock the page
+            {TRANSLATIONS.GATED_CONTENT.SUB_TITLE}
           </p>
           <h2 className="pt-4 pb-8 typography-h2 text-center">
-            Just a moment...
+            {TRANSLATIONS.GATED_CONTENT.TITLE}
           </h2>
-          <HubspotForm form={form} onSuccess={() => setGated(false)} />
+          <HubspotForm
+            form={form}
+            onSuccess={() => {
+              setStoredGated(false);
+              setGated(false);
+            }}
+          />
         </div>
       )}
       {!isGated && contentToShow}

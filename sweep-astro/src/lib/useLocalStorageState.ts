@@ -14,7 +14,7 @@ export function useLocalStorageGlobalState<T = unknown>({
   key,
   initialValue,
 }: UseLocalStorageStateArgs<T>): [T, (newValue: T) => void, () => void] {
-  const [item, setItemState] = useState<T>(() => {
+  const [item, setItemState] = useState<unknown>(() => {
     if (typeof window === 'undefined') {
       return initialValue;
     }
@@ -67,5 +67,5 @@ export function useLocalStorageGlobalState<T = unknown>({
       window.removeEventListener(eventKey, syncItem as EventListener);
   }, [key, syncItem]);
 
-  return [item, setItem, removeItem];
+  return [item as T, setItem, removeItem];
 }

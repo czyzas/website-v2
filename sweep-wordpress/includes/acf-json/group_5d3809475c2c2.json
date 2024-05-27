@@ -721,6 +721,123 @@
                     "graphql_field_name": "image"
                 }
             ]
+        },
+        {
+            "key": "field_665458e59d893",
+            "label": "Gated content",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "graphql_field_name": "gatedContent",
+            "wpml_cf_preferences": 0,
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_665459649d894",
+            "label": "Gated content",
+            "name": "gated_content",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 0,
+            "layout": "block",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "gatedContent",
+            "graphql_non_null": 0,
+            "sub_fields": [
+                {
+                    "key": "field_665459719d895",
+                    "label": "Gated form GUID",
+                    "name": "gated_form_guid",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 0,
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "gatedFormGuid",
+                    "graphql_non_null": 0
+                },
+                {
+                    "key": "field_6654597c9d896",
+                    "label": "Sub title",
+                    "name": "sub_title",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 0,
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "subTitle",
+                    "graphql_non_null": 0
+                },
+                {
+                    "key": "field_6654598e9d897",
+                    "label": "Title",
+                    "name": "title",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 0,
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "title",
+                    "graphql_non_null": 0
+                }
+            ]
         }
     ],
     "location": [
@@ -746,5 +863,5 @@
     "graphql_field_name": "themeOptionsAcf",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1716558503
+    "modified": 1716804027
 }

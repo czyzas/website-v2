@@ -18,6 +18,12 @@ export const TRANSLATIONS = {
     FORM_SUCCESS_MESSAGE: 'SUBMISSION SUCCESS',
     SIGN_UP: 'Sign up',
   },
+  GATED_CONTENT: {
+    TITLE: 'Just a moment...',
+    SUB_TITLE:
+      "We'd love to know a little more about you. Enter your details to unlock the page",
+    GATED_FORM_GUID: 'a83996b3-80a3-4bb2-8595-a0a51f71a11e',
+  },
   HOME: 'Home',
   EVENT: 'EVENT',
   PAST_EVENT: 'PAST EVENT',
