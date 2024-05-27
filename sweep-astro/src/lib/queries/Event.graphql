@@ -102,7 +102,16 @@ query EventSinglePage($URI: String!, $LANG: String!) {
       ...ModulesCollection
     }
   }
-  articles: events(first: 4, where: { status: PUBLISH, language: $LANG }) {
+  articles: events(
+    first: 4
+    where: {
+      status: PUBLISH
+      language: $LANG
+      metaKey: "event_date"
+      metaType: DATE
+      orderby: { order: DESC, field: META_VALUE }
+    }
+  ) {
     nodes {
       ...EventListItem
     }
