@@ -46,6 +46,14 @@ query EventsListPage($LANG: String!, $TAG_SLUG: [String]) {
       slug
     }
   }
+  moreArticles: insights(
+    first: 4
+    where: { status: PUBLISH, language: $LANG }
+  ) {
+    nodes {
+      ...InsightsListItem
+    }
+  }
   ...Essential
 }
 

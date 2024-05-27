@@ -25,6 +25,7 @@ export const TRANSLATIONS = {
   },
   HOME: 'Home',
   EVENT: 'EVENT',
+  BLOG: 'Blog',
   PAST_EVENT: 'PAST EVENT',
   READ_MORE: 'Read more',
   READ_FULL_STORY: 'Read the full story',

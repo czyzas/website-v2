@@ -53,6 +53,8 @@ const {
 
 const page = data.page!;
 const posts = (data.articles?.edges ?? []).filter(Boolean).map((p) => p.node);
+const insightsArticles =
+  postType === 'event' ? (data.moreArticles?.nodes ?? []).filter(Boolean) : [];
 
 // TAGS
 const tags = (data.filterTags?.nodes ?? []).filter(Boolean);
@@ -165,4 +167,22 @@ if (!rawFeaturedPost && posts?.[0] && !filterTag) {
       <Pagination />
     </Container>
   </Section>
+  {
+    postType === 'event' && (
+      <Fragment>
+        {insightsArticles.length > 0 && (
+          <Section bg="surface-subdued">
+            <Container>
+              <SectionTitle withMargin headline={TRANSLATIONS.BLOG} />
+              <ArticlesGrid
+                postType="insights"
+                posts={insightsArticles}
+                columns={4}
+              />
+            </Container>
+          </Section>
+        )}
+      </Fragment>
+    )
+  }
 </Layout>
