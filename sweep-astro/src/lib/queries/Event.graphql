@@ -15,7 +15,14 @@ query EventsListPage($LANG: String!, $TAG_SLUG: [String]) {
   }
   articles: events(
     first: 6
-    where: { status: PUBLISH, language: $LANG, tagSlug: $TAG_SLUG }
+    where: {
+      status: PUBLISH
+      language: $LANG
+      tagSlug: $TAG_SLUG
+      metaKey: "event_date"
+      metaType: DATE
+      orderby: { order: DESC, field: META_VALUE }
+    }
   ) {
     edges {
       cursor

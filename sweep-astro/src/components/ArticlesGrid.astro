@@ -10,6 +10,7 @@ import type {
 } from '@/__generated__/cms';
 import { getStore } from '@/scripts/store';
 import { languageStore } from '@/stores/languageStore';
+import { cn } from '@/scripts/cn';
 import Grid from './ui/Grid.astro';
 import ArticleTag from './ArticleTag.astro';
 import ArticleEventDetails from './ArticleEventDetails.astro';
@@ -21,11 +22,12 @@ type ArticlesGridProps = {
     | NewsroomListItemFragment
     | EventListItemFragment
   )[];
+  columns?: 3 | 4;
 };
 
 type Props = WithAttributes<ArticlesGridProps>;
 
-const { posts } = Astro.props;
+const { posts, columns = 3 } = Astro.props;
 const { currentLanguage } = getStore(languageStore);
 const lang = currentLanguage.code;
 ---
@@ -44,7 +46,10 @@ const lang = currentLanguage.code;
             link={{ url: buildI18nPath(post.uri, lang) }}
             image={post.subpageSettings?.image}
             postType={post.__typename}
-            class="col-span-full sm:col-span-6 lg:col-span-4"
+            class={cn('col-span-full', {
+              'sm:col-span-6 lg:col-span-4': columns === 3,
+              'sm:col-span-6 lg:col-span-4 xl:col-span-3': columns === 4,
+            })}
           >
             {post.__typename === 'Event' && !!eventDate && (
               <ArticleEventDetails slot="image-addition" date={eventDate} />

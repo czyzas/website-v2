@@ -32,11 +32,11 @@ const Tag = link ? 'a' : 'div';
     className
   )}
 >
-  <div class="image-container relative aspect-[16/9] sm:aspect-[28/19]">
+  <div class="image-container relative">
     <WordpressImage
       data={topImage}
       preferredWidth={586}
-      class="size-full object-cover"
+      class="object-cover aspect-[16/9] sm:aspect-[28/19]"
     />
     <slot name="image-addition" />
   </div>
