@@ -20,10 +20,8 @@ const form = hubspotFormGuid
 
 {
   !!hubspotFormGuid && !!form && (
-    <Fragment>
-      <ClientGated guid={hubspotFormGuid} form={form} client:load>
-        <slot />
-      </ClientGated>
-    </Fragment>
+    <ClientGated guid={hubspotFormGuid} form={form} client:load>
+      <slot />
+    </ClientGated>
   )
 }
