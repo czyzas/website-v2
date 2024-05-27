@@ -1,24 +1,34 @@
 ---
 import type {
+  AuthorFragment,
+  EventListItemFragment,
+  EventSinglePageQuery,
   InsightsListItemFragment,
   InsightsSinglePageQuery,
   NewsroomListItemFragment,
   NewsroomSinglePageQuery,
 } from '@/__generated__/cms';
+
 import ArticleBar from '@/components/ArticleBar.astro';
 import ArticlesGrid from '@/components/ArticlesGrid.astro';
+import EventInformation from '@/components/EventInformation.astro';
 import ModulesIncluder from '@/components/ModulesIncluder.astro';
+import Form from '@/components/hubspot-form/Form.astro';
+import FormContainer from '@/components/hubspot-form/FormContainer.astro';
 import SectionTitle from '@/components/partials/SectionTitle.astro';
 import Top from '@/components/partials/Top.astro';
 import Sidebar from '@/components/sidebar/Sidebar.astro';
 import SidebarCardAuthor from '@/components/sidebar/SidebarCardAuthor.astro';
 import SidebarCardTableOfContents from '@/components/sidebar/SidebarCardTableOfContents.astro';
+import SidebarEventCTA from '@/components/sidebar/SidebarEventCTA.astro';
 import Container from '@/components/ui/Container.astro';
 import Grid from '@/components/ui/Grid.astro';
 import Section from '@/components/ui/Section.astro';
 import { TRANSLATIONS } from '@/constants';
+import { getLocale } from '@/i18n/utils';
 import Layout from '@/layouts/Layout.astro';
 import { buildTOC } from '@/scripts/buildTOC';
+import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
 import { parseTags } from '@/scripts/data-parsers/parseTag';
 import { overwriteWYSIWYGContent } from '@/scripts/overwriteWYSIWYGContent';
 import { initializeStore } from '@/scripts/store';
@@ -33,10 +43,15 @@ type NewsroomSingleProps = {
   postType: 'newsroom';
   data: NewsroomSinglePageQuery;
 };
+type EventSingleProps = {
+  postType: 'event';
+  data: EventSinglePageQuery;
+};
 interface ArticlePageProps {
   lang: string;
 }
-type Props = (InsightsSingleProps | NewsroomSingleProps) & ArticlePageProps;
+type Props = (InsightsSingleProps | NewsroomSingleProps | EventSingleProps) &
+  ArticlePageProps;
 
 const { postType, data, lang } = Astro.props;
 
@@ -48,39 +63,59 @@ initializeStore(cmsStore, {
   subpageSettings: data.page?.subpageSettings,
 });
 
+overwriteWYSIWYGContent(page.modules?.modulesContent, {
+  RICH_TEXT_CONTENT_HEADINGS_IDS: true,
+});
+
 const { subpageSettings } = page;
 const pageTitle = page?.title ?? '';
 const title = subpageSettings?.customTitle || pageTitle || '';
+const introduction = subpageSettings?.introduction || '';
 const image = subpageSettings?.image;
 const size = (subpageSettings?.topDistribution ?? '5-7') as ColumnSizes;
 const tags = parseTags(page.tags?.nodes);
 const category = page.categories?.nodes?.[0]?.name;
-const lastUpdated = page.modified
-  ? new Date(page.modified).toLocaleDateString(lang === 'en' ? 'en-UK' : lang, {
+const toc = buildTOC(page.modules?.modulesContent);
+let lastUpdated: string | undefined;
+let author: AuthorFragment | undefined;
+
+if (page.__typename === 'InsightsItem' || page.__typename === 'NewsroomItem') {
+  if (page.modified) {
+    lastUpdated = new Date(page.modified).toLocaleDateString(getLocale(lang), {
       day: '2-digit',
       month: 'long',
       year: 'numeric',
-    })
-  : undefined;
-const acf = page.articleAcf;
-const author =
-  acf?.author?.node.__typename === 'PostAuthor' ? acf.author.node : undefined;
+    });
+  }
 
-overwriteWYSIWYGContent(page.modules?.modulesContent, {
-  RICH_TEXT_CONTENT_HEADINGS_IDS: true,
-});
-const toc = buildTOC(page.modules?.modulesContent);
-
-let posts: (InsightsListItemFragment | NewsroomListItemFragment)[] = [];
-if (postType === 'insights') {
-  posts = (data?.articles?.nodes ?? []).filter(Boolean);
+  if (page.articleAcf?.author?.node.__typename === 'PostAuthor') {
+    author = page.articleAcf.author.node;
+  }
 }
 
-if (postType === 'newsroom') {
-  posts = (data?.articles?.nodes ?? []).filter(Boolean);
-}
-
+let posts: (
+  | InsightsListItemFragment
+  | NewsroomListItemFragment
+  | EventListItemFragment
+)[] = (data?.articles?.nodes ?? []).filter(Boolean);
 posts = posts.filter((post) => post.uri !== data.page?.uri).slice(0, 3);
+
+let postsTitle = '';
+switch (postType) {
+  case 'event':
+    postsTitle = TRANSLATIONS.ARTICLE.MORE_EVENTS;
+    break;
+  case 'insights':
+  case 'newsroom':
+  default:
+    postsTitle = TRANSLATIONS.ARTICLE.MORE_STORIES;
+    break;
+}
+
+let registerFormTitle;
+if (page.__typename === 'Event') {
+  registerFormTitle = page.eventAcf?.registerFormTitle?.selectSectionTitle;
+}
 ---
 
 <Layout
@@ -89,12 +124,25 @@ posts = posts.filter((post) => post.uri !== data.page?.uri).slice(0, 3);
   htmlClassName="scroll-smooth scroll-p-4"
 >
   <Top
+    overline={TRANSLATIONS.EVENT}
     title={title}
     titleSize="h2"
+    content={introduction}
     image={image}
     size={size}
     class="py-8 md:pt-18 md:pb-14"
   >
+    {
+      postType === 'event' && page.__typename === 'Event' && (
+        <Fragment slot="details">
+          <EventInformation
+            location={page.eventAcf?.eventLocation}
+            date={page.eventAcf?.eventDate}
+            language={page.eventAcf?.eventLanguage}
+          />
+        </Fragment>
+      )
+    }
     <ArticleBar
       details={{
         Category: category,
@@ -117,16 +165,41 @@ posts = posts.filter((post) => post.uri !== data.page?.uri).slice(0, 3);
           sticky
           class="col-span-full md:col-start-9 lg:col-start-10 md:col-end-13 order-1 md:order-2"
         >
-          {(<SidebarCardAuthor author={author} />)}
-          <SidebarCardTableOfContents toc={toc} />
+          <SidebarCardAuthor author={author} />
+          {
+            (postType === 'insights' || postType === 'newsroom') && (
+              <SidebarCardTableOfContents toc={toc} />
+            )
+          }
+          {
+            page.__typename === 'Event' && (
+              <SidebarEventCTA location={page.eventAcf?.eventLocation} />
+            )
+          }
         </Sidebar>
       </Grid>
     </Container>
   </Section>
-  <Section bg="surface-background">
-    <Container>
-      <SectionTitle withMargin headline={TRANSLATIONS.MORE_STORIES} />
-      {(<ArticlesGrid posts={posts} />)}
-    </Container>
-  </Section>
+  {
+    page.__typename === 'Event' && page.eventAcf?.registerFormGuid && (
+      <Section bg="surface-subdued">
+        <Container>
+          <SectionTitle withMargin {...parseSectionTitle(registerFormTitle)} />
+          <FormContainer>
+            <Form formGuid={page.eventAcf?.registerFormGuid} />
+          </FormContainer>
+        </Container>
+      </Section>
+    )
+  }
+  {
+    posts.length > 0 && (
+      <Section bg="surface-background">
+        <Container>
+          <SectionTitle withMargin headline={postsTitle} />
+          <ArticlesGrid postType={postType} posts={posts} />
+        </Container>
+      </Section>
+    )
+  }
 </Layout>

@@ -1,6 +1,7 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
 import type {
+  EventListItemFragment,
   InsightsListItemFragment,
   NewsroomListItemFragment,
 } from '@/__generated__/cms';
@@ -11,13 +12,17 @@ import { languageStore } from '@/stores/languageStore';
 import type { WithAttributes } from '@/types';
 import { cn } from '@/scripts/cn';
 import { parseTags } from '@/scripts/data-parsers/parseTag';
+import EventDate from '@/components/EventDate.astro';
 import WordpressButtonLink from './WordpressButtonLink.astro';
 import Prose from './ui/Prose.astro';
 import CardWithMergedImage from './CardWithMergedImage.astro';
 import CardWithBigImage from './CardWithBigImage.astro';
 import ArticleTag from './ArticleTag.astro';
 
-type UnparsedArticle = InsightsListItemFragment | NewsroomListItemFragment;
+type UnparsedArticle =
+  | InsightsListItemFragment
+  | NewsroomListItemFragment
+  | EventListItemFragment;
 
 interface ListFeaturedArticleProps extends HTMLAttributes<'div'> {
   data?: UnparsedArticle;
@@ -35,16 +40,12 @@ const {
 const { currentLanguage } = getStore(languageStore);
 const lang = currentLanguage.code;
 
-const featuredPost = data
-  ? {
-      uri: data.uri,
-      category: data.categories?.nodes?.[0]?.name,
-      title: data.title,
-      content: data.subpageSettings?.introduction,
-      image: data.subpageSettings?.image,
-      tags: parseTags(data.tags?.nodes),
-    }
-  : undefined;
+const uri = data?.uri;
+const title = data?.title;
+const category = data?.categories?.nodes?.[0]?.name;
+const content = data?.subpageSettings?.introduction;
+const image = data?.subpageSettings?.image;
+const tags = parseTags(data?.tags?.nodes);
 
 type CardLayout = keyof typeof layouts;
 
@@ -60,35 +61,43 @@ const ContentWrapper =
 ---
 
 {
-  !!featuredPost && (
+  !!data && (
     <ContentWrapper
       {...props}
-      image={featuredPost.image}
+      image={image}
       size={layout === 'merged' ? 'lg' : undefined}
       class={cn('list-featured-article', className)}
     >
       <div class="flex-1 flex flex-col items-start gap-4">
-        {!!featuredPost.category && (
+        {!!category && (
           <div class="typography-card-title text-sw-text-subdued">
-            {featuredPost.category}
+            {category}
           </div>
         )}
-        {!!featuredPost.title && (
-          <div class="typography-cards-bold-large">{featuredPost.title}</div>
+        {!!title && (
+          <div class="flex items-center gap-4 md:gap-8">
+            {data.__typename === 'Event' && data.eventAcf?.eventDate && (
+              <EventDate
+                date={data.eventAcf.eventDate}
+                class="border border-sw-text-disabled"
+              />
+            )}
+            <div class="typography-cards-bold-large">{title}</div>
+          </div>
         )}
-        {!!featuredPost.content && <Prose set:html={featuredPost.content} />}
-        {!!featuredPost.uri && (
+        {!!content && <Prose set:html={content} />}
+        {!!uri && (
           <WordpressButtonLink
             data={{
-              url: buildI18nPath(featuredPost.uri, lang),
+              url: buildI18nPath(uri, lang),
               title: TRANSLATIONS.READ_FULL_STORY,
             }}
             arrow
           />
         )}
-        {featuredPost.tags.length > 0 && (
+        {tags.length > 0 && (
           <div class="tags mt-auto flex flex-wrap gap-2.5">
-            {featuredPost.tags.map((tag) =>
+            {tags.map((tag) =>
               tag.shouldRender ? (
                 <ArticleTag color={tag.color}>{tag.name}</ArticleTag>
               ) : null

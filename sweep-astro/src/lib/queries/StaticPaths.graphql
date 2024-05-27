@@ -85,3 +85,25 @@ query NewsroomPagesStaticPaths {
     }
   }
 }
+
+# Event
+query EventTagsStaticPaths {
+  tags: eventTags(first: 100, where: { language: "all", hideEmpty: true }) {
+    nodes {
+      databaseId
+      slug
+      uri
+      languageCode
+    }
+  }
+}
+query EventPagesStaticPaths {
+  pages: events(first: 100, where: { status: PUBLISH, language: "all" }) {
+    nodes {
+      databaseId
+      slug
+      uri
+      languageCode
+    }
+  }
+}

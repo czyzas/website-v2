@@ -1,6 +1,9 @@
 import type { GetStaticPathsItem } from 'astro';
 import { castArray, trim } from 'lodash-es';
-import { locales, defaultLocale } from './config';
+import { languages, defaultLocale, locales } from './config';
+
+export const getLocale = (lang: string) =>
+  locales?.[lang] ?? locales[defaultLocale];
 
 /**
  * Return undefined if provided language is the default one
@@ -24,7 +27,7 @@ export const getUrlWithoutLang = (
   let paramPath = url.startsWith('/') ? url.slice(1) : url;
   const chunks = paramPath.split('/');
 
-  if (locales.includes(chunks[0] ?? '')) {
+  if (languages.includes(chunks[0] ?? '')) {
     chunks.shift();
     paramPath = chunks.join('/');
   }
@@ -54,7 +57,7 @@ export const fixLangParams = (
     return params;
   }
 
-  if (locales.includes(lang)) {
+  if (languages.includes(lang)) {
     return params;
   }
 
@@ -79,7 +82,7 @@ export const buildI18nPath = (
   pathWithoutLang: string | string[],
   lang: string
 ) => {
-  const language = locales.includes(lang) ? lang : defaultLocale;
+  const language = languages.includes(lang) ? lang : defaultLocale;
   const path = castArray(pathWithoutLang).map((p) => trim(p, '/'));
 
   if (pathWithoutLang === '/' && language !== defaultLocale) {

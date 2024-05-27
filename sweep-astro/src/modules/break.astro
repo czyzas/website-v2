@@ -2,15 +2,17 @@
 import type { ModulesModulesContentBreakLayout } from '@/__generated__/cms';
 import ModuleContainer from '@/components/ModuleContainer.astro';
 import { cn } from '@/scripts/cn';
+import type { WithModuleMeta } from '@/types';
 
-type Props = ModulesModulesContentBreakLayout;
+type Props = WithModuleMeta<ModulesModulesContentBreakLayout>;
 
-const { layoutName, backgroundColor, height } = Astro.props;
+const { __meta__, layoutName, backgroundColor, height } = Astro.props;
 const px = !Number.isNaN(Number(height)) ? Number(height) : 0;
 const rem = px / 16;
 ---
 
 <ModuleContainer
+  meta={__meta__}
   name={layoutName!}
   bg={backgroundColor}
   padding={false}

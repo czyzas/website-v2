@@ -15,6 +15,7 @@ import type { ColumnSizes } from '@/types';
 import ListTagFilter from '@/components/ListTagFilter.astro';
 import Pagination from '@/components/Pagination.astro';
 import type {
+  EventsListPageQuery,
   InsightsListPageQuery,
   NewsroomListPageQuery,
 } from '@/__generated__/cms';
@@ -30,12 +31,17 @@ type NewsroomListProps = {
   postType: 'newsroom';
   data: NewsroomListPageQuery;
 };
+type EventsListProps = {
+  postType: 'event';
+  data: EventsListPageQuery;
+};
 interface ArticleListProps {
   prefix?: string;
   tag?: string;
   lang: string;
 }
-type Props = (InsightsListProps | NewsroomListProps) & ArticleListProps;
+type Props = (InsightsListProps | NewsroomListProps | EventsListProps) &
+  ArticleListProps;
 
 const {
   postType,
@@ -86,6 +92,13 @@ if (
   acf.featuredNewsroomItem.node.__typename === 'NewsroomItem'
 ) {
   rawFeaturedPost = acf.featuredNewsroomItem.node;
+}
+if (
+  postType === 'event' &&
+  acf?.featuredEvent &&
+  acf.featuredEvent.node.__typename === 'Event'
+) {
+  rawFeaturedPost = acf.featuredEvent.node;
 }
 
 if (!rawFeaturedPost && posts?.[0] && !filterTag) {
@@ -148,7 +161,7 @@ if (!rawFeaturedPost && posts?.[0] && !filterTag) {
         class="my-8 md:mt-12 md:mb-20"
       />
 
-      <ArticlesGrid posts={posts} />
+      <ArticlesGrid postType={postType} posts={posts} />
       <Pagination />
     </Container>
   </Section>

@@ -2,36 +2,92 @@
 import type { ModulesModulesContentTeamLayout } from '@/__generated__/cms';
 import ModuleContainer from '@/components/ModuleContainer.astro';
 import WordpressImage from '@/components/WordpressImage.astro';
-import Container from '@/components/ui/Container.astro';
+import { cn } from '@/scripts/cn';
+import { imageShouldRender } from '@/scripts/data-parsers/parseImage';
+import { fixDoubleBr } from '@/scripts/fixDoubleBr';
+import type { WithModuleMeta } from '@/types';
 
-type Props = ModulesModulesContentTeamLayout;
+type Props = WithModuleMeta<WithModuleMeta<ModulesModulesContentTeamLayout>>;
 
-const { layoutName, backgroundColor, team: rawTeam } = Astro.props;
+const {
+  __meta__,
+  layoutName,
+  backgroundColor,
+  columns: rawColumns,
+  look: rawLook,
+  team: rawTeam,
+} = Astro.props;
 
 const team = (rawTeam ?? []).filter(Boolean);
+const columns = rawColumns ?? 'auto';
+const look = (rawLook ?? 'default') as 'default' | 'card';
 ---
 
 {
   team.length > 0 && (
-    <ModuleContainer name={layoutName!} bg={backgroundColor}>
-      <Container>
-        <div class="grid grid-cols-[repeat(auto-fit,minmax(0,12.5rem))] sm:grid-cols-[repeat(auto-fit,minmax(0,13.75rem))] justify-center gap-x-4 gap-y-14">
-          {team.map((person) => (
-            <div class="person ">
-              <WordpressImage
-                data={person.image}
-                class="aspect-[220/169] object-cover rounded-lg border border-sw-text-disabled mb-4.5"
-              />
-              {!!person?.name && <div class="typography-h4">{person.name}</div>}
+    <ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
+      <div
+        class={cn(
+          'grid',
+          {
+            'grid-cols-[repeat(auto-fill,minmax(0,12.5rem))] sm:grid-cols-[repeat(auto-fill,minmax(0,13.75rem))]':
+              columns === 'auto',
+            'grid-cols-1 xs:grid-cols-2 md:grid-cols-3': columns === '3',
+            'grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4':
+              columns === '4',
+          },
+          'justify-center gap-x-4 gap-y-14',
+          { 'gap-y-4': look === 'card' }
+        )}
+      >
+        {team.map((person) => (
+          <div
+            class={cn('person', {
+              'border border-sw-text-disabled rounded-lg overflow-hidden':
+                look === 'card',
+            })}
+          >
+            <WordpressImage
+              data={person.image}
+              class={cn('aspect-[220/169] object-cover', {
+                'rounded-lg border border-sw-text-disabled mb-4.5':
+                  look === 'default',
+              })}
+            />
+            <div
+              class={cn({
+                contents: look === 'default',
+                'px-4 py-3': look === 'card',
+              })}
+            >
+              {!!person?.name && (
+                <div
+                  class={cn({
+                    'typography-h4': look === 'default',
+                    'typography-body text-black': look === 'card',
+                  })}
+                >
+                  {person.name}
+                </div>
+              )}
               {!!person?.position && (
-                <div class="typography-body text-sw-text-subdued mt-1.5">
-                  {person.position}
+                <div
+                  class="typography-body text-sw-text-subdued mt-1.5"
+                  set:html={fixDoubleBr(person.position)}
+                />
+              )}
+              {imageShouldRender(person.logo) && (
+                <div class="mt-auto pt-2">
+                  <WordpressImage
+                    data={person.logo}
+                    class="w-auto h-7 object-contain object-left-top"
+                  />
                 </div>
               )}
             </div>
-          ))}
-        </div>
-      </Container>
+          </div>
+        ))}
+      </div>
     </ModuleContainer>
   )
 }

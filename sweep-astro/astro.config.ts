@@ -7,7 +7,7 @@ import tailwind from '@astrojs/tailwind';
 import icon from 'astro-icon';
 import react from '@astrojs/react';
 import svgr from 'vite-plugin-svgr';
-import { defaultLocale, locales } from './src/i18n/config';
+import { defaultLocale, languages } from './src/i18n/config';
 
 const appMode = (process.env.APP_MODE ?? 'static') as 'static' | 'ssr';
 const { CMS_ASSETS_DOMAIN } = loadEnv(
@@ -22,7 +22,7 @@ export default defineConfig({
   adapter: appMode === 'ssr' ? vercel() : undefined,
   i18n: {
     defaultLocale,
-    locales: [...locales],
+    locales: [...languages],
   },
   image: {
     domains: [CMS_ASSETS_DOMAIN],

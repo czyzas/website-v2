@@ -1,5 +1,5 @@
 import { isEmpty, isNil, isNumber, isString, trim } from 'lodash-es';
-import { defaultLocale, locales } from '@/i18n/config';
+import { defaultLocale, languages } from '@/i18n/config';
 
 interface CleanURIOptions {
   defaultUri?: string;
@@ -41,7 +41,7 @@ export function cleanURI(
   // uri have lang
   // FIXME: typescript 5.4.5 bug -remove tempUri when its fixed
   const tempUri = uri;
-  const currentUriLang = locales.find(
+  const currentUriLang = languages.find(
     (locale) => locale !== defaultLocale && tempUri.startsWith(`${locale}/`)
   );
 

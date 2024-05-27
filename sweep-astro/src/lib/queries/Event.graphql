@@ -1,0 +1,131 @@
+query EventsListPage($LANG: String!, $TAG_SLUG: [String]) {
+  page: pageByLang(uri: "events", lang: $LANG) {
+    title
+    slug
+    uri
+    language {
+      ...Languages
+    }
+    subpageSettings {
+      ...SubpageSettings
+    }
+    articlesListAcf {
+      ...ArticlesListAcf
+    }
+  }
+  articles: events(
+    first: 6
+    where: {
+      status: PUBLISH
+      language: $LANG
+      tagSlug: $TAG_SLUG
+      metaKey: "event_date"
+      metaType: DATE
+      orderby: { order: DESC, field: META_VALUE }
+    }
+  ) {
+    edges {
+      cursor
+      node {
+        ...EventListItem
+      }
+    }
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+      hasPreviousPage
+    }
+  }
+  filterTags: eventTags(
+    first: 100
+    where: { language: $LANG, hideEmpty: true }
+  ) {
+    nodes {
+      name
+      slug
+    }
+  }
+  ...Essential
+}
+
+query EventSinglePage($URI: String!, $LANG: String!) {
+  page: eventByLang(uri: $URI, lang: $LANG) {
+    __typename
+    title
+    slug
+    uri
+    eventAcf {
+      eventDate
+      eventLanguage
+      eventLocation
+      registerFormTitle {
+        selectSectionTitle {
+          customStyle
+          displayAs
+          headline
+          headlineType
+          overline
+          textUnder
+        }
+      }
+      registerFormGuid
+    }
+    categories: eventCategories(first: 1) {
+      nodes {
+        name
+      }
+    }
+    tags: eventTags {
+      nodes {
+        name
+        tagTaxonomyAcf {
+          tagColor
+        }
+      }
+    }
+    language {
+      ...Languages
+    }
+    subpageSettings {
+      ...SubpageSettings
+    }
+    modules {
+      ...ModulesCollection
+    }
+  }
+  articles: events(first: 4, where: { status: PUBLISH, language: $LANG }) {
+    nodes {
+      ...EventListItem
+    }
+  }
+  ...Essential
+}
+
+fragment EventListItem on Event {
+  __typename
+  title
+  uri
+  eventAcf {
+    eventDate
+  }
+  subpageSettings {
+    introduction
+    image {
+      ...Image
+    }
+  }
+  categories: eventCategories(first: 1) {
+    nodes {
+      name
+    }
+  }
+  tags: eventTags {
+    nodes {
+      name
+      tagTaxonomyAcf {
+        tagColor
+      }
+    }
+  }
+}

@@ -2,11 +2,12 @@
 import type { ModulesModulesContentCardsLayout } from '@/__generated__/cms';
 import CardsGrid from '@/components/CardsGrid.astro';
 import ModuleContainer from '@/components/ModuleContainer.astro';
-import Container from '@/components/ui/Container.astro';
+import type { WithModuleMeta } from '@/types';
 
-type Props = ModulesModulesContentCardsLayout;
+type Props = WithModuleMeta<ModulesModulesContentCardsLayout>;
 
 const {
+  __meta__,
   layoutName,
   backgroundColor,
   cards: rawCards,
@@ -19,10 +20,8 @@ const columns = Number(stringifiedColumns);
 
 {
   cards.length > 0 && (
-    <ModuleContainer name={layoutName!} bg={backgroundColor}>
-      <Container>
-        <CardsGrid columns={columns} cards={cards} />
-      </Container>
+    <ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
+      <CardsGrid columns={columns} cards={cards} />
     </ModuleContainer>
   )
 }

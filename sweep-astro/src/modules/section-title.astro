@@ -2,16 +2,16 @@
 import type { ModulesModulesContentSectionTitleLayout } from '@/__generated__/cms';
 import ModuleContainer from '@/components/ModuleContainer.astro';
 import UISectionTitle from '@/components/partials/SectionTitle.astro';
-import Container from '@/components/ui/Container.astro';
 import { cn } from '@/scripts/cn';
 import {
   parseSectionTitle,
   sectionTitleShouldRender,
 } from '@/scripts/data-parsers/parseSectionTitle';
+import type { WithModuleMeta } from '@/types';
 
-type Props = ModulesModulesContentSectionTitleLayout;
+type Props = WithModuleMeta<ModulesModulesContentSectionTitleLayout>;
 
-const { layoutName, backgroundColor, sectionTitle, addBottomSpace } =
+const { __meta__, layoutName, backgroundColor, sectionTitle, addBottomSpace } =
   Astro.props;
 const data = sectionTitle?.selectSectionTitle;
 const parsed = parseSectionTitle(data);
@@ -20,6 +20,7 @@ const parsed = parseSectionTitle(data);
 {
   sectionTitleShouldRender(data) && (
     <ModuleContainer
+      meta={__meta__}
       name={layoutName!}
       bg={backgroundColor}
       class={cn({
@@ -27,9 +28,7 @@ const parsed = parseSectionTitle(data);
         'display-as-overline': parsed.displayAs === 'overline',
       })}
     >
-      <Container>
-        <UISectionTitle {...parsed} />
-      </Container>
+      <UISectionTitle {...parsed} />
     </ModuleContainer>
   )
 }

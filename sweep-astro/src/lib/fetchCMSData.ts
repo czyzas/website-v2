@@ -22,6 +22,10 @@ import {
   NewsroomTagsStaticPathsDocument,
   NewsroomSinglePageDocument,
   NewsroomPagesStaticPathsDocument,
+  EventPagesStaticPathsDocument,
+  EventSinglePageDocument,
+  EventsListPageDocument,
+  EventTagsStaticPathsDocument,
 } from '@/__generated__/cms';
 import type {
   ComponentIndustriesListFragment,
@@ -166,7 +170,7 @@ export async function fetchInsightsTagsStaticPaths() {
       await fetchData(InsightsTagsStaticPathsDocument, undefined, [
         CACHE_KEYS.STATIC_PATHS,
         CACHE_KEYS.INSIGHTS,
-        CACHE_KEYS.TAGS,
+        CACHE_KEYS.TAG,
       ])
     ).tags?.nodes ?? []
   );
@@ -182,7 +186,7 @@ export function fetchInsightsListPage(
       TAG_SLUG: tag,
     },
     tag
-      ? [lang, CACHE_KEYS.INSIGHTS, CACHE_KEYS.TAGS, tag]
+      ? [lang, CACHE_KEYS.INSIGHTS, CACHE_KEYS.TAG, tag]
       : [lang, CACHE_KEYS.INSIGHTS]
   );
 }
@@ -216,7 +220,7 @@ export async function fetchNewsroomTagsStaticPaths() {
       await fetchData(NewsroomTagsStaticPathsDocument, undefined, [
         CACHE_KEYS.STATIC_PATHS,
         CACHE_KEYS.NEWSROOM,
-        CACHE_KEYS.TAGS,
+        CACHE_KEYS.TAG,
       ])
     ).tags?.nodes ?? []
   );
@@ -232,7 +236,7 @@ export function fetchNewsroomListPage(
       TAG_SLUG: tag,
     },
     tag
-      ? [lang, CACHE_KEYS.NEWSROOM, CACHE_KEYS.TAGS, tag]
+      ? [lang, CACHE_KEYS.NEWSROOM, CACHE_KEYS.TAG, tag]
       : [lang, CACHE_KEYS.NEWSROOM]
   );
 }
@@ -246,6 +250,57 @@ export function fetchNewsroomSingle(uri: string, lang: string = defaultLocale) {
     [lang, getUrlWithoutLang(uri)]
   );
 }
+
+// EVENT
+export async function fetchEventPagesStaticPaths() {
+  // TODO: handle more than 100 pages
+  return (
+    (
+      await fetchData(EventPagesStaticPathsDocument, undefined, [
+        CACHE_KEYS.STATIC_PATHS,
+        CACHE_KEYS.EVENTS,
+      ])
+    ).pages?.nodes ?? []
+  );
+}
+export async function fetchEventTagsStaticPaths() {
+  // TODO: handle more than 100 pages
+  return (
+    (
+      await fetchData(EventTagsStaticPathsDocument, undefined, [
+        CACHE_KEYS.STATIC_PATHS,
+        CACHE_KEYS.EVENTS,
+        CACHE_KEYS.TAG,
+      ])
+    ).tags?.nodes ?? []
+  );
+}
+export function fetchEventsListPage(
+  lang: string = defaultLocale,
+  tag?: string
+) {
+  return fetchData(
+    EventsListPageDocument,
+    {
+      LANG: lang,
+      TAG_SLUG: tag,
+    },
+    tag
+      ? [lang, CACHE_KEYS.EVENTS, CACHE_KEYS.TAG, tag]
+      : [lang, CACHE_KEYS.EVENTS]
+  );
+}
+export function fetchEventSingle(uri: string, lang: string = defaultLocale) {
+  return fetchData(
+    EventSinglePageDocument,
+    {
+      URI: uri,
+      LANG: lang,
+    },
+    [lang, getUrlWithoutLang(uri)]
+  );
+}
+
 // MODULES
 interface PostsParams {
   lang: string;
@@ -294,7 +349,7 @@ export async function fetchPostsModuleList(
 
   if (postType === 'newsroom') {
     return await fetchData(NewsroomModuleListDocument, options, [
-      CACHE_KEYS.MODULE_LIST_OF_POSTS,
+      CACHE_KEYS.MODULE_LIST_OF_NEWSROOM,
       hashedOptions,
     ]);
   }

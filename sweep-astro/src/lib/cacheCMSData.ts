@@ -13,10 +13,11 @@ export const CACHE_KEYS = {
   INDUSTRY: 'industry',
   INSIGHTS: 'insights',
   NEWSROOM: 'newsroom',
-  TAGS: 'tag',
+  TAG: 'tag',
+  EVENTS: 'events',
   COMPONENT_INDUSTRIES_LIST: 'component/industries-list',
   MODULE_LIST_OF_EVENTS: 'module/list-of-events',
-  MODULE_LIST_OF_POSTS: 'module/list-of-posts',
+  MODULE_LIST_OF_NEWSROOM: 'module/list-of-newsroom',
 } as const;
 
 export type CachePayload = string | string[];

@@ -2,15 +2,16 @@
 import 'swiper/swiper-bundle.css';
 import type { ModulesModulesContentQuotationsLayout } from '@/__generated__/cms';
 import ModuleContainer from '@/components/ModuleContainer.astro';
-import Container from '@/components/ui/Container.astro';
 import UIQuotation from '@/components/Quotation.astro';
 import SwiperNavigation from '@/components/SwiperNavigation.astro';
 import Grid from '@/components/ui/Grid.astro';
 import SwiperPagination from '@/components/SwiperPagination.astro';
+import type { WithModuleMeta } from '@/types';
 
-type Props = ModulesModulesContentQuotationsLayout;
+type Props = WithModuleMeta<ModulesModulesContentQuotationsLayout>;
 
 const {
+  __meta__,
   layoutName,
   backgroundColor,
   theme = 'light',
@@ -58,54 +59,52 @@ const quotationsArray = (quotations ?? []).filter(Boolean).map((quotation) => {
 </script>
 
 <style>
-  .swiper {
+  .quotations-swiper {
     @apply overflow-visible;
-  }
 
-  .swiper-slide {
-    width: 37.5rem;
-    @apply max-w-full;
+    .swiper-slide {
+      @apply w-[37.5rem] max-w-full;
+    }
   }
 </style>
 
 {
   quotationsArray.length > 0 && (
-    <ModuleContainer name={layoutName!} bg={backgroundColor}>
-      <div class="overflow-hidden pb-11">
-        <Container>
-          <Grid>
-            <div class="quotations-swiper col-span-full lg:col-start-2 lg:col-end-12">
-              <div class="swiper-wrapper">
-                {quotationsArray.map((quotation) => {
-                  const { quote, authorName, authorImage, authorOccupation } =
-                    quotation;
-                  return (
-                    <div class="swiper-slide">
-                      <UIQuotation
-                        theme={
-                          theme === 'light' || theme === 'dark'
-                            ? theme
-                            : 'light'
-                        }
-                        avatarSize={theme === 'dark' ? 'sm' : 'md'}
-                        quoteSize={theme === 'dark' ? 'sm' : 'md'}
-                        authorName={authorName}
-                        authorImage={authorImage}
-                        authorOccupation={authorOccupation}
-                        set:html={quote}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-              <div class="flex items-center gap-4 text-xl">
-                <SwiperPagination />
-                <SwiperNavigation class="w-fit" />
-              </div>
+    <ModuleContainer
+      meta={__meta__}
+      name={layoutName!}
+      bg={backgroundColor}
+      class={'overflow-hidden'}
+    >
+      <Grid>
+        <div class="col-span-full lg:col-start-2 lg:col-end-12">
+          <div class="quotations-swiper">
+            <div class="swiper-wrapper">
+              {quotationsArray.map(
+                ({ quote, authorName, authorImage, authorOccupation }) => (
+                  <div class="swiper-slide">
+                    <UIQuotation
+                      theme={
+                        theme === 'light' || theme === 'dark' ? theme : 'light'
+                      }
+                      avatarSize={theme === 'dark' ? 'sm' : 'md'}
+                      quoteSize={theme === 'dark' ? 'sm' : 'md'}
+                      authorName={authorName}
+                      authorImage={authorImage}
+                      authorOccupation={authorOccupation}
+                      set:html={quote}
+                    />
+                  </div>
+                )
+              )}
             </div>
-          </Grid>
-        </Container>
-      </div>
+            <div class="flex items-center gap-4 text-xl mt-9">
+              <SwiperPagination />
+              <SwiperNavigation class="w-fit" />
+            </div>
+          </div>
+        </div>
+      </Grid>
     </ModuleContainer>
   )
 }

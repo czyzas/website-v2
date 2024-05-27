@@ -5,11 +5,12 @@ import type {
 } from '@/__generated__/cms';
 import IndustriesList from '@/components/IndustriesList.astro';
 import ModuleContainer from '@/components/ModuleContainer.astro';
-import Container from '@/components/ui/Container.astro';
+import type { WithModuleMeta } from '@/types';
 
-type Props = ModulesModulesContentIndustriesLayout;
+type Props = WithModuleMeta<ModulesModulesContentIndustriesLayout>;
 
 const {
+  __meta__,
   layoutName,
   backgroundColor,
   show = 'all',
@@ -21,10 +22,6 @@ const selectedIndustries =
   rawSelectedIndustries?.nodes as unknown as ComponentIndustriesListFragment[];
 ---
 
-<ModuleContainer name={layoutName!} bg={backgroundColor}>
-  <Container>
-    <IndustriesList
-      industries={showSelected ? selectedIndustries : undefined}
-    />
-  </Container>
+<ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
+  <IndustriesList industries={showSelected ? selectedIndustries : undefined} />
 </ModuleContainer>

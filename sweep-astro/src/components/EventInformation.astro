@@ -1,0 +1,121 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { Icon } from 'astro-icon/components';
+import { cn } from '@/scripts/cn';
+import type { WithAttributes } from '@/types';
+import { getStore } from '@/scripts/store';
+import { languageStore } from '@/stores/languageStore';
+import { getLocale } from '@/i18n/utils';
+import { TRANSLATIONS } from '@/constants';
+import Card from './ui/Card.astro';
+
+interface EventInformationProps extends HTMLAttributes<'div'> {
+  location?: string;
+  date?: string;
+  language?: string;
+}
+
+type Props = WithAttributes<EventInformationProps>;
+
+const {
+  class: className,
+  location: eventLocaiton,
+  date: eventDate,
+  language: eventLanguage,
+  ...props
+} = Astro.props;
+const { currentLanguage } = getStore(languageStore);
+const lang = currentLanguage.code;
+
+const date = eventDate
+  ? new Date(eventDate).toLocaleDateString(getLocale(lang), {
+      day: '2-digit',
+      month: 'long',
+      year: '2-digit',
+    })
+  : undefined;
+
+const time = eventDate
+  ? new Date(eventDate).toLocaleTimeString(getLocale(lang), {
+      timeStyle: 'short',
+      timeZone: 'UTC',
+    })
+  : undefined;
+
+const rows: Array<{
+  type: 'location' | 'date' | 'time' | 'language';
+  icon: string;
+  originalValue?: string;
+  value?: string;
+}> = [
+  { type: 'location', icon: 'map-ping', value: eventLocaiton },
+  { type: 'date', icon: 'calendar', value: date },
+  { type: 'time', icon: 'clock', originalValue: eventDate, value: time },
+  { type: 'language', icon: 'conversation', value: eventLanguage },
+];
+
+// TIMEZONE: https://github.com/sweep-net/website/blob/main/src/app/events/EventInformation.tsx#L72
+---
+
+<script>
+  const rows = document.querySelectorAll<HTMLSpanElement>(
+    '.event-information [data-type="time"]'
+  );
+
+  for (const row of rows) {
+    const { value, locale, lang } = row.dataset;
+    if (!value || !locale || !lang) continue;
+    const date = new Date(value);
+    const time = `${date.toLocaleTimeString(locale, {
+      timeStyle: 'short',
+    })} ${date
+      .toLocaleTimeString(lang, {
+        timeZoneName: 'shortGeneric',
+      })
+      .split(' ')
+      .slice(2, 4)
+      .join(' ')}`;
+
+    row.innerText = time;
+  }
+</script>
+
+{
+  rows.length > 0 && (
+    <Card {...props} class={cn('event-information', 'py-3', className)}>
+      <div class="grid grid-cols-[auto,auto,1fr]">
+        {rows.map((row, index) => {
+          if (!row.value) return null;
+          const label = TRANSLATIONS.EVENT_INFORMATION[row.type];
+          const rowStyles = cn('flex shrink-0 py-2 items-center', {
+            'border-b border-b-sw-border': index !== rows.length - 1,
+          });
+          return (
+            <>
+              <div class={cn(rowStyles, 'text-sw-text-subdued pr-1.5')}>
+                <Icon name={row.icon} class="size-6" />
+              </div>
+              <div
+                class={cn(
+                  rowStyles,
+                  'typography-small-box-title text-sw-sky-400 uppercase pr-3'
+                )}
+              >
+                {label}
+              </div>
+              <div
+                class={cn(rowStyles, 'typography-body-large font-medium')}
+                data-type={row.type}
+                data-lang={lang}
+                data-locale={getLocale(lang)}
+                data-value={row.originalValue ?? row.value}
+              >
+                {row.value}
+              </div>
+            </>
+          );
+        })}
+      </div>
+    </Card>
+  )
+}

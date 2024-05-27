@@ -4,10 +4,10 @@
     "fields": [
         {
             "key": "field_6639da2f52323",
-            "label": "Event date",
+            "label": "Date & time",
             "name": "event_date",
             "aria-label": "",
-            "type": "date_picker",
+            "type": "date_time_picker",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -17,12 +17,134 @@
                 "id": ""
             },
             "wpml_cf_preferences": 1,
-            "display_format": "d\/m\/Y",
-            "return_format": "Ymd",
+            "display_format": "d-m-Y H:i",
+            "return_format": "YmdHis",
             "first_day": 1,
             "show_in_graphql": 1,
             "graphql_description": "",
             "graphql_field_name": "eventDate",
+            "graphql_non_null": 0
+        },
+        {
+            "key": "field_664f2010b8a96",
+            "label": "Location",
+            "name": "event_location",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 2,
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "eventLocation",
+            "graphql_non_null": 0
+        },
+        {
+            "key": "field_664f2018b8a97",
+            "label": "Language",
+            "name": "event_language",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 2,
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "eventLanguage",
+            "graphql_non_null": 0
+        },
+        {
+            "key": "field_664f210eb8a9a",
+            "label": "Register Form Title",
+            "name": "register_form_title",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 1,
+            "layout": "block",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "registerFormTitle",
+            "graphql_non_null": 0,
+            "sub_fields": [
+                {
+                    "key": "field_664f212ab8a9b",
+                    "label": "Register Form Title",
+                    "name": "register_form_title",
+                    "aria-label": "",
+                    "type": "clone",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "graphql_field_name": "registerFormTitle",
+                    "wpml_cf_preferences": 1,
+                    "clone": [
+                        "field_6606859e9c6b5"
+                    ],
+                    "display": "seamless",
+                    "layout": "block",
+                    "prefix_label": 0,
+                    "prefix_name": 0
+                }
+            ]
+        },
+        {
+            "key": "field_664f20e9b8a99",
+            "label": "Register form GUID",
+            "name": "register_form_guid",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 2,
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Eg. 550e8400-e29b-41d4-a716-446655440000",
+            "prepend": "",
+            "append": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "registerFormGuid",
             "graphql_non_null": 0
         }
     ],
@@ -51,5 +173,5 @@
     "graphql_field_name": "eventAcf",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1715067647
+    "modified": 1716464697
 }

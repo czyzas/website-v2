@@ -7,7 +7,6 @@ import CardWithSideImage from '@/components/CardWithSideImage.astro';
 import ModuleContainer from '@/components/ModuleContainer.astro';
 import WordpressButtonLink from '@/components/WordpressButtonLink.astro';
 import WordpressImage from '@/components/WordpressImage.astro';
-import Container from '@/components/ui/Container.astro';
 import Prose from '@/components/ui/Prose.astro';
 import TabList from '@/components/ui/Tabs/TabList.astro';
 import TabListItem from '@/components/ui/Tabs/TabListItem.astro';
@@ -17,10 +16,12 @@ import { cn } from '@/scripts/cn';
 import { linkShouldRender } from '@/scripts/data-parsers/parseLink';
 import { fixDoubleBr } from '@/scripts/fixDoubleBr';
 import CardWithMergedImage from '@/components/CardWithMergedImage.astro';
+import type { WithModuleMeta } from '@/types';
 
-type Props = ModulesModulesContentTabsLayout;
+type Props = WithModuleMeta<ModulesModulesContentTabsLayout>;
 
 const {
+  __meta__,
   layoutName,
   backgroundColor,
   contentLayout,
@@ -52,69 +53,66 @@ const ContentWrapper =
 
 {
   tabs && tabs.length > 0 ? (
-    <ModuleContainer name={layoutName!} bg={backgroundColor}>
-      <Container>
-        <UITabs>
-          {tabs.length > 1 && (
-            <TabList class="mb-10">
-              {tabs.map((tab, tabIndex) => (
-                <TabListItem
-                  counter={tabsLook === 'ordered'}
-                  underline={tabsLook === 'ordered'}
-                  isActive={tabIndex === 0}
-                  id={`${tabId}-${tabIndex}`}
-                  class={cn({ 'min-w-52': tabsLook === 'ordered' })}
-                >
-                  <Fragment set:html={fixDoubleBr(tab?.tabTitle)} />
-                </TabListItem>
-              ))}
-            </TabList>
-          )}
-          <div class="tab-content">
-            {tabs.map((tab, tabIndex) => {
-              const titleSizeValue = tab?.titleSize ?? 'default';
-              const titleSize =
-                titleSizes[titleSizeValue] ?? titleSizes.default;
-              return (
-                <TabPane isActive={tabIndex === 0} id={`${tabId}-${tabIndex}`}>
-                  <ContentWrapper image={tab?.image}>
-                    {(!!tab?.overline || !!tab?.overlineIcon) && (
-                      <p class="overline-container mb-2 flex item-scenter gap-1">
-                        <WordpressImage
-                          data={tab?.overlineIcon}
-                          class="size-8 object-contain"
-                        />
-                        {!!tab.overline && (
-                          <span class="typography-subhead">{tab.overline}</span>
-                        )}
-                      </p>
-                    )}
-                    {!!tab?.title && (
-                      <h3
-                        class={cn(titleSize, 'max-w-96')}
-                        set:html={fixDoubleBr(tab.title)}
-                      />
-                    )}
-                    {!!tab?.content && (
-                      <Prose class="mt-[1.125rem]" set:html={tab?.content} />
-                    )}
-                    {linkShouldRender(tab?.ctaButton) && (
-                      <div class="mt-auto pt-4">
-                        <WordpressButtonLink data={tab?.ctaButton} arrow />
-                      </div>
-                    )}
-                  </ContentWrapper>
-                </TabPane>
-              );
-            })}
-          </div>
-        </UITabs>
-        {linkShouldRender(ctaButton) && (
-          <ButtonContainer class="md:mt-12">
-            <WordpressButtonLink data={ctaButton} arrow />
-          </ButtonContainer>
+    <ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
+      <UITabs>
+        {tabs.length > 1 && (
+          <TabList class="mb-10">
+            {tabs.map((tab, tabIndex) => (
+              <TabListItem
+                counter={tabsLook === 'ordered'}
+                underline={tabsLook === 'ordered'}
+                isActive={tabIndex === 0}
+                id={`${tabId}-${tabIndex}`}
+                class={cn({ 'min-w-52': tabsLook === 'ordered' })}
+              >
+                <Fragment set:html={fixDoubleBr(tab?.tabTitle)} />
+              </TabListItem>
+            ))}
+          </TabList>
         )}
-      </Container>
+        <div class="tab-content">
+          {tabs.map((tab, tabIndex) => {
+            const titleSizeValue = tab?.titleSize ?? 'default';
+            const titleSize = titleSizes[titleSizeValue] ?? titleSizes.default;
+            return (
+              <TabPane isActive={tabIndex === 0} id={`${tabId}-${tabIndex}`}>
+                <ContentWrapper image={tab?.image}>
+                  {(!!tab?.overline || !!tab?.overlineIcon) && (
+                    <p class="overline-container mb-2 flex item-scenter gap-1">
+                      <WordpressImage
+                        data={tab?.overlineIcon}
+                        class="size-8 object-contain"
+                      />
+                      {!!tab.overline && (
+                        <span class="typography-subhead">{tab.overline}</span>
+                      )}
+                    </p>
+                  )}
+                  {!!tab?.title && (
+                    <h3
+                      class={cn(titleSize, 'max-w-96')}
+                      set:html={fixDoubleBr(tab.title)}
+                    />
+                  )}
+                  {!!tab?.content && (
+                    <Prose class="mt-[1.125rem]" set:html={tab?.content} />
+                  )}
+                  {linkShouldRender(tab?.ctaButton) && (
+                    <div class="mt-auto pt-4">
+                      <WordpressButtonLink data={tab?.ctaButton} arrow />
+                    </div>
+                  )}
+                </ContentWrapper>
+              </TabPane>
+            );
+          })}
+        </div>
+      </UITabs>
+      {linkShouldRender(ctaButton) && (
+        <ButtonContainer class="md:mt-12">
+          <WordpressButtonLink data={ctaButton} arrow />
+        </ButtonContainer>
+      )}
     </ModuleContainer>
   ) : null
 }

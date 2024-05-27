@@ -1,5 +1,6 @@
 query NewsroomListPage($LANG: String!, $TAG_SLUG: [String]) {
   page: pageByLang(uri: "newsroom", lang: $LANG) {
+    __typename
     title
     slug
     uri

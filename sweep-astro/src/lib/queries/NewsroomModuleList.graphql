@@ -1,5 +1,12 @@
-query NewsroomModuleList($LIMIT: Int, $LANG: String!) {
-  newsroomItems(first: $LIMIT, where: { language: $LANG }) {
+query NewsroomModuleList(
+  $LIMIT: Int
+  $CATEGORY_SLUG: [String]
+  $LANG: String!
+) {
+  newsroomItems(
+    first: $LIMIT
+    where: { language: $LANG, categorySlug: $CATEGORY_SLUG }
+  ) {
     nodes {
       ...NewsroomModulePost
     }

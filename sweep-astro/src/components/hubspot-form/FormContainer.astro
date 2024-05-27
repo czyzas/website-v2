@@ -1,0 +1,24 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/scripts/cn';
+import Grid from '../ui/Grid.astro';
+
+interface FormContainerProps extends HTMLAttributes<'div'> {}
+
+type Props = FormContainerProps;
+
+const { class: className, ...props } = Astro.props;
+---
+
+<Grid>
+  <div
+    {...props}
+    class={cn(
+      'form-container',
+      'col-span-full lg:col-start-3 lg:col-end-11',
+      className
+    )}
+  >
+    <slot />
+  </div>
+</Grid>

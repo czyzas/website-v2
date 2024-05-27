@@ -1,0 +1,52 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { Icon } from 'astro-icon/components';
+import { cn } from '@/scripts/cn';
+import { TRANSLATIONS } from '@/constants';
+import EventDate from '@/components/EventDate.astro';
+import ArticleTag from './ArticleTag.astro';
+
+interface ArticleEventDetailsProps extends HTMLAttributes<'div'> {
+  date: string;
+}
+
+type Props = ArticleEventDetailsProps;
+
+const { class: className, date, ...props } = Astro.props;
+---
+
+<script>
+  const labels = document.querySelectorAll<HTMLSpanElement>(
+    '.article-event-details .article-card-past-event-label'
+  );
+  const showLabel = (el: HTMLElement) => {
+    el.ariaHidden = 'false';
+  };
+
+  for (const label of labels) {
+    const { date } = label.dataset;
+    if (!date) continue;
+    const eventDate = new Date(date).setHours(23, 59, 59);
+    const now = new Date().getTime();
+    const isPast = now - eventDate <= 0;
+    if (!isPast) {
+      showLabel(label);
+    }
+  }
+</script>
+
+<div {...props} class={cn('article-event-details', className)}>
+  <ArticleTag
+    color="destructive"
+    data-date={date}
+    aria-hidden="true"
+    class="article-card-past-event-label aria-hidden:invisible absolute top-4 sm:top-5 right-4 sm:right-5 flex items-center gap-0.5"
+  >
+    <Icon name="clock-countdown" class="text-sw-fire-500 text-lg" />
+    {TRANSLATIONS.PAST_EVENT}
+  </ArticleTag>
+  <EventDate
+    date={date}
+    class="absolute bottom-4 sm:bottom-6 left-4 sm:left-6"
+  />
+</div>

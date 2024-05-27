@@ -44,6 +44,7 @@ query InsightsListPage($LANG: String!, $TAG_SLUG: [String]) {
 
 query InsightsSinglePage($URI: String!, $LANG: String!) {
   page: insightsItemByLang(uri: $URI, lang: $LANG) {
+    __typename
     title
     slug
     uri

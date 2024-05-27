@@ -44,7 +44,8 @@
             "wpml_cf_preferences": 1,
             "choices": {
                 "insights": "Insights",
-                "newsroom": "Newsroom"
+                "newsroom": "Newsroom",
+                "event": "Events"
             },
             "default_value": "",
             "return_format": "value",
@@ -136,6 +137,45 @@
             "bidirectional_target": []
         },
         {
+            "key": "field_665449abb238e",
+            "label": "Featured event",
+            "name": "featured_event",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_664c75fb5982f",
+                        "operator": "==",
+                        "value": "event"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "66",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 1,
+            "post_type": [
+                "event"
+            ],
+            "post_status": "",
+            "taxonomy": "",
+            "return_format": "object",
+            "multiple": 0,
+            "allow_null": 1,
+            "bidirectional": 0,
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "featuredEvent",
+            "graphql_connection_type": "one_to_one",
+            "ui": 1,
+            "bidirectional_target": []
+        },
+        {
             "key": "field_66447c2d6b955",
             "label": "List title",
             "name": "list_title",
@@ -210,5 +250,5 @@
     "graphql_types": [
         "Page"
     ],
-    "modified": 1716290737
+    "modified": 1716800347
 }

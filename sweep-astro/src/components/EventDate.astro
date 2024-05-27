@@ -1,0 +1,36 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { getStore } from '../scripts/store';
+import { languageStore } from '../stores/languageStore';
+import { cn } from '../scripts/cn';
+
+interface EventDateProps extends HTMLAttributes<'div'> {
+  date: string;
+}
+
+type Props = EventDateProps;
+
+const { class: className, date, ...props } = Astro.props;
+const { currentLanguage } = getStore(languageStore);
+const lang = currentLanguage.code;
+
+const parsedDate = new Date(date);
+const day = parsedDate.toLocaleDateString(lang, { day: '2-digit' });
+const month = parsedDate.toLocaleDateString(lang, { month: 'short' });
+---
+
+<time
+  {...props}
+  datetime={date}
+  class={cn(
+    'bg-white rounded-lg py-2 px-4 sm:px-6 text-center flex flex-col items-center justify-center',
+    className
+  )}
+>
+  <span class="uppercase font-bold text-base sm:text-lg text-sw-text-subdued">
+    {month}
+  </span>
+  <span class="typography-h4 sm:typography-h2 leading-none">
+    {day}
+  </span>
+</time>
