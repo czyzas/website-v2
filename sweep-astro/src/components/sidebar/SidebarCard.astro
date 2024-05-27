@@ -5,19 +5,20 @@ import { cn } from '@/scripts/cn';
 import Card from '../ui/Card.astro';
 
 interface SidebarCardProps {
+  name?: string;
   title?: string;
   collapsible?: boolean;
 }
 
 type Props = WithAttributes<SidebarCardProps>;
 
-const { title, collapsible = false } = Astro.props;
+const { title, collapsible = false, name } = Astro.props;
 
 const Wrapper = collapsible ? 'details' : Fragment;
 const Heading = collapsible ? 'summary' : 'div';
 ---
 
-<Card class={cn('p-0', { collapsible })}>
+<Card class={cn(name, 'p-0', { collapsible })}>
   <Wrapper class="group">
     {
       (collapsible || (!collapsible && title)) && (

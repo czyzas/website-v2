@@ -17,10 +17,11 @@ export const getStaticPaths = async () => {
   return createPagesStaticPaths(paths, {
     paramKey: 'page',
     paramValueType: 'uri',
-    customValidator: (staticPath) =>
-      !['Default', 'Homepage'].includes(
+    customValidator(staticPath) {
+      return ['Default', 'Homepage'].includes(
         staticPath.template?.templateName ?? ''
-      ),
+      );
+    },
   });
 };
 

@@ -1,17 +1,18 @@
 import type { ReactNode } from 'react';
 import { Fragment, useEffect, useMemo, useState } from 'react';
-import { useLocalStorageGlobalState } from '@/lib/useLocalStorageState';
 import { TRANSLATIONS } from '@/constants';
+import { useLocalStorageGlobalState } from '@/scripts/client/hooks/useLocalStorageState';
+import { $gated } from '@/scripts/client/atoms/gated';
 import { HubspotForm } from './hubspot-form/HubspotForm';
 import type { IHubspotFormDefinition } from './hubspot-form/shared';
 
-type UseGatedContentArgs = {
+type GatedProps = {
   form: IHubspotFormDefinition;
   children: ReactNode;
-  guid?: string;
+  guid: string;
 };
 
-const UseGatedContent = ({ form, children, guid }: UseGatedContentArgs) => {
+const Gated = ({ form, children, guid }: GatedProps) => {
   const [isGated, setGated] = useState(true);
   const [isClient, setIsClient] = useState(false);
 
@@ -24,10 +25,11 @@ const UseGatedContent = ({ form, children, guid }: UseGatedContentArgs) => {
   useEffect(() => {
     setIsClient(true);
     setGated(storedGated);
+    $gated.set(storedGated);
   }, []);
 
   const contentToShow = useMemo(() => {
-    // TODO check if google bot working
+    // TODO: check if google bot working
     const isGoogle =
       isClient && navigator?.userAgent.toLowerCase().includes('googlebot');
 
@@ -56,6 +58,7 @@ const UseGatedContent = ({ form, children, guid }: UseGatedContentArgs) => {
             onSuccess={() => {
               setStoredGated(false);
               setGated(false);
+              $gated.set(false);
             }}
           />
         </div>
@@ -65,4 +68,4 @@ const UseGatedContent = ({ form, children, guid }: UseGatedContentArgs) => {
   );
 };
 
-export default UseGatedContent;
+export default Gated;

@@ -121,7 +121,7 @@ export function createPagesStaticPaths<T extends string>(
       continue;
     }
 
-    if (isFunction(customValidator) && customValidator(staticPath)) continue;
+    if (isFunction(customValidator) && !customValidator(staticPath)) continue;
 
     const uriWithoutLang = getUrlWithoutLang(staticPath.uri);
     let paramValue: string | undefined = '';

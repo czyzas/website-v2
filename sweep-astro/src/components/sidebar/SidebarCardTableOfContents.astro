@@ -7,13 +7,30 @@ import SidebarCard from './SidebarCard.astro';
 type Props = {
   toc?: ITableOfContentsEntry[];
 };
-// Note: if toc is empty, you probably should use this component AFTER using Prose (because those items are added inside <Prose /> component)
 const { toc } = Astro.props;
 ---
 
+<script>
+  import { $gated } from '@/scripts/client/atoms/gated';
+
+  const cards =
+    document.querySelectorAll<HTMLElement>('.table-of-contents-sidebar-card') ??
+    [];
+
+  $gated.subscribe((value) => {
+    for (const card of cards) {
+      card.style.display = value ? 'none' : '';
+    }
+  });
+</script>
+
 {
   !!toc && toc.length > 0 && (
-    <SidebarCard collapsible title={TRANSLATIONS.SIDEBAR.TOC}>
+    <SidebarCard
+      collapsible
+      title={TRANSLATIONS.SIDEBAR.TOC}
+      name="table-of-contents-sidebar-card"
+    >
       <ul>
         {toc.map((entry) => (
           <li class={cn('mt-1.5', { 'mt-0.5': entry.level > 2 })}>
