@@ -167,6 +167,7 @@ add_filter( 'attachment_fields_to_edit', function ( $form_fields, $post ) {
 			'html'          => "<button $attrs>Optimize SVG</button>",
 			'show_in_modal' => true,
 			'show_in_edit'  => true,
+			'label'         => 'Optimize SVG'
 		);
 	}
 
