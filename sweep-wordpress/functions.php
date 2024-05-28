@@ -15,5 +15,5 @@ require_once "includes/svg-optimize/svg-optimize.php";
 require_once "includes/functions/enqueue-assets.php";
 require_once "includes/translations/translations.php";
 require_once "includes/functions/register-dashboard-widget.php";
-require_once "includes/functions/graphql/graphql.php";
+require_once "includes/functions/graphql.php";
 require_once "includes/functions/admin-menu.php";
