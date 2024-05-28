@@ -1,0 +1,32 @@
+---
+import { defaultLocale } from '@/i18n/config';
+import {
+  fetchInsightsListPage,
+  fetchSinglePageStaticPaths,
+  fetchTotalPages,
+} from '@/lib/fetchCMSData';
+import { createPagesStaticPaths } from '@/scripts/utils-static-paths';
+import ArticlesList from '@/templates/ArticlesList.astro';
+
+export async function getStaticPaths() {
+  // const paths = [];
+  // const pages = await fetchSinglePageStaticPaths('/insights');
+  // for (const page of pages) {
+  //   const lang = page.languageCode;
+  //   const totalPages = await fetchTotalPages('insights', {
+  //     lang,
+  //     postsPerPage: 2,
+  //   });
+  // }
+  return [];
+  // return createPagesStaticPaths<'paged', number>(paths, {
+  //   paramKey: 'paged',
+  //   paramValueType: 'slug',
+  // });
+}
+
+const { lang = defaultLocale, paged } = Astro.params;
+const data = await fetchInsightsListPage(lang, { paged });
+---
+
+<ArticlesList postType="insights" data={data} lang={lang} />

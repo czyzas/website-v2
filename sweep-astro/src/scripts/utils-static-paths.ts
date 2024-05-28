@@ -150,3 +150,9 @@ export function createPagesStaticPaths<T extends string>(
 
   return finalPaths;
 }
+
+export function createPaginatedStaticPaths<T extends string>(
+  generatedStaticPaths: PageStaticPathsResultItem<T>[]
+) {
+  console.log(generatedStaticPaths);
+}

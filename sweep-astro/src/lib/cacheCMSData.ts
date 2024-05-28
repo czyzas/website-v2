@@ -6,6 +6,7 @@ import { fileExists } from '../scripts/server/fileExists';
 
 export const CACHE_KEYS = {
   STATIC_PATHS: 'static-paths',
+  TOTAL_PAGES: 'total-pages',
   HOMEPAGE: 'homepage',
   PAGE: 'page',
   CONTACT: 'contact',

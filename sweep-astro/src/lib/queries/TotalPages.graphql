@@ -1,0 +1,60 @@
+query InsightsTotalPages(
+  $LANG: String!
+  $TAG_SLUG: [String]
+  $POSTS_PER_PAGE: Int!
+) {
+  pages: insights(
+    where: {
+      status: PUBLISH
+      language: $LANG
+      tagSlug: $TAG_SLUG
+      pagination: { postsPerPage: $POSTS_PER_PAGE }
+    }
+  ) {
+    pageInfo {
+      pagination {
+        totalPages
+      }
+    }
+  }
+}
+query NewsroomTotalPages(
+  $LANG: String!
+  $TAG_SLUG: [String]
+  $POSTS_PER_PAGE: Int!
+) {
+  pages: newsroomItems(
+    where: {
+      status: PUBLISH
+      language: $LANG
+      tagSlug: $TAG_SLUG
+      pagination: { postsPerPage: $POSTS_PER_PAGE }
+    }
+  ) {
+    pageInfo {
+      pagination {
+        totalPages
+      }
+    }
+  }
+}
+query EventsTotalPages(
+  $LANG: String!
+  $TAG_SLUG: [String]
+  $POSTS_PER_PAGE: Int!
+) {
+  pages: events(
+    where: {
+      status: PUBLISH
+      language: $LANG
+      tagSlug: $TAG_SLUG
+      pagination: { postsPerPage: $POSTS_PER_PAGE }
+    }
+  ) {
+    pageInfo {
+      pagination {
+        totalPages
+      }
+    }
+  }
+}

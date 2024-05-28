@@ -26,6 +26,9 @@ import {
   EventSinglePageDocument,
   EventsListPageDocument,
   EventTagsStaticPathsDocument,
+  EventsTotalPagesDocument,
+  InsightsTotalPagesDocument,
+  NewsroomTotalPagesDocument,
 } from '@/__generated__/cms';
 import type {
   ComponentIndustriesListFragment,
@@ -72,6 +75,39 @@ const fetchData = async <Query, QueryVariables extends Variables = Variables>(
 
   return data;
 };
+
+export async function fetchTotalPages(
+  postType: 'insights' | 'newsroom' | 'event',
+  payload: {
+    lang?: string;
+    postsPerPage: number;
+    tagSlug?: string;
+  }
+) {
+  const { lang = defaultLocale, postsPerPage, tagSlug = '' } = payload ?? {};
+  const options = {
+    LANG: lang,
+    POSTS_PER_PAGE: postsPerPage,
+    TAG_SLUG: tagSlug,
+  };
+  const cache = [CACHE_KEYS.TOTAL_PAGES, postType];
+  let data;
+  switch (postType) {
+    case 'insights':
+      data = await fetchData(InsightsTotalPagesDocument, options, cache);
+      break;
+    case 'newsroom':
+      data = await fetchData(NewsroomTotalPagesDocument, options, cache);
+      break;
+    case 'event':
+      data = await fetchData(EventsTotalPagesDocument, options, cache);
+      break;
+    default:
+      return 1;
+  }
+
+  return data.pages?.pageInfo.pagination?.totalPages || 1;
+}
 
 // DEFAULT PAGES
 export function fetchHomepage(lang: string) {
@@ -177,13 +213,16 @@ export async function fetchInsightsTagsStaticPaths() {
 }
 export function fetchInsightsListPage(
   lang: string = defaultLocale,
-  tag?: string
+  payload?: { tag?: string; paged?: number }
 ) {
+  const { tag = '', paged = 1 } = payload ?? {};
+
   return fetchData(
     InsightsListPageDocument,
     {
       LANG: lang,
       TAG_SLUG: tag,
+      PAGED: paged,
     },
     tag
       ? [lang, CACHE_KEYS.INSIGHTS, CACHE_KEYS.TAG, tag]
