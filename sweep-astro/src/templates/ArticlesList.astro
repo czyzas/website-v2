@@ -36,9 +36,10 @@ type EventsListProps = {
   data: EventsListPageQuery;
 };
 interface ArticleListProps {
+  lang: string;
   prefix?: string;
   tag?: string;
-  lang: string;
+  paged?: number;
 }
 type Props = (InsightsListProps | NewsroomListProps | EventsListProps) &
   ArticleListProps;
@@ -49,10 +50,11 @@ const {
   prefix = postType,
   data,
   lang,
+  paged = 1,
 } = Astro.props;
 
 const page = data.page!;
-const posts = (data.articles?.edges ?? []).filter(Boolean).map((p) => p.node);
+const posts = (data.articles?.nodes ?? []).filter(Boolean);
 const insightsArticles =
   postType === 'event' ? (data.moreArticles?.nodes ?? []).filter(Boolean) : [];
 
@@ -164,7 +166,12 @@ if (!rawFeaturedPost && posts?.[0] && !filterTag) {
       />
 
       <ArticlesGrid postType={postType} posts={posts} />
-      <Pagination />
+      {/* TODO: update hardcoded totalPages */}
+      <Pagination
+        paged={paged}
+        totalPages={3}
+        transformUri={(u) => `${u}#list`}
+      />
     </Container>
   </Section>
   {

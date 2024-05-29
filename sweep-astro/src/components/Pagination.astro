@@ -1,2 +1,48 @@
-{/* TODO: IMPLEMENT PAGINATION */}
-<div class="pagination"></div>
+---
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/scripts/cn';
+import { paginateURI, unpaginateURI } from '@/scripts/utils-pagination';
+
+interface PaginationProps extends HTMLAttributes<'div'> {
+  paged: number;
+  totalPages: number;
+  transformUri?: (uri: string) => string;
+}
+type Props = PaginationProps;
+
+const {
+  class: className,
+  paged,
+  totalPages,
+  transformUri = (u) => u,
+  ...props
+} = Astro.props;
+const baseUri = unpaginateURI(Astro.url.pathname);
+
+const entries: { page: number; isCurrent: boolean }[] = [];
+for (let i = 1; i <= totalPages; i += 1) {
+  entries.push({ page: i, isCurrent: i === paged });
+}
+---
+
+<ul
+  {...props}
+  class={cn('pagination', 'flex items-center justify-center gap-6', className)}
+>
+  {
+    entries.map(({ page, isCurrent }) => (
+      <li>
+        {isCurrent ? (
+          <span>{page}</span>
+        ) : (
+          <a
+            href={transformUri(paginateURI(baseUri, page))}
+            class="text-sw-sky-400"
+          >
+            {page}
+          </a>
+        )}
+      </li>
+    ))
+  }
+</ul>

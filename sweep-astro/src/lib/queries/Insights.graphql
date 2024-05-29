@@ -1,4 +1,9 @@
-query InsightsListPage($LANG: String!, $TAG_SLUG: [String], $PAGED: Int = 1) {
+query InsightsListPage(
+  $LANG: String!
+  $TAG_SLUG: [String]
+  $PAGED: Int = 1
+  $POSTS_PER_PAGE: Int = 6
+) {
   page: pageByLang(uri: "insights", lang: $LANG) {
     title
     slug
@@ -18,7 +23,7 @@ query InsightsListPage($LANG: String!, $TAG_SLUG: [String], $PAGED: Int = 1) {
       status: PUBLISH
       language: $LANG
       tagSlug: $TAG_SLUG
-      pagination: { postsPerPage: 6, paged: $PAGED }
+      pagination: { postsPerPage: $POSTS_PER_PAGE, paged: $PAGED }
     }
   ) {
     nodes {

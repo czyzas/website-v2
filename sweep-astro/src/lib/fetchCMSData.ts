@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
 import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import type { Variables } from 'graphql-request';
-import { isNil, omitBy } from 'lodash-es';
+import { cloneDeep, isNil, omit, omitBy } from 'lodash-es';
 import {
   ContactPageDocument,
   DefaultPageDocument,
@@ -37,9 +37,14 @@ import type {
 } from '@/__generated__/cms';
 import { defaultLocale } from '@/i18n/config';
 import { getUrlWithoutLang } from '@/i18n/utils';
-import { parseStaticPaths } from '@/scripts/utils-static-paths';
+import { DEFAULT_POSTS_PER_PAGE } from '@/constants';
 import { gqlClient } from './graphqlClient';
-import { getCachedCMSData, cacheCMSData, CACHE_KEYS } from './cacheCMSData';
+import {
+  getCachedCMSData,
+  cacheCMSData,
+  CACHE_KEYS,
+  paginateCacheKey,
+} from './cacheCMSData';
 
 const fetchData = async <Query, QueryVariables extends Variables = Variables>(
   document: TypedDocumentNode<Query, QueryVariables>,
@@ -76,8 +81,9 @@ const fetchData = async <Query, QueryVariables extends Variables = Variables>(
   return data;
 };
 
+export type TotalPagesAllowedPostTypes = 'insights' | 'newsroom' | 'event';
 export async function fetchTotalPages(
-  postType: 'insights' | 'newsroom' | 'event',
+  postType: TotalPagesAllowedPostTypes,
   payload: {
     lang?: string;
     postsPerPage: number;
@@ -129,6 +135,23 @@ export async function fetchDefaultPagesStaticPaths() {
   );
 }
 
+/**
+ * Take raw page (page object + translations[]) from WP and return array of all pages
+ * @example
+ *
+ * ```
+ * const raw = {
+ *   // original page
+ *   translations: [
+ *     // other translated pages
+ *   ],
+ * };
+ *
+ * const parsed = [
+ *   // all pages inside array
+ * ];
+ * ```
+ */
 export async function fetchSinglePageStaticPaths(uri: string) {
   const rawData = await fetchData(
     SinglePageStaticPathsDocument,
@@ -138,7 +161,10 @@ export async function fetchSinglePageStaticPaths(uri: string) {
 
   if (!rawData?.page) return [];
 
-  return parseStaticPaths(rawData.page);
+  const translations = rawData.page?.translations ?? [];
+  const originalPage = cloneDeep(omit(rawData.page, 'translations'));
+
+  return [originalPage, ...translations].filter(Boolean);
 }
 
 export function fetchDefaultPage(uri: string, lang: string = defaultLocale) {
@@ -213,20 +239,28 @@ export async function fetchInsightsTagsStaticPaths() {
 }
 export function fetchInsightsListPage(
   lang: string = defaultLocale,
-  payload?: { tag?: string; paged?: number }
+  payload?: { tag?: string; paged?: number; postsPerPage?: number }
 ) {
-  const { tag = '', paged = 1 } = payload ?? {};
+  const {
+    tag = '',
+    paged = 1,
+    postsPerPage = DEFAULT_POSTS_PER_PAGE,
+  } = payload ?? {};
 
   return fetchData(
     InsightsListPageDocument,
     {
       LANG: lang,
       TAG_SLUG: tag,
-      PAGED: paged,
+      PAGED: +paged,
+      POSTS_PER_PAGE: postsPerPage,
     },
-    tag
-      ? [lang, CACHE_KEYS.INSIGHTS, CACHE_KEYS.TAG, tag]
-      : [lang, CACHE_KEYS.INSIGHTS]
+    paginateCacheKey(
+      tag
+        ? [lang, CACHE_KEYS.INSIGHTS, CACHE_KEYS.TAG, tag]
+        : [lang, CACHE_KEYS.INSIGHTS],
+      paged
+    )
   );
 }
 export function fetchInsightsSingle(uri: string, lang: string = defaultLocale) {

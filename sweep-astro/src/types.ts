@@ -1,3 +1,4 @@
+// UTILS
 export type WithAttributes<T> = astroHTML.JSX.IntrinsicAttributes & T;
 type StringLiteralToString<T> = T extends string ? string : T;
 
@@ -12,6 +13,7 @@ export type ReplaceTypenameLiteral<ObjType extends object> = {
 // eslint-disable-next-line @typescript-eslint/ban-types -- Use `string & {}` for strings with autocomplete (src: https://stackoverflow.com/a/75265010)
 export type StringAutocomplete<T extends string> = T | (string & {});
 
+// TYPES
 export type ColumnSizes = '5-7' | '6-6' | '7-5';
 
 export type ModuleMeta = {
