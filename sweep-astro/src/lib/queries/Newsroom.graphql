@@ -1,6 +1,10 @@
-query NewsroomListPage($LANG: String!, $TAG_SLUG: [String]) {
+query NewsroomListPage(
+  $LANG: String!
+  $TAG_SLUG: [String]
+  $PAGED: Int = 1
+  $POSTS_PER_PAGE: Int = 6
+) {
   page: pageByLang(uri: "newsroom", lang: $LANG) {
-    __typename
     title
     slug
     uri
@@ -15,20 +19,20 @@ query NewsroomListPage($LANG: String!, $TAG_SLUG: [String]) {
     }
   }
   articles: newsroomItems(
-    first: 6
-    where: { status: PUBLISH, language: $LANG, tagSlug: $TAG_SLUG }
+    where: {
+      status: PUBLISH
+      language: $LANG
+      tagSlug: $TAG_SLUG
+      pagination: { postsPerPage: $POSTS_PER_PAGE, paged: $PAGED }
+    }
   ) {
-    edges {
-      cursor
-      node {
-        ...NewsroomListItem
-      }
+    nodes {
+      ...NewsroomListItem
     }
     pageInfo {
-      startCursor
-      endCursor
-      hasNextPage
-      hasPreviousPage
+      pagination {
+        totalPages
+      }
     }
   }
   filterTags: newsroomTags(

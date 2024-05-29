@@ -88,7 +88,7 @@ export const cacheCMSData = async <T = unknown>(
   }
 };
 
-export function paginateCacheKey(cacheKey: string[], page: number = 1) {
+export function paginateCacheKey(cacheKey: string[], page: number) {
   if (page === 1) return cacheKey;
   return [...cacheKey, String(page)];
 }

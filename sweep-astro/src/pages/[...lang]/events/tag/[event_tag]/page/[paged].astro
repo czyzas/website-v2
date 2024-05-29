@@ -1,8 +1,8 @@
 ---
 import { defaultLocale } from '@/i18n/config';
 import {
-  fetchInsightsListPage,
-  fetchInsightsTagsStaticPaths,
+  fetchEventTagsStaticPaths,
+  fetchEventsListPage,
 } from '@/lib/fetchCMSData';
 import { fixPagedParams } from '@/scripts/utils-pagination';
 import {
@@ -12,25 +12,26 @@ import {
 import ArticlesList from '@/templates/ArticlesList.astro';
 
 export const getStaticPaths = async () => {
-  const pagesSP = createPagesStaticPaths(await fetchInsightsTagsStaticPaths(), {
-    paramKey: 'insights_tag',
+  const pagesSP = createPagesStaticPaths(await fetchEventTagsStaticPaths(), {
+    paramKey: 'event_tag',
     paramValueType: 'slug',
   });
 
-  return await createPaginatedStaticPaths(pagesSP, 'insights');
+  return await createPaginatedStaticPaths(pagesSP, 'event');
 };
 
 const {
   lang = defaultLocale,
-  insights_tag: tag,
+  event_tag: tag,
   paged = 1,
 } = fixPagedParams(Astro.params);
 
-const data = await fetchInsightsListPage(lang, { tag, paged });
+const data = await fetchEventsListPage(lang, { tag, paged });
 ---
 
 <ArticlesList
-  postType="insights"
+  postType="event"
+  prefix="events"
   data={data}
   lang={lang}
   tag={tag}

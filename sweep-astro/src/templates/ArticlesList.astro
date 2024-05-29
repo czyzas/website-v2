@@ -53,6 +53,7 @@ const {
   paged = 1,
 } = Astro.props;
 
+const totalPages = data.articles?.pageInfo.pagination?.totalPages ?? 1;
 const page = data.page!;
 const posts = (data.articles?.nodes ?? []).filter(Boolean);
 const insightsArticles =
@@ -166,10 +167,9 @@ if (!rawFeaturedPost && posts?.[0] && !filterTag) {
       />
 
       <ArticlesGrid postType={postType} posts={posts} />
-      {/* TODO: update hardcoded totalPages */}
       <Pagination
         paged={paged}
-        totalPages={3}
+        totalPages={totalPages}
         transformUri={(u) => `${u}#list`}
       />
     </Container>

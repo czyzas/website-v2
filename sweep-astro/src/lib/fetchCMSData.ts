@@ -81,6 +81,12 @@ const fetchData = async <Query, QueryVariables extends Variables = Variables>(
   return data;
 };
 
+type ListPagePayload = {
+  tag?: string;
+  paged?: number;
+  postsPerPage?: number;
+};
+
 export type TotalPagesAllowedPostTypes = 'insights' | 'newsroom' | 'event';
 export async function fetchTotalPages(
   postType: TotalPagesAllowedPostTypes,
@@ -90,7 +96,7 @@ export async function fetchTotalPages(
     tagSlug?: string;
   }
 ) {
-  const { lang = defaultLocale, postsPerPage, tagSlug = '' } = payload ?? {};
+  const { lang = defaultLocale, postsPerPage, tagSlug } = payload ?? {};
   const options = {
     LANG: lang,
     POSTS_PER_PAGE: postsPerPage,
@@ -235,10 +241,10 @@ export async function fetchInsightsTagsStaticPaths() {
 }
 export function fetchInsightsListPage(
   lang: string = defaultLocale,
-  payload?: { tag?: string; paged?: number; postsPerPage?: number }
+  payload?: ListPagePayload
 ) {
   const {
-    tag = '',
+    tag = undefined,
     paged = 1,
     postsPerPage = DEFAULT_POSTS_PER_PAGE,
   } = payload ?? {};
@@ -294,17 +300,28 @@ export async function fetchNewsroomTagsStaticPaths() {
 }
 export function fetchNewsroomListPage(
   lang: string = defaultLocale,
-  tag?: string
+  payload?: ListPagePayload
 ) {
+  const {
+    tag,
+    paged = 1,
+    postsPerPage = DEFAULT_POSTS_PER_PAGE,
+  } = payload ?? {};
+
   return fetchData(
     NewsroomListPageDocument,
     {
       LANG: lang,
       TAG_SLUG: tag,
+      PAGED: +paged,
+      POSTS_PER_PAGE: +postsPerPage,
     },
-    tag
-      ? [lang, CACHE_KEYS.NEWSROOM, CACHE_KEYS.TAG, tag]
-      : [lang, CACHE_KEYS.NEWSROOM]
+    paginateCacheKey(
+      tag
+        ? [lang, CACHE_KEYS.NEWSROOM, CACHE_KEYS.TAG, tag]
+        : [lang, CACHE_KEYS.NEWSROOM],
+      paged
+    )
   );
 }
 export function fetchNewsroomSingle(uri: string, lang: string = defaultLocale) {
@@ -342,17 +359,27 @@ export async function fetchEventTagsStaticPaths() {
 }
 export function fetchEventsListPage(
   lang: string = defaultLocale,
-  tag?: string
+  payload?: ListPagePayload
 ) {
+  const {
+    tag,
+    paged = 1,
+    postsPerPage = DEFAULT_POSTS_PER_PAGE,
+  } = payload ?? {};
   return fetchData(
     EventsListPageDocument,
     {
       LANG: lang,
       TAG_SLUG: tag,
+      PAGED: +paged,
+      POSTS_PER_PAGE: +postsPerPage,
     },
-    tag
-      ? [lang, CACHE_KEYS.EVENTS, CACHE_KEYS.TAG, tag]
-      : [lang, CACHE_KEYS.EVENTS]
+    paginateCacheKey(
+      tag
+        ? [lang, CACHE_KEYS.EVENTS, CACHE_KEYS.TAG, tag]
+        : [lang, CACHE_KEYS.EVENTS],
+      paged
+    )
   );
 }
 export function fetchEventSingle(uri: string, lang: string = defaultLocale) {

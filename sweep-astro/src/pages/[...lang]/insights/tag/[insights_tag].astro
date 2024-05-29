@@ -16,6 +16,7 @@ export const getStaticPaths = async () => {
 };
 
 const { lang = defaultLocale, insights_tag: tag } = Astro.params;
+
 const data = await fetchInsightsListPage(lang, { tag });
 ---
 
