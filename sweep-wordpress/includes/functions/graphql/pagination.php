@@ -5,6 +5,7 @@ namespace WPGraphQL\Extensions\Pagination;
 use Exception;
 use WP_Post_Type;
 use WP_Query;
+use WP_Term_Query;
 use WPGraphQL;
 use WPGraphQL\Data\Connection\AbstractConnectionResolver;
 
@@ -158,8 +159,11 @@ class Pagination
 		/** @var WP_Query $query */
 		$query = $resolver->get_query();
 
-		$totalPages = $query->max_num_pages;
+		if ( $query instanceof WP_Term_Query ) {
+			return $page_info;
+		}
 
+		$totalPages = $query->max_num_pages;
 		$page_info['pagination'] = [
 			'currentPage' => $paged,
 			'totalPages'  => $totalPages,
