@@ -124,7 +124,6 @@ export function fetchHomepage(lang: string) {
 }
 
 export async function fetchDefaultPagesStaticPaths() {
-  // TODO: handle more than 100 pages
   return (
     (
       await fetchData(DefaultPagesStaticPathsDocument, undefined, [
@@ -191,7 +190,6 @@ export function fetchDemoPage(lang: string = defaultLocale) {
 
 // INDUSTRIES PAGES
 export async function fetchIndustryPagesStaticPaths() {
-  // TODO: handle more than 100 pages
   return (
     (
       await fetchData(IndustryPagesStaticPathsDocument, undefined, [
@@ -215,7 +213,6 @@ export function fetchIndustrySingle(uri: string, lang: string = defaultLocale) {
 
 // INSIGHTS
 export async function fetchInsightsPagesStaticPaths() {
-  // TODO: handle more than 100 pages
   return (
     (
       await fetchData(InsightsPagesStaticPathsDocument, undefined, [
@@ -226,7 +223,6 @@ export async function fetchInsightsPagesStaticPaths() {
   );
 }
 export async function fetchInsightsTagsStaticPaths() {
-  // TODO: handle more than 100 pages
   return (
     (
       await fetchData(InsightsTagsStaticPathsDocument, undefined, [
@@ -276,7 +272,6 @@ export function fetchInsightsSingle(uri: string, lang: string = defaultLocale) {
 
 // NEWSROOM
 export async function fetchNewsroomPagesStaticPaths() {
-  // TODO: handle more than 100 pages
   return (
     (
       await fetchData(NewsroomPagesStaticPathsDocument, undefined, [
@@ -287,7 +282,6 @@ export async function fetchNewsroomPagesStaticPaths() {
   );
 }
 export async function fetchNewsroomTagsStaticPaths() {
-  // TODO: handle more than 100 pages
   return (
     (
       await fetchData(NewsroomTagsStaticPathsDocument, undefined, [
@@ -326,7 +320,6 @@ export function fetchNewsroomSingle(uri: string, lang: string = defaultLocale) {
 
 // EVENT
 export async function fetchEventPagesStaticPaths() {
-  // TODO: handle more than 100 pages
   return (
     (
       await fetchData(EventPagesStaticPathsDocument, undefined, [
@@ -337,7 +330,6 @@ export async function fetchEventPagesStaticPaths() {
   );
 }
 export async function fetchEventTagsStaticPaths() {
-  // TODO: handle more than 100 pages
   return (
     (
       await fetchData(EventTagsStaticPathsDocument, undefined, [

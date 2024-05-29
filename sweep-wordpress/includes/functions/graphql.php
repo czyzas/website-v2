@@ -6,3 +6,4 @@ include_once 'graphql/query-by-lang.php';
 include_once 'graphql/filter-by-category-slug.php';
 include_once 'graphql/sort-by-meta-key.php';
 include_once 'graphql/pagination.php';
+include_once 'graphql/limit-posts.php';
