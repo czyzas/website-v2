@@ -1,7 +1,9 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
+import { isString } from 'lodash-es';
 import { cn } from '@/scripts/cn';
 import { paginateURI, unpaginateURI } from '@/scripts/utils-pagination';
+import PaginationItem from './PaginationItem.astro';
 
 interface PaginationProps extends HTMLAttributes<'div'> {
   paged: number;
@@ -19,30 +21,58 @@ const {
 } = Astro.props;
 const baseUri = unpaginateURI(Astro.url.pathname);
 
-const entries: { page: number; isCurrent: boolean }[] = [];
-for (let i = 1; i <= totalPages; i += 1) {
-  entries.push({ page: i, isCurrent: i === paged });
+function buildPagination(current: number, last: number, onSides = 1) {
+  // pages
+  const pages = [];
+  // Loop through
+  for (let i = 1; i <= last; i += 1) {
+    // Define offset
+    const offset = i === 1 || last ? onSides + 1 : onSides;
+    // If added
+    if (
+      i === 1 ||
+      (current - offset <= i && current + offset >= i) ||
+      i === current ||
+      i === last
+    ) {
+      pages.push(i);
+    } else if (i === current - (offset + 1) || i === current + (offset + 1)) {
+      pages.push('...');
+    }
+  }
+  return pages;
 }
+
+const items = buildPagination(paged, totalPages, 1);
 ---
 
-<ul
-  {...props}
-  class={cn('pagination', 'flex items-center justify-center gap-6', className)}
->
-  {
-    entries.map(({ page, isCurrent }) => (
-      <li>
-        {isCurrent ? (
-          <span>{page}</span>
-        ) : (
-          <a
-            href={transformUri(paginateURI(baseUri, page))}
-            class="text-sw-sky-400"
+{
+  totalPages > 1 && (
+    <ul
+      {...props}
+      class={cn(
+        'pagination',
+        'flex items-center justify-center',
+        'border border-sw-border divide-x divide-sw-border rounded-lg overflow-hidden',
+        className
+      )}
+    >
+      {items.map((item) => {
+        const isSeparator = isString(item);
+        if (isSeparator) return <PaginationItem>{item}</PaginationItem>;
+
+        const isCurrent = item === paged;
+        const link = transformUri(paginateURI(baseUri, item));
+
+        return (
+          <PaginationItem
+            link={!isCurrent ? link : undefined}
+            active={isCurrent}
           >
-            {page}
-          </a>
-        )}
-      </li>
-    ))
-  }
-</ul>
+            {item}
+          </PaginationItem>
+        );
+      })}
+    </ul>
+  )
+}

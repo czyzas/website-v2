@@ -13,6 +13,7 @@ import { cmsStore } from '@/stores/cmsStore';
 import { languageStore } from '@/stores/languageStore';
 import type { ColumnSizes } from '@/types';
 import ListTagFilter from '@/components/ListTagFilter.astro';
+import PaginationContainer from '@/components/ButtonContainer.astro';
 import Pagination from '@/components/Pagination.astro';
 import type {
   EventsListPageQuery,
@@ -167,11 +168,17 @@ if (!rawFeaturedPost && posts?.[0] && !filterTag) {
       />
 
       <ArticlesGrid postType={postType} posts={posts} />
-      <Pagination
-        paged={paged}
-        totalPages={totalPages}
-        transformUri={(u) => `${u}#list`}
-      />
+      {
+        totalPages > 1 && (
+          <PaginationContainer marginSize="sm">
+            <Pagination
+              paged={paged}
+              totalPages={totalPages}
+              transformUri={(u) => `${u}#list`}
+            />
+          </PaginationContainer>
+        )
+      }
     </Container>
   </Section>
   {

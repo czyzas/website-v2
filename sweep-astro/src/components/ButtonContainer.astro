@@ -5,9 +5,15 @@ import { cn } from '@/scripts/cn';
 type Props = {
   /** @default true */
   withMargin?: boolean;
+  marginSize?: 'md' | 'sm';
 } & HTMLAttributes<'div'>;
 
-const { withMargin = true, class: className, ...props } = Astro.props;
+const {
+  withMargin = true,
+  marginSize = 'md',
+  class: className,
+  ...props
+} = Astro.props;
 ---
 
 <div
@@ -15,7 +21,8 @@ const { withMargin = true, class: className, ...props } = Astro.props;
   class={cn(
     'button-container',
     'flex justify-start md:justify-center items-center gap-2',
-    { 'mt-8 md:mt-15': withMargin },
+    { 'mt-8 md:mt-12': withMargin && marginSize === 'sm' },
+    { 'mt-8 md:mt-15': withMargin && marginSize === 'md' },
     className
   )}
 >
