@@ -2,6 +2,22 @@
 /**
  * ADD FILTERING BY TAGS
  */
+add_action( 'graphql_register_types', function () {
+	// Register the field in the "where" clause.
+	try {
+		$post_types = [ 'Event', 'Post', 'InsightsItem', 'NewsroomItem' ];
+		foreach ( $post_types as $post_type ) {
+			register_graphql_fields( 'RootQueryTo' . $post_type . 'ConnectionWhereArgs', [
+				'tagSlug' => [
+					'type'        => [ 'list_of' => 'String' ], // To accept multiple strings
+					'description' => 'Filter by post objects that have the specific tag slug',
+				],
+			] );
+
+		}
+	} catch ( Exception $e ) {
+	}
+} );
 add_filter( 'graphql_post_object_connection_query_args', function (
 	$query_args,
 	$source,

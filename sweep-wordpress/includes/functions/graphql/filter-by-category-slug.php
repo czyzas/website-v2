@@ -14,10 +14,6 @@ add_action( 'graphql_register_types', function () {
 					'type'        => [ 'list_of' => 'String' ], // To accept multiple strings
 					'description' => 'Filter by post objects that have the specific category slug',
 				],
-				'tagSlug'      => [
-					'type'        => [ 'list_of' => 'String' ], // To accept multiple strings
-					'description' => 'Filter by post objects that have the specific tag slug',
-				],
 			] );
 
 		}
