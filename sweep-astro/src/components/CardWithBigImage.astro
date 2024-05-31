@@ -11,6 +11,7 @@ type Props = WithAttributes<
   {
     image?: UnparsedImage;
     preferContentHeight?: boolean;
+    widerCard?: boolean;
   } & HTMLAttributes<'div'>
 >;
 
@@ -18,13 +19,17 @@ const {
   class: className,
   image,
   preferContentHeight = false,
+  widerCard = false,
   ...props
 } = Astro.props;
 ---
 
-<Grid {...props} class={cn('card-with-big-image', className)}>
+<Grid {...props} class={cn('card-with-big-image items-center', className)}>
   <Card
-    class="content-column flex flex-col col-span-full md:col-start-1 md:col-end-8 lg:col-end-6 md:row-span-full relative z-[1] md:my-24"
+    class={cn(
+      'content-column flex flex-col col-span-full md:col-start-1 md:col-end-8 lg:col-end-6 md:row-span-full relative z-[1] md:my-24 h-fit',
+      { 'lg:col-end-8': widerCard }
+    )}
   >
     <slot />
   </Card>
@@ -36,10 +41,13 @@ const {
   >
     <WordpressImage
       data={image}
-      preferredWidth={760}
-      class={cn('w-full h-full object-cover rounded-lg', {
-        'md:absolute md:size-full md:left-0 md:top-0': preferContentHeight,
-      })}
+      preferredWidth={1000}
+      class={cn(
+        'w-full h-full object-cover rounded-lg border border-sw-gray-400',
+        {
+          'md:absolute md:size-full md:left-0 md:top-0': preferContentHeight,
+        }
+      )}
     />
   </div>
 </Grid>

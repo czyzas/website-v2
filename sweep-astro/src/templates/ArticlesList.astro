@@ -148,6 +148,7 @@ if (!rawFeaturedPost && posts?.[0] && !filterTag) {
               <ListFeaturedArticle
                 layout={postType === 'newsroom' ? 'merged' : 'overlapping'}
                 data={rawFeaturedPost}
+                postType={postType}
               />
             </div>
           </Grid>
