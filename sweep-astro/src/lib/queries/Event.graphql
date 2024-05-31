@@ -1,4 +1,9 @@
-query EventsListPage($LANG: String!, $TAG_SLUG: [String]) {
+query EventsListPage(
+  $LANG: String!
+  $TAG_SLUG: [String]
+  $PAGED: Int = 1
+  $POSTS_PER_PAGE: Int = 6
+) {
   page: pageByLang(uri: "events", lang: $LANG) {
     title
     slug
@@ -14,7 +19,6 @@ query EventsListPage($LANG: String!, $TAG_SLUG: [String]) {
     }
   }
   articles: events(
-    first: 6
     where: {
       status: PUBLISH
       language: $LANG
@@ -22,19 +26,16 @@ query EventsListPage($LANG: String!, $TAG_SLUG: [String]) {
       metaKey: "event_date"
       metaType: DATE
       orderby: { order: DESC, field: META_VALUE }
+      pagination: { postsPerPage: $POSTS_PER_PAGE, paged: $PAGED }
     }
   ) {
-    edges {
-      cursor
-      node {
-        ...EventListItem
-      }
+    nodes {
+      ...EventListItem
     }
     pageInfo {
-      startCursor
-      endCursor
-      hasNextPage
-      hasPreviousPage
+      pagination {
+        totalPages
+      }
     }
   }
   filterTags: eventCategories(

@@ -1,0 +1,35 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import type { WithAttributes } from '@/types';
+import { cn } from '@/scripts/cn';
+
+interface PaginationItemProps {
+  active?: boolean;
+}
+
+type LinkProps = HTMLAttributes<'a'> & { link: string };
+type SpanProps = HTMLAttributes<'span'> & { link?: never };
+
+type Props = WithAttributes<LinkProps | SpanProps> & PaginationItemProps;
+
+const { class: className, link = '', active = false, ...props } = Astro.props;
+const isLink = !!link;
+
+const Tag = link ? 'a' : 'span';
+---
+
+<li>
+  <Tag
+    {...props}
+    href={isLink ? link : undefined}
+    class={cn(
+      'pagination-item',
+      'flex items-center justify-center text-center select-none tabular-nums size-10',
+      'bg-white typography-body text-black',
+      { 'cursor-default': !isLink },
+      { 'hover:bg-sw-surface-subdued': isLink },
+      { 'text-white bg-sw-sky-400': active },
+      className
+    )}><slot /></Tag
+  >
+</li>

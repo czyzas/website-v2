@@ -1,4 +1,9 @@
-query InsightsListPage($LANG: String!, $TAG_SLUG: [String]) {
+query InsightsListPage(
+  $LANG: String!
+  $TAG_SLUG: [String]
+  $PAGED: Int = 1
+  $POSTS_PER_PAGE: Int = 6
+) {
   page: pageByLang(uri: "insights", lang: $LANG) {
     title
     slug
@@ -14,20 +19,20 @@ query InsightsListPage($LANG: String!, $TAG_SLUG: [String]) {
     }
   }
   articles: insights(
-    first: 6
-    where: { status: PUBLISH, language: $LANG, tagSlug: $TAG_SLUG }
+    where: {
+      status: PUBLISH
+      language: $LANG
+      tagSlug: $TAG_SLUG
+      pagination: { postsPerPage: $POSTS_PER_PAGE, paged: $PAGED }
+    }
   ) {
-    edges {
-      cursor
-      node {
-        ...InsightsListItem
-      }
+    nodes {
+      ...InsightsListItem
     }
     pageInfo {
-      startCursor
-      endCursor
-      hasNextPage
-      hasPreviousPage
+      pagination {
+        totalPages
+      }
     }
   }
   filterTags: insightsTags(

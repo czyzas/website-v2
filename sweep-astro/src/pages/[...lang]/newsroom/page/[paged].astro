@@ -1,0 +1,26 @@
+---
+import { defaultLocale } from '@/i18n/config';
+import {
+  fetchNewsroomListPage,
+  fetchSinglePageStaticPaths,
+} from '@/lib/fetchCMSData';
+import { fixPagedParams } from '@/scripts/utils-pagination';
+import {
+  createPaginatedStaticPaths,
+  createSingleDefaultPageStaticPaths,
+} from '@/scripts/utils-static-paths';
+import ArticlesList from '@/templates/ArticlesList.astro';
+
+export async function getStaticPaths() {
+  const pagesSP = createSingleDefaultPageStaticPaths(
+    await fetchSinglePageStaticPaths('newsroom')
+  );
+
+  return await createPaginatedStaticPaths(pagesSP, 'newsroom');
+}
+
+const { lang = defaultLocale, paged = 1 } = fixPagedParams(Astro.params);
+const data = await fetchNewsroomListPage(lang, { paged });
+---
+
+<ArticlesList postType="newsroom" data={data} lang={lang} paged={paged} />

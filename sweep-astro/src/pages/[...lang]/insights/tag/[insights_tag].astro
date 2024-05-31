@@ -16,7 +16,8 @@ export const getStaticPaths = async () => {
 };
 
 const { lang = defaultLocale, insights_tag: tag } = Astro.params;
-const data = await fetchInsightsListPage(lang, tag);
+
+const data = await fetchInsightsListPage(lang, { tag });
 ---
 
 <ArticlesList postType="insights" data={data} lang={lang} tag={tag} />

@@ -58,13 +58,16 @@ const logos = (rawLogos?.edges ?? []).filter(Boolean);
 
 <script>
   import { Swiper } from 'swiper';
-  import { Pagination } from 'swiper/modules';
+  import { Pagination, Autoplay } from 'swiper/modules';
 
   new Swiper('.demo-swiper', {
-    modules: [Pagination],
+    modules: [Pagination, Autoplay],
     pagination: {
       el: '.swiper-pagination',
       clickable: true,
+    },
+    autoplay: {
+      delay: 5000,
     },
     spaceBetween: 16,
     autoHeight: true,

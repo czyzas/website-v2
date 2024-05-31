@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
 import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import type { Variables } from 'graphql-request';
-import { isNil, omitBy } from 'lodash-es';
+import { cloneDeep, isNil, omit, omitBy } from 'lodash-es';
 import {
   ContactPageDocument,
   DefaultPageDocument,
@@ -26,6 +26,9 @@ import {
   EventSinglePageDocument,
   EventsListPageDocument,
   EventTagsStaticPathsDocument,
+  EventsTotalPagesDocument,
+  InsightsTotalPagesDocument,
+  NewsroomTotalPagesDocument,
 } from '@/__generated__/cms';
 import type {
   ComponentIndustriesListFragment,
@@ -34,9 +37,14 @@ import type {
 } from '@/__generated__/cms';
 import { defaultLocale } from '@/i18n/config';
 import { getUrlWithoutLang } from '@/i18n/utils';
-import { parseStaticPaths } from '@/scripts/utils-static-paths';
+import { DEFAULT_POSTS_PER_PAGE } from '@/constants';
 import { gqlClient } from './graphqlClient';
-import { getCachedCMSData, cacheCMSData, CACHE_KEYS } from './cacheCMSData';
+import {
+  getCachedCMSData,
+  cacheCMSData,
+  CACHE_KEYS,
+  paginateCacheKey,
+} from './cacheCMSData';
 
 const fetchData = async <Query, QueryVariables extends Variables = Variables>(
   document: TypedDocumentNode<Query, QueryVariables>,
@@ -73,6 +81,46 @@ const fetchData = async <Query, QueryVariables extends Variables = Variables>(
   return data;
 };
 
+type ListPagePayload = {
+  tag?: string;
+  paged?: number;
+  postsPerPage?: number;
+};
+
+export type TotalPagesAllowedPostTypes = 'insights' | 'newsroom' | 'event';
+export async function fetchTotalPages(
+  postType: TotalPagesAllowedPostTypes,
+  payload: {
+    lang?: string;
+    postsPerPage: number;
+    tagSlug?: string;
+  }
+) {
+  const { lang = defaultLocale, postsPerPage, tagSlug } = payload ?? {};
+  const options = {
+    LANG: lang,
+    POSTS_PER_PAGE: postsPerPage,
+    TAG_SLUG: tagSlug,
+  };
+  const cache = [CACHE_KEYS.TOTAL_PAGES, postType];
+  let data;
+  switch (postType) {
+    case 'insights':
+      data = await fetchData(InsightsTotalPagesDocument, options, cache);
+      break;
+    case 'newsroom':
+      data = await fetchData(NewsroomTotalPagesDocument, options, cache);
+      break;
+    case 'event':
+      data = await fetchData(EventsTotalPagesDocument, options, cache);
+      break;
+    default:
+      return 1;
+  }
+
+  return data.pages?.pageInfo.pagination?.totalPages || 1;
+}
+
 // DEFAULT PAGES
 export function fetchHomepage(lang: string) {
   return fetchData(HomepageDocument, { LANG: lang }, [
@@ -82,7 +130,6 @@ export function fetchHomepage(lang: string) {
 }
 
 export async function fetchDefaultPagesStaticPaths() {
-  // TODO: handle more than 100 pages
   return (
     (
       await fetchData(DefaultPagesStaticPathsDocument, undefined, [
@@ -93,6 +140,23 @@ export async function fetchDefaultPagesStaticPaths() {
   );
 }
 
+/**
+ * Take raw page (page object + translations[]) from WP and return array of all pages
+ * @example
+ *
+ * ```
+ * const raw = {
+ *   // original page
+ *   translations: [
+ *     // other translated pages
+ *   ],
+ * };
+ *
+ * const parsed = [
+ *   // all pages inside array
+ * ];
+ * ```
+ */
 export async function fetchSinglePageStaticPaths(uri: string) {
   const rawData = await fetchData(
     SinglePageStaticPathsDocument,
@@ -102,7 +166,10 @@ export async function fetchSinglePageStaticPaths(uri: string) {
 
   if (!rawData?.page) return [];
 
-  return parseStaticPaths(rawData.page);
+  const translations = rawData.page?.translations ?? [];
+  const originalPage = cloneDeep(omit(rawData.page, 'translations'));
+
+  return [originalPage, ...translations].filter(Boolean);
 }
 
 export function fetchDefaultPage(uri: string, lang: string = defaultLocale) {
@@ -129,7 +196,6 @@ export function fetchDemoPage(lang: string = defaultLocale) {
 
 // INDUSTRIES PAGES
 export async function fetchIndustryPagesStaticPaths() {
-  // TODO: handle more than 100 pages
   return (
     (
       await fetchData(IndustryPagesStaticPathsDocument, undefined, [
@@ -153,7 +219,6 @@ export function fetchIndustrySingle(uri: string, lang: string = defaultLocale) {
 
 // INSIGHTS
 export async function fetchInsightsPagesStaticPaths() {
-  // TODO: handle more than 100 pages
   return (
     (
       await fetchData(InsightsPagesStaticPathsDocument, undefined, [
@@ -164,7 +229,6 @@ export async function fetchInsightsPagesStaticPaths() {
   );
 }
 export async function fetchInsightsTagsStaticPaths() {
-  // TODO: handle more than 100 pages
   return (
     (
       await fetchData(InsightsTagsStaticPathsDocument, undefined, [
@@ -177,17 +241,28 @@ export async function fetchInsightsTagsStaticPaths() {
 }
 export function fetchInsightsListPage(
   lang: string = defaultLocale,
-  tag?: string
+  payload?: ListPagePayload
 ) {
+  const {
+    tag = undefined,
+    paged = 1,
+    postsPerPage = DEFAULT_POSTS_PER_PAGE,
+  } = payload ?? {};
+
   return fetchData(
     InsightsListPageDocument,
     {
       LANG: lang,
       TAG_SLUG: tag,
+      PAGED: +paged,
+      POSTS_PER_PAGE: postsPerPage,
     },
-    tag
-      ? [lang, CACHE_KEYS.INSIGHTS, CACHE_KEYS.TAG, tag]
-      : [lang, CACHE_KEYS.INSIGHTS]
+    paginateCacheKey(
+      tag
+        ? [lang, CACHE_KEYS.INSIGHTS, CACHE_KEYS.TAG, tag]
+        : [lang, CACHE_KEYS.INSIGHTS],
+      paged
+    )
   );
 }
 export function fetchInsightsSingle(uri: string, lang: string = defaultLocale) {
@@ -203,7 +278,6 @@ export function fetchInsightsSingle(uri: string, lang: string = defaultLocale) {
 
 // NEWSROOM
 export async function fetchNewsroomPagesStaticPaths() {
-  // TODO: handle more than 100 pages
   return (
     (
       await fetchData(NewsroomPagesStaticPathsDocument, undefined, [
@@ -214,7 +288,6 @@ export async function fetchNewsroomPagesStaticPaths() {
   );
 }
 export async function fetchNewsroomTagsStaticPaths() {
-  // TODO: handle more than 100 pages
   return (
     (
       await fetchData(NewsroomTagsStaticPathsDocument, undefined, [
@@ -227,17 +300,28 @@ export async function fetchNewsroomTagsStaticPaths() {
 }
 export function fetchNewsroomListPage(
   lang: string = defaultLocale,
-  tag?: string
+  payload?: ListPagePayload
 ) {
+  const {
+    tag,
+    paged = 1,
+    postsPerPage = DEFAULT_POSTS_PER_PAGE,
+  } = payload ?? {};
+
   return fetchData(
     NewsroomListPageDocument,
     {
       LANG: lang,
       TAG_SLUG: tag,
+      PAGED: +paged,
+      POSTS_PER_PAGE: +postsPerPage,
     },
-    tag
-      ? [lang, CACHE_KEYS.NEWSROOM, CACHE_KEYS.TAG, tag]
-      : [lang, CACHE_KEYS.NEWSROOM]
+    paginateCacheKey(
+      tag
+        ? [lang, CACHE_KEYS.NEWSROOM, CACHE_KEYS.TAG, tag]
+        : [lang, CACHE_KEYS.NEWSROOM],
+      paged
+    )
   );
 }
 export function fetchNewsroomSingle(uri: string, lang: string = defaultLocale) {
@@ -253,7 +337,6 @@ export function fetchNewsroomSingle(uri: string, lang: string = defaultLocale) {
 
 // EVENT
 export async function fetchEventPagesStaticPaths() {
-  // TODO: handle more than 100 pages
   return (
     (
       await fetchData(EventPagesStaticPathsDocument, undefined, [
@@ -264,7 +347,6 @@ export async function fetchEventPagesStaticPaths() {
   );
 }
 export async function fetchEventTagsStaticPaths() {
-  // TODO: handle more than 100 pages
   return (
     (
       await fetchData(EventTagsStaticPathsDocument, undefined, [
@@ -277,17 +359,27 @@ export async function fetchEventTagsStaticPaths() {
 }
 export function fetchEventsListPage(
   lang: string = defaultLocale,
-  tag?: string
+  payload?: ListPagePayload
 ) {
+  const {
+    tag,
+    paged = 1,
+    postsPerPage = DEFAULT_POSTS_PER_PAGE,
+  } = payload ?? {};
   return fetchData(
     EventsListPageDocument,
     {
       LANG: lang,
       TAG_SLUG: tag,
+      PAGED: +paged,
+      POSTS_PER_PAGE: +postsPerPage,
     },
-    tag
-      ? [lang, CACHE_KEYS.EVENTS, CACHE_KEYS.TAG, tag]
-      : [lang, CACHE_KEYS.EVENTS]
+    paginateCacheKey(
+      tag
+        ? [lang, CACHE_KEYS.EVENTS, CACHE_KEYS.TAG, tag]
+        : [lang, CACHE_KEYS.EVENTS],
+      paged
+    )
   );
 }
 export function fetchEventSingle(uri: string, lang: string = defaultLocale) {

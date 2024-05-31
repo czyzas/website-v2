@@ -1,0 +1,39 @@
+---
+import { defaultLocale } from '@/i18n/config';
+import {
+  fetchEventTagsStaticPaths,
+  fetchEventsListPage,
+} from '@/lib/fetchCMSData';
+import { fixPagedParams } from '@/scripts/utils-pagination';
+import {
+  createPagesStaticPaths,
+  createPaginatedStaticPaths,
+} from '@/scripts/utils-static-paths';
+import ArticlesList from '@/templates/ArticlesList.astro';
+
+export const getStaticPaths = async () => {
+  const pagesSP = createPagesStaticPaths(await fetchEventTagsStaticPaths(), {
+    paramKey: 'event_tag',
+    paramValueType: 'slug',
+  });
+
+  return await createPaginatedStaticPaths(pagesSP, 'event');
+};
+
+const {
+  lang = defaultLocale,
+  event_tag: tag,
+  paged = 1,
+} = fixPagedParams(Astro.params);
+
+const data = await fetchEventsListPage(lang, { tag, paged });
+---
+
+<ArticlesList
+  postType="event"
+  prefix="events"
+  data={data}
+  lang={lang}
+  tag={tag}
+  paged={paged}
+/>

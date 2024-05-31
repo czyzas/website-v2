@@ -13,6 +13,7 @@ import { cmsStore } from '@/stores/cmsStore';
 import { languageStore } from '@/stores/languageStore';
 import type { ColumnSizes } from '@/types';
 import ListTagFilter from '@/components/ListTagFilter.astro';
+import PaginationContainer from '@/components/ButtonContainer.astro';
 import Pagination from '@/components/Pagination.astro';
 import type {
   EventsListPageQuery,
@@ -36,9 +37,10 @@ type EventsListProps = {
   data: EventsListPageQuery;
 };
 interface ArticleListProps {
+  lang: string;
   prefix?: string;
   tag?: string;
-  lang: string;
+  paged?: number;
 }
 type Props = (InsightsListProps | NewsroomListProps | EventsListProps) &
   ArticleListProps;
@@ -49,10 +51,12 @@ const {
   prefix = postType,
   data,
   lang,
+  paged = 1,
 } = Astro.props;
 
+const totalPages = data.articles?.pageInfo.pagination?.totalPages ?? 1;
 const page = data.page!;
-const posts = (data.articles?.edges ?? []).filter(Boolean).map((p) => p.node);
+const posts = (data.articles?.nodes ?? []).filter(Boolean);
 const insightsArticles =
   postType === 'event' ? (data.moreArticles?.nodes ?? []).filter(Boolean) : [];
 
@@ -164,7 +168,17 @@ if (!rawFeaturedPost && posts?.[0] && !filterTag) {
       />
 
       <ArticlesGrid postType={postType} posts={posts} />
-      <Pagination />
+      {
+        totalPages > 1 && (
+          <PaginationContainer marginSize="sm">
+            <Pagination
+              paged={paged}
+              totalPages={totalPages}
+              transformUri={(u) => `${u}#list`}
+            />
+          </PaginationContainer>
+        )
+      }
     </Container>
   </Section>
   {

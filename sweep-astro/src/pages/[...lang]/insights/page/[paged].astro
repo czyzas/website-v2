@@ -1,0 +1,26 @@
+---
+import { defaultLocale } from '@/i18n/config';
+import {
+  fetchInsightsListPage,
+  fetchSinglePageStaticPaths,
+} from '@/lib/fetchCMSData';
+import { fixPagedParams } from '@/scripts/utils-pagination';
+import {
+  createPaginatedStaticPaths,
+  createSingleDefaultPageStaticPaths,
+} from '@/scripts/utils-static-paths';
+import ArticlesList from '@/templates/ArticlesList.astro';
+
+export async function getStaticPaths() {
+  const pagesSP = createSingleDefaultPageStaticPaths(
+    await fetchSinglePageStaticPaths('/insights')
+  );
+
+  return await createPaginatedStaticPaths(pagesSP, 'insights');
+}
+
+const { lang = defaultLocale, paged = 1 } = fixPagedParams(Astro.params);
+const data = await fetchInsightsListPage(lang, { paged });
+---
+
+<ArticlesList postType="insights" data={data} lang={lang} paged={paged} />

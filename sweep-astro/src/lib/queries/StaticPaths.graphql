@@ -1,6 +1,12 @@
 # Page
 query DefaultPagesStaticPaths {
-  pages(first: 100, where: { status: PUBLISH, language: "all" }) {
+  pages(
+    where: {
+      status: PUBLISH
+      language: "all"
+      pagination: { postsPerPage: -1, paged: 1 }
+    }
+  ) {
     nodes {
       databaseId
       slug
@@ -29,7 +35,13 @@ query SinglePageStaticPaths($STATIC_PATH_URI: String!) {
 
 # Industry
 query IndustryPagesStaticPaths {
-  pages: industries(first: 100, where: { status: PUBLISH, language: "all" }) {
+  pages: industries(
+    where: {
+      status: PUBLISH
+      language: "all"
+      pagination: { postsPerPage: -1, paged: 1 }
+    }
+  ) {
     nodes {
       databaseId
       slug
@@ -51,7 +63,13 @@ query InsightsTagsStaticPaths {
   }
 }
 query InsightsPagesStaticPaths {
-  pages: insights(first: 100, where: { status: PUBLISH, language: "all" }) {
+  pages: insights(
+    where: {
+      status: PUBLISH
+      language: "all"
+      pagination: { postsPerPage: -1, paged: 1 }
+    }
+  ) {
     nodes {
       databaseId
       slug
@@ -74,8 +92,11 @@ query NewsroomTagsStaticPaths {
 }
 query NewsroomPagesStaticPaths {
   pages: newsroomItems(
-    first: 100
-    where: { status: PUBLISH, language: "all" }
+    where: {
+      status: PUBLISH
+      language: "all"
+      pagination: { postsPerPage: -1, paged: 1 }
+    }
   ) {
     nodes {
       databaseId
@@ -101,7 +122,13 @@ query EventTagsStaticPaths {
   }
 }
 query EventPagesStaticPaths {
-  pages: events(first: 100, where: { status: PUBLISH, language: "all" }) {
+  pages: events(
+    where: {
+      status: PUBLISH
+      language: "all"
+      pagination: { postsPerPage: -1, paged: 1 }
+    }
+  ) {
     nodes {
       databaseId
       slug

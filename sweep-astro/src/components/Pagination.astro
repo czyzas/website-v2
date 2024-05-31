@@ -1,2 +1,78 @@
-{/* TODO: IMPLEMENT PAGINATION */}
-<div class="pagination"></div>
+---
+import type { HTMLAttributes } from 'astro/types';
+import { isString } from 'lodash-es';
+import { cn } from '@/scripts/cn';
+import { paginateURI, unpaginateURI } from '@/scripts/utils-pagination';
+import PaginationItem from './PaginationItem.astro';
+
+interface PaginationProps extends HTMLAttributes<'div'> {
+  paged: number;
+  totalPages: number;
+  transformUri?: (uri: string) => string;
+}
+type Props = PaginationProps;
+
+const {
+  class: className,
+  paged,
+  totalPages,
+  transformUri = (u) => u,
+  ...props
+} = Astro.props;
+const baseUri = unpaginateURI(Astro.url.pathname);
+
+function buildPagination(current: number, last: number, onSides = 1) {
+  // pages
+  const pages = [];
+  // Loop through
+  for (let i = 1; i <= last; i += 1) {
+    // Define offset
+    const offset = i === 1 || last ? onSides + 1 : onSides;
+    // If added
+    if (
+      i === 1 ||
+      (current - offset <= i && current + offset >= i) ||
+      i === current ||
+      i === last
+    ) {
+      pages.push(i);
+    } else if (i === current - (offset + 1) || i === current + (offset + 1)) {
+      pages.push('...');
+    }
+  }
+  return pages;
+}
+
+const items = buildPagination(paged, totalPages, 1);
+---
+
+{
+  totalPages > 1 && (
+    <ul
+      {...props}
+      class={cn(
+        'pagination',
+        'flex items-center justify-center',
+        'border border-sw-border divide-x divide-sw-border rounded-lg overflow-hidden',
+        className
+      )}
+    >
+      {items.map((item) => {
+        const isSeparator = isString(item);
+        if (isSeparator) return <PaginationItem>{item}</PaginationItem>;
+
+        const isCurrent = item === paged;
+        const link = transformUri(paginateURI(baseUri, item));
+
+        return (
+          <PaginationItem
+            link={!isCurrent ? link : undefined}
+            active={isCurrent}
+          >
+            {item}
+          </PaginationItem>
+        );
+      })}
+    </ul>
+  )
+}
