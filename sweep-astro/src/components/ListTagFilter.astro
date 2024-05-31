@@ -6,12 +6,15 @@ import type { FilterTag } from '@/types';
 import { buildI18nPath } from '@/i18n/utils';
 import { getStore } from '@/scripts/store';
 import { languageStore } from '@/stores/languageStore';
+import { TRANSLATIONS } from '@/constants';
 import Card from './ui/Card.astro';
 
 interface ListTagFilterProps extends HTMLAttributes<'div'> {
   tags?: FilterTag[];
   activeTag?: string;
   prefix?: string;
+  allButton?: boolean;
+  sectionId?: string;
 }
 type Props = ListTagFilterProps;
 
@@ -20,6 +23,8 @@ const {
   tags: rawTags,
   prefix = '',
   activeTag = '',
+  allButton = false,
+  sectionId: rawSectionId = '',
   ...props
 } = Astro.props;
 const { currentLanguage } = getStore(languageStore);
@@ -28,6 +33,13 @@ const lang = currentLanguage.code;
 const tags = (rawTags ?? []).filter(
   (tag) => tag && !isNil(tag.name) && !isNil(tag.slug)
 );
+
+if (allButton) {
+  // Add additional `All` tag to filters
+  tags.unshift({ name: TRANSLATIONS.ALL, slug: '' });
+}
+
+const sectionId = rawSectionId ? `#${rawSectionId}` : '';
 ---
 
 <div {...props} class={cn('')}>
@@ -36,14 +48,16 @@ const tags = (rawTags ?? []).filter(
       <div
         class={cn(
           'list-tag-filter',
-          'grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-2',
+          'grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-2',
           className
         )}
       >
         {tags.map((tag) => (
           <a
             href={buildI18nPath(
-              tag.slug ? [prefix, 'tag', `${tag.slug}#list`] : `${prefix}#list`,
+              tag.slug
+                ? [prefix, 'tag', `${tag.slug}${sectionId}`]
+                : `${prefix}${sectionId}`,
               lang
             )}
             data-active={activeTag === tag.slug ? 'true' : 'false'}

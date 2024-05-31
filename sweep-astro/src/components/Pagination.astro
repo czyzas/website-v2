@@ -8,7 +8,7 @@ import PaginationItem from './PaginationItem.astro';
 interface PaginationProps extends HTMLAttributes<'div'> {
   paged: number;
   totalPages: number;
-  transformUri?: (uri: string) => string;
+  sectionId?: string;
 }
 type Props = PaginationProps;
 
@@ -16,9 +16,11 @@ const {
   class: className,
   paged,
   totalPages,
-  transformUri = (u) => u,
+  sectionId: rawSectionId = '',
   ...props
 } = Astro.props;
+
+const sectionId = rawSectionId ? `#${rawSectionId}` : '';
 const baseUri = unpaginateURI(Astro.url.pathname);
 
 function buildPagination(current: number, last: number, onSides = 1) {
@@ -52,7 +54,7 @@ const items = buildPagination(paged, totalPages, 1);
       {...props}
       class={cn(
         'pagination',
-        'flex items-center justify-center',
+        'inline-flex items-center justify-center',
         'border border-sw-border divide-x divide-sw-border rounded-lg overflow-hidden',
         className
       )}
@@ -62,7 +64,7 @@ const items = buildPagination(paged, totalPages, 1);
         if (isSeparator) return <PaginationItem>{item}</PaginationItem>;
 
         const isCurrent = item === paged;
-        const link = transformUri(paginateURI(baseUri, item));
+        const link = paginateURI(baseUri, item) + sectionId;
 
         return (
           <PaginationItem

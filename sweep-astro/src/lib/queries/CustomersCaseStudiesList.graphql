@@ -1,0 +1,33 @@
+query CustomersCaseStudiesList(
+  $LANG: String!
+  $TAG_SLUG: [String]
+  $PAGED: Int = 1
+  $POSTS_PER_PAGE: Int = 8
+) {
+  articles: caseStudies(
+    where: {
+      status: PUBLISH
+      language: $LANG
+      tagSlug: $TAG_SLUG
+      pagination: { postsPerPage: $POSTS_PER_PAGE, paged: $PAGED }
+    }
+  ) {
+    nodes {
+      ...CaseStudyCard
+    }
+    pageInfo {
+      pagination {
+        totalPages
+      }
+    }
+  }
+  filterTags: caseStudyTags(
+    first: 100
+    where: { language: $LANG, hideEmpty: true }
+  ) {
+    nodes {
+      name
+      slug
+    }
+  }
+}

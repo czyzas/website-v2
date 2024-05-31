@@ -29,6 +29,9 @@ import {
   EventsTotalPagesDocument,
   InsightsTotalPagesDocument,
   NewsroomTotalPagesDocument,
+  CustomersCaseStudiesListDocument,
+  CaseStudiesTotalPagesDocument,
+  CaseStudiesTagsStaticPathsDocument,
 } from '@/__generated__/cms';
 import type {
   ComponentIndustriesListFragment,
@@ -87,7 +90,11 @@ type ListPagePayload = {
   postsPerPage?: number;
 };
 
-export type TotalPagesAllowedPostTypes = 'insights' | 'newsroom' | 'event';
+export type TotalPagesAllowedPostTypes =
+  | 'insights'
+  | 'newsroom'
+  | 'event'
+  | 'case-study';
 export async function fetchTotalPages(
   postType: TotalPagesAllowedPostTypes,
   payload: {
@@ -113,6 +120,9 @@ export async function fetchTotalPages(
       break;
     case 'event':
       data = await fetchData(EventsTotalPagesDocument, options, cache);
+      break;
+    case 'case-study':
+      data = await fetchData(CaseStudiesTotalPagesDocument, options, cache);
       break;
     default:
       return 1;
@@ -390,6 +400,44 @@ export function fetchEventSingle(uri: string, lang: string = defaultLocale) {
       LANG: lang,
     },
     [lang, getUrlWithoutLang(uri)]
+  );
+}
+
+// CASE STUDIES
+export async function fetchCaseStudiesTagsStaticPaths() {
+  return (
+    (
+      await fetchData(CaseStudiesTagsStaticPathsDocument, undefined, [
+        CACHE_KEYS.STATIC_PATHS,
+        CACHE_KEYS.CASE_STUDY,
+        CACHE_KEYS.TAG,
+      ])
+    ).tags?.nodes ?? []
+  );
+}
+export function fetchCustomersCaseStudiesList(
+  lang: string = defaultLocale,
+  payload?: ListPagePayload
+) {
+  const {
+    tag,
+    paged = 1,
+    postsPerPage = DEFAULT_POSTS_PER_PAGE,
+  } = payload ?? {};
+  return fetchData(
+    CustomersCaseStudiesListDocument,
+    {
+      LANG: lang,
+      TAG_SLUG: tag,
+      PAGED: +paged,
+      POSTS_PER_PAGE: +postsPerPage,
+    },
+    paginateCacheKey(
+      tag
+        ? [lang, CACHE_KEYS.MODULE_CASE_STUDY_LIST, CACHE_KEYS.TAG, tag]
+        : [lang, CACHE_KEYS.MODULE_CASE_STUDY_LIST],
+      paged
+    )
   );
 }
 
