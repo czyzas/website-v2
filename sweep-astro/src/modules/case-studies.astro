@@ -1,8 +1,5 @@
 ---
-import type {
-  CaseStudyCardFragment,
-  ModulesModulesContentCaseStudiesLayout,
-} from '@/__generated__/cms';
+import type { ModulesModulesContentCaseStudiesLayout } from '@/__generated__/cms';
 import ButtonContainer from '@/components/ButtonContainer.astro';
 import CardWithBigImage from '@/components/CardWithBigImage.astro';
 import CaseStudiesGrid from '@/components/CaseStudiesGrid.astro';
@@ -14,6 +11,10 @@ import TabList from '@/components/ui/Tabs/TabList.astro';
 import TabListItem from '@/components/ui/Tabs/TabListItem.astro';
 import TabPane from '@/components/ui/Tabs/TabPane.astro';
 import Tabs from '@/components/ui/Tabs/Tabs.astro';
+import {
+  parseCaseStudies,
+  parseCaseStudyCustomer,
+} from '@/scripts/data-parsers/parseCaseStudies';
 import { linkShouldRender } from '@/scripts/data-parsers/parseLink';
 import type { WithModuleMeta } from '@/types';
 
@@ -31,8 +32,7 @@ const {
 
 const tabId = crypto.randomUUID();
 
-const cases = (caseStudiesList?.nodes ??
-  []) as unknown as CaseStudyCardFragment[];
+const cases = parseCaseStudies(caseStudiesList);
 ---
 
 <ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
@@ -41,12 +41,7 @@ const cases = (caseStudiesList?.nodes ??
       <Tabs>
         <TabList>
           {cases.map((caseStudy, index) => {
-            if (caseStudy.__typename !== 'CaseStudy') return null;
-            const customerMaybe = caseStudy.caseStudyAcf?.relatedCustomer?.node;
-            const customer =
-              customerMaybe?.__typename === 'Customer'
-                ? customerMaybe
-                : undefined;
+            const customer = parseCaseStudyCustomer(caseStudy);
             const customerLogo = customer?.customerAcf?.logo;
 
             return (
@@ -66,12 +61,7 @@ const cases = (caseStudiesList?.nodes ??
         </TabList>
         <div class="tab-content mt-10">
           {cases.map((caseStudy, index) => {
-            if (caseStudy.__typename !== 'CaseStudy') return null;
-            const customerMaybe = caseStudy.caseStudyAcf?.relatedCustomer?.node;
-            const customer =
-              customerMaybe?.__typename === 'Customer'
-                ? customerMaybe
-                : undefined;
+            const customer = parseCaseStudyCustomer(caseStudy);
             const customerLogo = customer?.customerAcf?.logo;
             const longerTitle = caseStudy.caseStudyAcf?.longerTitle;
 
