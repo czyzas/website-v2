@@ -137,3 +137,15 @@ query EventPagesStaticPaths {
     }
   }
 }
+
+# Case Studies
+query CaseStudiesTagsStaticPaths {
+  tags: caseStudyTags(first: 100, where: { language: "all", hideEmpty: true }) {
+    nodes {
+      databaseId
+      slug
+      uri
+      languageCode
+    }
+  }
+}

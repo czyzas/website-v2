@@ -4,8 +4,8 @@ fragment CaseStudyCard on CaseStudy {
   uri
   caseStudyAcf {
     longerTitle
-    relatedCustomer(first: 100) {
-      nodes {
+    relatedCustomer {
+      node {
         __typename
         ... on Customer {
           title

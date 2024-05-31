@@ -13,7 +13,7 @@ import { cmsStore } from '@/stores/cmsStore';
 import { languageStore } from '@/stores/languageStore';
 import type { ColumnSizes } from '@/types';
 import ListTagFilter from '@/components/ListTagFilter.astro';
-import PaginationContainer from '@/components/ButtonContainer.astro';
+import PaginationContainer from '@/components/PaginationContainer.astro';
 import Pagination from '@/components/Pagination.astro';
 import type {
   EventsListPageQuery,
@@ -62,8 +62,6 @@ const insightsArticles =
 
 // TAGS
 const tags = (data.filterTags?.nodes ?? []).filter(Boolean);
-// Add additional `All` tag to filters
-tags.unshift({ name: TRANSLATIONS.ALL, slug: '' });
 
 initializeStore(cmsStore, {
   primaryMenu: data.primaryMenu!,
@@ -110,6 +108,8 @@ if (
 if (!rawFeaturedPost && posts?.[0] && !filterTag) {
   rawFeaturedPost = posts.at(0);
 }
+
+const listSectionId = 'list';
 ---
 
 <Layout
@@ -148,6 +148,7 @@ if (!rawFeaturedPost && posts?.[0] && !filterTag) {
               <ListFeaturedArticle
                 layout={postType === 'newsroom' ? 'merged' : 'overlapping'}
                 data={rawFeaturedPost}
+                postType={postType}
               />
             </div>
           </Grid>
@@ -155,12 +156,14 @@ if (!rawFeaturedPost && posts?.[0] && !filterTag) {
       )
     }
   </Top>
-  <Section bg="surface-background" id="list">
+  <Section bg="surface-background" id={listSectionId}>
     <Container>
       <SectionTitle
         {...parseSectionTitle(acf?.listTitle?.selectSectionTitle)}
       />
       <ListTagFilter
+        allButton
+        sectionId={listSectionId}
         tags={tags}
         activeTag={filterTag}
         prefix={prefix}
@@ -170,11 +173,11 @@ if (!rawFeaturedPost && posts?.[0] && !filterTag) {
       <ArticlesGrid postType={postType} posts={posts} />
       {
         totalPages > 1 && (
-          <PaginationContainer marginSize="sm">
+          <PaginationContainer>
             <Pagination
+              sectionId={listSectionId}
               paged={paged}
               totalPages={totalPages}
-              transformUri={(u) => `${u}#list`}
             />
           </PaginationContainer>
         )

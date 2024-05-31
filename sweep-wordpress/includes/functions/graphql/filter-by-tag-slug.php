@@ -5,7 +5,7 @@
 add_action( 'graphql_register_types', function () {
 	// Register the field in the "where" clause.
 	try {
-		$post_types = [ 'Event', 'Post', 'InsightsItem', 'NewsroomItem' ];
+		$post_types = [ 'Event', 'Post', 'InsightsItem', 'NewsroomItem', 'CaseStudy' ];
 		foreach ( $post_types as $post_type ) {
 			register_graphql_fields( 'RootQueryTo' . $post_type . 'ConnectionWhereArgs', [
 				'tagSlug' => [
@@ -34,6 +34,7 @@ add_filter( 'graphql_post_object_connection_query_args', function (
 		in_array( 'post', $post_type ) => 'tag',
 		in_array( 'insights', $post_type ) => 'insights-tag',
 		in_array( 'newsroom', $post_type ) => 'newsroom-tag',
+		in_array( 'case-study', $post_type ) => 'case-study-tag',
 		default => null
 	};
 

@@ -1,5 +1,8 @@
 ---
-import type { ModulesModulesContentLogosLayout } from '@/__generated__/cms';
+import type {
+  ModulesModulesContentLogosLayout,
+  CustomerLogoFragment,
+} from '@/__generated__/cms';
 import ButtonContainer from '@/components/ButtonContainer.astro';
 import LogosCollection from '@/components/LogosCollection.astro';
 import LogosGrid from '@/components/LogosGrid.astro';
@@ -26,10 +29,24 @@ const {
   logosTabs = [],
 } = Astro.props;
 
-const tabs = (logosTabs ?? [])
-  .filter(Boolean)
-  .map((tab) => ({ ...tab, logos: tab.logos?.edges?.filter(Boolean) }));
 const tabId = crypto.randomUUID();
+const tabs = logosTabs.filter(Boolean).map((tab) => {
+  const logosSource = (tab.logosSource || 'gallery') as 'gallery' | 'customers';
+
+  if (logosSource === 'customers') {
+    const logos = (
+      (tab.customersLogos?.nodes ?? []) as unknown as CustomerLogoFragment[]
+    )
+      .map((l) => !!l && l.__typename === 'Customer' && l.customerAcf?.logo)
+      .filter(Boolean);
+
+    return { ...tab, logos };
+  }
+
+  const logos = tab.logos?.edges?.filter(Boolean);
+
+  return { ...tab, logos };
+});
 ---
 
 {

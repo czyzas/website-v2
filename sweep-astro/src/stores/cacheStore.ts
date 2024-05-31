@@ -4,5 +4,5 @@ import { createStore } from '@/scripts/store';
 export const cacheStore = createStore<{
   allIndustries?: ComponentIndustriesListFragment[];
 }>({
-  allIndustries: undefined,
+  allIndustries: [],
 });

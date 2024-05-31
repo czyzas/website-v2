@@ -1,0 +1,8 @@
+fragment CustomerLogo on Customer {
+  __typename
+  customerAcf {
+    logo {
+      ...Image
+    }
+  }
+}

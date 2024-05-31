@@ -27,6 +27,7 @@ type UnparsedArticle =
 interface ListFeaturedArticleProps extends HTMLAttributes<'div'> {
   data?: UnparsedArticle;
   layout?: CardLayout;
+  postType: 'newsroom' | 'insights' | 'event';
 }
 type Props = WithAttributes<ListFeaturedArticleProps>;
 
@@ -34,6 +35,7 @@ const {
   class: className,
   data,
   layout = 'overlapping',
+  postType,
   ...props
 } = Astro.props;
 
@@ -67,6 +69,7 @@ const ContentWrapper =
       image={image}
       size={layout === 'merged' ? 'lg' : undefined}
       class={cn('list-featured-article', className)}
+      widerCard={postType === 'insights'}
     >
       <div class="flex-1 flex flex-col items-start gap-4">
         {!!category && (

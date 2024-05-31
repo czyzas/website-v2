@@ -123,8 +123,8 @@ const menu = (primaryMenu?.menuItems?.nodes ?? []).filter(Boolean);
         'navbar',
         'lg:flex-1 lg:self-stretch',
         'aria-hidden:hidden',
-        'absolute top-[calc(100%_+_0.5rem)] left-4 w-[calc(100%_-_2rem)] bg-white shadow-menu p-6 rounded-lg',
-        'lg:static lg:block lg:w-auto lg:left-0 lg:top-full lg:bg-none lg:shadow-none lg:p-0 lg:rounded-none'
+        'absolute top-[calc(100%_+_0.5rem)] left-4 w-[calc(100%_-_2rem)] bg-white lg:bg-transparent shadow-menu p-6 rounded-lg',
+        'lg:static lg:block lg:w-auto lg:left-0 lg:top-full lg:bg-none lg:shadow-none lg:p-0 lg:rounded-none z-10'
       )}
     >
       <nav class="navbar-nav h-full">
@@ -150,7 +150,7 @@ const menu = (primaryMenu?.menuItems?.nodes ?? []).filter(Boolean);
             const submenuItem = `submenu-item-${crypto.randomUUID().substring(16)}`;
 
             return (
-              <li class="group">
+              <li class="group lg:h-full lg:flex lg:items-center">
                 <MenuItem
                   href={item.uri}
                   target={item.target}

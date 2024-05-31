@@ -29,6 +29,12 @@ fragment ModulesCollection on Modules {
       size
       content
     }
+    ... on ModulesModulesContentCaseStudiesListLayout {
+      layoutName
+      backgroundColor {
+        selectBackgroundColor
+      }
+    }
     ... on ModulesModulesContentGatedLayout {
       layoutName
       hubspotFormGuid
@@ -77,9 +83,15 @@ fragment ModulesCollection on Modules {
       logosTabs {
         tabTitle
         description
+        logosSource
         logos {
           edges {
             ...Image
+          }
+        }
+        customersLogos {
+          nodes {
+            ...CustomerLogo
           }
         }
       }

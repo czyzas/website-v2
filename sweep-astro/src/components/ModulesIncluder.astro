@@ -35,7 +35,10 @@ let gatedInformation: ModulesModulesContentGatedLayout | undefined;
     <Fragment>
       {modulesContent.map((module, index) => {
         const layoutName = module?.layoutName ?? '';
-        if (!layoutName) return null;
+        if (!layoutName) {
+          console.warn(`Module ${module?.__typename} doesn't have layoutName`);
+          return null;
+        }
 
         const Component = components?.[layoutName];
         if (!Component) return null;
