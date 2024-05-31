@@ -9,6 +9,10 @@ export const HUBSPOT_FORM_ENDPOINT = 'https://api.hubapi.com/forms/v2/forms';
 // TODO: HANDLE TRANSLATED STRING FROM WORDPRESS
 export const TRANSLATIONS = {
   SOURCE: 'Source',
+  HEADER: {
+    LOGIN: 'Login',
+    BOOK_DEMO: 'Book a demo',
+  },
   HUBSPOT_FORM: {
     SUBMIT: 'Submit',
     SUBMITTING: 'Submitting',
