@@ -1,18 +1,20 @@
 import type { GetStaticPathsItem } from 'astro';
-import { isFinite } from 'lodash-es';
+import { isFinite, trimEnd } from 'lodash-es';
 import { PAGINATION_PREFIX } from '@/constants';
 
 type ParamsWithPaged = GetStaticPathsItem['params'] &
   Record<'paged', string | number | undefined>;
 
 export function paginateURI(baseUri: string, page: number) {
-  if (page > 1) return `${baseUri}/${PAGINATION_PREFIX}/${page}`;
+  const uri = trimEnd(baseUri, '/');
 
-  return baseUri;
+  if (page > 1) return `${uri}/${PAGINATION_PREFIX}/${page}`;
+
+  return uri;
 }
 
 export function unpaginateURI(uri: string) {
-  const segmented = uri.split('/');
+  const segmented = trimEnd(uri, '/').split('/');
 
   if (segmented.at(-2) !== PAGINATION_PREFIX) return uri;
 
