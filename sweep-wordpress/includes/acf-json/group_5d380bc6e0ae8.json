@@ -818,6 +818,35 @@
                                     "parent_repeater": "field_663a1e0e4aebd"
                                 },
                                 {
+                                    "key": "field_66598940c863d",
+                                    "label": "Logos source",
+                                    "name": "logos_source",
+                                    "aria-label": "",
+                                    "type": "button_group",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 0,
+                                    "choices": {
+                                        "gallery": "Gallery",
+                                        "customers": "Customers"
+                                    },
+                                    "default_value": "gallery",
+                                    "return_format": "value",
+                                    "allow_null": 0,
+                                    "layout": "horizontal",
+                                    "show_in_graphql": 1,
+                                    "graphql_description": "",
+                                    "graphql_field_name": "logosSource",
+                                    "graphql_non_null": 0,
+                                    "parent_repeater": "field_663a1e0e4aebd"
+                                },
+                                {
                                     "key": "field_6603e4ac0175f",
                                     "label": "Logos",
                                     "name": "logos",
@@ -825,7 +854,15 @@
                                     "type": "gallery",
                                     "instructions": "",
                                     "required": 0,
-                                    "conditional_logic": 0,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_66598940c863d",
+                                                "operator": "==",
+                                                "value": "gallery"
+                                            }
+                                        ]
+                                    ],
                                     "wrapper": {
                                         "width": "",
                                         "class": "",
@@ -848,6 +885,50 @@
                                     "show_in_graphql": 1,
                                     "graphql_description": "",
                                     "graphql_field_name": "logos",
+                                    "parent_repeater": "field_663a1e0e4aebd"
+                                },
+                                {
+                                    "key": "field_66598990c863e",
+                                    "label": "Select customers",
+                                    "name": "customers_logos",
+                                    "aria-label": "",
+                                    "type": "relationship",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_66598940c863d",
+                                                "operator": "==",
+                                                "value": "customers"
+                                            }
+                                        ]
+                                    ],
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 0,
+                                    "post_type": [
+                                        "customer"
+                                    ],
+                                    "post_status": "",
+                                    "taxonomy": "",
+                                    "filters": [
+                                        "search",
+                                        "taxonomy"
+                                    ],
+                                    "return_format": "object",
+                                    "min": "",
+                                    "max": "",
+                                    "elements": "",
+                                    "bidirectional": 0,
+                                    "show_in_graphql": 1,
+                                    "graphql_description": "",
+                                    "graphql_field_name": "customersLogos",
+                                    "graphql_connection_type": "one_to_many",
+                                    "bidirectional_target": [],
                                     "parent_repeater": "field_663a1e0e4aebd"
                                 }
                             ]
@@ -3754,5 +3835,5 @@
         "Page",
         "Post"
     ],
-    "modified": 1716548862
+    "modified": 1717144033
 }

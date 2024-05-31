@@ -77,9 +77,15 @@ fragment ModulesCollection on Modules {
       logosTabs {
         tabTitle
         description
+        logosSource
         logos {
           edges {
             ...Image
+          }
+        }
+        customersLogos {
+          nodes {
+            ...CustomerLogo
           }
         }
       }
