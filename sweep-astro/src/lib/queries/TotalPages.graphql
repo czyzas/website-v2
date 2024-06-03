@@ -58,3 +58,23 @@ query EventsTotalPages(
     }
   }
 }
+query CaseStudiesTotalPages(
+  $LANG: String!
+  $TAG_SLUG: [String]
+  $POSTS_PER_PAGE: Int!
+) {
+  pages: caseStudies(
+    where: {
+      status: PUBLISH
+      language: $LANG
+      tagSlug: $TAG_SLUG
+      pagination: { postsPerPage: $POSTS_PER_PAGE }
+    }
+  ) {
+    pageInfo {
+      pagination {
+        totalPages
+      }
+    }
+  }
+}

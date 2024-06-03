@@ -1,0 +1,34 @@
+---
+import {
+  fetchDefaultPage,
+  fetchSinglePageStaticPaths,
+} from '@/lib/fetchCMSData';
+import { initializeStore } from '@/scripts/store';
+import { defaultLocale } from '@/i18n/config';
+import {
+  createPaginatedStaticPaths,
+  createSingleDefaultPageStaticPaths,
+} from '@/scripts/utils-static-paths';
+import DefaultPage from '@/templates/DefaultPage.astro';
+import { customersCaseStudiesStore } from '@/stores/customersCaseStudiesStore';
+import { fixPagedParams } from '@/scripts/utils-pagination';
+
+export async function getStaticPaths() {
+  const pages = await fetchSinglePageStaticPaths('customers');
+  const pagesSP = createSingleDefaultPageStaticPaths(pages);
+
+  return await createPaginatedStaticPaths(pagesSP, 'case-study');
+}
+
+const { lang = defaultLocale, paged = 1 } = fixPagedParams(Astro.params);
+const data = await fetchDefaultPage('customers', lang);
+
+initializeStore(customersCaseStudiesStore, {
+  isCustomersPage: true,
+  lang,
+  paged,
+  tag: undefined,
+});
+---
+
+<DefaultPage data={data} />

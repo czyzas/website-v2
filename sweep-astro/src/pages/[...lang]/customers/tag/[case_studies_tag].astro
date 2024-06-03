@@ -1,0 +1,31 @@
+---
+import {
+  fetchCaseStudiesTagsStaticPaths,
+  fetchDefaultPage,
+} from '@/lib/fetchCMSData';
+import { initializeStore } from '@/scripts/store';
+import { defaultLocale } from '@/i18n/config';
+import { createPagesStaticPaths } from '@/scripts/utils-static-paths';
+import DefaultPage from '@/templates/DefaultPage.astro';
+import { customersCaseStudiesStore } from '@/stores/customersCaseStudiesStore';
+
+export async function getStaticPaths() {
+  const paths = await fetchCaseStudiesTagsStaticPaths();
+  return createPagesStaticPaths(paths, {
+    paramKey: 'case_studies_tag',
+    paramValueType: 'slug',
+  });
+}
+
+const { lang = defaultLocale, case_studies_tag: tag } = Astro.params;
+const data = await fetchDefaultPage('customers', lang);
+
+initializeStore(customersCaseStudiesStore, {
+  isCustomersPage: true,
+  lang,
+  paged: 1,
+  tag,
+});
+---
+
+<DefaultPage data={data} />

@@ -831,7 +831,7 @@
                                         "class": "",
                                         "id": ""
                                     },
-                                    "wpml_cf_preferences": 0,
+                                    "wpml_cf_preferences": 1,
                                     "choices": {
                                         "gallery": "Gallery",
                                         "customers": "Customers"
@@ -909,7 +909,7 @@
                                         "class": "",
                                         "id": ""
                                     },
-                                    "wpml_cf_preferences": 0,
+                                    "wpml_cf_preferences": 1,
                                     "post_type": [
                                         "customer"
                                     ],
@@ -3723,6 +3723,62 @@
                     "min": "",
                     "max": ""
                 },
+                "layout_665995188ca5a": {
+                    "key": "layout_665995188ca5a",
+                    "name": "case-studies-list",
+                    "label": "Case studies list (Customers only)",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_665995d72c1cb",
+                            "label": "Background color",
+                            "name": "background_color",
+                            "aria-label": "",
+                            "type": "group",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "invisible-group",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "layout": "block",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "backgroundColor",
+                            "graphql_non_null": 0,
+                            "sub_fields": [
+                                {
+                                    "key": "field_665995d72c1cc",
+                                    "label": "Background color",
+                                    "name": "background_color",
+                                    "aria-label": "",
+                                    "type": "clone",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 1,
+                                    "clone": [
+                                        "field_6602daa862d57"
+                                    ],
+                                    "display": "seamless",
+                                    "layout": "block",
+                                    "prefix_label": 0,
+                                    "prefix_name": 0
+                                }
+                            ]
+                        }
+                    ],
+                    "min": "",
+                    "max": "1"
+                },
                 "layout_664f1c751c6a5": {
                     "key": "layout_664f1c751c6a5",
                     "name": "gated",
@@ -3835,5 +3891,5 @@
         "Page",
         "Post"
     ],
-    "modified": 1717144033
+    "modified": 1717161146
 }

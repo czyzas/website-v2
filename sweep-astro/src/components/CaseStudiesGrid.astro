@@ -4,6 +4,8 @@ import { cn } from '@/scripts/cn';
 import type { CaseStudyCardFragment } from '@/__generated__/cms';
 import type { WithAttributes } from '@/types';
 import { TRANSLATIONS } from '@/constants';
+import { getDefaultTopImage } from '@/scripts/getDefaultTopImage';
+import { parseCaseStudyCustomer } from '@/scripts/data-parsers/parseCaseStudies';
 import Grid from './ui/Grid.astro';
 import CaseStudyContent from './CaseStudyContent.astro';
 import CardWithMergedImage from './CardWithMergedImage.astro';
@@ -11,6 +13,7 @@ import CardWithMergedImage from './CardWithMergedImage.astro';
 interface CaseStudiesGridProps extends HTMLAttributes<'div'> {
   cases: CaseStudyCardFragment[];
   buttonLabel?: string;
+  hasFeatured?: boolean;
   hasLongerTitle?: boolean;
 }
 
@@ -19,6 +22,7 @@ type Props = WithAttributes<CaseStudiesGridProps>;
 const {
   class: className,
   cases,
+  hasFeatured = true,
   hasLongerTitle = false,
   buttonLabel = TRANSLATIONS.VIEW_CASE_STUDY,
   ...props
@@ -29,11 +33,8 @@ const {
   {
     cases.length > 0 &&
       cases.map((caseStudy, index) => {
-        if (caseStudy.__typename !== 'CaseStudy') return null;
-        const isFeatured = index === 0;
-        const customerMaybe = caseStudy.caseStudyAcf?.relatedCustomer?.nodes[0];
-        const customer =
-          customerMaybe?.__typename === 'Customer' ? customerMaybe : undefined;
+        const isFeatured = hasFeatured && index === 0;
+        const customer = parseCaseStudyCustomer(caseStudy);
         const customerLogo = customer?.customerAcf?.logo;
         const longerTitle = caseStudy.caseStudyAcf?.longerTitle;
         const title = hasLongerTitle
@@ -47,7 +48,10 @@ const {
             })}
           >
             <CardWithMergedImage
-              image={caseStudy.subpageSettings?.image}
+              image={
+                caseStudy.subpageSettings?.image ||
+                getDefaultTopImage(caseStudy.__typename)
+              }
               size={isFeatured ? 'lg' : 'md'}
             >
               <CaseStudyContent

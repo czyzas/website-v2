@@ -49,7 +49,7 @@ export const getUrlWithoutLang = (
  */
 export const fixLangParams = (
   params: GetStaticPathsItem['params'],
-  notLangParam: string
+  notLangParam: string = 'page'
 ) => {
   const lang = params?.lang ? String(params.lang) : null;
 

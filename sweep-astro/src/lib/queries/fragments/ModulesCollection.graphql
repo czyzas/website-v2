@@ -29,6 +29,12 @@ fragment ModulesCollection on Modules {
       size
       content
     }
+    ... on ModulesModulesContentCaseStudiesListLayout {
+      layoutName
+      backgroundColor {
+        selectBackgroundColor
+      }
+    }
     ... on ModulesModulesContentGatedLayout {
       layoutName
       hubspotFormGuid

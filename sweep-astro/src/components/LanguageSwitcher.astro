@@ -41,18 +41,22 @@ const languages = (rawLanguages ?? []).filter(Boolean);
   }
 </script>
 
-<div class="language-switcher-container relative group">
+<div class="language-switcher-container relative self-stretch group">
   <MenuItem
     asButton
     type="button"
     data-action="toggle-language-switcher"
     aria-controls={id}
     aria-pressed="false"
+    class="h-full text-sm sm:text-base"
   >
-    <span class="text-sm sm:text-base">
+    <span>
       {currentLanguage.code.toUpperCase()}
     </span>
-    <Icon name="caret-down" />
+    <Icon
+      name="caret-down"
+      class="transform -translate-y-0.5 sm:-translate-y-0"
+    />
   </MenuItem>
   {
     languages && (
@@ -60,7 +64,7 @@ const languages = (rawLanguages ?? []).filter(Boolean);
         class={cn(
           'lg:pt-8 pt-4',
           'absolute invisible opacity-0 transition-all duration-100 z-10',
-          'group-hover:translate-y-1 group-hover:opacity-100 group-hover:visible'
+          'transform -translate-y-1 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible'
         )}
       >
         <ul class="list bg-white rounded-lg p-6 space-y-4 shadow-menu" id={id}>

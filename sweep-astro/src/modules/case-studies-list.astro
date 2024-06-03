@@ -1,0 +1,63 @@
+---
+import type { ModulesModulesContentCaseStudiesListLayout } from '@/__generated__/cms';
+import CaseStudiesGrid from '@/components/CaseStudiesGrid.astro';
+import ListTagFilter from '@/components/ListTagFilter.astro';
+import ModuleContainer from '@/components/ModuleContainer.astro';
+import Pagination from '@/components/Pagination.astro';
+import PaginationContainer from '@/components/PaginationContainer.astro';
+import { defaultLocale } from '@/i18n/config';
+import { fetchCustomersCaseStudiesList } from '@/lib/fetchCMSData';
+import { getStore } from '@/scripts/store';
+import { customersCaseStudiesStore } from '@/stores/customersCaseStudiesStore';
+import type { WithModuleMeta } from '@/types';
+
+type Props = WithModuleMeta<ModulesModulesContentCaseStudiesListLayout>;
+
+const { __meta__, layoutName, backgroundColor } = Astro.props;
+const {
+  isCustomersPage,
+  lang = defaultLocale,
+  paged = 1,
+  tag: filterTag,
+} = getStore(customersCaseStudiesStore);
+
+const data = await fetchCustomersCaseStudiesList(lang, {
+  paged,
+  tag: filterTag,
+  postsPerPage: 8,
+});
+
+// TODO: make cleanArray funciton to process this
+const cases = (data.articles?.nodes ?? []).filter(Boolean);
+const tags = (data.filterTags?.nodes ?? []).filter(Boolean);
+const totalPages = data.articles?.pageInfo.pagination?.totalPages ?? 1;
+const moduleId = `case-studies-${__meta__.index}`;
+---
+
+{
+  isCustomersPage && (
+    <ModuleContainer
+      meta={__meta__}
+      name={layoutName!}
+      bg={backgroundColor}
+      id={moduleId}
+    >
+      <ListTagFilter
+        allButton
+        sectionId={moduleId}
+        tags={tags}
+        activeTag={filterTag}
+        prefix="customers"
+        class="my-8 md:mt-12 md:mb-20"
+      />
+      <CaseStudiesGrid hasFeatured={false} hasLongerTitle cases={cases} />
+      <PaginationContainer>
+        <Pagination
+          paged={paged}
+          totalPages={totalPages}
+          sectionId={moduleId}
+        />
+      </PaginationContainer>
+    </ModuleContainer>
+  )
+}
