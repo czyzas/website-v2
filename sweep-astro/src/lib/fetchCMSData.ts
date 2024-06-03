@@ -30,9 +30,9 @@ import {
   EventsTotalPagesDocument,
   InsightsTotalPagesDocument,
   NewsroomTotalPagesDocument,
-  CustomersCaseStudiesListDocument,
   CaseStudiesTotalPagesDocument,
   CaseStudiesTagsStaticPathsDocument,
+  CustomersPageDocument,
 } from '@/__generated__/cms';
 import type {
   ComponentIndustriesListFragment,
@@ -421,22 +421,18 @@ export async function fetchCaseStudiesTagsStaticPaths() {
     ).tags?.nodes ?? []
   );
 }
-export function fetchCustomersCaseStudiesList(
+export function fetchCustomersPage(
   lang: string = defaultLocale,
   payload?: ListPagePayload
 ) {
-  const {
-    tag,
-    paged = 1,
-    postsPerPage = DEFAULT_POSTS_PER_PAGE,
-  } = payload ?? {};
+  const { tag, paged = 1, postsPerPage } = payload ?? {};
   return fetchData(
-    CustomersCaseStudiesListDocument,
+    CustomersPageDocument,
     {
       LANG: lang,
       TAG_SLUG: tag,
       PAGED: +paged,
-      POSTS_PER_PAGE: +postsPerPage,
+      POSTS_PER_PAGE: postsPerPage,
     },
     paginateCacheKey(
       tag

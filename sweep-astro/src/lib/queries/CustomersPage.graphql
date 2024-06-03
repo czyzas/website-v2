@@ -1,9 +1,23 @@
-query CustomersCaseStudiesList(
+query CustomersPage(
   $LANG: String!
   $TAG_SLUG: [String]
   $PAGED: Int = 1
   $POSTS_PER_PAGE: Int = 8
 ) {
+  page: pageByLang(uri: "customers", lang: $LANG) {
+    title
+    slug
+    uri
+    language {
+      ...Languages
+    }
+    subpageSettings {
+      ...SubpageSettings
+    }
+    modules {
+      ...ModulesCollection
+    }
+  }
   articles: caseStudies(
     where: {
       status: PUBLISH
@@ -30,4 +44,5 @@ query CustomersCaseStudiesList(
       slug
     }
   }
+  ...Essential
 }
