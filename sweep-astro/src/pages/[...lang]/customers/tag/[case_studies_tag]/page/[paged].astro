@@ -20,7 +20,10 @@ export async function getStaticPaths() {
     paramValueType: 'slug',
   });
 
-  return await createPaginatedStaticPaths(pagesSP, { postType: 'case-study' });
+  return await createPaginatedStaticPaths(pagesSP, {
+    postType: 'case-study',
+    tagSlug: 'case_studies_tag',
+  });
 }
 
 const {

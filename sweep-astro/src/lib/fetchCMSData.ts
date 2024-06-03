@@ -70,6 +70,12 @@ const fetchData = async <Query, QueryVariables extends Variables = Variables>(
       );
       return cache;
     }
+
+    console.info(
+      new Date().toLocaleTimeString(),
+      `\x1B[35m[cache]\x1B[0m`,
+      `Cache missed, fetching... (${cacheKey.join('/')})`
+    );
   }
 
   // Fetch data if cache was not found or its prod mode
@@ -82,7 +88,7 @@ const fetchData = async <Query, QueryVariables extends Variables = Variables>(
     console.info(
       new Date().toLocaleTimeString(),
       `\x1B[35m[cache]\x1B[0m`,
-      `Cache missed (${cacheKey.join('/')})`,
+      `Fresh data fetched (${cacheKey.join('/')})`,
       formatTiming(performance.now())
     );
   }
@@ -109,13 +115,19 @@ export async function fetchTotalPages(
     tagSlug?: string;
   }
 ) {
-  const { lang = defaultLocale, postsPerPage, tagSlug } = payload ?? {};
+  const {
+    lang = defaultLocale,
+    postsPerPage = DEFAULT_POSTS_PER_PAGE,
+    tagSlug,
+  } = payload ?? {};
   const options = {
     LANG: lang,
     POSTS_PER_PAGE: postsPerPage,
     TAG_SLUG: tagSlug,
   };
-  const cache = [CACHE_KEYS.TOTAL_PAGES, postType];
+  const cache = tagSlug
+    ? [CACHE_KEYS.TOTAL_PAGES, postType, CACHE_KEYS.TAG, tagSlug]
+    : [CACHE_KEYS.TOTAL_PAGES, postType];
   let data;
   switch (postType) {
     case 'insights':

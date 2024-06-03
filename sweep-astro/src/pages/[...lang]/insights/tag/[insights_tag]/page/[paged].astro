@@ -17,7 +17,10 @@ export const getStaticPaths = async () => {
     paramValueType: 'slug',
   });
 
-  return await createPaginatedStaticPaths(pagesSP, { postType: 'insights' });
+  return await createPaginatedStaticPaths(pagesSP, {
+    postType: 'insights',
+    tagSlug: 'insights_tag',
+  });
 };
 
 const {
