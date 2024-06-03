@@ -1,0 +1,29 @@
+query CaseStudySinglePage($URI: String!, $LANG: String!) {
+  page: caseStudyByLang(uri: $URI, lang: $LANG) {
+    ...CaseStudyCard
+    modified
+    tags: caseStudyTags {
+      nodes {
+        name
+        tagTaxonomyAcf {
+          tagColor
+        }
+      }
+    }
+    language {
+      ...Languages
+    }
+    subpageSettings {
+      ...SubpageSettings
+    }
+    modules {
+      ...ModulesCollection
+    }
+  }
+  articles: caseStudies(first: 4, where: { status: PUBLISH, language: $LANG }) {
+    nodes {
+      ...CaseStudyCard
+    }
+  }
+  ...Essential
+}

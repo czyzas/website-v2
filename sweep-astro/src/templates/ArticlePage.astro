@@ -1,6 +1,8 @@
 ---
 import type {
   AuthorFragment,
+  CaseStudyCardFragment,
+  CaseStudySinglePageQuery,
   EventListItemFragment,
   EventSinglePageQuery,
   InsightsListItemFragment,
@@ -47,10 +49,19 @@ type EventSingleProps = {
   postType: 'event';
   data: EventSinglePageQuery;
 };
+type CaseStudySingleProps = {
+  postType: 'case-study';
+  data: CaseStudySinglePageQuery;
+};
 interface ArticlePageProps {
   lang: string;
 }
-type Props = (InsightsSingleProps | NewsroomSingleProps | EventSingleProps) &
+type Props = (
+  | InsightsSingleProps
+  | NewsroomSingleProps
+  | EventSingleProps
+  | CaseStudySingleProps
+) &
   ArticlePageProps;
 
 const { postType, data, lang } = Astro.props;
@@ -73,30 +84,35 @@ const title = subpageSettings?.customTitle || pageTitle || '';
 const introduction = subpageSettings?.introduction || '';
 const image = subpageSettings?.image;
 const size = (subpageSettings?.topDistribution ?? '5-7') as ColumnSizes;
+const category =
+  page.__typename === 'CaseStudy'
+    ? TRANSLATIONS.CUSTOMER
+    : page.categories?.nodes?.[0]?.name;
 const tags = parseTags(page.tags?.nodes);
-const category = page.categories?.nodes?.[0]?.name;
 const toc = buildTOC(page.modules?.modulesContent);
 let lastUpdated: string | undefined;
 let author: AuthorFragment | undefined;
 
-if (page.__typename === 'InsightsItem' || page.__typename === 'NewsroomItem') {
-  if (page.modified) {
-    lastUpdated = new Date(page.modified).toLocaleDateString(getLocale(lang), {
-      day: '2-digit',
-      month: 'long',
-      year: 'numeric',
-    });
-  }
+if (
+  (page.__typename === 'InsightsItem' || page.__typename === 'NewsroomItem') &&
+  page.articleAcf?.author?.node.__typename === 'PostAuthor'
+) {
+  author = page.articleAcf.author.node;
+}
 
-  if (page.articleAcf?.author?.node.__typename === 'PostAuthor') {
-    author = page.articleAcf.author.node;
-  }
+if ('modified' in page && page.modified) {
+  lastUpdated = new Date(page.modified).toLocaleDateString(getLocale(lang), {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+  });
 }
 
 let posts: (
   | InsightsListItemFragment
   | NewsroomListItemFragment
   | EventListItemFragment
+  | CaseStudyCardFragment
 )[] = (data?.articles?.nodes ?? []).filter(Boolean);
 posts = posts.filter((post) => post.uri !== data.page?.uri).slice(0, 3);
 
@@ -104,6 +120,9 @@ let postsTitle = '';
 switch (postType) {
   case 'event':
     postsTitle = TRANSLATIONS.ARTICLE.MORE_EVENTS;
+    break;
+  case 'case-study':
+    postsTitle = TRANSLATIONS.ARTICLE.MORE_CUSTOMER_STORIES;
     break;
   case 'insights':
   case 'newsroom':
@@ -124,11 +143,11 @@ if (page.__typename === 'Event') {
   htmlClassName="scroll-smooth scroll-p-4"
 >
   <Top
-    overline={TRANSLATIONS.EVENT}
+    overline={postType === 'event' ? TRANSLATIONS.EVENT : undefined}
     title={title}
     titleSize="h2"
     content={introduction}
-    image={image}
+    image={page.__typename !== 'CaseStudy' ? image : undefined}
     size={size}
     class="py-8 md:pt-18 md:pb-14"
   >

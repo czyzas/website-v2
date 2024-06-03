@@ -149,3 +149,19 @@ query CaseStudiesTagsStaticPaths {
     }
   }
 }
+query CaseStudiesPagesStaticPaths {
+  pages: caseStudies(
+    where: {
+      status: PUBLISH
+      language: "all"
+      pagination: { postsPerPage: -1, paged: 1 }
+    }
+  ) {
+    nodes {
+      databaseId
+      slug
+      uri
+      languageCode
+    }
+  }
+}

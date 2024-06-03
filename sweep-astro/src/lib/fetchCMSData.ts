@@ -33,6 +33,8 @@ import {
   CaseStudiesTotalPagesDocument,
   CaseStudiesTagsStaticPathsDocument,
   CustomersPageDocument,
+  CaseStudiesPagesStaticPathsDocument,
+  CaseStudySinglePageDocument,
 } from '@/__generated__/cms';
 import type {
   ComponentIndustriesListFragment,
@@ -433,7 +435,17 @@ export async function fetchCaseStudiesTagsStaticPaths() {
     ).tags?.nodes ?? []
   );
 }
-export function fetchCustomersPage(
+export async function fetchCaseStudiesPagesStaticPaths() {
+  return (
+    (
+      await fetchData(CaseStudiesPagesStaticPathsDocument, undefined, [
+        CACHE_KEYS.STATIC_PATHS,
+        CACHE_KEYS.CASE_STUDY,
+      ])
+    ).pages?.nodes ?? []
+  );
+}
+export function fetchCaseStudiesListPage(
   lang: string = defaultLocale,
   payload?: ListPagePayload
 ) {
@@ -452,6 +464,20 @@ export function fetchCustomersPage(
         : [lang, CACHE_KEYS.MODULE_CASE_STUDY_LIST],
       paged
     )
+  );
+}
+
+export function fetchCaseStudySingle(
+  uri: string,
+  lang: string = defaultLocale
+) {
+  return fetchData(
+    CaseStudySinglePageDocument,
+    {
+      URI: uri,
+      LANG: lang,
+    },
+    [lang, getUrlWithoutLang(uri)]
   );
 }
 

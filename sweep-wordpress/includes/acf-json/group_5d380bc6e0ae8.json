@@ -3866,6 +3866,13 @@
                 "operator": "==",
                 "value": "event"
             }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "case-study"
+            }
         ]
     ],
     "menu_order": 1,
@@ -3884,6 +3891,7 @@
     "graphql_field_name": "modules",
     "map_graphql_types_from_location_rules": 1,
     "graphql_types": [
+        "CaseStudy",
         "Event",
         "Industry",
         "InsightsItem",
@@ -3891,5 +3899,5 @@
         "Page",
         "Post"
     ],
-    "modified": 1717161146
+    "modified": 1717419254
 }

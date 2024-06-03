@@ -4,6 +4,7 @@ import { buildI18nPath } from '@/i18n/utils';
 import ArticleCard from '@/components/ArticleCard.astro';
 import { parseTags } from '@/scripts/data-parsers/parseTag';
 import type {
+  CaseStudyCardFragment,
   EventListItemFragment,
   InsightsListItemFragment,
   NewsroomListItemFragment,
@@ -16,11 +17,12 @@ import ArticleTag from './ArticleTag.astro';
 import ArticleEventDetails from './ArticleEventDetails.astro';
 
 type ArticlesGridProps = {
-  postType: 'insights' | 'newsroom' | 'event';
+  postType: 'insights' | 'newsroom' | 'event' | 'case-study';
   posts: (
     | InsightsListItemFragment
     | NewsroomListItemFragment
     | EventListItemFragment
+    | CaseStudyCardFragment
   )[];
   columns?: 3 | 4;
 };
@@ -37,8 +39,12 @@ const lang = currentLanguage.code;
     <Grid>
       {posts.map((post) => {
         if (!post.uri) return null;
-        const categoryName = post.categories?.nodes?.[0]?.name ?? '';
-        const postTags = parseTags(post.tags?.nodes ?? []);
+        const categoryName =
+          'categories' in post
+            ? post.categories?.nodes?.[0]?.name ?? ''
+            : undefined;
+        const postTags =
+          'tags' in post ? parseTags(post.tags?.nodes ?? []) : [];
         const eventDate =
           post.__typename === 'Event' ? post.eventAcf?.eventDate : undefined;
         return (

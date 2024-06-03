@@ -1,7 +1,7 @@
 ---
 import {
   fetchCaseStudiesTagsStaticPaths,
-  fetchCustomersPage,
+  fetchCaseStudiesListPage,
 } from '@/lib/fetchCMSData';
 import { initializeStore } from '@/scripts/store';
 import { defaultLocale } from '@/i18n/config';
@@ -18,7 +18,7 @@ export async function getStaticPaths() {
 }
 
 const { lang = defaultLocale, case_studies_tag: tag } = Astro.params;
-const data = await fetchCustomersPage(lang, { tag });
+const data = await fetchCaseStudiesListPage(lang, { tag });
 
 initializeStore(customersCaseStudiesStore, {
   isCustomersPage: true,
