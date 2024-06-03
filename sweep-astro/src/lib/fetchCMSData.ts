@@ -1,4 +1,5 @@
 import crypto from 'node:crypto';
+import { performance } from 'node:perf_hooks';
 import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import type { Variables } from 'graphql-request';
 import { cloneDeep, isNil, omit, omitBy } from 'lodash-es';
@@ -54,6 +55,9 @@ const fetchData = async <Query, QueryVariables extends Variables = Variables>(
   variables?: QueryVariables,
   cacheKey?: string[]
 ) => {
+  const timingStart = performance.now();
+  const formatTiming = (timing: number) =>
+    `${Math.round(timing - timingStart)}ms`;
   if (import.meta.env.DEV && cacheKey) {
     // In dev mode its good to cache actual data to prevent fetching it from cms over and over again
     const cache = await getCachedCMSData<Query>(cacheKey);
@@ -61,16 +65,11 @@ const fetchData = async <Query, QueryVariables extends Variables = Variables>(
       console.info(
         new Date().toLocaleTimeString(),
         `\x1B[33m[cache]\x1B[0m`,
-        `Cache hit (${cacheKey.join('/')})`
+        `Cache hit (${cacheKey.join('/')})`,
+        formatTiming(performance.now())
       );
       return cache;
     }
-
-    console.info(
-      new Date().toLocaleTimeString(),
-      `\x1B[35m[cache]\x1B[0m`,
-      `Cache missed, fetching... (${cacheKey.join('/')})`
-    );
   }
 
   // Fetch data if cache was not found or its prod mode
@@ -79,6 +78,13 @@ const fetchData = async <Query, QueryVariables extends Variables = Variables>(
   // set cache in dev mode
   if (import.meta.env.DEV && cacheKey) {
     await cacheCMSData(cacheKey, data);
+
+    console.info(
+      new Date().toLocaleTimeString(),
+      `\x1B[35m[cache]\x1B[0m`,
+      `Cache missed (${cacheKey.join('/')})`,
+      formatTiming(performance.now())
+    );
   }
 
   return data;
