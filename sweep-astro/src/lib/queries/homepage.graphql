@@ -176,21 +176,7 @@ query Homepage($LANG: String!) {
             textUnder
           }
         }
-        resources(first: 100) {
-          nodes {
-            __typename
-            ... on LibraryItem {
-              uri
-              title
-              subpageSettings {
-                introduction
-                image {
-                  ...Image
-                }
-              }
-            }
-          }
-        }
+        show
         button {
           ...Link
         }
