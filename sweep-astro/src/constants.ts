@@ -31,6 +31,15 @@ export const TRANSLATIONS = {
     SUB_TITLE:
       "We'd love to know a little more about you. Enter your details to unlock the page",
   },
+  INSIGHTS: {
+    CTA_DEFAULT_TEXT: 'Read the full story',
+  },
+  NEWSROOM: {
+    CTA_DEFAULT_TEXT: 'Find out more',
+  },
+  EVENTS: {
+    CTA_DEFAULT_TEXT: 'Find out more',
+  },
   HOME: 'Home',
   EVENT: 'EVENT',
   BLOG: 'Blog',
