@@ -31,11 +31,6 @@ const industries: ComponentIndustriesListFragment[] = [];
 async function getAllIndustries() {
   // Use in-memory cache to prevent the industries being fetched again at the same page
   try {
-    const { allIndustries: cachedIndustries } = getStore(cacheStore);
-    if (cachedIndustries) {
-      return cachedIndustries;
-    }
-
     const fetchedIndustries = await fetchComponentIndustriesList(
       currentLanguage.code ?? defaultLocale
     );

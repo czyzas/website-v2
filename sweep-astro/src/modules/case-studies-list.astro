@@ -5,8 +5,6 @@ import ListTagFilter from '@/components/ListTagFilter.astro';
 import ModuleContainer from '@/components/ModuleContainer.astro';
 import Pagination from '@/components/Pagination.astro';
 import PaginationContainer from '@/components/PaginationContainer.astro';
-import { defaultLocale } from '@/i18n/config';
-import { fetchCustomersCaseStudiesList } from '@/lib/fetchCMSData';
 import { getStore } from '@/scripts/store';
 import { customersCaseStudiesStore } from '@/stores/customersCaseStudiesStore';
 import type { WithModuleMeta } from '@/types';
@@ -16,26 +14,20 @@ type Props = WithModuleMeta<ModulesModulesContentCaseStudiesListLayout>;
 const { __meta__, layoutName, backgroundColor } = Astro.props;
 const {
   isCustomersPage,
-  lang = defaultLocale,
   paged = 1,
   tag: filterTag,
+  data,
 } = getStore(customersCaseStudiesStore);
 
-const data = await fetchCustomersCaseStudiesList(lang, {
-  paged,
-  tag: filterTag,
-  postsPerPage: 8,
-});
-
-// TODO: make cleanArray funciton to process this
-const cases = (data.articles?.nodes ?? []).filter(Boolean);
-const tags = (data.filterTags?.nodes ?? []).filter(Boolean);
-const totalPages = data.articles?.pageInfo.pagination?.totalPages ?? 1;
+// TODO: make cleanArray function to process this
+const cases = (data?.articles?.nodes ?? []).filter(Boolean);
+const tags = (data?.filterTags?.nodes ?? []).filter(Boolean);
+const totalPages = data!.articles?.pageInfo.pagination?.totalPages ?? 1;
 const moduleId = `case-studies-${__meta__.index}`;
 ---
 
 {
-  isCustomersPage && (
+  isCustomersPage && cases.length > 0 && (
     <ModuleContainer
       meta={__meta__}
       name={layoutName!}

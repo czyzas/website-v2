@@ -1,7 +1,7 @@
 ---
 import {
   fetchCaseStudiesTagsStaticPaths,
-  fetchDefaultPage,
+  fetchCustomersPage,
 } from '@/lib/fetchCMSData';
 import { initializeStore } from '@/scripts/store';
 import { defaultLocale } from '@/i18n/config';
@@ -20,7 +20,10 @@ export async function getStaticPaths() {
     paramValueType: 'slug',
   });
 
-  return await createPaginatedStaticPaths(pagesSP, 'case-study');
+  return await createPaginatedStaticPaths(pagesSP, {
+    postType: 'case-study',
+    tagSlug: 'case_studies_tag',
+  });
 }
 
 const {
@@ -28,13 +31,14 @@ const {
   case_studies_tag: tag,
   paged = 1,
 } = fixPagedParams(Astro.params);
-const data = await fetchDefaultPage('customers', lang);
+const data = await fetchCustomersPage(lang, { paged, tag });
 
 initializeStore(customersCaseStudiesStore, {
   isCustomersPage: true,
   lang,
   paged,
   tag,
+  data,
 });
 ---
 

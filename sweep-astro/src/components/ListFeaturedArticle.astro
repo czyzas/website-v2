@@ -60,6 +60,21 @@ const layouts = {
 
 const ContentWrapper =
   layout in layouts ? layouts[layout as CardLayout] : layouts.overlapping;
+
+let ctaDefaultText = '';
+switch (postType) {
+  case 'newsroom':
+    ctaDefaultText = TRANSLATIONS.NEWSROOM.CTA_DEFAULT_TEXT;
+    break;
+  case 'insights':
+    ctaDefaultText = TRANSLATIONS.INSIGHTS.CTA_DEFAULT_TEXT;
+    break;
+  case 'event':
+    ctaDefaultText = TRANSLATIONS.EVENTS.CTA_DEFAULT_TEXT;
+    break;
+  default:
+    ctaDefaultText = TRANSLATIONS.READ_FULL_STORY;
+}
 ---
 
 {
@@ -93,7 +108,7 @@ const ContentWrapper =
           <WordpressButtonLink
             data={{
               url: buildI18nPath(uri, lang),
-              title: TRANSLATIONS.READ_FULL_STORY,
+              title: ctaDefaultText,
             }}
             arrow
           />

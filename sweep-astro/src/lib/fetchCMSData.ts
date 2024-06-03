@@ -1,4 +1,5 @@
 import crypto from 'node:crypto';
+import { performance } from 'node:perf_hooks';
 import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import type { Variables } from 'graphql-request';
 import { cloneDeep, isNil, omit, omitBy } from 'lodash-es';
@@ -29,9 +30,9 @@ import {
   EventsTotalPagesDocument,
   InsightsTotalPagesDocument,
   NewsroomTotalPagesDocument,
-  CustomersCaseStudiesListDocument,
   CaseStudiesTotalPagesDocument,
   CaseStudiesTagsStaticPathsDocument,
+  CustomersPageDocument,
 } from '@/__generated__/cms';
 import type {
   ComponentIndustriesListFragment,
@@ -54,6 +55,9 @@ const fetchData = async <Query, QueryVariables extends Variables = Variables>(
   variables?: QueryVariables,
   cacheKey?: string[]
 ) => {
+  const timingStart = performance.now();
+  const formatTiming = (timing: number) =>
+    `${Math.round(timing - timingStart)}ms`;
   if (import.meta.env.DEV && cacheKey) {
     // In dev mode its good to cache actual data to prevent fetching it from cms over and over again
     const cache = await getCachedCMSData<Query>(cacheKey);
@@ -61,7 +65,8 @@ const fetchData = async <Query, QueryVariables extends Variables = Variables>(
       console.info(
         new Date().toLocaleTimeString(),
         `\x1B[33m[cache]\x1B[0m`,
-        `Cache hit (${cacheKey.join('/')})`
+        `Cache hit (${cacheKey.join('/')})`,
+        formatTiming(performance.now())
       );
       return cache;
     }
@@ -79,6 +84,13 @@ const fetchData = async <Query, QueryVariables extends Variables = Variables>(
   // set cache in dev mode
   if (import.meta.env.DEV && cacheKey) {
     await cacheCMSData(cacheKey, data);
+
+    console.info(
+      new Date().toLocaleTimeString(),
+      `\x1B[35m[cache]\x1B[0m`,
+      `Fresh data fetched (${cacheKey.join('/')})`,
+      formatTiming(performance.now())
+    );
   }
 
   return data;
@@ -103,13 +115,19 @@ export async function fetchTotalPages(
     tagSlug?: string;
   }
 ) {
-  const { lang = defaultLocale, postsPerPage, tagSlug } = payload ?? {};
+  const {
+    lang = defaultLocale,
+    postsPerPage = DEFAULT_POSTS_PER_PAGE,
+    tagSlug,
+  } = payload ?? {};
   const options = {
     LANG: lang,
     POSTS_PER_PAGE: postsPerPage,
     TAG_SLUG: tagSlug,
   };
-  const cache = [CACHE_KEYS.TOTAL_PAGES, postType];
+  const cache = tagSlug
+    ? [CACHE_KEYS.TOTAL_PAGES, postType, CACHE_KEYS.TAG, tagSlug]
+    : [CACHE_KEYS.TOTAL_PAGES, postType];
   let data;
   switch (postType) {
     case 'insights':
@@ -415,22 +433,18 @@ export async function fetchCaseStudiesTagsStaticPaths() {
     ).tags?.nodes ?? []
   );
 }
-export function fetchCustomersCaseStudiesList(
+export function fetchCustomersPage(
   lang: string = defaultLocale,
   payload?: ListPagePayload
 ) {
-  const {
-    tag,
-    paged = 1,
-    postsPerPage = DEFAULT_POSTS_PER_PAGE,
-  } = payload ?? {};
+  const { tag, paged = 1, postsPerPage } = payload ?? {};
   return fetchData(
-    CustomersCaseStudiesListDocument,
+    CustomersPageDocument,
     {
       LANG: lang,
       TAG_SLUG: tag,
       PAGED: +paged,
-      POSTS_PER_PAGE: +postsPerPage,
+      POSTS_PER_PAGE: postsPerPage,
     },
     paginateCacheKey(
       tag

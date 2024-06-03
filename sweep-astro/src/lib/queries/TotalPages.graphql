@@ -47,7 +47,7 @@ query EventsTotalPages(
     where: {
       status: PUBLISH
       language: $LANG
-      tagSlug: $TAG_SLUG
+      categorySlug: $TAG_SLUG
       pagination: { postsPerPage: $POSTS_PER_PAGE }
     }
   ) {

@@ -5,6 +5,9 @@ import { getStore } from '@/scripts/store';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
 import { buildI18nPath } from '@/i18n/utils';
 import { languageStore } from '@/stores/languageStore';
+import { fetchInsightsListPage } from '@/lib/fetchCMSData';
+import { defaultLocale } from '@/i18n/config';
+import type { InsightsListPageQuery } from '@/__generated__/cms';
 import Container from '../ui/Container.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
 import SwiperNavigation from '../SwiperNavigation.astro';
@@ -17,7 +20,13 @@ const store = getStore(cmsStore);
 const data = store.homepage!;
 const acf = data.homepage!.resources!;
 
-const resources = acf.resources?.nodes ?? [];
+const insightsData: InsightsListPageQuery = await fetchInsightsListPage(
+  defaultLocale,
+  { postsPerPage: acf.show ?? 6 }
+);
+
+const insights = (insightsData.articles?.nodes ?? []).filter(Boolean);
+
 // TODO: create useLanguage hook to get current lang from the store automatically
 const { currentLanguage } = getStore(languageStore);
 ---
@@ -76,17 +85,17 @@ const { currentLanguage } = getStore(languageStore);
     <div class="swiper resources-swiper">
       <div class="swiper-wrapper">
         {
-          resources.map((resource) => {
-            if (resource.__typename !== 'LibraryItem') return null;
+          insights.map((insight) => {
+            if (insight.__typename !== 'InsightsItem') return null;
 
-            if (!resource.uri) return null;
+            if (!insight.uri) return null;
 
             return (
               <div class="swiper-slide">
                 <ArticleCard
-                  image={resource.subpageSettings?.image}
+                  image={insight.subpageSettings?.image}
                   link={{
-                    url: buildI18nPath(resource.uri, currentLanguage.code),
+                    url: buildI18nPath(insight.uri, currentLanguage.code),
                   }}
                   class="size-full"
                 >
@@ -95,7 +104,7 @@ const { currentLanguage } = getStore(languageStore);
                   </p>
                   <h3
                     class="typography-cards-bold-large"
-                    set:html={resource.title}
+                    set:html={insight.title}
                   />
                 </ArticleCard>
               </div>
