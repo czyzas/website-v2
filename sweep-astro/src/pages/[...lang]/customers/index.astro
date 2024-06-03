@@ -11,7 +11,9 @@ import { customersCaseStudiesStore } from '@/stores/customersCaseStudiesStore';
 
 export async function getStaticPaths() {
   const pages = await fetchSinglePageStaticPaths('customers');
-  return createSingleDefaultPageStaticPaths(pages);
+  const sp = createSingleDefaultPageStaticPaths(pages);
+
+  return sp;
 }
 
 const { lang = defaultLocale } = Astro.params;

@@ -129,10 +129,15 @@ export async function createPaginatedStaticPaths<
   T extends object = Record<string, string | number | undefined>,
 >(
   generatedStaticPaths: StaticPathsWithLang<T>[],
-  postType: TotalPagesAllowedPostTypes,
-  postsPerPage: number = DEFAULT_POSTS_PER_PAGE
+  payload: {
+    postType: TotalPagesAllowedPostTypes;
+    postsPerPage?: number;
+    tag?: string;
+  }
 ) {
   type R = T & { paged: number };
+  const { postType, postsPerPage = DEFAULT_POSTS_PER_PAGE } = payload ?? {};
+
   const finalPaths: StaticPathsWithLang<R>[] = [];
   for (const staticPath of generatedStaticPaths) {
     const { lang } = staticPath.params;

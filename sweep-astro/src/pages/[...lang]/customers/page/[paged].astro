@@ -17,7 +17,7 @@ export async function getStaticPaths() {
   const pages = await fetchSinglePageStaticPaths('customers');
   const pagesSP = createSingleDefaultPageStaticPaths(pages);
 
-  return await createPaginatedStaticPaths(pagesSP, 'case-study');
+  return await createPaginatedStaticPaths(pagesSP, { postType: 'case-study' });
 }
 
 const { lang = defaultLocale, paged = 1 } = fixPagedParams(Astro.params);

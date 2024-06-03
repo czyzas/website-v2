@@ -12,12 +12,13 @@ import {
 import ArticlesList from '@/templates/ArticlesList.astro';
 
 export const getStaticPaths = async () => {
-  const pagesSP = createPagesStaticPaths(await fetchInsightsTagsStaticPaths(), {
+  const pages = await fetchInsightsTagsStaticPaths();
+  const pagesSP = createPagesStaticPaths(pages, {
     paramKey: 'newsroom_tag',
     paramValueType: 'slug',
   });
 
-  return await createPaginatedStaticPaths(pagesSP, 'newsroom');
+  return await createPaginatedStaticPaths(pagesSP, { postType: 'newsroom' });
 };
 
 const {

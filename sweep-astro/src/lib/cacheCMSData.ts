@@ -14,6 +14,7 @@ export const CACHE_KEYS = {
   INDUSTRY: 'industry',
   INSIGHTS: 'insights',
   NEWSROOM: 'newsroom',
+  CUSTOMERS: 'customers',
   CASE_STUDY: 'case-study',
   TAG: 'tag',
   EVENTS: 'events',

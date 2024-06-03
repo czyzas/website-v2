@@ -16,7 +16,7 @@ export async function getStaticPaths() {
     await fetchSinglePageStaticPaths('newsroom')
   );
 
-  return await createPaginatedStaticPaths(pagesSP, 'newsroom');
+  return await createPaginatedStaticPaths(pagesSP, { postType: 'newsroom' });
 }
 
 const { lang = defaultLocale, paged = 1 } = fixPagedParams(Astro.params);
