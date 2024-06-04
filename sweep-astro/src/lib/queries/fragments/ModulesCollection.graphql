@@ -289,6 +289,28 @@ fragment ModulesCollection on Modules {
         }
       }
     }
+    ... on ModulesModulesContentQuotationWithImageLayout {
+      layoutName
+      backgroundColor {
+        selectBackgroundColor
+      }
+      image {
+        ...Image
+      }
+      logo {
+        ...Image
+      }
+      quotation {
+        selectQuotation {
+          quote
+          authorImage {
+            ...Image
+          }
+          authorName
+          authorOccupation
+        }
+      }
+    }
     ... on ModulesModulesContentQuotationsLayout {
       layoutName
       backgroundColor {

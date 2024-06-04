@@ -116,6 +116,10 @@ if (Astro.slots.has('default')) {
       @apply typography-h3;
     }
 
+    :global(:where(iframe)) {
+      @apply w-full h-auto aspect-video rounded-lg;
+    }
+
     :global(:where(:first-child)) {
       @apply mt-0;
     }

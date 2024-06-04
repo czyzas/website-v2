@@ -164,7 +164,7 @@ if (page.__typename === 'CaseStudy') {
 <Layout
   name={postType}
   pageTitle={pageTitle}
-  htmlClassName="scroll-smooth scroll-p-4"
+  htmlClassName="scroll-smooth scroll-p-24"
 >
   <Top
     overline={cn({ [TRANSLATIONS.EVENT]: page.__typename === 'Event' })}
@@ -250,8 +250,13 @@ if (page.__typename === 'CaseStudy') {
         >
           <SidebarCardAuthor author={author} />
           {
-            (page.__typename === 'InsightsItem' ||
-              page.__typename === 'NewsroomItem') && (
+            (
+              [
+                'InsightsItem',
+                'NewsroomItem',
+                'CaseStudy',
+              ] as (typeof page.__typename)[]
+            ).includes(page.__typename) && (
               <SidebarCardTableOfContents toc={toc} />
             )
           }

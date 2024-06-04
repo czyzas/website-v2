@@ -2,6 +2,7 @@
 import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
 import { linkShouldRender } from '@/scripts/data-parsers/parseLink';
 import type { UnparsedLink } from '@/scripts/data-parsers/parseLink';
+import { cn } from '@/scripts/cn';
 import Grid from './ui/Grid.astro';
 import WordpressButtonLink from './WordpressButtonLink.astro';
 import WordpressImage from './WordpressImage.astro';
@@ -10,30 +11,60 @@ type Props = {
   title?: string;
   button?: UnparsedLink;
   image?: UnparsedImage;
+  variant?: 'base' | 'small';
 };
 
-const { title, button, image } = Astro.props;
+const { title, button, image, variant = 'base' } = Astro.props;
 ---
 
 <Grid
-  class="grid-cols-1 gap-8 rounded-lg bg-sw-sea-500 p-6 md:grid-cols-12 md:gap-5 md:p-14"
+  class={cn(
+    'grid-cols-1 gap-8 rounded-lg bg-sw-sea-500 p-6 text-white md:grid-cols-12 md:gap-5 md:p-14',
+    { 'overflow-hidden p-0 md:p-0': variant === 'small' }
+  )}
 >
-  <div class="contents lg:col-span-6 lg:block">
+  <div
+    class={cn('contents lg:col-span-6 lg:block', {
+      'col-span-full flex flex-col gap-4 p-6': variant === 'small',
+    })}
+  >
     <h2
-      class="typography-h3 col-span-full text-white md:text-5xl md:font-bold md:leading-tight"
+      class={cn(
+        {
+          'typography-h3 md:text-5xl md:font-bold md:leading-tight':
+            variant === 'base',
+          'typography-body': variant === 'small',
+        },
+        'col-span-full text-inherit'
+      )}
       set:html={title}
     />
     {
       linkShouldRender(button) && (
-        <div class="order-3 col-span-full mt-2 lg:order-none lg:mt-4">
+        <div
+          class={cn('order-3 col-span-full mt-2 lg:order-none lg:mt-4', {
+            'order-2': variant === 'small',
+          })}
+        >
           <WordpressButtonLink data={button} />
         </div>
       )
     }
   </div>
   <div
-    class="order-2 col-span-full flex items-center justify-center lg:order-none lg:col-span-6"
+    class={cn(
+      'order-2 col-span-full flex items-center justify-center lg:order-none lg:col-span-6',
+      {
+        'order-3': variant === 'small',
+      }
+    )}
   >
-    <WordpressImage data={image} />
+    <WordpressImage
+      data={image}
+      class={cn({
+        'w-full lg:size-full lg:object-cover lg:object-left-top':
+          variant === 'small',
+      })}
+    />
   </div>
 </Grid>

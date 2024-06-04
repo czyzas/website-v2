@@ -12,5 +12,10 @@ const { __meta__, layoutName, backgroundColor, title, image, button } =
 ---
 
 <ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
-  <DemoComponent title={fixDoubleBr(title)} image={image} button={button} />
+  <DemoComponent
+    title={fixDoubleBr(title)}
+    image={image}
+    button={button}
+    variant={__meta__.moduleType === 'article' ? 'small' : 'base'}
+  />
 </ModuleContainer>
