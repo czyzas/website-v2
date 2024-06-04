@@ -972,6 +972,50 @@
                                     "graphql_connection_type": "one_to_many",
                                     "bidirectional_target": [],
                                     "parent_repeater": "field_663a1e0e4aebd"
+                                },
+                                {
+                                    "key": "field_665ee21e346e4",
+                                    "label": "Select partners",
+                                    "name": "partners_logos",
+                                    "aria-label": "",
+                                    "type": "relationship",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_66598940c863d",
+                                                "operator": "==",
+                                                "value": "partners"
+                                            }
+                                        ]
+                                    ],
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 1,
+                                    "post_type": [
+                                        "partner"
+                                    ],
+                                    "post_status": "",
+                                    "taxonomy": "",
+                                    "filters": [
+                                        "search",
+                                        "taxonomy"
+                                    ],
+                                    "return_format": "object",
+                                    "min": "",
+                                    "max": "",
+                                    "elements": "",
+                                    "bidirectional": 0,
+                                    "show_in_graphql": 1,
+                                    "graphql_description": "",
+                                    "graphql_field_name": "partnersLogos",
+                                    "graphql_connection_type": "one_to_many",
+                                    "bidirectional_target": [],
+                                    "parent_repeater": "field_663a1e0e4aebd"
                                 }
                             ]
                         },
@@ -3941,5 +3985,5 @@
         "Page",
         "Post"
     ],
-    "modified": 1717487933
+    "modified": 1717494436
 }

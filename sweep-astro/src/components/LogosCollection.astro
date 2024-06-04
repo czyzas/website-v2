@@ -6,7 +6,11 @@ import { cn } from '@/scripts/cn';
 import WordpressImage from './WordpressImage.astro';
 
 interface LogosCollectionProps {
-  logos?: UnparsedImage[];
+  logos?:
+    | UnparsedImage[]
+    | {
+        websiteLink?: string | boolean;
+      }[];
   sizing?: 'sm' | 'md';
 }
 
@@ -87,7 +91,7 @@ const logos = (rawLogos ?? []).filter(Boolean);
               })}
             >
               <WordpressImage
-                data={logo}
+                data={logo as UnparsedImage}
                 class="max-h-12 w-fit select-none object-contain"
               />
             </div>
