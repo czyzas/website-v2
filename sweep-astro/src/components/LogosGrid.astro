@@ -30,13 +30,13 @@ const columnClassName: Record<number, string> = {
       {logos.map((logo) => (
         <Card
           class={cn(
-            'customer-logo p-6 flex items-center justify-center',
+            'customer-logo flex items-center justify-center p-6',
             columnClassName?.[columns] ?? 'col-span-full'
           )}
         >
           <WordpressImage
             data={logo}
-            class="max-h-20 max-w-40 object-contain w-fit"
+            class="max-h-20 w-fit max-w-40 object-contain"
           />
         </Card>
       ))}

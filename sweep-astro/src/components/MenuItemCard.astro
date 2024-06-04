@@ -35,15 +35,15 @@ const tags = parseTags(rawTags);
 
 <Card
   {...props}
-  class={cn('overflow-hidden h-full p-0 grid grid-cols-2', className)}
+  class={cn('grid h-full grid-cols-2 overflow-hidden p-0', className)}
 >
   <div
     class={cn(
-      'content-column flex flex-col gap-4 self-start p-4 md:p-6 col-span-full md:col-span-1'
+      'content-column col-span-full flex flex-col gap-4 self-start p-4 md:col-span-1 md:p-6'
     )}
   >
     <span
-      class="text-xs text-sw-sky-400 font-bold uppercase"
+      class="text-xs font-bold uppercase text-sw-sky-400"
       set:html={featuredTitle}
     />
     <span
@@ -54,7 +54,7 @@ const tags = parseTags(rawTags);
       data={link}
       arrow
       secondary
-      class="py-1 px-3 self-start text-sm"
+      class="self-start px-3 py-1 text-sm"
     />
     {
       tags.length > 0 && (
@@ -71,9 +71,9 @@ const tags = parseTags(rawTags);
 
   <div
     class={cn(
-      'image-column aspect-[16/9] col-span-full md:aspect-auto md:col-span-1'
+      'image-column col-span-full aspect-[16/9] md:col-span-1 md:aspect-auto'
     )}
   >
-    <WordpressImage data={image} class="object-cover w-full h-full" />
+    <WordpressImage data={image} class="h-full w-full object-cover" />
   </div>
 </Card>

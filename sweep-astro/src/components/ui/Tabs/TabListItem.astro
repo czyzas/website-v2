@@ -23,18 +23,18 @@ const {
 <PrimitiveTabListItem
   {...props}
   liClassName={cn(
-    'flex-1 mb-2 bg-white',
+    'mb-2 flex-1 bg-white',
     { '[counter-increment:tab-list]': counter },
     liClassName
   )}
   class={cn(
-    'group min-h-full w-full border border-sw-text-disabled px-4 py-3 rounded-lg min-w-fit whitespace-nowrap aria-selected:cursor-default',
+    'group min-h-full w-full min-w-fit whitespace-nowrap rounded-lg border border-sw-text-disabled px-4 py-3 aria-selected:cursor-default',
     {
-      'transition-colors bg-white hover:bg-sw-surface-subdued aria-selected:bg-sw-sky-400 aria-selected:text-white aria-selected:border-transparent':
+      'bg-white transition-colors hover:bg-sw-surface-subdued aria-selected:border-transparent aria-selected:bg-sw-sky-400 aria-selected:text-white':
         !underline,
       'relative overflow-hidden': underline,
       'typography-body-2': !counter,
-      'isolate text-left typography-h3 flex items-baseline gap-3': counter,
+      'typography-h3 isolate flex items-baseline gap-3 text-left': counter,
     },
     className
   )}
@@ -44,18 +44,18 @@ const {
       <>
         <span
           class={cn(
-            'counter text-sw-sky-400 text-6xl before:[counter-increment:tab-item] before:content-[counter(tab-item)]',
+            'counter text-6xl text-sw-sky-400 before:content-[counter(tab-item)] before:[counter-increment:tab-item]',
             { 'transition-colors group-aria-selected:text-white': !underline }
           )}
         />
-        <span class="hidden lg:block absolute top-1/2 transform -translate-y-1/2 right-5 w-48 h-0.5 mt-3 bg-gradient-to-r from-white/0 to-sw-text-disabled -z-[1]" />
+        <span class="absolute right-5 top-1/2 -z-[1] mt-3 hidden h-0.5 w-48 -translate-y-1/2 transform bg-gradient-to-r from-white/0 to-sw-text-disabled lg:block" />
       </>
     )
   }
   <slot />
   {
     underline && (
-      <span class="active-line bg-sw-sky-400 h-1 w-full absolute left-0 bottom-0 transition-transform translate-y-1 group-aria-selected:translate-y-0" />
+      <span class="active-line absolute bottom-0 left-0 h-1 w-full translate-y-1 bg-sw-sky-400 transition-transform group-aria-selected:translate-y-0" />
     )
   }
 </PrimitiveTabListItem>

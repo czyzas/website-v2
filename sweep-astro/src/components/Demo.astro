@@ -16,23 +16,23 @@ const { title, button, image } = Astro.props;
 ---
 
 <Grid
-  class="bg-sw-sea-500 rounded-lg p-6 md:p-14 grid-cols-1 md:grid-cols-12 gap-8 md:gap-5"
+  class="grid-cols-1 gap-8 rounded-lg bg-sw-sea-500 p-6 md:grid-cols-12 md:gap-5 md:p-14"
 >
-  <div class="contents lg:block lg:col-span-6">
+  <div class="contents lg:col-span-6 lg:block">
     <h2
-      class="col-span-full text-white typography-h3 md:text-5xl md:leading-tight md:font-bold"
+      class="typography-h3 col-span-full text-white md:text-5xl md:font-bold md:leading-tight"
       set:html={title}
     />
     {
       linkShouldRender(button) && (
-        <div class="col-span-full mt-2 lg:mt-4 order-3 lg:order-none">
+        <div class="order-3 col-span-full mt-2 lg:order-none lg:mt-4">
           <WordpressButtonLink data={button} />
         </div>
       )
     }
   </div>
   <div
-    class="col-span-full lg:col-span-6 flex items-center justify-center order-2 lg:order-none"
+    class="order-2 col-span-full flex items-center justify-center lg:order-none lg:col-span-6"
   >
     <WordpressImage data={image} />
   </div>

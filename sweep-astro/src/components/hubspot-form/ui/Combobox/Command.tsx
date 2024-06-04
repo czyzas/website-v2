@@ -30,7 +30,7 @@ const CommandInput = forwardRef<
     <CommandPrimitive.Input
       ref={ref}
       className={cn(
-        'flex h-11 w-full rounded-md bg-transparent py-3 text-md outline-none disabled:cursor-not-allowed disabled:opacity-50',
+        'text-md flex h-11 w-full rounded-md bg-transparent py-3 outline-none disabled:cursor-not-allowed disabled:opacity-50',
         className
       )}
       {...props}
@@ -59,7 +59,7 @@ const CommandEmpty = forwardRef<
 >((props, ref) => (
   <CommandPrimitive.Empty
     ref={ref}
-    className="py-4 px-2 text-center typography-body"
+    className="typography-body px-2 py-4 text-center"
     {...props}
   />
 ));

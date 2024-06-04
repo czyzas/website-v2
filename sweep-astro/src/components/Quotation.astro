@@ -42,7 +42,7 @@ const hasAuthor = !!authorImage || !!authorName || !!authorOccupation;
       'xl:p-16': quoteSize === 'md',
       'xl:p-8': quoteSize === 'sm',
     },
-    { 'bg-sw-sea-500 text-white border-transparent': theme === 'dark' },
+    { 'border-transparent bg-sw-sea-500 text-white': theme === 'dark' },
     className
   )}
 >
@@ -60,7 +60,7 @@ const hasAuthor = !!authorImage || !!authorName || !!authorOccupation;
   {
     hasAuthor && (
       <div
-        class={cn('author flex items-center gap-6 mt-8', {
+        class={cn('author mt-8 flex items-center gap-6', {
           'md:mt-16': quoteSize === 'md',
           'md:mt-12': quoteSize === 'sm',
         })}
@@ -69,7 +69,7 @@ const hasAuthor = !!authorImage || !!authorName || !!authorOccupation;
           data={authorImage}
           preferredWidth={avatarSize === 'sm' ? 50 : 115}
           class={cn(
-            'aspect-square object-cover rounded-full border-2 border-transparent',
+            'aspect-square rounded-full border-2 border-transparent object-cover',
             {
               'border-white': theme === 'dark',
               'size-[4.875rem]': avatarSize === 'md',

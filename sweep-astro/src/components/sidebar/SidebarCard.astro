@@ -24,10 +24,10 @@ const Heading = collapsible ? 'summary' : 'div';
       (collapsible || (!collapsible && title)) && (
         <Heading
           class={cn(
-            'px-6 py-4 typography-small-box-title uppercase text-sw-sky-400',
+            'typography-small-box-title px-6 py-4 uppercase text-sw-sky-400',
             {
               'pb-3': !collapsible,
-              'cursor-pointer group-open:pb-3 flex items-center justify-between':
+              'flex cursor-pointer items-center justify-between group-open:pb-3':
                 collapsible,
             }
           )}
@@ -36,7 +36,7 @@ const Heading = collapsible ? 'summary' : 'div';
           {collapsible && (
             <Icon
               name="caret-down"
-              class="text-base text-sw-text-subdued transform group-open:rotate-180"
+              class="transform text-base text-sw-text-subdued group-open:rotate-180"
             />
           )}
         </Heading>

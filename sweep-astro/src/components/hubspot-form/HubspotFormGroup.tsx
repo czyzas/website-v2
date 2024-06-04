@@ -39,7 +39,7 @@ export const HubspotFormGroup = ({
   return (
     <div
       className={cn(
-        'form-group w-full grid grid-cols-1 gap-3.5',
+        'form-group grid w-full grid-cols-1 gap-3.5',
         columns?.[group.length] ?? 'md:grid-cols-1',
         { hidden: allHiddenFields },
         allHiddenFields

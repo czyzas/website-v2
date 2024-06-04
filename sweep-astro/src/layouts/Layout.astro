@@ -51,7 +51,7 @@ initializeStore(cacheStore, {
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body class="antialiased min-h-screen flex flex-col">
+  <body class="flex min-h-screen flex-col antialiased">
     <Header />
     <main {...props} class={cn({ subpage: !home }, name, 'flex-1', className)}>
       <slot />

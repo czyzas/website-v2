@@ -9,7 +9,7 @@ const SubscribeNewsletter = ({ form }: { form: IHubspotFormDefinition }) => {
   const [isSubmitSuccessful, setIsSubmitSuccessful] = useState(false);
 
   return (
-    <div className="flex gap-3 h-full w-full">
+    <div className="flex h-full w-full gap-3">
       <div className="flex flex-col gap-2">
         {isSubmitSuccessful ? (
           <p>{TRANSLATIONS.NEWSLETTER_SECTION.FORM_SUCCESS_MESSAGE}</p>

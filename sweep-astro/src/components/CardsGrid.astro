@@ -31,7 +31,7 @@ const columnClassName: Record<number, string> = {
     <Grid {...props} class={cn('cards-grid', className)}>
       {cards.map((card) => (
         <Card class={cn(columnClassName?.[columns] ?? 'col-span-full')}>
-          <WordpressImage data={card.icon} class="size-8 object-contain mb-3" />
+          <WordpressImage data={card.icon} class="mb-3 size-8 object-contain" />
           <div
             class="typography-cards-bold-large"
             set:html={fixDoubleBr(card.title)}

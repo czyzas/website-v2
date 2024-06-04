@@ -43,14 +43,14 @@ const look = (rawLook ?? 'default') as 'default' | 'card';
         {team.map((person) => (
           <div
             class={cn('person', {
-              'border border-sw-text-disabled rounded-lg overflow-hidden':
+              'overflow-hidden rounded-lg border border-sw-text-disabled':
                 look === 'card',
             })}
           >
             <WordpressImage
               data={person.image}
               class={cn('aspect-[220/169] object-cover', {
-                'rounded-lg border border-sw-text-disabled mb-4.5':
+                'mb-4.5 rounded-lg border border-sw-text-disabled':
                   look === 'default',
               })}
             />
@@ -72,7 +72,7 @@ const look = (rawLook ?? 'default') as 'default' | 'card';
               )}
               {!!person?.position && (
                 <div
-                  class="typography-body text-sw-text-subdued mt-1.5"
+                  class="typography-body mt-1.5 text-sw-text-subdued"
                   set:html={fixDoubleBr(person.position)}
                 />
               )}
@@ -80,7 +80,7 @@ const look = (rawLook ?? 'default') as 'default' | 'card';
                 <div class="mt-auto pt-2">
                   <WordpressImage
                     data={person.logo}
-                    class="w-auto h-7 object-contain object-left-top"
+                    class="h-7 w-auto object-contain object-left-top"
                   />
                 </div>
               )}

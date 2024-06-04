@@ -173,7 +173,7 @@ if (page.__typename === 'CaseStudy') {
     content={introduction}
     image={page.__typename !== 'CaseStudy' ? image : undefined}
     size={size}
-    class="py-8 md:pt-18 md:pb-14"
+    class="py-8 md:pb-14 md:pt-18"
   >
     {
       page.__typename === 'Event' && (
@@ -240,13 +240,13 @@ if (page.__typename === 'CaseStudy') {
     <Container>
       <Grid class="gap-y-8">
         <div
-          class="col-span-full md:col-start-1 lg:col-start-2 md:col-end-9 order-2 md:order-1 flex flex-col gap-8 md:gap-14"
+          class="order-2 col-span-full flex flex-col gap-8 md:order-1 md:col-start-1 md:col-end-9 md:gap-14 lg:col-start-2"
         >
           <ModulesIncluder category="article" data={page?.modules} />
         </div>
         <Sidebar
           sticky
-          class="col-span-full md:col-start-9 lg:col-start-10 md:col-end-13 order-1 md:order-2"
+          class="order-1 col-span-full md:order-2 md:col-start-9 md:col-end-13 lg:col-start-10"
         >
           <SidebarCardAuthor author={author} />
           {

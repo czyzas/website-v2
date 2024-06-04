@@ -97,12 +97,12 @@ export const Combobox = forwardRef<HTMLSelectElement, ComboboxProps>(
                 className={cn(
                   'combobox-trigger',
                   base,
-                  'text-left flex items-center gap-2 justify-between',
+                  'flex items-center justify-between gap-2 text-left',
                   { 'text-sw-text-subdued': !value },
                   buttonClassName
                 )}
               >
-                <span className="truncate min-h-[1.5em]">
+                <span className="min-h-[1.5em] truncate">
                   {value
                     ? options.find((option) => option.value === value)?.label
                     : placeholder}
@@ -113,7 +113,7 @@ export const Combobox = forwardRef<HTMLSelectElement, ComboboxProps>(
             <PopoverContent className="w-[max(12rem,var(--radix-popper-anchor-width))] p-0">
               <Command>
                 <CommandInput placeholder="Search..." />
-                <CommandList className="max-h-48 custom-scrollbar overflow-auto">
+                <CommandList className="custom-scrollbar max-h-48 overflow-auto">
                   <CommandEmpty>
                     {emptyText ?? 'No entries found.'}
                   </CommandEmpty>
@@ -148,7 +148,7 @@ export const Combobox = forwardRef<HTMLSelectElement, ComboboxProps>(
                         {option.label}
                         <CheckIcon
                           className={cn(
-                            'icon shrink-0 size-4',
+                            'icon size-4 shrink-0',
                             value === option.value ? 'opacity-100' : 'opacity-0'
                           )}
                         />

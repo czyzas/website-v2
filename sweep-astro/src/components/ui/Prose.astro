@@ -45,7 +45,7 @@ if (Astro.slots.has('default')) {
     }
 
     :global(:where(a, a:hover, a:focus)) {
-      @apply text-current underline underline-offset-4 decoration-current;
+      @apply text-current underline decoration-current underline-offset-4;
       text-decoration-skip-ink: none;
     }
     :global(:where(a:hover, a:focus)) {
@@ -61,7 +61,7 @@ if (Astro.slots.has('default')) {
     }
 
     :global(:where(img)) {
-      @apply w-full h-auto rounded-lg;
+      @apply h-auto w-full rounded-lg;
     }
 
     :global(:where(ol)) {
@@ -77,7 +77,7 @@ if (Astro.slots.has('default')) {
     }
 
     :global(:where(ol > li::marker)) {
-      @apply text-current font-normal;
+      @apply font-normal text-current;
     }
 
     :global(:where(ul > li::marker)) {
@@ -93,7 +93,7 @@ if (Astro.slots.has('default')) {
     }
 
     :global(:where(h2, h3, h4)) {
-      @apply text-black mt-8 mb-3;
+      @apply mb-3 mt-8 text-black;
     }
 
     :global(:where(h2 + *, h3 + *, h4 + *)) {

@@ -11,7 +11,7 @@ const { class: className } = Astro.props;
 <div
   class={cn(
     'swiper-navigation',
-    'flex bg-white divide-x border border-sw-border rounded-lg shadow-button-secondary text-black overflow-hidden',
+    'flex divide-x overflow-hidden rounded-lg border border-sw-border bg-white text-black shadow-button-secondary',
     className
   )}
 >
@@ -20,7 +20,7 @@ const { class: className } = Astro.props;
     class={cn(
       'swiper-navigation-prev',
       'flex items-center justify-center p-2.5 hover:bg-sw-surface-subdued',
-      'disabled:bg-sw-surface-background disabled:text-sw-text-disabled transition-colors'
+      'transition-colors disabled:bg-sw-surface-background disabled:text-sw-text-disabled'
     )}
   >
     <Icon name="caret-left" />
@@ -30,7 +30,7 @@ const { class: className } = Astro.props;
     class={cn(
       'swiper-navigation-next',
       'flex items-center justify-center p-2.5 hover:bg-sw-surface-subdued',
-      'disabled:bg-sw-surface-background disabled:text-sw-text-disabled transition-colors'
+      'transition-colors disabled:bg-sw-surface-background disabled:text-sw-text-disabled'
     )}
   >
     <Icon name="caret-right" />

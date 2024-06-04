@@ -28,7 +28,7 @@ const Tag = link ? 'a' : 'div';
   target={link ? link.target : undefined}
   class={cn(
     'article-card',
-    'flex flex-col border border-sw-border rounded-lg overflow-hidden shadow-button-secondary',
+    'flex flex-col overflow-hidden rounded-lg border border-sw-border shadow-button-secondary',
     className
   )}
 >
@@ -36,13 +36,13 @@ const Tag = link ? 'a' : 'div';
     <WordpressImage
       data={topImage}
       preferredWidth={586}
-      class="object-cover aspect-[16/9] sm:aspect-[28/19]"
+      class="aspect-[16/9] object-cover sm:aspect-[28/19]"
     />
     <slot name="image-addition" />
   </div>
   <div
     class={cn(
-      'content-container bg-white p-6 lg:max-xl:p-4 flex-1 flex flex-col gap-4',
+      'content-container flex flex-1 flex-col gap-4 bg-white p-6 lg:max-xl:p-4',
       { 'transition-colors hover:bg-sw-surface-subdued': !!link }
     )}
   >

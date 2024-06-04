@@ -34,7 +34,7 @@ const uri = replacePrefixURI(rawUri || '', 'case-study', 'customers');
 <CustomerLogo logo={customerLogo} />
 {
   !!customerTitle?.length || !!customerCategory?.length ? (
-    <div class="customer-details typography-card-title flex flex-col mb-4">
+    <div class="customer-details typography-card-title mb-4 flex flex-col">
       {customerTitle?.length ? <span>{customerTitle}</span> : null}
       {customerCategory ? (
         <span class="text-sw-text-subdued">{customerCategory}</span>

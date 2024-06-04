@@ -17,16 +17,16 @@ const { title = '', content = '', image, hubspotFormGuid = '' } = data ?? {};
   enabled && !!data && (
     <Section>
       <Container>
-        <Grid class="bg-sw-sea-500 rounded-lg p-0 grid-rows-1 text-white overflow-hidden">
-          <div class="relative z-[2] row-start-1 row-end-2 col-start-1 col-end-13 lg:col-start-1 lg:col-end-6 p-14 pr-0 flex flex-col items-start gap-4">
+        <Grid class="grid-rows-1 overflow-hidden rounded-lg bg-sw-sea-500 p-0 text-white">
+          <div class="relative z-[2] col-start-1 col-end-13 row-start-1 row-end-2 flex flex-col items-start gap-4 p-14 pr-0 lg:col-start-1 lg:col-end-6">
             <h2
-              class="text-inherit typography-h3 md:text-5xl md:leading-tight md:font-bold"
+              class="typography-h3 text-inherit md:text-5xl md:font-bold md:leading-tight"
               set:html={title}
             />
             <p set:html={content} />
             <NewsletterForm formGuid={hubspotFormGuid} />
           </div>
-          <div class="relative row-start-1 row-end-2 col-start-1 col-end-13 lg:col-start-5 lg:col-end-13 flex items-center justify-center">
+          <div class="relative col-start-1 col-end-13 row-start-1 row-end-2 flex items-center justify-center lg:col-start-5 lg:col-end-13">
             <WordpressImage
               data={image}
               preferredWidth={1440}

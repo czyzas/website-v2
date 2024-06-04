@@ -33,13 +33,13 @@ const showSourcePrefix =
 <ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
   <Grid>
     <Card
-      class={cn('col-span-full p-0 overflow-hidden flex flex-col', {
-        'lg:col-start-2 lg:col-end-12 md:flex-row': layout === 'horizontal',
+      class={cn('col-span-full flex flex-col overflow-hidden p-0', {
+        'md:flex-row lg:col-start-2 lg:col-end-12': layout === 'horizontal',
       })}
     >
       <div
         class={cn('column column-image', {
-          'md:grow-0 md:shrink-0 md:basis-1/3': layout === 'horizontal',
+          'md:shrink-0 md:grow-0 md:basis-1/3': layout === 'horizontal',
         })}
       >
         <WordpressImage
@@ -49,14 +49,14 @@ const showSourcePrefix =
           })}
         />
       </div>
-      <div class="column column-content grow p-6 flex flex-col">
+      <div class="column column-content flex grow flex-col p-6">
         <Prose
-          class="text-black text-lg sm:typography-large-quote md:pr-5"
+          class="text-lg text-black sm:typography-large-quote md:pr-5"
           set:html={content}
         />
         {
           sourceLink.shouldRender && (
-            <div class="sm:typography-body text-sw-text-subdued mt-auto pt-4">
+            <div class="mt-auto pt-4 text-sw-text-subdued sm:typography-body">
               {showSourcePrefix && `${TRANSLATIONS.SOURCE}: `}
               <Link
                 to={sourceLink.url}
