@@ -84,6 +84,7 @@ fragment ModulesCollection on Modules {
         tabTitle
         description
         logosSource
+        enableLinks
         logos {
           edges {
             ...Image
@@ -92,6 +93,11 @@ fragment ModulesCollection on Modules {
         customersLogos {
           nodes {
             ...CustomerLogo
+          }
+        }
+        partnersLogos {
+          nodes {
+            ...PartnerLogo
           }
         }
       }
