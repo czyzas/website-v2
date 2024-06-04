@@ -54,7 +54,7 @@
         },
         {
             "key": "field_65e836d80f595",
-            "label": "Category",
+            "label": "Industry",
             "name": "category",
             "aria-label": "",
             "type": "text",
@@ -75,6 +75,56 @@
             "show_in_graphql": 1,
             "graphql_description": "",
             "graphql_field_name": "category",
+            "graphql_non_null": 0
+        },
+        {
+            "key": "field_665eccc7a6990",
+            "label": "Size",
+            "name": "size",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 2,
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "size",
+            "graphql_non_null": 0
+        },
+        {
+            "key": "field_665eccefa6992",
+            "label": "Headquarters",
+            "name": "headquarters",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 2,
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "headquarters",
             "graphql_non_null": 0
         }
     ],
@@ -101,5 +151,5 @@
     "graphql_field_name": "customerAcf",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1717487580
+    "modified": 1717492592
 }

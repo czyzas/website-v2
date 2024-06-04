@@ -12,6 +12,8 @@ import type {
 import { getStore } from '@/scripts/store';
 import { languageStore } from '@/stores/languageStore';
 import { cn } from '@/scripts/cn';
+import { parseCaseStudyCustomer } from '@/scripts/data-parsers/parseCaseStudies';
+import { replacePrefixURI } from '@/scripts/utils-uri';
 import Grid from './ui/Grid.astro';
 import ArticleTag from './ArticleTag.astro';
 import ArticleEventDetails from './ArticleEventDetails.astro';
@@ -39,6 +41,7 @@ const lang = currentLanguage.code;
     <Grid>
       {posts.map((post) => {
         if (!post.uri) return null;
+
         const categoryName =
           'categories' in post
             ? post.categories?.nodes?.[0]?.name ?? ''
@@ -47,9 +50,19 @@ const lang = currentLanguage.code;
           'tags' in post ? parseTags(post.tags?.nodes ?? []) : [];
         const eventDate =
           post.__typename === 'Event' ? post.eventAcf?.eventDate : undefined;
+
+        let { title, uri } = post;
+        if (post.__typename === 'CaseStudy') {
+          const customer = parseCaseStudyCustomer(post);
+          const longerTitle = post.caseStudyAcf?.longerTitle;
+          title = longerTitle || customer?.title || '';
+
+          uri = replacePrefixURI(post.uri, 'case-study', 'customers');
+        }
+
         return (
           <ArticleCard
-            link={{ url: buildI18nPath(post.uri, lang) }}
+            link={{ url: buildI18nPath(uri, lang) }}
             image={post.subpageSettings?.image}
             postType={post.__typename}
             class={cn('col-span-full', {
@@ -66,9 +79,7 @@ const lang = currentLanguage.code;
                 {categoryName}
               </div>
             )}
-            {!!post.title && (
-              <div class="typography-cards-bold-large">{post.title}</div>
-            )}
+            {!!title && <div class="typography-cards-bold-large">{title}</div>}
             {postTags.length > 0 && (
               <div class="tags mt-auto flex flex-wrap gap-2.5">
                 {postTags.map((postTag) =>

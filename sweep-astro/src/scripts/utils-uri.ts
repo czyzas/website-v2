@@ -89,8 +89,21 @@ export function prefixURI(uriWithoutPrefix: string, prefix: string) {
 export function unprefixURI(uri: string, prefixToRemove: string) {
   if (!prefixToRemove) return uri;
 
-  const prefix = `${trim(prefixToRemove, '/')}/`;
-  if (!uri.startsWith(prefix)) return uri;
+  const trimmedUri = trim(uri, '/');
 
-  return uri.replace(prefix, '');
+  const prefix = `${trim(prefixToRemove, '/')}/`;
+  if (!trimmedUri.startsWith(prefix)) return uri;
+
+  return trimmedUri.replace(prefix, '');
+}
+
+/**
+ * Combine {@link unprefixURI} and {@link prefixURI} functions to replace prefix in URI
+ */
+export function replacePrefixURI(
+  uri: string,
+  prefixToSearch: string,
+  prefixToReplace: string
+) {
+  return prefixURI(unprefixURI(uri, prefixToSearch), prefixToReplace);
 }

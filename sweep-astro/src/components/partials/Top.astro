@@ -88,10 +88,14 @@ const [contentColumnSize, imageColumnSize] = hasImage
           class={titleSizes?.[titleSize] ?? titleSizes.h1}
           set:html={title ?? ''}
         />
-        <div
-          class="typography-body md:max-w-[22.125rem]"
-          set:html={content ?? ''}
-        />
+        {
+          !!content && (
+            <div
+              class="typography-body md:max-w-[22.125rem]"
+              set:html={content ?? ''}
+            />
+          )
+        }
         <slot name="details" />
         {
           link.shouldRender && (

@@ -1,12 +1,11 @@
 ---
-import { imageShouldRender } from '@/scripts/data-parsers/parseImage';
 import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
 import { buildI18nPath } from '@/i18n/utils';
 import { languageStore } from '@/stores/languageStore';
 import { getStore } from '@/scripts/store';
-import Card from './ui/Card.astro';
-import WordpressImage from './WordpressImage.astro';
+import { replacePrefixURI } from '@/scripts/utils-uri';
 import Button from './ui/Button.astro';
+import CustomerLogo from './CustomerLogo.astro';
 
 type Props = {
   customerLogo?: UnparsedImage;
@@ -18,7 +17,7 @@ type Props = {
 };
 
 const {
-  uri,
+  uri: rawUri,
   buttonLabel,
   customerCategory,
   customerTitle,
@@ -28,18 +27,11 @@ const {
 
 // TODO: create useLanguage hook to get current lang from the store automatically
 const { currentLanguage } = getStore(languageStore);
+
+const uri = replacePrefixURI(rawUri || '', 'case-study', 'customers');
 ---
 
-{
-  imageShouldRender(customerLogo) && (
-    <Card class="customer-logo p-3 w-36 h-20 max-w-full flex items-center justify-center mb-8">
-      <WordpressImage
-        data={customerLogo}
-        class="max-h-full max-w-full object-contain"
-      />
-    </Card>
-  )
-}
+<CustomerLogo logo={customerLogo} />
 {
   !!customerTitle?.length || !!customerCategory?.length ? (
     <div class="customer-details typography-card-title flex flex-col mb-4">

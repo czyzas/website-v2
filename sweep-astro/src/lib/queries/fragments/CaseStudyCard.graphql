@@ -12,6 +12,11 @@ fragment CaseStudyCard on CaseStudy {
           title
           customerAcf {
             category
+            headquarters
+            size
+            websiteLink {
+              ...Link
+            }
             logo {
               ...Image
             }
