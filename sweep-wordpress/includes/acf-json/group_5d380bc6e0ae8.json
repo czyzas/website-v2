@@ -834,7 +834,8 @@
                                     "wpml_cf_preferences": 1,
                                     "choices": {
                                         "gallery": "Gallery",
-                                        "customers": "Customers"
+                                        "customers": "Customers",
+                                        "partners": "Partners"
                                     },
                                     "default_value": "gallery",
                                     "return_format": "value",
@@ -843,6 +844,47 @@
                                     "show_in_graphql": 1,
                                     "graphql_description": "",
                                     "graphql_field_name": "logosSource",
+                                    "graphql_non_null": 0,
+                                    "parent_repeater": "field_663a1e0e4aebd"
+                                },
+                                {
+                                    "key": "field_665ec8cf6e0d9",
+                                    "label": "Enable links",
+                                    "name": "enable_links",
+                                    "aria-label": "",
+                                    "type": "true_false",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_66598940c863d",
+                                                "operator": "==",
+                                                "value": "customers"
+                                            }
+                                        ],
+                                        [
+                                            {
+                                                "field": "field_66598940c863d",
+                                                "operator": "==",
+                                                "value": "partners"
+                                            }
+                                        ]
+                                    ],
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 1,
+                                    "message": "",
+                                    "default_value": 0,
+                                    "ui_on_text": "",
+                                    "ui_off_text": "",
+                                    "ui": 1,
+                                    "show_in_graphql": 1,
+                                    "graphql_description": "",
+                                    "graphql_field_name": "enableLinks",
                                     "graphql_non_null": 0,
                                     "parent_repeater": "field_663a1e0e4aebd"
                                 },
@@ -3899,5 +3941,5 @@
         "Page",
         "Post"
     ],
-    "modified": 1717419254
+    "modified": 1717487933
 }

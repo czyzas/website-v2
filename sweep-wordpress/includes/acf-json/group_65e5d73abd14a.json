@@ -33,10 +33,10 @@
         },
         {
             "key": "field_65e5d74c7d000",
-            "label": "Website URL",
-            "name": "website_url",
+            "label": "Website link",
+            "name": "website_link",
             "aria-label": "",
-            "type": "url",
+            "type": "link",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -46,11 +46,10 @@
                 "id": ""
             },
             "wpml_cf_preferences": 1,
-            "default_value": "",
-            "placeholder": "https:\/\/example.com\/",
+            "return_format": "array",
             "show_in_graphql": 1,
             "graphql_description": "",
-            "graphql_field_name": "websiteUrl",
+            "graphql_field_name": "websiteLink",
             "graphql_non_null": 0
         },
         {
@@ -102,5 +101,5 @@
     "graphql_field_name": "customerAcf",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1712138149
+    "modified": 1717487580
 }
