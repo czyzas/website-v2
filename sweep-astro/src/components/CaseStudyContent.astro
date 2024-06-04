@@ -3,7 +3,6 @@ import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
 import { buildI18nPath } from '@/i18n/utils';
 import { languageStore } from '@/stores/languageStore';
 import { getStore } from '@/scripts/store';
-import { replacePrefixURI } from '@/scripts/utils-uri';
 import Button from './ui/Button.astro';
 import CustomerLogo from './CustomerLogo.astro';
 
@@ -17,7 +16,7 @@ type Props = {
 };
 
 const {
-  uri: rawUri,
+  uri,
   buttonLabel,
   customerCategory,
   customerTitle,
@@ -27,8 +26,6 @@ const {
 
 // TODO: create useLanguage hook to get current lang from the store automatically
 const { currentLanguage } = getStore(languageStore);
-
-const uri = replacePrefixURI(rawUri || '', 'case-study', 'customers');
 ---
 
 <CustomerLogo logo={customerLogo} />
