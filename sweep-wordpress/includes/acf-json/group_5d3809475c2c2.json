@@ -513,73 +513,6 @@
             ]
         },
         {
-            "key": "field_656f34e4ff8cb",
-            "label": "Socials",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "graphql_field_name": "socials",
-            "wpml_cf_preferences": 1,
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_654cdb7164eb0",
-            "label": "Socials links",
-            "name": "socials",
-            "aria-label": "",
-            "type": "repeater",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "wpml_cf_preferences": 1,
-            "layout": "table",
-            "pagination": 0,
-            "min": 0,
-            "max": 0,
-            "collapsed": "",
-            "button_label": "Add link",
-            "show_in_graphql": 1,
-            "graphql_description": "",
-            "graphql_field_name": "socials",
-            "graphql_non_null": 0,
-            "rows_per_page": 20,
-            "sub_fields": [
-                {
-                    "key": "field_654cdb7164eb1",
-                    "label": "Link",
-                    "name": "link",
-                    "aria-label": "",
-                    "type": "link",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "return_format": "array",
-                    "parent_repeater": "field_654cdb7164eb0",
-                    "wpml_cf_preferences": 1
-                }
-            ]
-        },
-        {
             "key": "field_650d8bcfe51c5",
             "label": "Footer",
             "name": "",
@@ -1130,5 +1063,5 @@
     "graphql_field_name": "themeOptionsAcf",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1717588729
+    "modified": 1717589337
 }
