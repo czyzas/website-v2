@@ -40,11 +40,13 @@ export const TRANSLATIONS = {
   EVENTS: {
     CTA_DEFAULT_TEXT: 'Find out more',
   },
+  CUSTOMER: 'Customer',
   HOME: 'Home',
   EVENT: 'EVENT',
   BLOG: 'Blog',
   PAST_EVENT: 'PAST EVENT',
   READ_MORE: 'Read more',
+  LOAD_MORE: 'Load more',
   READ_FULL_STORY: 'Read the full story',
   VIEW_CASE_STUDY: 'View Case Study',
   ALL: 'All',
@@ -62,5 +64,6 @@ export const TRANSLATIONS = {
   ARTICLE: {
     MORE_STORIES: 'More stories',
     MORE_EVENTS: 'More events',
+    MORE_CUSTOMER_STORIES: 'More customers stories',
   },
 } as const;

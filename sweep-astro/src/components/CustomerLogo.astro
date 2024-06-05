@@ -1,0 +1,35 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { imageShouldRender } from '@/scripts/data-parsers/parseImage';
+import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
+import type { WithAttributes } from '@/types';
+import { cn } from '@/scripts/cn';
+import Card from './ui/Card.astro';
+import WordpressImage from './WordpressImage.astro';
+
+interface CustomerLogoProps extends HTMLAttributes<'div'> {
+  logo: UnparsedImage;
+}
+
+type Props = WithAttributes<CustomerLogoProps>;
+
+const { class: className, logo, ...props } = Astro.props;
+---
+
+{
+  imageShouldRender(logo) && (
+    <Card
+      {...props}
+      class={cn(
+        'customer-logo',
+        'mb-8 flex h-20 w-36 max-w-full items-center justify-center p-3',
+        className
+      )}
+    >
+      <WordpressImage
+        data={logo}
+        class="max-h-full max-w-full object-contain"
+      />
+    </Card>
+  )
+}

@@ -20,12 +20,12 @@ const { class: className, partners = [], ...props } = Astro.props;
   partners.length > 0 && (
     <Grid {...props} class={cn('partners-list', className)}>
       {partners.map((partner) => (
-        <Card class="col-span-full sm:col-span-6 md:col-span-4 gap-8 flex flex-col items-start">
+        <Card class="col-span-full flex flex-col items-start gap-8 sm:col-span-6 md:col-span-4">
           <WordpressImage
             data={partner?.partnerAcf?.logo}
             class="h-20 w-48 object-contain object-left"
           />
-          <div class="flex flex-col typography-card-title">
+          <div class="typography-card-title flex flex-col">
             <span>{partner.title}</span>
             <span
               style={{

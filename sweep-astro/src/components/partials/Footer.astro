@@ -1,1 +1,104 @@
-<footer></footer>
+---
+import { Icon } from 'astro-icon/components';
+import { getStore } from '@/scripts/store';
+import { cmsStore } from '@/stores/cmsStore';
+import { cn } from '@/scripts/cn';
+import { parseLink } from '@/scripts/data-parsers/parseLink';
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+import MenuItem from '../MenuItem.astro';
+import WordpressImage from '../WordpressImage.astro';
+import Prose from '../ui/Prose.astro';
+
+const store = getStore(cmsStore);
+const {
+  menu = [],
+  logos = [],
+  legalNote = '',
+} = store.themeOptions?.themeOptionsAcf?.footer ?? {};
+
+const iconMap: Record<string, string> = {
+  linkedin: 'linkedin',
+  twitter: 'twitter',
+  instagram: 'instagram',
+  vimeo: 'vimeo',
+} as const;
+
+const getIconName = (title: string) => iconMap?.[title.toLowerCase()];
+---
+
+<footer>
+  <Section bg="surface-background" class="space-y-10 md:space-y-20">
+    <Container>
+      {
+        menu.length > 0 && (
+          <div class="menu-container flex flex-wrap gap-x-3 gap-y-4 md:flex-nowrap">
+            {menu.map((column) => {
+              const rows = column?.rows ?? [];
+              return (
+                <div class="w-full space-y-3">
+                  {rows.map((row, index) => {
+                    const rowTitle = row?.title ?? '';
+                    const items = row?.items ?? [];
+
+                    if (items.length === 0) return null;
+                    return (
+                      <Fragment>
+                        {!!rowTitle && (
+                          <p
+                            class={cn(
+                              'mb-2 text-xs font-bold uppercase text-sw-sky-400',
+                              index !== 0 && 'md:!mt-6'
+                            )}
+                          >
+                            {rowTitle}
+                          </p>
+                        )}
+                        <div class="w-full space-y-3 rounded-lg bg-white p-3">
+                          {items.map((item) => {
+                            const link = parseLink(item?.item);
+
+                            if (!link.shouldRender) return null;
+                            return (
+                              <MenuItem href={link.url} class="justify-start">
+                                {getIconName(link.title) && (
+                                  <Icon
+                                    name={getIconName(link.title)}
+                                    class="size-4"
+                                  />
+                                )}
+                                {link.title}
+                              </MenuItem>
+                            );
+                          })}
+                        </div>
+                      </Fragment>
+                    );
+                  })}
+                </div>
+              );
+            })}
+          </div>
+        )
+      }
+    </Container>
+    {
+      (!!legalNote || logos.length > 0) && (
+        <Container>
+          {logos.length > 0 && (
+            <div class="flex flex-wrap gap-4">
+              {logos.map((logo) => (
+                <div class="flex h-32 w-24 items-center justify-center rounded-lg bg-sw-gray-400 p-4 md:h-48 md:w-40">
+                  <WordpressImage data={logo?.logo} class="object-contain" />
+                </div>
+              ))}
+            </div>
+          )}
+          {!!legalNote && (
+            <Prose class="mt-6 text-sm text-[#828282]" set:html={legalNote} />
+          )}
+        </Container>
+      )
+    }
+  </Section>
+</footer>

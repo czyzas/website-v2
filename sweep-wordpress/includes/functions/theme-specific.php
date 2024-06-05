@@ -206,3 +206,60 @@ function add_ssr_action_link( $actions, $page_object ) {
 add_action( 'admin_bar_menu', function ( $wp_admin_bar ) {
 	$wp_admin_bar->remove_node( 'view' );
 }, 999 );
+
+function hide_all_modules_except( array $allowed_modules ): void {
+	$not_selector = array_map( fn( $m ) => "[data-layout=\"$m\"]", $allowed_modules );
+	$not_selector = implode( ',', $not_selector );
+	?>
+	<style>
+		.acf-tooltip.acf-fc-popup a:not(<?= $not_selector ?>) {
+			display: none;
+		}
+	</style>
+	<?php
+}
+
+function hide_selected_modules( array $hidden_modules ): void {
+	$is_selector = array_map( fn( $m ) => "[data-layout=\"$m\"]", $hidden_modules );
+	$is_selector = implode( ',', $is_selector );
+	?>
+	<style>
+		.acf-tooltip.acf-fc-popup a:is(<?= $is_selector ?>) {
+			display: none;
+		}
+	</style>
+	<?php
+}
+
+// Hide modules
+add_action( 'admin_footer', function () {
+	global $post;
+	if ( !$post || !$post->post_type ) return;
+	
+	$article_post_types = [ 'newsroom', 'insights', 'event' ];
+	$is_article = in_array( $post->post_type, $article_post_types );
+	$is_customers_page = $post->post_type === 'page' && $post->post_name === 'customers';
+
+	if ( $is_article ) { // show only on article
+		hide_all_modules_except( [
+			'rich-text-content',
+			'article-title',
+			'gated',
+			'quotation',
+			'quotation-with-image',
+			'demo',
+			'team',
+			'sourced-info',
+		] );
+	} else { // hide article modules on other pages
+		hide_selected_modules(
+			array_filter( [
+				'rich-text-content',
+				'article-title',
+				'gated',
+				// hide case studies list on non-customers pages
+				!$is_customers_page ? 'case-studies-list' : '',
+			] )
+		);
+	}
+} );

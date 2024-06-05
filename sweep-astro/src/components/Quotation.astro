@@ -1,6 +1,7 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
 import { cn } from '@/scripts/cn';
+import { imageShouldRender } from '@/scripts/data-parsers/parseImage';
 import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
 import type { WithAttributes } from '@/types';
 import WordpressImage from './WordpressImage.astro';
@@ -9,6 +10,7 @@ import Card from './ui/Card.astro';
 interface QuotationProps extends HTMLAttributes<'div'> {
   /** @default 'light' */
   theme?: 'light' | 'dark';
+  image?: UnparsedImage;
   authorImage?: UnparsedImage;
   authorName?: string;
   authorOccupation?: string;
@@ -16,6 +18,8 @@ interface QuotationProps extends HTMLAttributes<'div'> {
   avatarSize?: 'sm' | 'md';
   /** @default 'md' */
   quoteSize?: 'sm' | 'md';
+  /** @default 'md' */
+  paddingSize?: 'md' | 'sm' | 'with-image';
 }
 
 type Props = WithAttributes<QuotationProps>;
@@ -25,6 +29,8 @@ const {
   theme = 'light',
   avatarSize = 'md',
   quoteSize = 'md',
+  paddingSize = 'auto',
+  image,
   authorImage,
   authorName,
   authorOccupation,
@@ -38,61 +44,79 @@ const hasAuthor = !!authorImage || !!authorName || !!authorOccupation;
   {...props}
   class={cn(
     'quotation',
-    {
-      'xl:p-16': quoteSize === 'md',
-      'xl:p-8': quoteSize === 'sm',
-    },
-    { 'bg-sw-sea-500 text-white border-transparent': theme === 'dark' },
+    'overflow-hidden p-0',
+    { 'border-transparent bg-sw-sea-500 text-white': theme === 'dark' },
     className
   )}
 >
-  <blockquote
-    class={cn({
-      'text-lg leading-snug md:typography-large-quote': quoteSize === 'md',
-      'text-lg leading-normal md:typography-body-large': quoteSize === 'sm',
-      // TODO: switch from `typography` to `text`
-      '!text-white': theme === 'dark',
-    })}
-  >
-    <slot />
-  </blockquote>
-
   {
-    hasAuthor && (
-      <div
-        class={cn('author flex items-center gap-6 mt-8', {
-          'md:mt-16': quoteSize === 'md',
-          'md:mt-12': quoteSize === 'sm',
-        })}
-      >
+    imageShouldRender(image) && (
+      <div class="image-container relative">
         <WordpressImage
-          data={authorImage}
-          preferredWidth={avatarSize === 'sm' ? 50 : 115}
-          class={cn(
-            'aspect-square object-cover rounded-full border-2 border-transparent',
-            {
-              'border-white': theme === 'dark',
-              'size-[4.875rem]': avatarSize === 'md',
-              'size-12': avatarSize === 'sm',
-            }
-          )}
+          preferredWidth={1240}
+          data={image}
+          class="aspect-auto object-cover object-top md:aspect-video"
         />
-        <div class="details">
-          {!!authorName && (
-            <div
-              class={cn('typography-subhead', {
-                'text-black': theme === 'light',
-                'text-white': theme === 'dark',
-              })}
-            >
-              {authorName}
-            </div>
-          )}
-          {!!authorOccupation && (
-            <div class="text-base">{authorOccupation}</div>
-          )}
-        </div>
+        <slot name="image-details" />
       </div>
     )
   }
+  <div
+    class={cn('quotation-container', 'p-6', {
+      'xl:p-16': paddingSize === 'md',
+      'xl:p-8': paddingSize === 'sm',
+      'xl:px-8 xl:py-6': paddingSize === 'with-image',
+    })}
+  >
+    <blockquote
+      class={cn({
+        'text-lg leading-snug md:typography-large-quote': quoteSize === 'md',
+        'text-lg leading-normal md:typography-body-large': quoteSize === 'sm',
+        // TODO: switch from `typography` to `text`
+        '!text-white': theme === 'dark',
+      })}
+    >
+      <slot />
+    </blockquote>
+
+    {
+      hasAuthor && (
+        <div
+          class={cn('author mt-8 flex items-center gap-6', {
+            'md:mt-16': quoteSize === 'md',
+            'md:mt-12': quoteSize === 'sm',
+            'gap-3.5': avatarSize === 'sm',
+          })}
+        >
+          <WordpressImage
+            data={authorImage}
+            preferredWidth={avatarSize === 'sm' ? 50 : 115}
+            class={cn(
+              'aspect-square rounded-full border-2 border-transparent object-cover',
+              {
+                'border-white': theme === 'dark',
+                'size-[4.875rem]': avatarSize === 'md',
+                'size-12': avatarSize === 'sm',
+              }
+            )}
+          />
+          <div class="details">
+            {!!authorName && (
+              <div
+                class={cn('typography-subhead', {
+                  'text-black': theme === 'light',
+                  'text-white': theme === 'dark',
+                })}
+              >
+                {authorName}
+              </div>
+            )}
+            {!!authorOccupation && (
+              <div class="text-base">{authorOccupation}</div>
+            )}
+          </div>
+        </div>
+      )
+    }
+  </div>
 </Card>

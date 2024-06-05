@@ -84,6 +84,7 @@ fragment ModulesCollection on Modules {
         tabTitle
         description
         logosSource
+        enableLinks
         logos {
           edges {
             ...Image
@@ -92,6 +93,11 @@ fragment ModulesCollection on Modules {
         customersLogos {
           nodes {
             ...CustomerLogo
+          }
+        }
+        partnersLogos {
+          nodes {
+            ...PartnerLogo
           }
         }
       }
@@ -272,6 +278,28 @@ fragment ModulesCollection on Modules {
         selectBackgroundColor
       }
       theme
+      quotation {
+        selectQuotation {
+          quote
+          authorImage {
+            ...Image
+          }
+          authorName
+          authorOccupation
+        }
+      }
+    }
+    ... on ModulesModulesContentQuotationWithImageLayout {
+      layoutName
+      backgroundColor {
+        selectBackgroundColor
+      }
+      image {
+        ...Image
+      }
+      logo {
+        ...Image
+      }
       quotation {
         selectQuotation {
           quote

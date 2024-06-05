@@ -78,7 +78,7 @@ const ContentWrapper =
               <TabPane isActive={tabIndex === 0} id={`${tabId}-${tabIndex}`}>
                 <ContentWrapper image={tab?.image}>
                   {(!!tab?.overline || !!tab?.overlineIcon) && (
-                    <p class="overline-container mb-2 flex item-scenter gap-1">
+                    <p class="overline-container item-scenter mb-2 flex gap-1">
                       <WordpressImage
                         data={tab?.overlineIcon}
                         class="h-11 object-contain"

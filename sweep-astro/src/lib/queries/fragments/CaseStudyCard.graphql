@@ -2,6 +2,7 @@ fragment CaseStudyCard on CaseStudy {
   __typename
   title
   uri
+  slug
   caseStudyAcf {
     longerTitle
     relatedCustomer {
@@ -11,6 +12,11 @@ fragment CaseStudyCard on CaseStudy {
           title
           customerAcf {
             category
+            headquarters
+            size
+            websiteLink {
+              ...Link
+            }
             logo {
               ...Image
             }

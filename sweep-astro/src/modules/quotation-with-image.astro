@@ -1,22 +1,17 @@
 ---
-import type { ModulesModulesContentQuotationLayout } from '@/__generated__/cms';
+import type { ModulesModulesContentQuotationWithImageLayout } from '@/__generated__/cms';
+import CustomerLogo from '@/components/CustomerLogo.astro';
 import ModuleContainer from '@/components/ModuleContainer.astro';
 import UIQuotation from '@/components/Quotation.astro';
 import Grid from '@/components/ui/Grid.astro';
 import { cn } from '@/scripts/cn';
 import type { WithModuleMeta } from '@/types';
 
-type Props = WithModuleMeta<ModulesModulesContentQuotationLayout>;
+type Props = WithModuleMeta<ModulesModulesContentQuotationWithImageLayout>;
 
-const {
-  __meta__,
-  layoutName,
-  backgroundColor,
-  quotation,
-  theme: rawTheme = 'light',
-} = Astro.props;
+const { __meta__, layoutName, backgroundColor, quotation, image, logo } =
+  Astro.props;
 
-const theme = rawTheme === 'light' || rawTheme === 'dark' ? rawTheme : 'light';
 const { quote, authorImage, authorName, authorOccupation } =
   quotation?.selectQuotation ?? {};
 ---
@@ -29,22 +24,26 @@ const { quote, authorImage, authorName, authorOccupation } =
       })}
     >
       <UIQuotation
-        theme={theme}
-        avatarSize={theme === 'dark' || __meta__.moduleType === 'article'
-          ? 'sm'
-          : 'md'}
-        quoteSize={theme === 'dark' ? 'sm' : 'md'}
-        paddingSize={theme === 'dark' || __meta__.moduleType === 'article'
-          ? 'sm'
-          : 'md'}
+        theme={'light'}
+        avatarSize="sm"
+        quoteSize="md"
+        paddingSize="with-image"
         authorName={authorName}
         authorImage={authorImage}
         authorOccupation={authorOccupation}
+        image={image}
         class={cn({
           '[&_.author]:mt-6': __meta__.moduleType === 'article',
         })}
-        set:html={quote}
-      />
+      >
+        <Fragment slot="image-details">
+          <CustomerLogo
+            logo={logo}
+            class="absolute left-6 top-6 md:left-8 md:top-9"
+          />
+        </Fragment>
+        <Fragment set:html={quote} />
+      </UIQuotation>
     </div>
   </Grid>
 </ModuleContainer>

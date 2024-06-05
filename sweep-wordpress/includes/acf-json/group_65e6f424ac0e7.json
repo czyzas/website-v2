@@ -12,7 +12,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
@@ -30,6 +30,27 @@
             "show_in_graphql": 1,
             "graphql_description": "",
             "graphql_field_name": "logo"
+        },
+        {
+            "key": "field_665ec7c67e78b",
+            "label": "Website link",
+            "name": "website_link",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 1,
+            "return_format": "array",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "websiteLink",
+            "graphql_non_null": 0
         },
         {
             "key": "field_65e6f44276bb7",
@@ -105,5 +126,5 @@
     "graphql_field_name": "partnerAcf",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1709652944
+    "modified": 1717487631
 }

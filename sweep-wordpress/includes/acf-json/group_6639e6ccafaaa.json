@@ -70,6 +70,13 @@
                 "operator": "==",
                 "value": "newsroom-tag"
             }
+        ],
+        [
+            {
+                "param": "taxonomy",
+                "operator": "==",
+                "value": "case-study-tag"
+            }
         ]
     ],
     "menu_order": 0,
@@ -86,5 +93,5 @@
     "graphql_field_name": "tagTaxonomyAcf",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1716275565
+    "modified": 1717419160
 }

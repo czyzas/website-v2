@@ -65,14 +65,14 @@ for (const industry of rawIndustries) {
       {industries.map((industry) => (
         <a
           href={industry.uri}
-          class="industry col-span-full xs:col-span-6 md:col-span-4 lg:col-span-3 group"
+          class="industry group col-span-full xs:col-span-6 md:col-span-4 lg:col-span-3"
         >
-          <Card class="py-[2.1875rem] px-[1.375rem] xs:max-md:p-4 flex flex-col gap-[0.8125rem] h-full transition-colors group-hover:bg-sw-sky-400 hover:border-transparent">
+          <Card class="flex h-full flex-col gap-[0.8125rem] px-[1.375rem] py-[2.1875rem] transition-colors hover:border-transparent group-hover:bg-sw-sky-400 xs:max-md:p-4">
             <WordpressImage
               data={industry.industryAcf?.icon}
               class="transition-all group-hover:brightness-0 group-hover:invert"
             />
-            <span class="transition-colors typography-h4 xs:max-md:text-lg group-hover:text-white">
+            <span class="typography-h4 transition-colors group-hover:text-white xs:max-md:text-lg">
               {industry.title}
             </span>
           </Card>

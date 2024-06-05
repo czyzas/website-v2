@@ -6,7 +6,11 @@ import { cn } from '@/scripts/cn';
 import WordpressImage from './WordpressImage.astro';
 
 interface LogosCollectionProps {
-  logos?: UnparsedImage[];
+  logos?:
+    | UnparsedImage[]
+    | {
+        websiteLink?: string | boolean;
+      }[];
   sizing?: 'sm' | 'md';
 }
 
@@ -57,7 +61,7 @@ const logos = (rawLogos ?? []).filter(Boolean);
 
 <style>
   .swiper-slide {
-    @apply self-stretch h-auto flex w-auto;
+    @apply flex h-auto w-auto self-stretch;
   }
 
   .swiper-wrapper,
@@ -73,7 +77,7 @@ const logos = (rawLogos ?? []).filter(Boolean);
     <div
       {...props}
       class={cn(
-        'logos-collection-swiper md:flex md:flex-wrap md:gap-2 md:items-center md:justify-center',
+        'logos-collection-swiper md:flex md:flex-wrap md:items-center md:justify-center md:gap-2',
         className
       )}
     >
@@ -81,14 +85,14 @@ const logos = (rawLogos ?? []).filter(Boolean);
         {logos.map((logo) => (
           <div class="swiper-slide">
             <div
-              class={cn('logo p-3 flex items-center justify-center md:flex-0', {
+              class={cn('logo md:flex-0 flex items-center justify-center p-3', {
                 'md:basis-40': sizing === 'md',
                 'md:basis-25': sizing === 'sm',
               })}
             >
               <WordpressImage
-                data={logo}
-                class="max-h-12 w-fit object-contain select-none"
+                data={logo as UnparsedImage}
+                class="max-h-12 w-fit select-none object-contain"
               />
             </div>
           </div>

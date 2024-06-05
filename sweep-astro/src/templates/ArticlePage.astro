@@ -1,6 +1,8 @@
 ---
 import type {
   AuthorFragment,
+  CaseStudyCardFragment,
+  CaseStudySinglePageQuery,
   EventListItemFragment,
   EventSinglePageQuery,
   InsightsListItemFragment,
@@ -11,6 +13,8 @@ import type {
 
 import ArticleBar from '@/components/ArticleBar.astro';
 import ArticlesGrid from '@/components/ArticlesGrid.astro';
+import CardWithMergedImage from '@/components/CardWithMergedImage.astro';
+import CustomerLogo from '@/components/CustomerLogo.astro';
 import EventInformation from '@/components/EventInformation.astro';
 import ModulesIncluder from '@/components/ModulesIncluder.astro';
 import Form from '@/components/hubspot-form/Form.astro';
@@ -23,13 +27,19 @@ import SidebarCardTableOfContents from '@/components/sidebar/SidebarCardTableOfC
 import SidebarEventCTA from '@/components/sidebar/SidebarEventCTA.astro';
 import Container from '@/components/ui/Container.astro';
 import Grid from '@/components/ui/Grid.astro';
+import Link from '@/components/ui/Link.astro';
 import Section from '@/components/ui/Section.astro';
 import { TRANSLATIONS } from '@/constants';
-import { getLocale } from '@/i18n/utils';
+import { buildI18nPath, getLocale } from '@/i18n/utils';
 import Layout from '@/layouts/Layout.astro';
 import { buildTOC } from '@/scripts/buildTOC';
+import { cn } from '@/scripts/cn';
+import { parseCaseStudyCustomer } from '@/scripts/data-parsers/parseCaseStudies';
+import { parseLink } from '@/scripts/data-parsers/parseLink';
+import type { UnparsedLink } from '@/scripts/data-parsers/parseLink';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
 import { parseTags } from '@/scripts/data-parsers/parseTag';
+import { getDefaultTopImage } from '@/scripts/getDefaultTopImage';
 import { overwriteWYSIWYGContent } from '@/scripts/overwriteWYSIWYGContent';
 import { initializeStore } from '@/scripts/store';
 import { cmsStore } from '@/stores/cmsStore';
@@ -47,10 +57,19 @@ type EventSingleProps = {
   postType: 'event';
   data: EventSinglePageQuery;
 };
+type CaseStudySingleProps = {
+  postType: 'case-study';
+  data: CaseStudySinglePageQuery;
+};
 interface ArticlePageProps {
   lang: string;
 }
-type Props = (InsightsSingleProps | NewsroomSingleProps | EventSingleProps) &
+type Props = (
+  | InsightsSingleProps
+  | NewsroomSingleProps
+  | EventSingleProps
+  | CaseStudySingleProps
+) &
   ArticlePageProps;
 
 const { postType, data, lang } = Astro.props;
@@ -73,30 +92,35 @@ const title = subpageSettings?.customTitle || pageTitle || '';
 const introduction = subpageSettings?.introduction || '';
 const image = subpageSettings?.image;
 const size = (subpageSettings?.topDistribution ?? '5-7') as ColumnSizes;
+const category =
+  page.__typename === 'CaseStudy'
+    ? TRANSLATIONS.CUSTOMER
+    : page.categories?.nodes?.[0]?.name;
 const tags = parseTags(page.tags?.nodes);
-const category = page.categories?.nodes?.[0]?.name;
 const toc = buildTOC(page.modules?.modulesContent);
 let lastUpdated: string | undefined;
 let author: AuthorFragment | undefined;
 
-if (page.__typename === 'InsightsItem' || page.__typename === 'NewsroomItem') {
-  if (page.modified) {
-    lastUpdated = new Date(page.modified).toLocaleDateString(getLocale(lang), {
-      day: '2-digit',
-      month: 'long',
-      year: 'numeric',
-    });
-  }
+if (
+  (page.__typename === 'InsightsItem' || page.__typename === 'NewsroomItem') &&
+  page.articleAcf?.author?.node.__typename === 'PostAuthor'
+) {
+  author = page.articleAcf.author.node;
+}
 
-  if (page.articleAcf?.author?.node.__typename === 'PostAuthor') {
-    author = page.articleAcf.author.node;
-  }
+if ('modified' in page && page.modified) {
+  lastUpdated = new Date(page.modified).toLocaleDateString(getLocale(lang), {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+  });
 }
 
 let posts: (
   | InsightsListItemFragment
   | NewsroomListItemFragment
   | EventListItemFragment
+  | CaseStudyCardFragment
 )[] = (data?.articles?.nodes ?? []).filter(Boolean);
 posts = posts.filter((post) => post.uri !== data.page?.uri).slice(0, 3);
 
@@ -104,6 +128,9 @@ let postsTitle = '';
 switch (postType) {
   case 'event':
     postsTitle = TRANSLATIONS.ARTICLE.MORE_EVENTS;
+    break;
+  case 'case-study':
+    postsTitle = TRANSLATIONS.ARTICLE.MORE_CUSTOMER_STORIES;
     break;
   case 'insights':
   case 'newsroom':
@@ -116,24 +143,40 @@ let registerFormTitle;
 if (page.__typename === 'Event') {
   registerFormTitle = page.eventAcf?.registerFormTitle?.selectSectionTitle;
 }
+
+let caseStudyDetails: {
+  label: string;
+  value: UnparsedLink | string | number;
+}[] = [];
+if (page.__typename === 'CaseStudy') {
+  const customer = parseCaseStudyCustomer(page);
+  const longerTitle = page.caseStudyAcf?.longerTitle;
+  caseStudyDetails = [
+    { label: 'company', value: longerTitle || customer?.title },
+    { label: 'size', value: customer?.customerAcf?.size },
+    { label: 'industry', value: customer?.customerAcf?.category },
+    { label: 'headquarters', value: customer?.customerAcf?.headquarters },
+    { label: 'website', value: customer?.customerAcf?.websiteLink },
+  ].filter((entry) => entry.value);
+}
 ---
 
 <Layout
   name={postType}
   pageTitle={pageTitle}
-  htmlClassName="scroll-smooth scroll-p-4"
+  htmlClassName="scroll-smooth scroll-p-24"
 >
   <Top
-    overline={TRANSLATIONS.EVENT}
+    overline={cn({ [TRANSLATIONS.EVENT]: page.__typename === 'Event' })}
     title={title}
     titleSize="h2"
     content={introduction}
-    image={image}
+    image={page.__typename !== 'CaseStudy' ? image : undefined}
     size={size}
-    class="py-8 md:pt-18 md:pb-14"
+    class="py-8 md:pb-14 md:pt-18"
   >
     {
-      postType === 'event' && page.__typename === 'Event' && (
+      page.__typename === 'Event' && (
         <Fragment slot="details">
           <EventInformation
             location={page.eventAcf?.eventLocation}
@@ -141,6 +184,46 @@ if (page.__typename === 'Event') {
             language={page.eventAcf?.eventLanguage}
           />
         </Fragment>
+      )
+    }
+    {
+      page.__typename === 'CaseStudy' && (
+        <Container class="mt-4 md:mt-10">
+          <CardWithMergedImage
+            image={image || getDefaultTopImage(page.__typename)}
+            size="lg"
+          >
+            <CustomerLogo
+              logo={parseCaseStudyCustomer(page)?.customerAcf?.logo}
+            />
+            {caseStudyDetails.length > 0 && (
+              <div class="details flex flex-col gap-3">
+                {caseStudyDetails.map(({ label, value }) => {
+                  const link =
+                    typeof value === 'object' ? parseLink(value) : undefined;
+                  if (link && !link.shouldRender) return null;
+
+                  return (
+                    <div>
+                      <div class="typography-small-box-title uppercase text-sw-text-subdued">
+                        {label}
+                      </div>
+                      <div class="typography-body text-black">
+                        {link ? (
+                          <Link to={link.url} external>
+                            {link.title}
+                          </Link>
+                        ) : (
+                          value
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </CardWithMergedImage>
+        </Container>
       )
     }
     <ArticleBar
@@ -157,17 +240,23 @@ if (page.__typename === 'Event') {
     <Container>
       <Grid class="gap-y-8">
         <div
-          class="col-span-full md:col-start-1 lg:col-start-2 md:col-end-9 order-2 md:order-1 flex flex-col gap-8 md:gap-14"
+          class="order-2 col-span-full flex flex-col gap-8 md:order-1 md:col-start-1 md:col-end-9 md:gap-14 lg:col-start-2"
         >
           <ModulesIncluder category="article" data={page?.modules} />
         </div>
         <Sidebar
           sticky
-          class="col-span-full md:col-start-9 lg:col-start-10 md:col-end-13 order-1 md:order-2"
+          class="order-1 col-span-full md:order-2 md:col-start-9 md:col-end-13 lg:col-start-10"
         >
           <SidebarCardAuthor author={author} />
           {
-            (postType === 'insights' || postType === 'newsroom') && (
+            (
+              [
+                'InsightsItem',
+                'NewsroomItem',
+                'CaseStudy',
+              ] as (typeof page.__typename)[]
+            ).includes(page.__typename) && (
               <SidebarCardTableOfContents toc={toc} />
             )
           }
@@ -197,7 +286,18 @@ if (page.__typename === 'Event') {
       <Section bg="surface-background">
         <Container>
           <SectionTitle withMargin headline={postsTitle} />
-          <ArticlesGrid postType={postType} posts={posts} />
+          <ArticlesGrid
+            postType={postType}
+            posts={posts}
+            cta={
+              page.__typename === 'CaseStudy'
+                ? {
+                    url: buildI18nPath('/customers', lang),
+                    title: TRANSLATIONS.LOAD_MORE,
+                  }
+                : undefined
+            }
+          />
         </Container>
       </Section>
     )

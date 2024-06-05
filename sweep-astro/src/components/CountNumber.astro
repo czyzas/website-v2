@@ -75,7 +75,7 @@ const { prefix, value, suffix, valid } = parseValue(rawValue);
   data-valid={valid ? 'true' : 'false'}
   class={cn(
     'count-number',
-    'before:content-[attr(data-prefix)] after:content-[attr(data-suffix)] tabular-nums before:normal-nums after:normal-nums',
+    'tabular-nums before:normal-nums before:content-[attr(data-prefix)] after:normal-nums after:content-[attr(data-suffix)]',
     className
   )}
   set:html={valid ? 0 : rawValue}

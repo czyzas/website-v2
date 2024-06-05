@@ -1,6 +1,6 @@
 ---
 import {
-  fetchCustomersPage,
+  fetchCaseStudiesListPage,
   fetchSinglePageStaticPaths,
 } from '@/lib/fetchCMSData';
 import { initializeStore } from '@/scripts/store';
@@ -21,7 +21,7 @@ export async function getStaticPaths() {
 }
 
 const { lang = defaultLocale, paged = 1 } = fixPagedParams(Astro.params);
-const data = await fetchCustomersPage(lang, { paged });
+const data = await fetchCaseStudiesListPage(lang, { paged });
 
 initializeStore(customersCaseStudiesStore, {
   isCustomersPage: true,

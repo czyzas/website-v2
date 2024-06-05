@@ -47,10 +47,10 @@ const Gated = ({ form, children, guid }: GatedProps) => {
       {isGated && form && (
         <div className="box-shadow relative">
           <div className="absolute bottom-full h-60 w-full bg-gradient-to-b from-white/20 to-white"></div>
-          <p className="text-center text-sw-text-subdued font-medium">
+          <p className="text-center font-medium text-sw-text-subdued">
             {TRANSLATIONS.GATED_CONTENT.SUB_TITLE}
           </p>
-          <h2 className="pt-4 pb-8 typography-h2 text-center">
+          <h2 className="typography-h2 pb-8 pt-4 text-center">
             {TRANSLATIONS.GATED_CONTENT.TITLE}
           </h2>
           <HubspotForm

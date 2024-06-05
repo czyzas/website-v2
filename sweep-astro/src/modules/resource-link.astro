@@ -25,10 +25,10 @@ const {
 <ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
   <Grid>
     <Card
-      class="col-span-full lg:col-start-2 lg:col-end-12 grid grid-cols-1 lg:grid-cols-10 p-0 overflow-hidden"
+      class="col-span-full grid grid-cols-1 overflow-hidden p-0 lg:col-start-2 lg:col-end-12 lg:grid-cols-10"
     >
       <div
-        class="column-content order-2 lg:order-1 col-span-full lg:col-span-4 p-6 lg:min-h-[21.375rem] flex flex-col gap-4.5"
+        class="column-content order-2 col-span-full flex flex-col gap-4.5 p-6 lg:order-1 lg:col-span-4 lg:min-h-[21.375rem]"
       >
         <p class="typography-card-title text-sw-text-subdued">{overline}</p>
         <h3 class="typography-h4" set:html={fixDoubleBr(title)} />
@@ -42,7 +42,7 @@ const {
       </div>
 
       <div
-        class="column-image order-1 lg:order-2 col-span-full lg:col-span-6 relative"
+        class="column-image relative order-1 col-span-full lg:order-2 lg:col-span-6"
       >
         <WordpressImage
           data={image}

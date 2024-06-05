@@ -41,7 +41,7 @@ const languages = (rawLanguages ?? []).filter(Boolean);
   }
 </script>
 
-<div class="language-switcher-container relative self-stretch group">
+<div class="language-switcher-container group relative self-stretch">
   <MenuItem
     asButton
     type="button"
@@ -55,19 +55,19 @@ const languages = (rawLanguages ?? []).filter(Boolean);
     </span>
     <Icon
       name="caret-down"
-      class="transform -translate-y-0.5 sm:-translate-y-0"
+      class="-translate-y-0.5 transform sm:-translate-y-0"
     />
   </MenuItem>
   {
     languages && (
       <div
         class={cn(
-          'lg:pt-8 pt-4',
-          'absolute invisible opacity-0 transition-all duration-100 z-10',
-          'transform -translate-y-1 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible'
+          'pt-4 lg:pt-8',
+          'invisible absolute z-10 opacity-0 transition-all duration-100',
+          '-translate-y-1 transform group-hover:visible group-hover:translate-y-0 group-hover:opacity-100'
         )}
       >
-        <ul class="list bg-white rounded-lg p-6 space-y-4 shadow-menu" id={id}>
+        <ul class="list space-y-4 rounded-lg bg-white p-6 shadow-menu" id={id}>
           {languages.map((lang) => (
             <li class="flex flex-col">
               <MenuItem

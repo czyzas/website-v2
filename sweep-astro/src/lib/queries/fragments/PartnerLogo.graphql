@@ -1,6 +1,6 @@
-fragment CustomerLogo on Customer {
+fragment PartnerLogo on Partner {
   __typename
-  customerAcf {
+  partnerAcf {
     logo {
       ...Image
     }

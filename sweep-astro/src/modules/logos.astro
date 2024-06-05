@@ -2,6 +2,7 @@
 import type {
   ModulesModulesContentLogosLayout,
   CustomerLogoFragment,
+  PartnerLogoFragment,
 } from '@/__generated__/cms';
 import ButtonContainer from '@/components/ButtonContainer.astro';
 import LogosCollection from '@/components/LogosCollection.astro';
@@ -31,13 +32,41 @@ const {
 
 const tabId = crypto.randomUUID();
 const tabs = logosTabs.filter(Boolean).map((tab) => {
-  const logosSource = (tab.logosSource || 'gallery') as 'gallery' | 'customers';
+  const logosSource = (tab.logosSource || 'gallery') as
+    | 'gallery'
+    | 'customers'
+    | 'partners';
 
   if (logosSource === 'customers') {
     const logos = (
       (tab.customersLogos?.nodes ?? []) as unknown as CustomerLogoFragment[]
     )
-      .map((l) => !!l && l.__typename === 'Customer' && l.customerAcf?.logo)
+      .map((l) => {
+        const logo = !!l && l.__typename === 'Customer' && l.customerAcf?.logo;
+        const websiteLink =
+          tab.enableLinks &&
+          !!l &&
+          l.__typename === 'Customer' &&
+          l?.customerAcf?.websiteLink?.url;
+        return { ...logo, websiteLink };
+      })
+      .filter(Boolean);
+
+    return { ...tab, logos };
+  }
+  if (logosSource === 'partners') {
+    const logos = (
+      (tab.partnersLogos?.nodes ?? []) as unknown as PartnerLogoFragment[]
+    )
+      .map((l) => {
+        const logo = !!l && l.__typename === 'Partner' && l.partnerAcf?.logo;
+        const websiteLink =
+          tab.enableLinks &&
+          !!l &&
+          l.__typename === 'Partner' &&
+          l?.partnerAcf?.websiteLink?.url;
+        return { ...logo, websiteLink };
+      })
       .filter(Boolean);
 
     return { ...tab, logos };
@@ -83,7 +112,7 @@ const tabs = logosTabs.filter(Boolean).map((tab) => {
                   <Prose
                     tag="p"
                     set:html={fixDoubleBr(tab.description)}
-                    class="w-full max-w-[37rem] mx-auto mb-8 md:mb-15"
+                    class="mx-auto mb-8 w-full max-w-[37rem] md:mb-15"
                   />
                 )}
                 {layout === 'cards' && (

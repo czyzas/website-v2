@@ -27,7 +27,7 @@ const {
 <Grid {...props} class={cn('card-with-big-image items-center', className)}>
   <Card
     class={cn(
-      'content-column flex flex-col col-span-full md:col-start-1 md:col-end-8 lg:col-end-6 md:row-span-full relative z-[1] md:my-24 h-fit',
+      'content-column relative z-[1] col-span-full flex h-fit flex-col md:col-start-1 md:col-end-8 md:row-span-full md:my-24 lg:col-end-6',
       { 'lg:col-end-8': widerCard }
     )}
   >
@@ -35,7 +35,7 @@ const {
   </Card>
   <div
     class={cn(
-      'hidden md:block image-column col-start-2 col-end-[-1] md:col-start-4 lg:col-start-5 md:col-end-13 md:row-span-full',
+      'image-column col-start-2 col-end-[-1] hidden md:col-start-4 md:col-end-13 md:row-span-full md:block lg:col-start-5',
       { 'md:relative': preferContentHeight }
     )}
   >
@@ -43,9 +43,9 @@ const {
       data={image}
       preferredWidth={1000}
       class={cn(
-        'w-full h-full object-cover rounded-lg border border-sw-gray-400',
+        'h-full w-full rounded-lg border border-sw-gray-400 object-cover',
         {
-          'md:absolute md:size-full md:left-0 md:top-0': preferContentHeight,
+          'md:absolute md:left-0 md:top-0 md:size-full': preferContentHeight,
         }
       )}
     />

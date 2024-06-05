@@ -87,18 +87,18 @@ const rows: Array<{
         {rows.map((row, index) => {
           if (!row.value) return null;
           const label = TRANSLATIONS.EVENT_INFORMATION[row.type];
-          const rowStyles = cn('flex shrink-0 py-2 items-center', {
+          const rowStyles = cn('flex shrink-0 items-center py-2', {
             'border-b border-b-sw-border': index !== rows.length - 1,
           });
           return (
             <>
-              <div class={cn(rowStyles, 'text-sw-text-subdued pr-1.5')}>
+              <div class={cn(rowStyles, 'pr-1.5 text-sw-text-subdued')}>
                 <Icon name={row.icon} class="size-6" />
               </div>
               <div
                 class={cn(
                   rowStyles,
-                  'typography-small-box-title text-sw-sky-400 uppercase pr-3'
+                  'typography-small-box-title pr-3 uppercase text-sw-sky-400'
                 )}
               >
                 {label}

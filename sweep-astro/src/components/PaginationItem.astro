@@ -24,11 +24,11 @@ const Tag = link ? 'a' : 'span';
     href={isLink ? link : undefined}
     class={cn(
       'pagination-item',
-      'flex items-center justify-center text-center select-none tabular-nums size-10',
-      'bg-white typography-body text-black',
+      'flex size-10 select-none items-center justify-center text-center tabular-nums',
+      'typography-body bg-white text-black',
       { 'cursor-default': !isLink },
       { 'hover:bg-sw-surface-subdued': isLink },
-      { 'text-white bg-sw-sky-400': active },
+      { 'bg-sw-sky-400 text-white': active },
       className
     )}><slot /></Tag
   >

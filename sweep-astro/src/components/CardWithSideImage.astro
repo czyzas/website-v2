@@ -13,13 +13,13 @@ const { class: className, image, ...props } = Astro.props;
 ---
 
 <Grid {...props} class={cn('card-with-side-image', className)}>
-  <Card class="flex flex-col col-span-full md:col-span-5">
+  <Card class="col-span-full flex flex-col md:col-span-5">
     <slot />
   </Card>
-  <div class="image-container col-span-full md:col-span-7 relative">
+  <div class="image-container relative col-span-full md:col-span-7">
     <WordpressImage
       data={image}
-      class="md:absolute md:size-full md:object-cover md:object-left-top rounded-tl-lg"
+      class="rounded-tl-lg md:absolute md:size-full md:object-cover md:object-left-top"
     />
   </div>
 </Grid>

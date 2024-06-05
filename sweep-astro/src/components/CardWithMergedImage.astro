@@ -19,8 +19,8 @@ const { class: className, image, size = 'md', ...props } = Astro.props;
   {...props}
   class={cn(
     'card-with-merged-image',
-    'overflow-hidden h-full p-0 bg-sw-surface-subdued',
-    'grid lg:min-h-[26.25rem] grid-cols-2',
+    'h-full overflow-hidden bg-sw-surface-subdued p-0',
+    'grid grid-cols-2 lg:min-h-[26.25rem]',
     {
       'lg:grid-cols-12': size === 'lg',
     },
@@ -28,7 +28,7 @@ const { class: className, image, size = 'md', ...props } = Astro.props;
   )}
 >
   <div
-    class={cn('content-column flex flex-col p-6 col-span-full md:col-span-1', {
+    class={cn('content-column col-span-full flex flex-col p-6 md:col-span-1', {
       'lg:col-span-4': size === 'lg',
     })}
   >
@@ -36,12 +36,12 @@ const { class: className, image, size = 'md', ...props } = Astro.props;
   </div>
   <div
     class={cn(
-      'image-column aspect-[16/9] col-span-full md:aspect-auto md:col-span-1',
+      'image-column col-span-full aspect-[16/9] md:col-span-1 md:aspect-auto',
       {
         'lg:col-span-8': size === 'lg',
       }
     )}
   >
-    <WordpressImage data={image} class="object-cover w-full h-full" />
+    <WordpressImage data={image} class="h-full w-full object-cover" />
   </div>
 </Card>

@@ -10,7 +10,11 @@ import Grid from './ui/Grid.astro';
 type Props = WithAttributes<
   {
     columns?: number;
-    logos?: UnparsedImage[];
+    logos?:
+      | UnparsedImage[]
+      | {
+          websiteLink?: string | boolean;
+        }[];
   } & HTMLAttributes<'div'>
 >;
 
@@ -27,19 +31,31 @@ const columnClassName: Record<number, string> = {
 {
   logos.length > 0 && (
     <Grid {...props} class={cn('logos-grid', className)}>
-      {logos.map((logo) => (
-        <Card
-          class={cn(
-            'customer-logo p-6 flex items-center justify-center',
-            columnClassName?.[columns] ?? 'col-span-full'
-          )}
-        >
-          <WordpressImage
-            data={logo}
-            class="max-h-20 max-w-40 object-contain w-fit"
-          />
-        </Card>
-      ))}
+      {logos.map((logo) => {
+        const uri = (logo as { websiteLink?: string })?.websiteLink;
+        return (
+          <Card
+            class={cn(
+              'customer-logo flex items-center justify-center p-6',
+              columnClassName?.[columns] ?? 'col-span-full'
+            )}
+          >
+            {uri ? (
+              <a href={uri} class="contents">
+                <WordpressImage
+                  data={logo as UnparsedImage}
+                  class="max-h-20 w-fit max-w-40 object-contain"
+                />
+              </a>
+            ) : (
+              <WordpressImage
+                data={logo as UnparsedImage}
+                class="max-h-20 w-fit max-w-40 object-contain"
+              />
+            )}
+          </Card>
+        );
+      })}
     </Grid>
   )
 }

@@ -63,7 +63,7 @@ const sectionId = rawSectionId ? `#${rawSectionId}` : '';
             data-active={activeTag === tag.slug ? 'true' : 'false'}
             class="group"
           >
-            <Card class="h-full flex items-center justify-center transition-colors bg-white group-hover:bg-sw-surface-subdued group-data-[active=true]:bg-sw-sky-400 group-data-[active=true]:text-white group-data-[active=true]:border-transparent text-base font-medium p-3 text-center">
+            <Card class="flex h-full items-center justify-center bg-white p-3 text-center text-base font-medium transition-colors group-hover:bg-sw-surface-subdued group-data-[active=true]:border-transparent group-data-[active=true]:bg-sw-sky-400 group-data-[active=true]:text-white">
               {tag.name}
             </Card>
           </a>

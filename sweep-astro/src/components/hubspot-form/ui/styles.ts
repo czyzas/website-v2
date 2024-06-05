@@ -1,14 +1,14 @@
 import { cn } from '@/scripts/cn';
 
 export const base = cn(
-  'w-full text-black bg-white border border-sw-text-disabled shadow-button-secondary rounded-lg p-5 placeholder:text-sw-text-subdued'
+  'w-full rounded-lg border border-sw-text-disabled bg-white p-5 text-black shadow-button-secondary placeholder:text-sw-text-subdued'
 );
 
 export const selectOptionsWrapper = cn(
-  'p-6 rounded-lg bg-white border border-sw-text-disabled shadow-button-secondary'
+  'rounded-lg border border-sw-text-disabled bg-white p-6 shadow-button-secondary'
 );
 
-export const selectOptionsList = cn('py-2 px-3');
+export const selectOptionsList = cn('px-3 py-2');
 export const selectOptionItem = cn(
-  'cursor-pointer py-1 typography-body text-sw-text-subdued data-[state=checked]:text-sw-sky-400 data-[highlighted]:text-sw-sky-400 aria-selected:text-sw-sky-400 data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50'
+  'typography-body cursor-pointer py-1 text-sw-text-subdued aria-selected:text-sw-sky-400 data-[disabled=true]:pointer-events-none data-[highlighted]:text-sw-sky-400 data-[state=checked]:text-sw-sky-400 data-[disabled=true]:opacity-50'
 );

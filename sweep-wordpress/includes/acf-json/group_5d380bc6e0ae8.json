@@ -834,7 +834,8 @@
                                     "wpml_cf_preferences": 1,
                                     "choices": {
                                         "gallery": "Gallery",
-                                        "customers": "Customers"
+                                        "customers": "Customers",
+                                        "partners": "Partners"
                                     },
                                     "default_value": "gallery",
                                     "return_format": "value",
@@ -843,6 +844,47 @@
                                     "show_in_graphql": 1,
                                     "graphql_description": "",
                                     "graphql_field_name": "logosSource",
+                                    "graphql_non_null": 0,
+                                    "parent_repeater": "field_663a1e0e4aebd"
+                                },
+                                {
+                                    "key": "field_665ec8cf6e0d9",
+                                    "label": "Enable links",
+                                    "name": "enable_links",
+                                    "aria-label": "",
+                                    "type": "true_false",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_66598940c863d",
+                                                "operator": "==",
+                                                "value": "customers"
+                                            }
+                                        ],
+                                        [
+                                            {
+                                                "field": "field_66598940c863d",
+                                                "operator": "==",
+                                                "value": "partners"
+                                            }
+                                        ]
+                                    ],
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 1,
+                                    "message": "",
+                                    "default_value": 0,
+                                    "ui_on_text": "",
+                                    "ui_off_text": "",
+                                    "ui": 1,
+                                    "show_in_graphql": 1,
+                                    "graphql_description": "",
+                                    "graphql_field_name": "enableLinks",
                                     "graphql_non_null": 0,
                                     "parent_repeater": "field_663a1e0e4aebd"
                                 },
@@ -927,6 +969,50 @@
                                     "show_in_graphql": 1,
                                     "graphql_description": "",
                                     "graphql_field_name": "customersLogos",
+                                    "graphql_connection_type": "one_to_many",
+                                    "bidirectional_target": [],
+                                    "parent_repeater": "field_663a1e0e4aebd"
+                                },
+                                {
+                                    "key": "field_665ee21e346e4",
+                                    "label": "Select partners",
+                                    "name": "partners_logos",
+                                    "aria-label": "",
+                                    "type": "relationship",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_66598940c863d",
+                                                "operator": "==",
+                                                "value": "partners"
+                                            }
+                                        ]
+                                    ],
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 1,
+                                    "post_type": [
+                                        "partner"
+                                    ],
+                                    "post_status": "",
+                                    "taxonomy": "",
+                                    "filters": [
+                                        "search",
+                                        "taxonomy"
+                                    ],
+                                    "return_format": "object",
+                                    "min": "",
+                                    "max": "",
+                                    "elements": "",
+                                    "bidirectional": 0,
+                                    "show_in_graphql": 1,
+                                    "graphql_description": "",
+                                    "graphql_field_name": "partnersLogos",
                                     "graphql_connection_type": "one_to_many",
                                     "bidirectional_target": [],
                                     "parent_repeater": "field_663a1e0e4aebd"
@@ -3054,6 +3140,166 @@
                     "min": "",
                     "max": ""
                 },
+                "layout_665f0983e8362": {
+                    "key": "layout_665f0983e8362",
+                    "name": "quotation-with-image",
+                    "label": "Quotation with image",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_665f0667059d7",
+                            "label": "Background color",
+                            "name": "background_color",
+                            "aria-label": "",
+                            "type": "group",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "invisible-group",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "layout": "block",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "backgroundColor",
+                            "graphql_non_null": 0,
+                            "sub_fields": [
+                                {
+                                    "key": "field_665f0667059d8",
+                                    "label": "Background color",
+                                    "name": "background_color",
+                                    "aria-label": "",
+                                    "type": "clone",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 1,
+                                    "clone": [
+                                        "field_6602daa862d57"
+                                    ],
+                                    "display": "seamless",
+                                    "layout": "block",
+                                    "prefix_label": 0,
+                                    "prefix_name": 0
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_665f0667059db",
+                            "label": "Image",
+                            "name": "image",
+                            "aria-label": "",
+                            "type": "image",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "return_format": "array",
+                            "library": "all",
+                            "min_width": "",
+                            "min_height": "",
+                            "min_size": "",
+                            "max_width": "",
+                            "max_height": "",
+                            "max_size": "",
+                            "mime_types": "",
+                            "preview_size": "mobile-xs",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "image"
+                        },
+                        {
+                            "key": "field_665f0685059dd",
+                            "label": "Logo",
+                            "name": "logo",
+                            "aria-label": "",
+                            "type": "image",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "return_format": "array",
+                            "library": "all",
+                            "min_width": "",
+                            "min_height": "",
+                            "min_size": "",
+                            "max_width": "",
+                            "max_height": "",
+                            "max_size": "",
+                            "mime_types": "",
+                            "preview_size": "mobile-xs",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "logo"
+                        },
+                        {
+                            "key": "field_665f0667059da",
+                            "label": "Quotation",
+                            "name": "quotation",
+                            "aria-label": "",
+                            "type": "group",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "invisible-group",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "layout": "block",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "",
+                            "graphql_non_null": 0,
+                            "sub_fields": [
+                                {
+                                    "key": "field_665f0667059dc",
+                                    "label": "Quotation",
+                                    "name": "quotation",
+                                    "aria-label": "",
+                                    "type": "clone",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 1,
+                                    "clone": [
+                                        "field_662a151974620"
+                                    ],
+                                    "display": "seamless",
+                                    "layout": "block",
+                                    "prefix_label": 0,
+                                    "prefix_name": 0
+                                }
+                            ]
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
                 "layout_664de07660de6": {
                     "key": "layout_664de07660de6",
                     "name": "quotations",
@@ -3614,6 +3860,7 @@
                             "wpml_cf_preferences": 1,
                             "choices": {
                                 "white": "White",
+                                "gray": "Gray",
                                 "blue": "Blue",
                                 "green": "Green",
                                 "purple": "Purple",
@@ -3866,6 +4113,13 @@
                 "operator": "==",
                 "value": "event"
             }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "case-study"
+            }
         ]
     ],
     "menu_order": 1,
@@ -3884,6 +4138,7 @@
     "graphql_field_name": "modules",
     "map_graphql_types_from_location_rules": 1,
     "graphql_types": [
+        "CaseStudy",
         "Event",
         "Industry",
         "InsightsItem",
@@ -3891,5 +4146,5 @@
         "Page",
         "Post"
     ],
-    "modified": 1717161146
+    "modified": 1717504892
 }

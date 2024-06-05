@@ -32,21 +32,21 @@ const { menuId } = Astro.props;
   data-action="toggle-menu"
   aria-pressed="false"
   aria-controls={menuId}
-  class="flex lg:hidden flex-col justify-center items-center gap-1 hover:text-sw-sky-400 aria-pressed:text-sw-sky-400 size-8 sm:size-12 group"
+  class="group flex size-8 flex-col items-center justify-center gap-1 hover:text-sw-sky-400 aria-pressed:text-sw-sky-400 sm:size-12 lg:hidden"
 >
   <span
     class={cn(
-      'h-0.5 w-5 rounded-full bg-current transition ease transform duration-300',
-      'group-aria-pressed:rotate-45 group-aria-pressed:translate-y-1.5'
+      'ease h-0.5 w-5 transform rounded-full bg-current transition duration-300',
+      'group-aria-pressed:translate-y-1.5 group-aria-pressed:rotate-45'
     )}></span>
   <span
     class={cn(
-      'h-0.5 w-5 rounded-full bg-current transition ease transform duration-300',
+      'ease h-0.5 w-5 transform rounded-full bg-current transition duration-300',
       'group-aria-pressed:opacity-0'
     )}></span>
   <span
     class={cn(
-      'h-0.5 w-5 rounded-full bg-current transition ease transform duration-300',
-      'group-aria-pressed:-rotate-45 group-aria-pressed:-translate-y-1.5'
+      'ease h-0.5 w-5 transform rounded-full bg-current transition duration-300',
+      'group-aria-pressed:-translate-y-1.5 group-aria-pressed:-rotate-45'
     )}></span>
 </button>

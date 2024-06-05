@@ -2,7 +2,8 @@
 const config = {
   singleQuote: true,
   trailingComma: 'es5',
-  plugins: ['prettier-plugin-astro'],
+  plugins: ['prettier-plugin-astro', 'prettier-plugin-tailwindcss'],
+  tailwindFunctions: ['cn', 'cva'],
   overrides: [
     {
       files: '*.astro',
