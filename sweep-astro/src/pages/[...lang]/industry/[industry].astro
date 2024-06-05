@@ -5,9 +5,10 @@ import {
   fetchIndustryPagesStaticPaths,
   fetchIndustrySingle,
 } from '@/lib/fetchCMSData';
-import { cleanURI, compareURI, prefixURI } from '@/scripts/utils-uri';
+import { validateUri } from '@/scripts/utils-uri';
 import DefaultPage from '@/templates/DefaultPage.astro';
 import { createPagesStaticPaths } from '@/scripts/utils-static-paths';
+import { getUrlWithoutLang } from '@/i18n/utils';
 
 export const getStaticPaths = async () => {
   const paths = await fetchIndustryPagesStaticPaths();
@@ -18,27 +19,15 @@ export const getStaticPaths = async () => {
 };
 
 const params = Astro.params as InferGetStaticParamsType<typeof getStaticPaths>;
-const { industry: unprefixedURI, lang = defaultLocale } = params;
-const rawUri = prefixURI(unprefixedURI, 'industry');
-const uri = cleanURI(rawUri, lang);
+const { industry: unprefixedUri, lang = defaultLocale } = params;
 
-if (!uri) {
-  if (import.meta.env.SSR) {
-    return Astro.redirect('/404');
-  }
+const { data, error } = await validateUri(unprefixedUri, lang, {
+  prefix: 'industry',
+  fetcher: (uri) => fetchIndustrySingle(getUrlWithoutLang(uri), lang),
+  onError: () => Astro.redirect('/404'),
+});
 
-  throw new Error(`Page with uri '${rawUri}' does not exists`);
-}
-
-const data = await fetchIndustrySingle(uri, lang);
-
-if (!compareURI(uri, data.page?.uri)) {
-  if (import.meta.env.SSR) {
-    return Astro.redirect('/404');
-  }
-
-  throw new Error(`Page with uri '${rawUri}' does not exists`);
-}
+if (error) return error;
 ---
 
 <DefaultPage data={data} />

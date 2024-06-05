@@ -5,9 +5,10 @@ import {
   fetchNewsroomPagesStaticPaths,
   fetchNewsroomSingle,
 } from '@/lib/fetchCMSData';
-import { cleanURI, compareURI, prefixURI } from '@/scripts/utils-uri';
+import { validateUri } from '@/scripts/utils-uri';
 import ArticlePage from '@/templates/ArticlePage.astro';
 import { createPagesStaticPaths } from '@/scripts/utils-static-paths';
+import { getUrlWithoutLang } from '@/i18n/utils';
 
 export const getStaticPaths = async () => {
   const paths = await fetchNewsroomPagesStaticPaths();
@@ -18,29 +19,15 @@ export const getStaticPaths = async () => {
 };
 
 const params = Astro.params as InferGetStaticParamsType<typeof getStaticPaths>;
-const { newsroom_single: unprefixedURI, lang = defaultLocale } = params;
-const rawUri = prefixURI(unprefixedURI, 'newsroom');
-const uri = cleanURI(rawUri, lang);
+const { newsroom_single: unprefixedUri, lang = defaultLocale } = params;
 
-// TODO: use some kind of reusable function
-if (!uri) {
-  if (import.meta.env.SSR) {
-    return Astro.redirect('/404');
-  }
+const { data, error } = await validateUri(unprefixedUri, lang, {
+  prefix: 'newsroom',
+  fetcher: (uri) => fetchNewsroomSingle(getUrlWithoutLang(uri), lang),
+  onError: () => Astro.redirect('/404'),
+});
 
-  throw new Error(`Page with uri '${rawUri}' does not exists`);
-}
-
-const data = await fetchNewsroomSingle(uri, lang);
-
-// TODO: use some kind of reusable function
-if (!compareURI(uri, data.page?.uri)) {
-  if (import.meta.env.SSR) {
-    return Astro.redirect('/404');
-  }
-
-  throw new Error(`Page with uri '${rawUri}' does not exists`);
-}
+if (error) return error;
 ---
 
 <ArticlePage postType="newsroom" lang={lang} data={data} />

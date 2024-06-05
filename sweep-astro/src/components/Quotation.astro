@@ -11,6 +11,7 @@ interface QuotationProps extends HTMLAttributes<'div'> {
   /** @default 'light' */
   theme?: 'light' | 'dark';
   image?: UnparsedImage;
+  fullHeight?: boolean;
   authorImage?: UnparsedImage;
   authorName?: string;
   authorOccupation?: string;
@@ -30,6 +31,7 @@ const {
   avatarSize = 'md',
   quoteSize = 'md',
   paddingSize = 'auto',
+  fullHeight = false,
   image,
   authorImage,
   authorName,
@@ -46,6 +48,7 @@ const hasAuthor = !!authorImage || !!authorName || !!authorOccupation;
     'quotation',
     'overflow-hidden p-0',
     { 'border-transparent bg-sw-sea-500 text-white': theme === 'dark' },
+    { 'h-full': fullHeight },
     className
   )}
 >
@@ -66,6 +69,7 @@ const hasAuthor = !!authorImage || !!authorName || !!authorOccupation;
       'xl:p-16': paddingSize === 'md',
       'xl:p-8': paddingSize === 'sm',
       'xl:px-8 xl:py-6': paddingSize === 'with-image',
+      'flex h-full flex-col': fullHeight,
     })}
   >
     <blockquote
@@ -74,6 +78,7 @@ const hasAuthor = !!authorImage || !!authorName || !!authorOccupation;
         'text-lg leading-normal md:typography-body-large': quoteSize === 'sm',
         // TODO: switch from `typography` to `text`
         '!text-white': theme === 'dark',
+        'mb-6': fullHeight,
       })}
     >
       <slot />
@@ -86,6 +91,7 @@ const hasAuthor = !!authorImage || !!authorName || !!authorOccupation;
             'md:mt-16': quoteSize === 'md',
             'md:mt-12': quoteSize === 'sm',
             'gap-3.5': avatarSize === 'sm',
+            '!mt-auto': fullHeight,
           })}
         >
           <WordpressImage

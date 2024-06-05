@@ -2,6 +2,9 @@ import type { ImageFragment } from '@/__generated__/cms';
 import type { ReplaceTypenameLiteral, WithShouldRender } from '@/types';
 
 export type UnparsedImage = ReplaceTypenameLiteral<ImageFragment> | undefined;
+export type UnparsedImageWithLink = NonNullable<UnparsedImage> & {
+  websiteLink?: string;
+};
 
 export type ParsedImage = {
   url: string;

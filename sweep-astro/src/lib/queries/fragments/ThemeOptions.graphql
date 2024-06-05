@@ -1,23 +1,44 @@
 fragment ThemeOptions on ThemeOptions {
   themeOptionsAcf {
-    defaultTopImages {
-      partner {
-        ...Image
+    postTypeRelated {
+      insights {
+        featuredArticleCtaText
+        defaultTopImage {
+          ...Image
+        }
       }
-      newsroomItem {
-        ...Image
+      insights {
+        featuredArticleCtaText
+        defaultTopImage {
+          ...Image
+        }
       }
-      insightsItem {
-        ...Image
-      }
-      industries {
-        ...Image
+      newsroom {
+        featuredArticleCtaText
+        defaultTopImage {
+          ...Image
+        }
       }
       event {
-        ...Image
+        featuredArticleCtaText
+        defaultTopImage {
+          ...Image
+        }
       }
       caseStudy {
-        ...Image
+        defaultTopImage {
+          ...Image
+        }
+      }
+      industry {
+        defaultTopImage {
+          ...Image
+        }
+      }
+      partner {
+        defaultTopImage {
+          ...Image
+        }
       }
     }
     bookDemoLink {

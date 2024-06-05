@@ -70,13 +70,12 @@ const logos = (rawLogos?.edges ?? []).filter(Boolean);
       delay: 5000,
     },
     spaceBetween: 16,
-    autoHeight: true,
   });
 </script>
 
 <style>
   .swiper-slide {
-    @apply self-start;
+    @apply h-auto;
   }
   .swiper-pagination {
     @apply static mt-4.5 flex justify-center gap-2.5;
@@ -116,6 +115,7 @@ const logos = (rawLogos?.edges ?? []).filter(Boolean);
                     return (
                       <div class="swiper-slide">
                         <Quotation
+                          fullHeight
                           theme="dark"
                           avatarSize="sm"
                           quoteSize="sm"
