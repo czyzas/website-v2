@@ -46,6 +46,7 @@ export const TRANSLATIONS = {
   BLOG: 'Blog',
   PAST_EVENT: 'PAST EVENT',
   READ_MORE: 'Read more',
+  LOAD_MORE: 'Load more',
   READ_FULL_STORY: 'Read the full story',
   VIEW_CASE_STUDY: 'View Case Study',
   ALL: 'All',

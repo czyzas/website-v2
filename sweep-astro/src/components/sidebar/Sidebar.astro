@@ -13,7 +13,9 @@ const { class: className, sticky = false, ...props } = Astro.props;
 
 <aside {...props} class={cn(className)}>
   <div
-    class={cn('flex flex-col gap-4 md:gap-6', { 'md:sticky md:top-8': sticky })}
+    class={cn('flex flex-col gap-4 md:gap-6', {
+      'md:sticky md:top-24': sticky,
+    })}
   >
     <slot />
   </div>

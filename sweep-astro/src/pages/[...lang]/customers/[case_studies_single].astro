@@ -12,14 +12,13 @@ export const getStaticPaths = async () => {
   const paths = await fetchCaseStudiesPagesStaticPaths();
   return createPagesStaticPaths(paths, {
     paramKey: 'case_studies_single',
-    paramValueType: 'prefixed-uri',
-    uriPrefix: 'case-study',
+    paramValueType: 'slug',
   });
 };
 
 const { params } = Astro;
 const { case_studies_single: unprefixedURI, lang = defaultLocale } = params;
-const rawUri = prefixURI(unprefixedURI, 'case-study');
+const rawUri = prefixURI(unprefixedURI, 'customers');
 const uri = cleanURI(rawUri, lang);
 
 // TODO: use some kind of reusable function

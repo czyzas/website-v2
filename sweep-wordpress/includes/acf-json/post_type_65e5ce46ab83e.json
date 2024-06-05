@@ -57,7 +57,10 @@
     "rest_namespace": "wp\/v2",
     "rest_controller_class": "WP_REST_Posts_Controller",
     "menu_position": "",
-    "menu_icon": "dashicons-format-chat",
+    "menu_icon": {
+        "type": "dashicons",
+        "value": "dashicons-format-chat"
+    },
     "rename_capabilities": false,
     "singular_capability_name": "post",
     "plural_capability_name": "posts",
@@ -69,7 +72,8 @@
     "has_archive": false,
     "has_archive_slug": "",
     "rewrite": {
-        "permalink_rewrite": "post_type_key",
+        "permalink_rewrite": "custom_permalink",
+        "slug": "customers",
         "with_front": "1",
         "feeds": "0",
         "pages": "1"
@@ -83,5 +87,5 @@
     "show_in_graphql": 1,
     "graphql_single_name": "caseStudy",
     "graphql_plural_name": "caseStudies",
-    "modified": 1709649024
+    "modified": 1717499279
 }
