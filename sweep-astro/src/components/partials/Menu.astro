@@ -27,7 +27,7 @@ const menu = (primaryMenu?.menuItems?.nodes ?? []).filter(Boolean);
 
   const mainItems =
     navbar?.querySelectorAll<HTMLAnchorElement>(
-      'ul.main-menu a.main-menu-item'
+      'ul.main-menu .main-menu-item'
     ) ?? [];
 
   const isMobileMedia = window.matchMedia('(max-width: 1023px)');
@@ -149,11 +149,15 @@ const menu = (primaryMenu?.menuItems?.nodes ?? []).filter(Boolean);
 
             const submenuItem = `submenu-item-${crypto.randomUUID().substring(16)}`;
 
+            console.log({ uri: item.uri });
+            const isDropdown = item.uri === '#';
             return (
               <li class="group lg:flex lg:h-full lg:items-center">
                 <MenuItem
-                  href={item.uri}
-                  target={item.target}
+                  asButton={isDropdown}
+                  type={isDropdown ? 'button' : undefined}
+                  href={!isDropdown ? item.uri : undefined}
+                  target={!isDropdown ? item.target : undefined}
                   data-menu-item-id={item.databaseId}
                   data-parent-item-id={item.parentDatabaseId}
                   class={cn('main-menu-item justify-start lg:text-center', {
