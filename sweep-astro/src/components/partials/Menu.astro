@@ -149,7 +149,6 @@ const menu = (primaryMenu?.menuItems?.nodes ?? []).filter(Boolean);
 
             const submenuItem = `submenu-item-${crypto.randomUUID().substring(16)}`;
 
-            console.log({ uri: item.uri });
             const isDropdown = item.uri === '#';
             return (
               <li class="group lg:flex lg:h-full lg:items-center">
