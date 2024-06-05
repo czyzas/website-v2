@@ -3,6 +3,7 @@ import { Icon } from 'astro-icon/components';
 import { getStore } from '@/scripts/store';
 import { cmsStore } from '@/stores/cmsStore';
 import { cn } from '@/scripts/cn';
+import { parseLink } from '@/scripts/data-parsers/parseLink';
 import Container from '../ui/Container.astro';
 import Section from '../ui/Section.astro';
 import MenuItem from '../MenuItem.astro';
@@ -37,36 +38,36 @@ const getIconName = (title: string) => iconMap?.[title.toLowerCase()];
               return (
                 <div class="w-full space-y-3">
                   {rows.map((row, index) => {
-                    const title = row?.title ?? '';
+                    const rowTitle = row?.title ?? '';
                     const items = row?.items ?? [];
-                    if (items.length === 0) return null;
 
+                    if (items.length === 0) return null;
                     return (
                       <Fragment>
-                        {!!title && (
+                        {!!rowTitle && (
                           <p
                             class={cn(
                               'mb-2 text-xs font-bold uppercase text-sw-sky-400',
                               index !== 0 && 'md:!mt-6'
                             )}
                           >
-                            {title}
+                            {rowTitle}
                           </p>
                         )}
                         <div class="w-full space-y-3 rounded-lg bg-white p-3">
                           {items.map((item) => {
-                            const link = item?.item;
-                            const title = link?.title ?? '';
-                            if (!title) return null;
+                            const link = parseLink(item?.item);
+
+                            if (!link.shouldRender) return null;
                             return (
-                              <MenuItem href={link?.url} class="justify-start">
-                                {iconMap?.[title.toLowerCase()] && (
+                              <MenuItem href={link.url} class="justify-start">
+                                {getIconName(link.title) && (
                                   <Icon
-                                    name={getIconName(title)}
+                                    name={getIconName(link.title)}
                                     class="size-4"
                                   />
                                 )}
-                                {title}
+                                {link.title}
                               </MenuItem>
                             );
                           })}
