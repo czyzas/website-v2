@@ -65,8 +65,8 @@
             "graphql_non_null": 0
         },
         {
-            "key": "field_635b6e690ccf4",
-            "label": "Default top images",
+            "key": "field_6660453b086d3",
+            "label": "Post types related",
             "name": "",
             "aria-label": "",
             "type": "tab",
@@ -78,16 +78,16 @@
                 "class": "",
                 "id": ""
             },
-            "graphql_field_name": "defaultTopImages",
+            "graphql_field_name": "postTypesRelated",
             "wpml_cf_preferences": 1,
             "placement": "top",
             "endpoint": 0,
             "selected": 0
         },
         {
-            "key": "field_66509a29c9bee",
-            "label": "Default top images",
-            "name": "default_top_images",
+            "key": "field_666046da086d6",
+            "label": "Post type related",
+            "name": "post_type_related",
             "aria-label": "",
             "type": "group",
             "instructions": "",
@@ -95,10 +95,10 @@
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
-                "class": "",
+                "class": "invisible-group",
                 "id": ""
             },
-            "graphql_field_name": "defaultTopImages",
+            "graphql_field_name": "postTypeRelated",
             "wpml_cf_preferences": 1,
             "layout": "block",
             "show_in_graphql": 1,
@@ -106,296 +106,411 @@
             "graphql_non_null": 0,
             "sub_fields": [
                 {
-                    "key": "field_664c62b167fb4",
-                    "label": "Case study",
-                    "name": "case_study",
+                    "key": "field_666047b23ae1d",
+                    "label": "Insights",
+                    "name": "",
                     "aria-label": "",
-                    "type": "image",
+                    "type": "tab",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "50",
+                        "width": "",
                         "class": "",
                         "id": ""
                     },
+                    "graphql_field_name": "tab",
                     "wpml_cf_preferences": 1,
-                    "return_format": "array",
-                    "library": "all",
-                    "min_width": "",
-                    "min_height": "",
-                    "min_size": "",
-                    "max_width": "",
-                    "max_height": "",
-                    "max_size": "",
-                    "mime_types": "",
-                    "preview_size": "medium",
-                    "show_in_graphql": 1,
-                    "graphql_description": "",
-                    "graphql_field_name": "caseStudy"
+                    "placement": "top",
+                    "endpoint": 0,
+                    "selected": 0
                 },
                 {
-                    "key": "field_6639f03bc3089",
+                    "key": "field_66604a6d28931",
+                    "label": "Insights",
+                    "name": "insights",
+                    "aria-label": "",
+                    "type": "group",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "invisible-group",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 1,
+                    "layout": "block",
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "insights",
+                    "graphql_non_null": 0,
+                    "sub_fields": [
+                        {
+                            "key": "field_665d7854167bc",
+                            "label": "Insights",
+                            "name": "insights",
+                            "aria-label": "",
+                            "type": "clone",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "invisible-group",
+                                "id": ""
+                            },
+                            "graphql_field_name": "insights",
+                            "wpml_cf_preferences": 1,
+                            "clone": [
+                                "field_666048211bbcf",
+                                "field_666048971bbd1"
+                            ],
+                            "display": "seamless",
+                            "layout": "",
+                            "prefix_label": 0,
+                            "prefix_name": 0
+                        }
+                    ]
+                },
+                {
+                    "key": "field_666049d72e8a1",
+                    "label": "Newsroom",
+                    "name": "",
+                    "aria-label": "",
+                    "type": "tab",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "graphql_field_name": "copy",
+                    "wpml_cf_preferences": 1,
+                    "placement": "top",
+                    "endpoint": 0,
+                    "selected": 0
+                },
+                {
+                    "key": "field_66604a9728932",
+                    "label": "Newsroom",
+                    "name": "newsroom",
+                    "aria-label": "",
+                    "type": "group",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "invisible-group",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 1,
+                    "layout": "block",
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "newsroom",
+                    "graphql_non_null": 0,
+                    "sub_fields": [
+                        {
+                            "key": "field_66604a9728934",
+                            "label": "Newsroom",
+                            "name": "newsroom",
+                            "aria-label": "",
+                            "type": "clone",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "invisible-group",
+                                "id": ""
+                            },
+                            "graphql_field_name": "newsroom",
+                            "wpml_cf_preferences": 1,
+                            "clone": [
+                                "field_666048211bbcf",
+                                "field_666048971bbd1"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 0
+                        }
+                    ]
+                },
+                {
+                    "key": "field_66604b21ed03d",
+                    "label": "Event",
+                    "name": "",
+                    "aria-label": "",
+                    "type": "tab",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "graphql_field_name": "copy",
+                    "wpml_cf_preferences": 1,
+                    "placement": "top",
+                    "endpoint": 0,
+                    "selected": 0
+                },
+                {
+                    "key": "field_66604b25ed03e",
                     "label": "Event",
                     "name": "event",
                     "aria-label": "",
-                    "type": "image",
+                    "type": "group",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "50",
-                        "class": "",
+                        "width": "",
+                        "class": "invisible-group",
                         "id": ""
                     },
                     "wpml_cf_preferences": 1,
-                    "return_format": "array",
-                    "library": "all",
-                    "min_width": "",
-                    "min_height": "",
-                    "min_size": "",
-                    "max_width": "",
-                    "max_height": "",
-                    "max_size": "",
-                    "mime_types": "",
-                    "preview_size": "medium",
+                    "layout": "block",
                     "show_in_graphql": 1,
                     "graphql_description": "",
-                    "graphql_field_name": "event"
+                    "graphql_field_name": "event",
+                    "graphql_non_null": 0,
+                    "sub_fields": [
+                        {
+                            "key": "field_66604b25ed040",
+                            "label": "Event",
+                            "name": "event",
+                            "aria-label": "",
+                            "type": "clone",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "invisible-group",
+                                "id": ""
+                            },
+                            "graphql_field_name": "event",
+                            "wpml_cf_preferences": 1,
+                            "clone": [
+                                "field_666048211bbcf",
+                                "field_666048971bbd1"
+                            ],
+                            "display": "seamless",
+                            "layout": "",
+                            "prefix_label": 0,
+                            "prefix_name": 0
+                        }
+                    ]
                 },
                 {
-                    "key": "field_664c5aaf179ca",
-                    "label": "Industries",
-                    "name": "industries",
+                    "key": "field_66604c18ed041",
+                    "label": "Case study",
+                    "name": "",
                     "aria-label": "",
-                    "type": "image",
+                    "type": "tab",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "50",
+                        "width": "",
                         "class": "",
                         "id": ""
                     },
+                    "graphql_field_name": "copy2",
                     "wpml_cf_preferences": 1,
-                    "return_format": "array",
-                    "library": "all",
-                    "min_width": "",
-                    "min_height": "",
-                    "min_size": "",
-                    "max_width": "",
-                    "max_height": "",
-                    "max_size": "",
-                    "mime_types": "",
-                    "preview_size": "medium",
-                    "show_in_graphql": 1,
-                    "graphql_description": "",
-                    "graphql_field_name": "industries"
+                    "placement": "top",
+                    "endpoint": 0,
+                    "selected": 0
                 },
                 {
-                    "key": "field_664c5ac0179cb",
-                    "label": "Insights Item",
-                    "name": "insights_item",
+                    "key": "field_66604c2bed042",
+                    "label": "Case study",
+                    "name": "case_study",
                     "aria-label": "",
-                    "type": "image",
+                    "type": "group",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "50",
-                        "class": "",
+                        "width": "",
+                        "class": "invisible-group",
                         "id": ""
                     },
                     "wpml_cf_preferences": 1,
-                    "return_format": "array",
-                    "library": "all",
-                    "min_width": "",
-                    "min_height": "",
-                    "min_size": "",
-                    "max_width": "",
-                    "max_height": "",
-                    "max_size": "",
-                    "mime_types": "",
-                    "preview_size": "medium",
+                    "layout": "block",
                     "show_in_graphql": 1,
                     "graphql_description": "",
-                    "graphql_field_name": "insightsItem"
+                    "graphql_field_name": "caseStudy",
+                    "graphql_non_null": 0,
+                    "sub_fields": [
+                        {
+                            "key": "field_66604c2bed044",
+                            "label": "Case study",
+                            "name": "case_study",
+                            "aria-label": "",
+                            "type": "clone",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "invisible-group",
+                                "id": ""
+                            },
+                            "graphql_field_name": "caseStudy",
+                            "wpml_cf_preferences": 1,
+                            "clone": [
+                                "field_666048211bbcf"
+                            ],
+                            "display": "seamless",
+                            "layout": "",
+                            "prefix_label": 0,
+                            "prefix_name": 0
+                        }
+                    ]
                 },
                 {
-                    "key": "field_664c5ad1179cc",
-                    "label": "Newsroom item",
-                    "name": "newsroom_item",
+                    "key": "field_66604c73ed045",
+                    "label": "Industry",
+                    "name": "",
                     "aria-label": "",
-                    "type": "image",
+                    "type": "tab",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "50",
+                        "width": "",
                         "class": "",
                         "id": ""
                     },
+                    "graphql_field_name": "copy3",
                     "wpml_cf_preferences": 1,
-                    "return_format": "array",
-                    "library": "all",
-                    "min_width": "",
-                    "min_height": "",
-                    "min_size": "",
-                    "max_width": "",
-                    "max_height": "",
-                    "max_size": "",
-                    "mime_types": "",
-                    "preview_size": "medium",
-                    "show_in_graphql": 1,
-                    "graphql_description": "",
-                    "graphql_field_name": "newsroomItem"
+                    "placement": "top",
+                    "endpoint": 0,
+                    "selected": 0
                 },
                 {
-                    "key": "field_664c5adb179cd",
+                    "key": "field_66604c76ed046",
+                    "label": "Industry",
+                    "name": "industry",
+                    "aria-label": "",
+                    "type": "group",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "invisible-group",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 1,
+                    "layout": "block",
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "industry",
+                    "graphql_non_null": 0,
+                    "sub_fields": [
+                        {
+                            "key": "field_66604c76ed048",
+                            "label": "Industry",
+                            "name": "industry",
+                            "aria-label": "",
+                            "type": "clone",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "invisible-group",
+                                "id": ""
+                            },
+                            "graphql_field_name": "industry",
+                            "wpml_cf_preferences": 1,
+                            "clone": [
+                                "field_666048211bbcf"
+                            ],
+                            "display": "seamless",
+                            "layout": "",
+                            "prefix_label": 0,
+                            "prefix_name": 0
+                        }
+                    ]
+                },
+                {
+                    "key": "field_66604c94ed049",
+                    "label": "Partner",
+                    "name": "",
+                    "aria-label": "",
+                    "type": "tab",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "graphql_field_name": "copy4",
+                    "wpml_cf_preferences": 1,
+                    "placement": "top",
+                    "endpoint": 0,
+                    "selected": 0
+                },
+                {
+                    "key": "field_66604c96ed04a",
                     "label": "Partner",
                     "name": "partner",
                     "aria-label": "",
-                    "type": "image",
+                    "type": "group",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "50",
-                        "class": "",
+                        "width": "",
+                        "class": "invisible-group",
                         "id": ""
                     },
                     "wpml_cf_preferences": 1,
-                    "return_format": "array",
-                    "library": "all",
-                    "min_width": "",
-                    "min_height": "",
-                    "min_size": "",
-                    "max_width": "",
-                    "max_height": "",
-                    "max_size": "",
-                    "mime_types": "",
-                    "preview_size": "medium",
+                    "layout": "block",
                     "show_in_graphql": 1,
                     "graphql_description": "",
-                    "graphql_field_name": "partner"
+                    "graphql_field_name": "partner",
+                    "graphql_non_null": 0,
+                    "sub_fields": [
+                        {
+                            "key": "field_66604c96ed04c",
+                            "label": "Partner",
+                            "name": "partner",
+                            "aria-label": "",
+                            "type": "clone",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "invisible-group",
+                                "id": ""
+                            },
+                            "graphql_field_name": "partner",
+                            "wpml_cf_preferences": 1,
+                            "clone": [
+                                "field_666048211bbcf"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 0
+                        }
+                    ]
                 }
             ]
-        },
-        {
-            "key": "field_6571b3eecc4a8",
-            "label": "Error 404 page",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "graphql_field_name": "error404Page",
-            "wpml_cf_preferences": 1,
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_6571b461eaf9a",
-            "label": "Title",
-            "name": "error404_title",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "25",
-                "class": "",
-                "id": ""
-            },
-            "wpml_cf_preferences": 2,
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "show_in_graphql": 1,
-            "graphql_description": "",
-            "graphql_field_name": "error404Title",
-            "graphql_non_null": 0
-        },
-        {
-            "key": "field_654cb55bfb069",
-            "label": "Headline",
-            "name": "error404_headline",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "25",
-                "class": "",
-                "id": ""
-            },
-            "wpml_cf_preferences": 2,
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "show_in_graphql": 1,
-            "graphql_description": "",
-            "graphql_field_name": "error404Headline",
-            "graphql_non_null": 0
-        },
-        {
-            "key": "field_5d3809daa15af",
-            "label": "Text under title",
-            "name": "error404_text",
-            "aria-label": "",
-            "type": "textarea",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "25",
-                "class": "",
-                "id": ""
-            },
-            "wpml_cf_preferences": 2,
-            "default_value": "",
-            "maxlength": "",
-            "rows": 2,
-            "placeholder": "",
-            "new_lines": "br",
-            "show_in_graphql": 1,
-            "graphql_description": "",
-            "graphql_field_name": "error404Text",
-            "graphql_non_null": 0
-        },
-        {
-            "key": "field_654cb16af1d6a",
-            "label": "Go back link",
-            "name": "error404_link",
-            "aria-label": "",
-            "type": "link",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "25",
-                "class": "",
-                "id": ""
-            },
-            "wpml_cf_preferences": 1,
-            "return_format": "array",
-            "show_in_graphql": 1,
-            "graphql_description": "",
-            "graphql_field_name": "error404Link",
-            "graphql_non_null": 0
         },
         {
             "key": "field_656f34e4ff8cb",
@@ -990,210 +1105,6 @@
                     "graphql_non_null": 0
                 }
             ]
-        },
-        {
-            "key": "field_665d7845167bb",
-            "label": "Insights",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "graphql_field_name": "insights",
-            "wpml_cf_preferences": 1,
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_665d7854167bc",
-            "label": "Insights",
-            "name": "insights",
-            "aria-label": "",
-            "type": "group",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "wpml_cf_preferences": 1,
-            "layout": "block",
-            "show_in_graphql": 1,
-            "graphql_description": "",
-            "graphql_field_name": "insights",
-            "graphql_non_null": 0,
-            "sub_fields": [
-                {
-                    "key": "field_665d786a167bd",
-                    "label": "CTA default text",
-                    "name": "cta_default_text",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "wpml_cf_preferences": 2,
-                    "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "show_in_graphql": 1,
-                    "graphql_description": "",
-                    "graphql_field_name": "ctaDefaultText",
-                    "graphql_non_null": 0
-                }
-            ]
-        },
-        {
-            "key": "field_665d78cb5a9f4",
-            "label": "Newsroom",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "graphql_field_name": "copy",
-            "wpml_cf_preferences": 1,
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_665d78cd5a9f5",
-            "label": "Newsroom",
-            "name": "newsroom",
-            "aria-label": "",
-            "type": "group",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "wpml_cf_preferences": 1,
-            "layout": "block",
-            "show_in_graphql": 1,
-            "graphql_description": "",
-            "graphql_field_name": "newsroom",
-            "graphql_non_null": 0,
-            "sub_fields": [
-                {
-                    "key": "field_665d78cd5a9f6",
-                    "label": "CTA default text",
-                    "name": "cta_default_text",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "wpml_cf_preferences": 2,
-                    "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "show_in_graphql": 1,
-                    "graphql_description": "",
-                    "graphql_field_name": "ctaDefaultText",
-                    "graphql_non_null": 0
-                }
-            ]
-        },
-        {
-            "key": "field_665d78d05a9f7",
-            "label": "Event",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "graphql_field_name": "copy2",
-            "wpml_cf_preferences": 1,
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_665d78d35a9f8",
-            "label": "Event",
-            "name": "event",
-            "aria-label": "",
-            "type": "group",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "wpml_cf_preferences": 1,
-            "layout": "block",
-            "show_in_graphql": 1,
-            "graphql_description": "",
-            "graphql_field_name": "event",
-            "graphql_non_null": 0,
-            "sub_fields": [
-                {
-                    "key": "field_665d78d35a9f9",
-                    "label": "CTA default text",
-                    "name": "cta_default_text",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "wpml_cf_preferences": 2,
-                    "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "show_in_graphql": 1,
-                    "graphql_description": "",
-                    "graphql_field_name": "ctaDefaultText",
-                    "graphql_non_null": 0
-                }
-            ]
         }
     ],
     "location": [
@@ -1219,5 +1130,5 @@
     "graphql_field_name": "themeOptionsAcf",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1717579360
+    "modified": 1717588729
 }

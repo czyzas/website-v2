@@ -6,13 +6,13 @@ import type {
   NewsroomListItemFragment,
 } from '@/__generated__/cms';
 import { buildI18nPath } from '@/i18n/utils';
-import { TRANSLATIONS } from '@/constants';
 import { getStore } from '@/scripts/store';
 import { languageStore } from '@/stores/languageStore';
 import type { WithAttributes } from '@/types';
 import { cn } from '@/scripts/cn';
 import { parseTags } from '@/scripts/data-parsers/parseTag';
 import EventDate from '@/components/EventDate.astro';
+import { getFeaturedArticleCtaText } from '@/scripts/postTypeOptions';
 import WordpressButtonLink from './WordpressButtonLink.astro';
 import Prose from './ui/Prose.astro';
 import CardWithMergedImage from './CardWithMergedImage.astro';
@@ -60,21 +60,6 @@ const layouts = {
 
 const ContentWrapper =
   layout in layouts ? layouts[layout as CardLayout] : layouts.overlapping;
-
-let ctaDefaultText = '';
-switch (postType) {
-  case 'newsroom':
-    ctaDefaultText = TRANSLATIONS.NEWSROOM.CTA_DEFAULT_TEXT;
-    break;
-  case 'insights':
-    ctaDefaultText = TRANSLATIONS.INSIGHTS.CTA_DEFAULT_TEXT;
-    break;
-  case 'event':
-    ctaDefaultText = TRANSLATIONS.EVENTS.CTA_DEFAULT_TEXT;
-    break;
-  default:
-    ctaDefaultText = TRANSLATIONS.READ_FULL_STORY;
-}
 ---
 
 {
@@ -108,7 +93,7 @@ switch (postType) {
           <WordpressButtonLink
             data={{
               url: buildI18nPath(uri, lang),
-              title: ctaDefaultText,
+              title: getFeaturedArticleCtaText(data.__typename),
             }}
             arrow
           />
