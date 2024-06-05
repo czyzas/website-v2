@@ -12,8 +12,6 @@ type Props = WithModuleMeta<ModulesModulesContentQuotationWithImageLayout>;
 const { __meta__, layoutName, backgroundColor, quotation, image, logo } =
   Astro.props;
 
-console.log({ image, logo });
-
 const { quote, authorImage, authorName, authorOccupation } =
   quotation?.selectQuotation ?? {};
 ---
@@ -34,14 +32,14 @@ const { quote, authorImage, authorName, authorOccupation } =
         authorImage={authorImage}
         authorOccupation={authorOccupation}
         image={image}
-        class={cn('overflow-hidden xl:p-0', {
+        class={cn({
           '[&_.author]:mt-6': __meta__.moduleType === 'article',
         })}
       >
         <Fragment slot="image-details">
           <CustomerLogo
             logo={logo}
-            class="absolute top-6 left-6 md:top-9 md:left-8"
+            class="absolute left-6 top-6 md:left-8 md:top-9"
           />
         </Fragment>
         <Fragment set:html={quote} />

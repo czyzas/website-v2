@@ -44,7 +44,7 @@ const hasAuthor = !!authorImage || !!authorName || !!authorOccupation;
   {...props}
   class={cn(
     'quotation',
-    'p-0',
+    'overflow-hidden p-0',
     { 'border-transparent bg-sw-sea-500 text-white': theme === 'dark' },
     className
   )}
@@ -55,7 +55,7 @@ const hasAuthor = !!authorImage || !!authorName || !!authorOccupation;
         <WordpressImage
           preferredWidth={1240}
           data={image}
-          class="object-cover object-top aspect-auto md:aspect-video"
+          class="aspect-auto object-cover object-top md:aspect-video"
         />
         <slot name="image-details" />
       </div>

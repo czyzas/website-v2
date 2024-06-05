@@ -30,7 +30,7 @@ import Grid from '@/components/ui/Grid.astro';
 import Link from '@/components/ui/Link.astro';
 import Section from '@/components/ui/Section.astro';
 import { TRANSLATIONS } from '@/constants';
-import { getLocale } from '@/i18n/utils';
+import { buildI18nPath, getLocale } from '@/i18n/utils';
 import Layout from '@/layouts/Layout.astro';
 import { buildTOC } from '@/scripts/buildTOC';
 import { cn } from '@/scripts/cn';
@@ -286,7 +286,18 @@ if (page.__typename === 'CaseStudy') {
       <Section bg="surface-background">
         <Container>
           <SectionTitle withMargin headline={postsTitle} />
-          <ArticlesGrid postType={postType} posts={posts} />
+          <ArticlesGrid
+            postType={postType}
+            posts={posts}
+            cta={
+              page.__typename === 'CaseStudy'
+                ? {
+                    url: buildI18nPath('/customers', lang),
+                    title: TRANSLATIONS.LOAD_MORE,
+                  }
+                : undefined
+            }
+          />
         </Container>
       </Section>
     )
