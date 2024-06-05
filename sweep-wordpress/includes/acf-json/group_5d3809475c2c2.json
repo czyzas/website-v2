@@ -19,7 +19,8 @@
             "graphql_field_name": "general",
             "wpml_cf_preferences": 1,
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_65ef10ed4ff0e",
@@ -80,7 +81,8 @@
             "graphql_field_name": "defaultTopImages",
             "wpml_cf_preferences": 1,
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_66509a29c9bee",
@@ -296,7 +298,8 @@
             "graphql_field_name": "error404Page",
             "wpml_cf_preferences": 1,
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_6571b461eaf9a",
@@ -411,7 +414,8 @@
             "graphql_field_name": "socials",
             "wpml_cf_preferences": 1,
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_654cdb7164eb0",
@@ -477,39 +481,34 @@
             "graphql_field_name": "footer",
             "wpml_cf_preferences": 1,
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
-            "key": "field_665effcd5edd8",
-            "label": "Menu",
-            "name": "footer_menu",
+            "key": "field_66602b7cc457b",
+            "label": "Footer",
+            "name": "footer",
             "aria-label": "",
-            "type": "repeater",
+            "type": "group",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
-                "class": "",
+                "class": "invisible-group",
                 "id": ""
             },
             "wpml_cf_preferences": 1,
-            "layout": "row",
-            "pagination": 0,
-            "min": 0,
-            "max": 0,
-            "collapsed": "",
-            "button_label": "Add Column",
+            "layout": "block",
             "show_in_graphql": 1,
             "graphql_description": "",
-            "graphql_field_name": "footerMenu",
+            "graphql_field_name": "footer",
             "graphql_non_null": 0,
-            "rows_per_page": 20,
             "sub_fields": [
                 {
-                    "key": "field_665effeb5edd9",
-                    "label": "Rows",
-                    "name": "rows",
+                    "key": "field_665effcd5edd8",
+                    "label": "Menu",
+                    "name": "menu",
                     "aria-label": "",
                     "type": "repeater",
                     "instructions": "",
@@ -522,47 +521,21 @@
                     },
                     "wpml_cf_preferences": 1,
                     "layout": "row",
+                    "pagination": 0,
                     "min": 0,
                     "max": 0,
                     "collapsed": "",
-                    "button_label": "Add Row",
+                    "button_label": "Add Column",
                     "show_in_graphql": 1,
                     "graphql_description": "",
-                    "graphql_field_name": "rows",
+                    "graphql_field_name": "menu",
                     "graphql_non_null": 0,
                     "rows_per_page": 20,
-                    "parent_repeater": "field_665effcd5edd8",
                     "sub_fields": [
                         {
-                            "key": "field_665f01f1fb5e4",
-                            "label": "Title",
-                            "name": "title",
-                            "aria-label": "",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "wpml_cf_preferences": 2,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "title",
-                            "graphql_non_null": 0,
-                            "parent_repeater": "field_665effeb5edd9"
-                        },
-                        {
-                            "key": "field_665f0179fb596",
-                            "label": "Items",
-                            "name": "items",
+                            "key": "field_665effeb5edd9",
+                            "label": "Rows",
+                            "name": "rows",
                             "aria-label": "",
                             "type": "repeater",
                             "instructions": "",
@@ -574,24 +547,50 @@
                                 "id": ""
                             },
                             "wpml_cf_preferences": 1,
-                            "layout": "table",
+                            "layout": "row",
                             "min": 0,
                             "max": 0,
                             "collapsed": "",
-                            "button_label": "Add Item",
+                            "button_label": "Add Row",
                             "show_in_graphql": 1,
                             "graphql_description": "",
-                            "graphql_field_name": "items",
+                            "graphql_field_name": "rows",
                             "graphql_non_null": 0,
                             "rows_per_page": 20,
-                            "parent_repeater": "field_665effeb5edd9",
+                            "parent_repeater": "field_665effcd5edd8",
                             "sub_fields": [
                                 {
-                                    "key": "field_665efffd5edda",
-                                    "label": "Item",
-                                    "name": "item",
+                                    "key": "field_665f01f1fb5e4",
+                                    "label": "Title",
+                                    "name": "title",
                                     "aria-label": "",
-                                    "type": "link",
+                                    "type": "text",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "wpml_cf_preferences": 2,
+                                    "default_value": "",
+                                    "maxlength": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "show_in_graphql": 1,
+                                    "graphql_description": "",
+                                    "graphql_field_name": "title",
+                                    "graphql_non_null": 0,
+                                    "parent_repeater": "field_665effeb5edd9"
+                                },
+                                {
+                                    "key": "field_665f0179fb596",
+                                    "label": "Items",
+                                    "name": "items",
+                                    "aria-label": "",
+                                    "type": "repeater",
                                     "instructions": "",
                                     "required": 0,
                                     "conditional_logic": 0,
@@ -601,52 +600,52 @@
                                         "id": ""
                                     },
                                     "wpml_cf_preferences": 1,
-                                    "return_format": "array",
+                                    "layout": "table",
+                                    "min": 0,
+                                    "max": 0,
+                                    "collapsed": "",
+                                    "button_label": "Add Item",
                                     "show_in_graphql": 1,
                                     "graphql_description": "",
-                                    "graphql_field_name": "item",
+                                    "graphql_field_name": "items",
                                     "graphql_non_null": 0,
-                                    "parent_repeater": "field_665f0179fb596"
+                                    "rows_per_page": 20,
+                                    "parent_repeater": "field_665effeb5edd9",
+                                    "sub_fields": [
+                                        {
+                                            "key": "field_665efffd5edda",
+                                            "label": "Item",
+                                            "name": "item",
+                                            "aria-label": "",
+                                            "type": "link",
+                                            "instructions": "",
+                                            "required": 0,
+                                            "conditional_logic": 0,
+                                            "wrapper": {
+                                                "width": "",
+                                                "class": "",
+                                                "id": ""
+                                            },
+                                            "wpml_cf_preferences": 1,
+                                            "return_format": "array",
+                                            "show_in_graphql": 1,
+                                            "graphql_description": "",
+                                            "graphql_field_name": "item",
+                                            "graphql_non_null": 0,
+                                            "parent_repeater": "field_665f0179fb596"
+                                        }
+                                    ]
                                 }
                             ]
                         }
                     ]
-                }
-            ]
-        },
-        {
-            "key": "field_650d8c4ae51c9",
-            "label": "Logos",
-            "name": "footer_logos",
-            "aria-label": "",
-            "type": "repeater",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "wpml_cf_preferences": 1,
-            "layout": "table",
-            "pagination": 0,
-            "min": 0,
-            "max": 0,
-            "collapsed": "",
-            "button_label": "Add link",
-            "show_in_graphql": 1,
-            "graphql_description": "",
-            "graphql_field_name": "footerLogos",
-            "graphql_non_null": 0,
-            "rows_per_page": 20,
-            "sub_fields": [
+                },
                 {
-                    "key": "field_666015bfaeb5b",
-                    "label": "Logo",
-                    "name": "logo",
+                    "key": "field_650d8c4ae51c9",
+                    "label": "Logos",
+                    "name": "logos",
                     "aria-label": "",
-                    "type": "image",
+                    "type": "repeater",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -656,47 +655,76 @@
                         "id": ""
                     },
                     "wpml_cf_preferences": 1,
-                    "return_format": "array",
-                    "library": "all",
-                    "min_width": "",
-                    "min_height": "",
-                    "min_size": "",
-                    "max_width": "",
-                    "max_height": "",
-                    "max_size": "",
-                    "mime_types": "",
-                    "preview_size": "thumbnail",
+                    "layout": "table",
+                    "pagination": 0,
+                    "min": 0,
+                    "max": 0,
+                    "collapsed": "",
+                    "button_label": "Add link",
                     "show_in_graphql": 1,
                     "graphql_description": "",
-                    "graphql_field_name": "logo",
-                    "parent_repeater": "field_650d8c4ae51c9"
+                    "graphql_field_name": "logos",
+                    "graphql_non_null": 0,
+                    "rows_per_page": 20,
+                    "sub_fields": [
+                        {
+                            "key": "field_666015bfaeb5b",
+                            "label": "Logo",
+                            "name": "logo",
+                            "aria-label": "",
+                            "type": "image",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 1,
+                            "return_format": "array",
+                            "library": "all",
+                            "min_width": "",
+                            "min_height": "",
+                            "min_size": "",
+                            "max_width": "",
+                            "max_height": "",
+                            "max_size": "",
+                            "mime_types": "",
+                            "preview_size": "thumbnail",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "logo",
+                            "parent_repeater": "field_650d8c4ae51c9"
+                        }
+                    ]
+                },
+                {
+                    "key": "field_650d8beae51c6",
+                    "label": "Legal note",
+                    "name": "legal_note",
+                    "aria-label": "",
+                    "type": "wysiwyg",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 2,
+                    "default_value": "",
+                    "tabs": "all",
+                    "toolbar": "basic",
+                    "media_upload": 0,
+                    "delay": 0,
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "legalNote",
+                    "graphql_non_null": 0
                 }
             ]
-        },
-        {
-            "key": "field_650d8beae51c6",
-            "label": "Legal note",
-            "name": "footer_legal_note",
-            "aria-label": "",
-            "type": "wysiwyg",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "wpml_cf_preferences": 2,
-            "default_value": "",
-            "tabs": "all",
-            "toolbar": "basic",
-            "media_upload": 0,
-            "delay": 0,
-            "show_in_graphql": 1,
-            "graphql_description": "",
-            "graphql_field_name": "footerLegalNote",
-            "graphql_non_null": 0
         },
         {
             "key": "field_6645eee9a9d28",
@@ -715,7 +743,8 @@
             "graphql_field_name": "newsletterSection",
             "wpml_cf_preferences": 1,
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_6645eef6a9d29",
@@ -861,7 +890,8 @@
             "graphql_field_name": "gatedContent",
             "wpml_cf_preferences": 1,
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_665459649d894",
@@ -978,7 +1008,8 @@
             "graphql_field_name": "insights",
             "wpml_cf_preferences": 1,
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_665d7854167bc",
@@ -1045,7 +1076,8 @@
             "graphql_field_name": "copy",
             "wpml_cf_preferences": 1,
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_665d78cd5a9f5",
@@ -1112,7 +1144,8 @@
             "graphql_field_name": "copy2",
             "wpml_cf_preferences": 1,
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_665d78d35a9f8",
@@ -1186,5 +1219,5 @@
     "graphql_field_name": "themeOptionsAcf",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1717578311
+    "modified": 1717579360
 }

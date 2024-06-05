@@ -234,6 +234,8 @@ function hide_selected_modules( array $hidden_modules ): void {
 // Hide modules
 add_action( 'admin_footer', function () {
 	global $post;
+	if ( !$post || !$post->post_type ) return;
+	
 	$article_post_types = [ 'newsroom', 'insights', 'event' ];
 	$is_article = in_array( $post->post_type, $article_post_types );
 	$is_customers_page = $post->post_type === 'page' && $post->post_name === 'customers';

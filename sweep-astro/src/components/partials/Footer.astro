@@ -9,17 +9,17 @@ import WordpressImage from '../WordpressImage.astro';
 import Prose from '../ui/Prose.astro';
 
 const store = getStore(cmsStore);
-const menu = store.themeOptions?.themeOptionsAcf?.footerMenu;
-const logos = store.themeOptions?.themeOptionsAcf?.footerLogos;
-const legalNote = store.themeOptions?.themeOptionsAcf?.footerLegalNote;
-const iconMap: { [key: string]: string } = {
+const { menu, logos, legalNote } =
+  store.themeOptions?.themeOptionsAcf?.footer ?? {};
+
+const iconMap: Record<string, string> = {
   linkedin: 'linkedin',
   twitter: 'twitter',
   instagram: 'instagram',
   vimeo: 'vimeo',
-};
+} as const;
 
-const getIconName = (title: string) => iconMap[title.toLowerCase()];
+const getIconName = (title: string) => iconMap?.[title.toLowerCase()];
 ---
 
 <footer>
@@ -52,7 +52,7 @@ const getIconName = (title: string) => iconMap[title.toLowerCase()];
                               href={link?.url}
                               class="mb-3 justify-start last:mb-0"
                             >
-                              {iconMap[title.toLowerCase()] && (
+                              {iconMap?.[title.toLowerCase()] && (
                                 <Icon
                                   name={getIconName(title)}
                                   class="size-4"

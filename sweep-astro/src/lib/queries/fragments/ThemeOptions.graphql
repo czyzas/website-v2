@@ -34,21 +34,23 @@ fragment ThemeOptions on ThemeOptions {
         ...Image
       }
     }
-    footerMenu {
-      rows {
-        items {
-          item {
-            ...Link
+    footer {
+      menu {
+        rows {
+          items {
+            item {
+              ...Link
+            }
           }
+          title
         }
-        title
       }
-    }
-    footerLogos {
-      logo {
-        ...Image
+      logos {
+        logo {
+          ...Image
+        }
       }
+      legalNote
     }
-    footerLegalNote
   }
 }
