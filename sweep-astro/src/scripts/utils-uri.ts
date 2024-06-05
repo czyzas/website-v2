@@ -107,3 +107,58 @@ export function replacePrefixURI(
 ) {
   return prefixURI(unprefixURI(uri, prefixToSearch), prefixToReplace);
 }
+
+type ValidateUriOptions<T> = {
+  prefix: string;
+  fetcher: (uri: string) => Promise<T>;
+  onError: () => Response;
+};
+export async function validateUri<T extends { page?: { uri?: string } }>(
+  unprefixedUri: string,
+  lang: string,
+  options: ValidateUriOptions<T>
+): Promise<
+  | {
+      success: false;
+      error: Response;
+      data?: never;
+    }
+  | {
+      success: true;
+      error?: never;
+      data: T;
+    }
+> {
+  const { prefix, fetcher, onError } = options;
+  const rawUri = prefixURI(unprefixedUri, prefix);
+  const uri = cleanURI(rawUri, lang);
+
+  if (!uri) {
+    if (import.meta.env.SSR) {
+      return {
+        success: false,
+        error: onError(),
+      };
+    }
+
+    throw new Error(`Page with uri '${rawUri}' does not exists`);
+  }
+
+  const data = await fetcher(uri);
+
+  if (!compareURI(uri, data.page?.uri)) {
+    if (import.meta.env.SSR) {
+      return {
+        success: false,
+        error: onError(),
+      };
+    }
+
+    throw new Error(`Page with uri '${rawUri}' does not exists`);
+  }
+
+  return {
+    success: true,
+    data,
+  };
+}
