@@ -17,6 +17,7 @@ import Tabs from '@/components/ui/Tabs/Tabs.astro';
 import { fixDoubleBr } from '@/scripts/fixDoubleBr';
 import Prose from '@/components/ui/Prose.astro';
 import type { WithModuleMeta } from '@/types';
+import type { UnparsedImageWithLink } from '@/scripts/data-parsers/parseImage';
 
 type Props = WithModuleMeta<ModulesModulesContentLogosLayout>;
 
@@ -42,39 +43,39 @@ const tabs = logosTabs.filter(Boolean).map((tab) => {
       (tab.customersLogos?.nodes ?? []) as unknown as CustomerLogoFragment[]
     )
       .map((l) => {
-        const logo = !!l && l.__typename === 'Customer' && l.customerAcf?.logo;
-        const websiteLink =
-          tab.enableLinks &&
-          !!l &&
-          l.__typename === 'Customer' &&
-          l?.customerAcf?.websiteLink?.url;
+        if (!l || l.__typename !== 'Customer') return undefined;
+
+        const logo = l.customerAcf?.logo;
+        if (!tab.enableLinks) return logo;
+
+        const websiteLink = l?.customerAcf?.websiteLink?.url;
         return { ...logo, websiteLink };
       })
       .filter(Boolean);
 
-    return { ...tab, logos };
+    return { ...tab, logos: logos as UnparsedImageWithLink[] };
   }
   if (logosSource === 'partners') {
     const logos = (
       (tab.partnersLogos?.nodes ?? []) as unknown as PartnerLogoFragment[]
     )
       .map((l) => {
-        const logo = !!l && l.__typename === 'Partner' && l.partnerAcf?.logo;
-        const websiteLink =
-          tab.enableLinks &&
-          !!l &&
-          l.__typename === 'Partner' &&
-          l?.partnerAcf?.websiteLink?.url;
+        if (!l || l.__typename !== 'Partner') return undefined;
+
+        const logo = l.partnerAcf?.logo;
+        if (!tab.enableLinks) return logo;
+
+        const websiteLink = l?.partnerAcf?.websiteLink?.url;
         return { ...logo, websiteLink };
       })
       .filter(Boolean);
 
-    return { ...tab, logos };
+    return { ...tab, logos: logos as UnparsedImageWithLink[] };
   }
 
   const logos = tab.logos?.edges?.filter(Boolean);
 
-  return { ...tab, logos };
+  return { ...tab, logos: logos as UnparsedImageWithLink[] };
 });
 ---
 

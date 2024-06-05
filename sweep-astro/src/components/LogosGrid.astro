@@ -1,6 +1,6 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
-import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
+import type { UnparsedImageWithLink } from '@/scripts/data-parsers/parseImage';
 import { cn } from '@/scripts/cn';
 import type { WithAttributes } from '@/types';
 import WordpressImage from './WordpressImage.astro';
@@ -10,11 +10,7 @@ import Grid from './ui/Grid.astro';
 type Props = WithAttributes<
   {
     columns?: number;
-    logos?:
-      | UnparsedImage[]
-      | {
-          websiteLink?: string | boolean;
-        }[];
+    logos?: UnparsedImageWithLink[];
   } & HTMLAttributes<'div'>
 >;
 
@@ -31,8 +27,8 @@ const columnClassName: Record<number, string> = {
 {
   logos.length > 0 && (
     <Grid {...props} class={cn('logos-grid', className)}>
-      {logos.map((logo) => {
-        const uri = (logo as { websiteLink?: string })?.websiteLink;
+      {logos.map((rawLogo) => {
+        const { websiteLink: uri, ...logo } = rawLogo;
         return (
           <Card
             class={cn(
@@ -43,13 +39,13 @@ const columnClassName: Record<number, string> = {
             {uri ? (
               <a href={uri} class="contents">
                 <WordpressImage
-                  data={logo as UnparsedImage}
+                  data={logo}
                   class="max-h-20 w-fit max-w-40 object-contain"
                 />
               </a>
             ) : (
               <WordpressImage
-                data={logo as UnparsedImage}
+                data={logo}
                 class="max-h-20 w-fit max-w-40 object-contain"
               />
             )}
