@@ -34,5 +34,21 @@ fragment ThemeOptions on ThemeOptions {
         ...Image
       }
     }
+    footerMenu {
+      rows {
+        items {
+          item {
+            ...Link
+          }
+        }
+        title
+      }
+    }
+    footerLogos {
+      logo {
+        ...Image
+      }
+    }
+    footerLegalNote
   }
 }

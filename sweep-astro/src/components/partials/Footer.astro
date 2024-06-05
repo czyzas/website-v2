@@ -1,1 +1,88 @@
-<footer></footer>
+---
+import { Icon } from 'astro-icon/components';
+import { getStore } from '@/scripts/store';
+import { cmsStore } from '@/stores/cmsStore';
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+import MenuItem from '../MenuItem.astro';
+import WordpressImage from '../WordpressImage.astro';
+import Prose from '../ui/Prose.astro';
+
+const store = getStore(cmsStore);
+const menu = store.themeOptions?.themeOptionsAcf?.footerMenu;
+const logos = store.themeOptions?.themeOptionsAcf?.footerLogos;
+const legalNote = store.themeOptions?.themeOptionsAcf?.footerLegalNote;
+const iconMap: { [key: string]: string } = {
+  linkedin: 'linkedin',
+  twitter: 'twitter',
+  instagram: 'instagram',
+  vimeo: 'vimeo',
+};
+
+const getIconName = (title: string) => iconMap[title.toLowerCase()];
+---
+
+<footer>
+  <Section bg="surface-background">
+    <Container
+      class="mb-10 flex flex-wrap gap-x-3 gap-y-4 md:mb-20 md:flex-nowrap"
+    >
+      {
+        !!menu &&
+          menu.map((column) => {
+            const rows = column?.rows ?? [];
+            return (
+              <div class="w-full">
+                {rows.map((row) => {
+                  const items = row?.items ?? [];
+                  const title = row?.title;
+                  return (
+                    <>
+                      {title && (
+                        <p class="mb-2 text-xs font-bold uppercase text-sw-sky-400 md:[&:not(:first-child)]:mt-6">
+                          {title}
+                        </p>
+                      )}
+                      <div class="mb-3 w-full rounded-lg bg-white p-3 last:mb-0">
+                        {items.map((item) => {
+                          const link = item?.item;
+                          const title = link?.title ?? '';
+                          return (
+                            <MenuItem
+                              href={link?.url}
+                              class="mb-3 justify-start last:mb-0"
+                            >
+                              {iconMap[title.toLowerCase()] && (
+                                <Icon
+                                  name={getIconName(title)}
+                                  class="size-4"
+                                />
+                              )}
+                              {title}
+                            </MenuItem>
+                          );
+                        })}
+                      </div>
+                    </>
+                  );
+                })}
+              </div>
+            );
+          })
+      }
+    </Container>
+    <Container>
+      <div class="flex flex-wrap gap-4">
+        {
+          !!logos &&
+            logos.map((logo) => (
+              <div class="flex h-32 w-24 items-center justify-center rounded-lg bg-sw-gray-400 p-4 md:h-48 md:w-40">
+                <WordpressImage data={logo?.logo} class="object-contain" />
+              </div>
+            ))
+        }
+      </div>
+      <Prose class="mt-6 text-sm text-[#828282]" set:html={legalNote} />
+    </Container>
+  </Section>
+</footer>
