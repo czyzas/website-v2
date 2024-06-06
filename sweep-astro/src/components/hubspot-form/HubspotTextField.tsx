@@ -1,5 +1,6 @@
 import type { HTMLInputTypeAttribute } from 'react';
 import { useCallback, useState } from 'react';
+import { kebabCase } from 'lodash-es';
 import type { IFieldProps, IHubspotFormFieldDefinition } from './shared';
 import { makeInputId } from './shared';
 import Input from './ui/Input/Input';
@@ -57,7 +58,7 @@ export const HubspotTextField = ({
       className={options.fieldClassName}
       disabled={!field.enabled}
       hidden={!!field.hidden}
-      id={makeInputId(formName, field.name)}
+      id={makeInputId(kebabCase(formName), field.name)}
       name={field.name}
       pattern={
         field.name === 'email'

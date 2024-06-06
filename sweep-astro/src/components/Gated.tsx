@@ -10,9 +10,10 @@ type GatedProps = {
   form: IHubspotFormDefinition;
   children: ReactNode;
   guid: string;
+  formName?: string;
 };
 
-const Gated = ({ form, children, guid }: GatedProps) => {
+const Gated = ({ form, children, guid, formName }: GatedProps) => {
   const [isGated, setGated] = useState(true);
   const [isClient, setIsClient] = useState(false);
 
@@ -58,6 +59,7 @@ const Gated = ({ form, children, guid }: GatedProps) => {
           </h2>
           <HubspotForm
             form={form}
+            formName={formName}
             onSuccess={() => {
               setStoredGated(false);
               setGated(false);

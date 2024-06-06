@@ -25,6 +25,7 @@ import { registerFieldTypeHandler } from './HubspotFormFieldFactory';
 export interface HubSpotFormProps
   extends Omit<ComponentProps<'form'>, 'ref' | 'onSubmit'> {
   form: IHubspotFormDefinition;
+  formName?: string;
   options?: IHubspotFormOptions;
   values?: Record<string, string | number | undefined>;
   onSubmitForm?: (formData: FormData) => void;
@@ -43,6 +44,7 @@ export interface HubSpotFormProps
 
 export const HubspotForm = ({
   form: formDefinition,
+  formName,
   values,
   options = {},
   onSubmitForm,
@@ -179,7 +181,7 @@ export const HubspotForm = ({
       )}
       {allGroups.map((group, index) => (
         <HubspotFormGroup
-          formName={name}
+          formName={formName || name}
           group={group}
           key={index}
           options={options}
