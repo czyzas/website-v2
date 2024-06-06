@@ -1,19 +1,13 @@
 ---
 import type { ModulesModulesContentListOfEventsLayout } from '@/__generated__/cms';
-import ArticleCard from '@/components/ArticleCard.astro';
-import ArticleTag from '@/components/ArticleTag.astro';
 import ButtonContainer from '@/components/ButtonContainer.astro';
 import ModuleContainer from '@/components/ModuleContainer.astro';
 import WordpressButtonLink from '@/components/WordpressButtonLink.astro';
-import Grid from '@/components/ui/Grid.astro';
-import { buildI18nPath } from '@/i18n/utils';
 import { fetchPostsModuleList } from '@/lib/fetchCMSData';
 import { getStore } from '@/scripts/store';
 import { languageStore } from '@/stores/languageStore';
-import { parseTags } from '@/scripts/data-parsers/parseTag';
 import type { WithModuleMeta } from '@/types';
-import { getDefaultTopImage } from '@/scripts/postTypeOptions';
-import ArticleEventDetails from '@/components/ArticleEventDetails.astro';
+import ArticlesGrid from '@/components/ArticlesGrid.astro';
 
 type Props = WithModuleMeta<ModulesModulesContentListOfEventsLayout>;
 
@@ -41,54 +35,7 @@ const events = (rawEvents?.events?.nodes ?? []).filter(Boolean);
 {
   events.length > 0 && (
     <ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
-      <Grid>
-        {events.map((event) => {
-          const {
-            uri,
-            eventAcf,
-            categories,
-            subpageSettings,
-            tags: rawTags,
-          } = event;
-          const category = categories?.nodes?.[0].name;
-          const image = subpageSettings?.image || getDefaultTopImage('Event');
-          const url = uri
-            ? { url: buildI18nPath(uri, currentLanguage.code) }
-            : undefined;
-          const tags = parseTags(rawTags?.nodes);
-          const eventDate = eventAcf?.eventDate;
-
-          return (
-            <ArticleCard
-              link={url}
-              image={image}
-              class="col-span-full md:col-span-6 lg:col-span-4"
-            >
-              {/* Content on image */}
-              {!!eventDate && (
-                <ArticleEventDetails slot="image-addition" date={eventDate} />
-              )}
-              {/* Content inside article */}
-              <span class="typography-card-title text-sw-text-subdued">
-                {category}
-              </span>
-              <h3 class="typography-cards-bold-large text-pretty">
-                {event.title}
-              </h3>
-
-              {tags.length > 0 && (
-                <div class="tags mt-auto flex flex-wrap gap-2.5">
-                  {tags.map((tag) =>
-                    tag.shouldRender ? (
-                      <ArticleTag color={tag.color}>{tag.name}</ArticleTag>
-                    ) : null
-                  )}
-                </div>
-              )}
-            </ArticleCard>
-          );
-        })}
-      </Grid>
+      <ArticlesGrid postType="event" posts={events} />
       <ButtonContainer>
         <WordpressButtonLink data={ctaButton} secondary />
       </ButtonContainer>

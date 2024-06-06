@@ -15,6 +15,7 @@ import { cn } from '@/scripts/cn';
 import { parseCaseStudyCustomer } from '@/scripts/data-parsers/parseCaseStudies';
 import { parseLink } from '@/scripts/data-parsers/parseLink';
 import type { UnparsedLink } from '@/scripts/data-parsers/parseLink';
+import { getDefaultTopImage } from '@/scripts/postTypeOptions';
 import Grid from './ui/Grid.astro';
 import ArticleTag from './ArticleTag.astro';
 import ArticleEventDetails from './ArticleEventDetails.astro';
@@ -66,7 +67,9 @@ const cta = parseLink(rawCta);
         return (
           <ArticleCard
             link={{ url: buildI18nPath(post.uri, lang) }}
-            image={post.subpageSettings?.image}
+            image={
+              post.subpageSettings?.image || getDefaultTopImage(post.__typename)
+            }
             postType={post.__typename}
             class={cn('col-span-full', {
               'sm:col-span-6 lg:col-span-4': columns === 3,
