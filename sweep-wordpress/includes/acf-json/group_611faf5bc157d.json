@@ -19,7 +19,8 @@
             "graphql_field_name": "test",
             "wpml_cf_preferences": 3,
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_65e58c6caa22f",
@@ -132,7 +133,8 @@
             "graphql_field_name": "goals",
             "wpml_cf_preferences": 3,
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_65e58f63e1204",
@@ -406,7 +408,8 @@
             "graphql_field_name": "copy",
             "wpml_cf_preferences": 3,
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_65e58ffd53059",
@@ -547,7 +550,8 @@
             "graphql_field_name": "copy2",
             "wpml_cf_preferences": 3,
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_65e5900d5305d",
@@ -711,7 +715,8 @@
             "graphql_field_name": "copy",
             "wpml_cf_preferences": 3,
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_660d3769db44c",
@@ -831,7 +836,8 @@
             "graphql_field_name": "copy3",
             "wpml_cf_preferences": 3,
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_65e5908853062",
@@ -1077,7 +1083,8 @@
             "graphql_field_name": "industries",
             "wpml_cf_preferences": 3,
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_65e5920753066",
@@ -1238,7 +1245,8 @@
             "graphql_field_name": "caseStudies",
             "wpml_cf_preferences": 3,
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_65e592135306a",
@@ -1409,7 +1417,8 @@
             "graphql_field_name": "copy6",
             "wpml_cf_preferences": 3,
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_65e592255306e",
@@ -1480,33 +1489,6 @@
                     ]
                 },
                 {
-                    "key": "field_65e5d12a91932",
-                    "label": "Show",
-                    "name": "show",
-                    "aria-label": "",
-                    "type": "number",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "wpml_cf_preferences": 3,
-                    "default_value": 6,
-                    "min": "",
-                    "max": "",
-                    "placeholder": "",
-                    "step": "",
-                    "prepend": "",
-                    "append": "",
-                    "show_in_graphql": 1,
-                    "graphql_description": "",
-                    "graphql_field_name": "show",
-                    "graphql_non_null": 0
-                },
-                {
                     "key": "field_65e6f202a8daf",
                     "label": "Button",
                     "name": "button",
@@ -1546,7 +1528,8 @@
             "graphql_field_name": "copy7",
             "wpml_cf_preferences": 3,
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_65e5923353072",
@@ -1687,7 +1670,8 @@
             "graphql_field_name": "customers",
             "wpml_cf_preferences": 3,
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_65e5da39cd54b",
@@ -1828,7 +1812,8 @@
             "graphql_field_name": "demo",
             "wpml_cf_preferences": 3,
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_65e5d2eabbeb6",
@@ -1961,5 +1946,5 @@
     "graphql_field_name": "homepage",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1717401184
+    "modified": 1717660668
 }

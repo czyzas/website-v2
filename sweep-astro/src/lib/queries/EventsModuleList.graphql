@@ -10,33 +10,7 @@ query EventsModuleList($LIMIT: Int, $CATEGORY_SLUG: [String], $LANG: String!) {
     }
   ) {
     nodes {
-      ...EventsModuleEvent
-    }
-  }
-}
-
-fragment EventsModuleEvent on Event {
-  title
-  uri
-  eventAcf {
-    eventDate
-  }
-  subpageSettings {
-    image {
-      ...Image
-    }
-  }
-  categories: eventCategories {
-    nodes {
-      name
-    }
-  }
-  tags: eventTags {
-    nodes {
-      name
-      tagTaxonomyAcf {
-        tagColor
-      }
+      ...EventListItem
     }
   }
 }

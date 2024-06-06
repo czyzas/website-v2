@@ -1,26 +1,19 @@
 ---
-import type { HTMLAttributes } from 'astro/types';
-import type { WithAttributes } from '@/types';
 import { fetchHubspotForm } from '@/lib/fetchHubspotForm';
-import type { ModulesCollectionFragment } from '@/__generated__/cms';
+import { cmsStore } from '@/stores/cmsStore';
+import { getStore } from '@/scripts/store';
 import ClientGated from './Gated';
 
-interface GatedProps extends HTMLAttributes<'div'> {
-  children: ModulesCollectionFragment[];
-  hubspotFormGuid?: string;
-}
+const store = getStore(cmsStore);
+const { gatedFormGuid } =
+  store.themeOptions?.themeOptionsAcf?.gatedContent ?? {};
 
-type Props = WithAttributes<GatedProps>;
-
-const { hubspotFormGuid } = Astro.props;
-const form = hubspotFormGuid
-  ? await fetchHubspotForm(hubspotFormGuid)
-  : undefined;
+const form = gatedFormGuid ? await fetchHubspotForm(gatedFormGuid) : undefined;
 ---
 
 {
-  !!hubspotFormGuid && !!form && (
-    <ClientGated guid={hubspotFormGuid} form={form} client:load>
+  !!gatedFormGuid && !!form && (
+    <ClientGated guid={gatedFormGuid} form={form} client:load>
       <slot />
     </ClientGated>
   )

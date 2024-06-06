@@ -18,7 +18,7 @@ interface ArticleCardProps extends HTMLAttributes<'div'> {
 
 // TODO: use this inside ColoredImageCards
 const { image, link, postType, class: className, ...props } = Astro.props;
-const topImage = image || getDefaultTopImage(postType);
+const topImage = image || (postType ? getDefaultTopImage(postType) : undefined);
 const Tag = link ? 'a' : 'div';
 ---
 

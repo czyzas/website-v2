@@ -8,30 +8,7 @@ query NewsroomModuleList(
     where: { language: $LANG, categorySlug: $CATEGORY_SLUG }
   ) {
     nodes {
-      ...NewsroomModulePost
-    }
-  }
-}
-
-fragment NewsroomModulePost on NewsroomItem {
-  title
-  uri
-  subpageSettings {
-    image {
-      ...Image
-    }
-  }
-  categories: newsroomCategories {
-    nodes {
-      name
-    }
-  }
-  tags: newsroomTags {
-    nodes {
-      name
-      tagTaxonomyAcf {
-        tagColor
-      }
+      ...NewsroomListItem
     }
   }
 }
