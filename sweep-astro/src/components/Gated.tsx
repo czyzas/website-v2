@@ -29,7 +29,6 @@ const Gated = ({ form, children, guid }: GatedProps) => {
   }, []);
 
   const contentToShow = useMemo(() => {
-    // TODO: check if google bot working
     const isGoogle =
       isClient && navigator?.userAgent.toLowerCase().includes('googlebot');
 

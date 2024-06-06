@@ -27,7 +27,6 @@ for (const component of modulesComponents) {
 const ungatedComponents: ModulesCollectionFragment[] = [];
 const gatedComponents: ModulesCollectionFragment[] = [];
 let isGated = false;
-let gatedInformation: ModulesModulesContentGatedLayout | undefined;
 ---
 
 {
@@ -50,7 +49,6 @@ let gatedInformation: ModulesModulesContentGatedLayout | undefined;
 
         if (layoutName === 'gated') {
           isGated = true;
-          gatedInformation = module as ModulesModulesContentGatedLayout;
         }
         if (isGated)
           gatedComponents.push(<Component __meta__={meta} {...module} />);
@@ -59,7 +57,7 @@ let gatedInformation: ModulesModulesContentGatedLayout | undefined;
         return null;
       })}
       {ungatedComponents}
-      {isGated && <Gated {...gatedInformation}>{gatedComponents}</Gated>}
+      {isGated && <Gated>{gatedComponents}</Gated>}
     </Fragment>
   )
 }
