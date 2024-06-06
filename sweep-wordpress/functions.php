@@ -17,3 +17,6 @@ require_once "includes/translations/translations.php";
 require_once "includes/functions/register-dashboard-widget.php";
 require_once "includes/functions/graphql.php";
 require_once "includes/functions/admin-menu.php";
+
+// Extensions
+require_once "extensions/graphql-migration/migrate.php";
