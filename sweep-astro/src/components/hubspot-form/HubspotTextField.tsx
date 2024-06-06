@@ -36,7 +36,12 @@ export const HubspotTextField = ({
   value,
   options,
 }: IFieldProps) => {
-  const [currentValue, setCurrentValue] = useState(value);
+  const [currentValue, setCurrentValue] = useState(() => {
+    if (field.name === 'form_name') {
+      return formName;
+    }
+    return field.defaultValue || value;
+  });
 
   const handleChange = useCallback(
     (ev: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,7 +55,6 @@ export const HubspotTextField = ({
   return (
     <Input
       className={options.fieldClassName}
-      // defaultValue={field.defaultValue ?? ''}
       disabled={!field.enabled}
       hidden={!!field.hidden}
       id={makeInputId(formName, field.name)}

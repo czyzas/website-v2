@@ -82,7 +82,7 @@ const { currentLanguage } = getStore(languageStore);
               return null;
             }
 
-            const category = insight.categories?.nodes?.[0].name ?? '';
+            const category = insight.categories?.nodes?.[0]?.name ?? '';
 
             return (
               <div class="swiper-slide">

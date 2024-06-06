@@ -14,20 +14,13 @@ import type {
 } from './shared';
 import type { HubspotFormStatus } from './useFormHandler';
 import { useFormHandler } from './useFormHandler';
-import {
-  registerCheckboxField,
-  registerHubspotTextField,
-  registerSelectField,
-  registerTextAreaField,
-} from './register';
 import { usePublicIp } from './ip';
-
-function register(): void {
-  registerHubspotTextField();
-  registerTextAreaField();
-  registerSelectField();
-  registerCheckboxField();
-}
+import { HubspotPhoneField } from './HubspotPhoneField';
+import { HubspotTextField } from './HubspotTextField';
+import { HubspotSelectField } from './HubspotSelectField';
+import { HubspotTextareaField } from './HubspotTextareaField';
+import { HubspotCheckboxField } from './HubspotCheckboxField';
+import { registerFieldTypeHandler } from './HubspotFormFieldFactory';
 
 export interface HubSpotFormProps
   extends Omit<ComponentProps<'form'>, 'ref' | 'onSubmit'> {
@@ -242,5 +235,14 @@ export const HubspotForm = ({
     </form>
   );
 };
+
+function register(): void {
+  registerFieldTypeHandler('text', HubspotTextField);
+  registerFieldTypeHandler('textarea', HubspotTextareaField);
+  registerFieldTypeHandler('number', HubspotTextField);
+  registerFieldTypeHandler('phonenumber', HubspotPhoneField);
+  registerFieldTypeHandler('select', HubspotSelectField);
+  registerFieldTypeHandler('checkbox', HubspotCheckboxField);
+}
 
 register();

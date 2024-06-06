@@ -1,14 +1,19 @@
-import { getStore } from '@/scripts/store';
-import { hubspotHandlersStore } from '@/stores/hubspotHandlersStore';
-import type { HubspotHandlersKeys } from '@/stores/hubspotHandlersStore';
 import type { IFieldProps } from './shared';
+
+const handlers: Record<string, React.FC<IFieldProps>> = {};
+
+export function registerFieldTypeHandler(
+  type: string,
+  component: React.FC<IFieldProps>
+): void {
+  handlers[type] = component;
+}
 
 export const FieldFactory: React.FC<{ type: string; field: IFieldProps }> = ({
   type,
   field,
 }) => {
-  const store = getStore(hubspotHandlersStore);
-  const Component = store[type as HubspotHandlersKeys];
+  const Component = handlers[type];
 
   if (!Component) {
     return null;
