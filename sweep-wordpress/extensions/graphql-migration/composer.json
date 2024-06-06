@@ -1,0 +1,22 @@
+{
+  "name": "siwy/graphql-migration",
+  "config": {
+    "platform": {
+      "php": "8.1.14"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "FH_Migration\\": "src/"
+    }
+  },
+  "require": {
+    "softonic/graphql-client": "^2.2.0"
+  },
+  "authors": [
+    {
+      "name": "Bartłomiej",
+      "email": "bartlomiej@flyhigh.pro"
+    }
+  ]
+}
