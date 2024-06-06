@@ -178,7 +178,6 @@ query Homepage($LANG: String!) {
             textUnder
           }
         }
-        show
         button {
           ...Link
         }
@@ -240,6 +239,13 @@ query Homepage($LANG: String!) {
           ...Image
         }
       }
+    }
+  }
+  insights(
+    where: { language: $LANG, status: PUBLISH, pagination: { postsPerPage: 6 } }
+  ) {
+    nodes {
+      ...InsightsListItem
     }
   }
   ...Essential
