@@ -29,8 +29,12 @@ const Gated = ({ form, children, guid }: GatedProps) => {
   }, []);
 
   const contentToShow = useMemo(() => {
-    const isGoogle =
-      isClient && navigator?.userAgent.toLowerCase().includes('googlebot');
+    let isGoogle = false;
+    if (isClient) {
+      isGoogle = window.navigator?.userAgent
+        .toLowerCase()
+        .includes('googlebot');
+    }
 
     if (isGoogle || !isGated) return children;
   }, [isGated, children, isClient]);
