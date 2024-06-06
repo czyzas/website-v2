@@ -89,7 +89,10 @@ const getIconName = (title: string) => iconMap?.[title.toLowerCase()];
             <div class="flex flex-wrap gap-4">
               {logos.map((logo) => (
                 <div class="flex h-32 w-24 items-center justify-center rounded-lg bg-sw-gray-400 p-4 md:h-48 md:w-40">
-                  <WordpressImage data={logo?.logo} class="object-contain" />
+                  <WordpressImage
+                    data={logo?.logo}
+                    class="max-h-24 object-contain md:max-h-32"
+                  />
                 </div>
               ))}
             </div>
