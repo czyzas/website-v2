@@ -24,6 +24,7 @@ const { data } = Astro.props;
 
 initializeStore(cmsStore, {
   homepage: data.page!,
+  homepageInsights: data.insights!,
   primaryMenu: data.primaryMenu!,
   themeOptions: data.themeOptions!,
 });
