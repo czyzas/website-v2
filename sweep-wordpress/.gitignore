@@ -1,4 +1,5 @@
 /.idea
 /dist
 /node_modules
+/extensions/graphql-migration/vendor
 .DS_Store
