@@ -14,13 +14,16 @@ const { location } = Astro.props;
 const title = template(TRANSLATIONS.SIDEBAR.JOIN_US_LIVE, {
   interpolate: /{([\s\S]+?)}/g,
 });
+
+// TODO: update thhis
+const SHOW = false;
 ---
 
 {
-  !!location && (
+  !!SHOW && (
     <SidebarCard title={title({ location })}>
       <Button asLink href="#register-form">
-        {TRANSLATIONS.SIDEBAR.REGISTER}
+        {TRANSLATIONS.SIDEBAR.DOWNLOAD}
       </Button>
     </SidebarCard>
   )
