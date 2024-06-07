@@ -86,7 +86,7 @@
             "ui": 1,
             "show_in_graphql": 1,
             "graphql_description": "",
-            "graphql_field_name": "SearchEngineVisibillity",
+            "graphql_field_name": "searchEngineVisibility",
             "graphql_non_null": 0
         },
         {
@@ -1088,5 +1088,5 @@
     "graphql_field_name": "themeOptionsAcf",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1717750205
+    "modified": 1717750263
 }
