@@ -1,16 +1,16 @@
 ---
 import 'swiper/swiper-bundle.css';
 import type { HTMLAttributes } from 'astro/types';
-import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
+import type {
+  UnparsedImage,
+  UnparsedImageWithLink,
+} from '@/scripts/data-parsers/parseImage';
 import { cn } from '@/scripts/cn';
+import { cleanArray } from '@/scripts/cleanArray';
 import WordpressImage from './WordpressImage.astro';
 
 interface LogosCollectionProps {
-  logos?:
-    | UnparsedImage[]
-    | {
-        websiteLink?: string | boolean;
-      }[];
+  logos?: UnparsedImageWithLink[];
   sizing?: 'sm' | 'md';
 }
 
@@ -22,7 +22,7 @@ const {
   sizing = 'md',
   ...props
 } = Astro.props;
-const logos = (rawLogos ?? []).filter(Boolean);
+const logos = cleanArray(rawLogos);
 ---
 
 <script>
@@ -80,7 +80,7 @@ const logos = (rawLogos ?? []).filter(Boolean);
     <div
       {...props}
       class={cn(
-        'logos-collection-swiper md:flex md:flex-wrap md:items-center md:justify-center md:gap-2',
+        'logos-collection-swiper md:flex md:flex-wrap md:items-center md:justify-center md:gap-x-4 md:gap-y-7',
         className
       )}
     >
@@ -88,14 +88,14 @@ const logos = (rawLogos ?? []).filter(Boolean);
         {logos.map((logo) => (
           <div class="swiper-slide">
             <div
-              class={cn('logo md:flex-0 flex items-center justify-center p-3', {
+              class={cn('logo md:flex-0 flex items-center justify-center p-2', {
                 'basis-40': sizing === 'md',
                 'basis-25': sizing === 'sm',
               })}
             >
               <WordpressImage
                 data={logo as UnparsedImage}
-                class="max-h-12 w-fit select-none object-contain"
+                class="max-h-10 w-fit max-w-28 select-none object-contain"
               />
             </div>
           </div>

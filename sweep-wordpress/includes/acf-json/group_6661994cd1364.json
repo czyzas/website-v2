@@ -48,8 +48,8 @@
     "show_in_rest": 0,
     "acfml_field_group_mode": "translation",
     "show_in_graphql": 1,
-    "graphql_field_name": "insight",
+    "graphql_field_name": "insightsItemAcf",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1717672389
+    "modified": 1717749017
 }

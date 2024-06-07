@@ -4,8 +4,9 @@ import { cmsStore } from '@/stores/cmsStore';
 import { getStore } from '@/scripts/store';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
 import { buildI18nPath } from '@/i18n/utils';
-import { languageStore } from '@/stores/languageStore';
 import { getDefaultTopImage } from '@/scripts/postTypeOptions';
+import { getLanguage } from '@/scripts/utils-store-helpers';
+import { cleanArray } from '@/scripts/cleanArray';
 import Container from '../ui/Container.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
 import SwiperNavigation from '../SwiperNavigation.astro';
@@ -17,10 +18,9 @@ import WordpressButtonLink from '../WordpressButtonLink.astro';
 const store = getStore(cmsStore);
 const data = store.homepage!;
 const acf = data.homepage!.resources!;
-const insights = (store.homepageInsights?.nodes ?? []).filter(Boolean);
+const insights = cleanArray(store.homepageInsights?.nodes);
 
-// TODO: create useLanguage hook to get current lang from the store automatically
-const { currentLanguage } = getStore(languageStore);
+const { currentLanguage } = getLanguage();
 ---
 
 <script>
@@ -92,7 +92,7 @@ const { currentLanguage } = getStore(languageStore);
                     getDefaultTopImage(insight.__typename)
                   }
                   link={{
-                    url: buildI18nPath(insight.uri, currentLanguage.code),
+                    url: buildI18nPath(insight.uri, currentLanguage),
                   }}
                   class="size-full"
                 >

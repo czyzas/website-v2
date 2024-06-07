@@ -10,13 +10,12 @@ import type {
   InsightsListItemFragment,
   NewsroomListItemFragment,
 } from '@/__generated__/cms';
-import { getStore } from '@/scripts/store';
-import { languageStore } from '@/stores/languageStore';
 import { cn } from '@/scripts/cn';
 import { parseCaseStudyCustomer } from '@/scripts/data-parsers/parseCaseStudies';
 import { parseLink } from '@/scripts/data-parsers/parseLink';
 import type { UnparsedLink } from '@/scripts/data-parsers/parseLink';
 import { getDefaultTopImage } from '@/scripts/postTypeOptions';
+import { getLanguage } from '@/scripts/utils-store-helpers';
 import Grid from './ui/Grid.astro';
 import ArticleTag from './ArticleTag.astro';
 import ArticleEventDetails from './ArticleEventDetails.astro';
@@ -38,8 +37,7 @@ interface ArticlesGridProps extends HTMLAttributes<'div'> {
 type Props = WithAttributes<ArticlesGridProps>;
 
 const { posts, columns = 3, cta: rawCta } = Astro.props;
-const { currentLanguage } = getStore(languageStore);
-const lang = currentLanguage.code;
+const { currentLanguage } = getLanguage();
 const cta = parseLink(rawCta);
 ---
 
@@ -53,8 +51,7 @@ const cta = parseLink(rawCta);
           'categories' in post
             ? post.categories?.nodes?.[0]?.name ?? ''
             : undefined;
-        const postTags =
-          'tags' in post ? parseTags(post.tags?.nodes ?? []) : [];
+        const postTags = 'tags' in post ? parseTags(post.tags?.nodes) : [];
         const eventDate =
           post.__typename === 'Event' ? post.eventAcf?.eventDate : undefined;
 
@@ -67,7 +64,7 @@ const cta = parseLink(rawCta);
 
         return (
           <ArticleCard
-            link={{ url: buildI18nPath(post.uri, lang) }}
+            link={{ url: buildI18nPath(post.uri, currentLanguage) }}
             image={
               post.subpageSettings?.image || getDefaultTopImage(post.__typename)
             }

@@ -1,7 +1,6 @@
-import { cmsStore } from '@/stores/cmsStore';
 import { TRANSLATIONS } from '@/constants';
-import { getStore } from './store';
 import type { UnparsedImage } from './data-parsers/parseImage';
+import { getOptions } from './utils-store-helpers';
 
 export type ContentTypeWithFront =
   | 'CaseStudy'
@@ -14,8 +13,8 @@ export type ContentTypeWithFront =
 export function getDefaultTopImage(
   postType: ContentTypeWithFront
 ): UnparsedImage {
-  const { themeOptions } = getStore(cmsStore);
-  const postTypes = themeOptions?.themeOptionsAcf?.postTypeRelated;
+  const options = getOptions();
+  const postTypes = options.postTypeRelated;
 
   switch (postType) {
     case 'CaseStudy':
@@ -41,8 +40,8 @@ export function getFeaturedArticleCtaText(
     'InsightsItem' | 'NewsroomItem' | 'Event'
   >
 ) {
-  const { themeOptions } = getStore(cmsStore);
-  const postTypes = themeOptions?.themeOptionsAcf?.postTypeRelated;
+  const options = getOptions();
+  const postTypes = options.postTypeRelated;
 
   let text: string | undefined = '';
 

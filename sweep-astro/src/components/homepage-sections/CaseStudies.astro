@@ -4,6 +4,7 @@ import { getStore } from '@/scripts/store';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
 import { linkShouldRender } from '@/scripts/data-parsers/parseLink';
 import type { CaseStudyCardFragment } from '@/__generated__/cms';
+import { cleanArray } from '@/scripts/cleanArray';
 import Container from '../ui/Container.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
 import ButtonContainer from '../ButtonContainer.astro';
@@ -14,7 +15,7 @@ import WordpressButtonLink from '../WordpressButtonLink.astro';
 const store = getStore(cmsStore);
 const data = store.homepage!;
 const acf = data.homepage!.caseStudies!;
-const cases = (acf.caseStudies?.nodes ?? []) as CaseStudyCardFragment[];
+const cases = cleanArray(acf.caseStudies?.nodes) as CaseStudyCardFragment[];
 ---
 
 <Section name="case-studies" bg="white">

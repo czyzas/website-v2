@@ -51,6 +51,8 @@ export const TRANSLATIONS = {
   VIEW_CASE_STUDY: 'View Case Study',
   ALL: 'All',
   SIDEBAR: {
+    DOWNLOAD: 'Download',
+    REGISTER: 'Register',
     AUTHOR: 'Author',
     TOC: 'Contents',
     JOIN_US_LIVE: 'Join us live in {location}',

@@ -24,6 +24,7 @@ import { defaultLocale } from '@/i18n/config';
 import { createSingleDefaultPageStaticPaths } from '@/scripts/utils-static-paths';
 import type { ColumnSizes } from '@/types';
 import FormContainer from '@/components/hubspot-form/FormContainer.astro';
+import { cleanArray } from '@/scripts/cleanArray';
 
 export async function getStaticPaths() {
   return createSingleDefaultPageStaticPaths(
@@ -38,7 +39,7 @@ const page = data.page!;
 
 initializeStore(cmsStore, {
   primaryMenu: data.primaryMenu!,
-  themeOptions: data.themeOptions!,
+  themeOptions: data.themeOptionsByLang!,
   subpageSettings: data.page?.subpageSettings,
 });
 initializeStore(languageStore, {
@@ -59,10 +60,10 @@ const formGuid = form?.hubspotFormGuid ?? '';
 
 const demo = page.contactAcf?.demo;
 const updates = page.contactAcf?.updates;
-const updatesCards = updates?.cards ?? [];
+const updatesCards = cleanArray(updates?.cards);
 
 const offices = page.contactAcf?.offices;
-const officesCards = offices?.cards ?? [];
+const officesCards = cleanArray(offices?.cards);
 ---
 
 <Layout name="contact" pageTitle={pageTitle}>

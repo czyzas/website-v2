@@ -1,6 +1,7 @@
 ---
 import { getStore } from '@/scripts/store';
 import { cmsStore } from '@/stores/cmsStore';
+import { getOptions } from '@/scripts/utils-store-helpers';
 import WordpressImage from '../WordpressImage.astro';
 import Grid from '../ui/Grid.astro';
 import Section from '../ui/Section.astro';
@@ -9,12 +10,17 @@ import NewsletterForm from '../hubspot-form/NewsletterForm.astro';
 
 const store = getStore(cmsStore);
 const enabled = store.subpageSettings?.hasNewsletterSection ?? false;
-const data = store.themeOptions?.themeOptionsAcf?.newsletterSection;
-const { title = '', content = '', image, hubspotFormGuid = '' } = data ?? {};
+const options = getOptions();
+const {
+  title = '',
+  content = '',
+  image,
+  hubspotFormGuid = '',
+} = options.newsletterSection;
 ---
 
 {
-  enabled && !!data && (
+  enabled && !!options.newsletterSection && (
     <Section>
       <Container>
         <Grid class="grid-rows-1 overflow-hidden rounded-lg bg-sw-sea-500 p-0 text-white">

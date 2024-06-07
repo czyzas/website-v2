@@ -3,8 +3,9 @@ import { cn } from '@/scripts/cn';
 import { getStore } from '@/scripts/store';
 import { cmsStore } from '@/stores/cmsStore';
 import { buildI18nPath } from '@/i18n/utils';
-import { languageStore } from '@/stores/languageStore';
 import { TRANSLATIONS } from '@/constants';
+import { getLanguage } from '@/scripts/utils-store-helpers';
+import { cleanArray } from '@/scripts/cleanArray';
 import MenuItem from '../MenuItem.astro';
 import MenuItemCard from '../MenuItemCard.astro';
 
@@ -13,11 +14,10 @@ type Props = {
 };
 const { id } = Astro.props;
 
-// TODO: create useLanguage hook to get current lang from the store automatically
-const { currentLanguage } = getStore(languageStore);
+const { currentLanguage } = getLanguage();
 const { primaryMenu } = getStore(cmsStore);
 
-const menu = (primaryMenu?.menuItems?.nodes ?? []).filter(Boolean);
+const menu = cleanArray(primaryMenu?.menuItems?.nodes);
 ---
 
 <script>
@@ -213,10 +213,7 @@ const menu = (primaryMenu?.menuItems?.nodes ?? []).filter(Boolean);
                           title={relatedPost.title}
                           link={{
                             url: relatedPost.uri
-                              ? buildI18nPath(
-                                  relatedPost.uri,
-                                  currentLanguage.code
-                                )
+                              ? buildI18nPath(relatedPost.uri, currentLanguage)
                               : undefined,
                             title: TRANSLATIONS.READ_MORE,
                           }}

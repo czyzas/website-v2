@@ -2,6 +2,7 @@
 import type { ModulesModulesContentTeamLayout } from '@/__generated__/cms';
 import ModuleContainer from '@/components/ModuleContainer.astro';
 import WordpressImage from '@/components/WordpressImage.astro';
+import { cleanArray } from '@/scripts/cleanArray';
 import { cn } from '@/scripts/cn';
 import { imageShouldRender } from '@/scripts/data-parsers/parseImage';
 import { fixDoubleBr } from '@/scripts/fixDoubleBr';
@@ -18,7 +19,7 @@ const {
   team: rawTeam,
 } = Astro.props;
 
-const team = (rawTeam ?? []).filter(Boolean);
+const team = cleanArray(rawTeam);
 const columns = rawColumns ?? 'auto';
 const look = (rawLook ?? 'default') as 'default' | 'card';
 ---

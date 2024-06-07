@@ -4,9 +4,8 @@ import { isNil } from 'lodash-es';
 import { cn } from '@/scripts/cn';
 import type { FilterTag } from '@/types';
 import { buildI18nPath } from '@/i18n/utils';
-import { getStore } from '@/scripts/store';
-import { languageStore } from '@/stores/languageStore';
 import { TRANSLATIONS } from '@/constants';
+import { getLanguage } from '@/scripts/utils-store-helpers';
 import Card from './ui/Card.astro';
 
 interface ListTagFilterProps extends HTMLAttributes<'div'> {
@@ -27,8 +26,7 @@ const {
   sectionId: rawSectionId = '',
   ...props
 } = Astro.props;
-const { currentLanguage } = getStore(languageStore);
-const lang = currentLanguage.code;
+const { currentLanguage } = getLanguage();
 
 const tags = (rawTags ?? []).filter(
   (tag) => tag && !isNil(tag.name) && !isNil(tag.slug)
@@ -58,7 +56,7 @@ const sectionId = rawSectionId ? `#${rawSectionId}` : '';
             tag.slug
               ? [prefix, 'tag', `${tag.slug}${sectionId}`]
               : `${prefix}${sectionId}`,
-            lang
+            currentLanguage
           )}
           data-active={activeTag === tag.slug ? 'true' : 'false'}
           class="group"

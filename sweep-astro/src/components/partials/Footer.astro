@@ -1,21 +1,17 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { getStore } from '@/scripts/store';
-import { cmsStore } from '@/stores/cmsStore';
 import { cn } from '@/scripts/cn';
 import { parseLink } from '@/scripts/data-parsers/parseLink';
+import { getOptions } from '@/scripts/utils-store-helpers';
+import { cleanArray } from '@/scripts/cleanArray';
 import Container from '../ui/Container.astro';
 import Section from '../ui/Section.astro';
 import MenuItem from '../MenuItem.astro';
 import WordpressImage from '../WordpressImage.astro';
 import Prose from '../ui/Prose.astro';
 
-const store = getStore(cmsStore);
-const {
-  menu = [],
-  logos = [],
-  legalNote = '',
-} = store.themeOptions?.themeOptionsAcf?.footer ?? {};
+const options = getOptions();
+const { menu = [], logos = [], legalNote = '' } = options.footer;
 
 const iconMap: Record<string, string> = {
   linkedin: 'linkedin',
@@ -34,12 +30,12 @@ const getIconName = (title: string) => iconMap?.[title.toLowerCase()];
         menu.length > 0 && (
           <div class="menu-container flex flex-wrap gap-x-3 gap-y-4 md:flex-nowrap">
             {menu.map((column) => {
-              const rows = column?.rows ?? [];
+              const rows = cleanArray(column?.rows);
               return (
                 <div class="w-full space-y-3">
                   {rows.map((row, index) => {
-                    const rowTitle = row?.title ?? '';
-                    const items = row?.items ?? [];
+                    const rowTitle = row.title ?? '';
+                    const items = cleanArray(row.items);
 
                     if (items.length === 0) return null;
                     return (
@@ -56,7 +52,7 @@ const getIconName = (title: string) => iconMap?.[title.toLowerCase()];
                         )}
                         <div class="w-full space-y-3 rounded-lg bg-white p-3">
                           {items.map((item) => {
-                            const link = parseLink(item?.item);
+                            const link = parseLink(item.item);
 
                             if (!link.shouldRender) return null;
                             return (

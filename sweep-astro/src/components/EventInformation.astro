@@ -3,10 +3,9 @@ import type { HTMLAttributes } from 'astro/types';
 import { Icon } from 'astro-icon/components';
 import { cn } from '@/scripts/cn';
 import type { WithAttributes } from '@/types';
-import { getStore } from '@/scripts/store';
-import { languageStore } from '@/stores/languageStore';
 import { getLocale } from '@/i18n/utils';
 import { TRANSLATIONS } from '@/constants';
+import { getLanguage } from '@/scripts/utils-store-helpers';
 import Card from './ui/Card.astro';
 
 interface EventInformationProps extends HTMLAttributes<'div'> {
@@ -24,11 +23,11 @@ const {
   language: eventLanguage,
   ...props
 } = Astro.props;
-const { currentLanguage } = getStore(languageStore);
-const lang = currentLanguage.code;
+const { currentLanguage } = getLanguage();
+const locale = getLocale(currentLanguage);
 
 const date = eventDate
-  ? new Date(eventDate).toLocaleDateString(getLocale(lang), {
+  ? new Date(eventDate).toLocaleDateString(locale, {
       day: '2-digit',
       month: 'long',
       year: '2-digit',
@@ -36,7 +35,7 @@ const date = eventDate
   : undefined;
 
 const time = eventDate
-  ? new Date(eventDate).toLocaleTimeString(getLocale(lang), {
+  ? new Date(eventDate).toLocaleTimeString(locale, {
       timeStyle: 'short',
       timeZone: 'UTC',
     })
@@ -106,8 +105,8 @@ const rows: Array<{
               <div
                 class={cn(rowStyles, 'typography-body-large font-medium')}
                 data-type={row.type}
-                data-lang={lang}
-                data-locale={getLocale(lang)}
+                data-lang={currentLanguage}
+                data-locale={getLocale(currentLanguage)}
                 data-value={row.originalValue ?? row.value}
               >
                 {row.value}

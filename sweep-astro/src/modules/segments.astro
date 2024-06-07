@@ -2,6 +2,7 @@
 import type { ModulesModulesContentSegmentsLayout } from '@/__generated__/cms';
 import ColoredImageCards from '@/components/ColoredImageCards.astro';
 import ModuleContainer from '@/components/ModuleContainer.astro';
+import { cleanArray } from '@/scripts/cleanArray';
 import type { WithModuleMeta } from '@/types';
 
 type Props = WithModuleMeta<ModulesModulesContentSegmentsLayout>;
@@ -12,7 +13,7 @@ const {
   backgroundColor,
   segmentsCards: cards,
 } = Astro.props;
-const filteredCards = (cards ?? []).filter(Boolean);
+const filteredCards = cleanArray(cards);
 ---
 
 <ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>

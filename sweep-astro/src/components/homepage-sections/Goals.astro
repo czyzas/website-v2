@@ -4,6 +4,7 @@ import { cmsStore } from '@/stores/cmsStore';
 import { getStore } from '@/scripts/store';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
 import { parseLink } from '@/scripts/data-parsers/parseLink';
+import { cleanArray } from '@/scripts/cleanArray';
 import Tabs from '../ui/Tabs/Tabs.astro';
 import TabList from '../ui/Tabs/TabList.astro';
 import TabListItem from '../ui/Tabs/TabListItem.astro';
@@ -19,7 +20,7 @@ const store = getStore(cmsStore);
 const data = store.homepage!;
 const acf = data.homepage!.goals!;
 
-const tabs = acf.tabs ?? [];
+const tabs = cleanArray(acf.tabs);
 ---
 
 <Section name="goals" bg="white">

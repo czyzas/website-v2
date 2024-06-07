@@ -1,5 +1,6 @@
 <?php
 
+use FH_Migration\BlogBasicClass;
 use FH_Migration\InsightBasicClass;
 use FH_Migration\InsightsCategoriesClass;
 use FH_Migration\LibraryBasicClass;
@@ -26,6 +27,7 @@ add_action( 'rest_api_init', function () {
 //				'library-basic' => new LibraryBasicClass(),
 				'newsroom-basic' => new NewsroomBasicClass(),
 				'insight-basic' => new InsightBasicClass(),
+				'blog-basic' => new BlogBasicClass(),
 //				'library-photo-sync' => new LibraryPhotoSyncClass(),
 				default => throw new Exception('Wrong migration type')
 			};

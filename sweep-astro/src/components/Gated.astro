@@ -1,17 +1,14 @@
 ---
 import { fetchHubspotForm } from '@/lib/fetchHubspotForm';
-import { cmsStore } from '@/stores/cmsStore';
-import { getStore } from '@/scripts/store';
+import { getOptions } from '@/scripts/utils-store-helpers';
 import ClientGated from './Gated';
 
 type Props = {
   formName?: string;
 };
 const { formName } = Astro.props;
-const store = getStore(cmsStore);
-const { gatedFormGuid } =
-  store.themeOptions?.themeOptionsAcf?.gatedContent ?? {};
-
+const options = getOptions();
+const { gatedFormGuid } = options.gatedContent;
 const form = gatedFormGuid ? await fetchHubspotForm(gatedFormGuid) : undefined;
 ---
 

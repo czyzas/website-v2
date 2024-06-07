@@ -1,4 +1,13 @@
 // UTILS
+type OmitDistributive<T, K extends PropertyKey> = T extends unknown
+  ? T extends object
+    ? OmitRecursively<T, K>
+    : T
+  : never;
+export type OmitRecursively<T, K extends PropertyKey> = Omit<
+  { [P in keyof T]: OmitDistributive<T[P], K> },
+  K
+>;
 export type WithAttributes<T> = astroHTML.JSX.IntrinsicAttributes & T;
 type StringLiteralToString<T> = T extends string ? string : T;
 
@@ -8,6 +17,17 @@ export type ReplaceTypenameLiteral<ObjType extends object> = {
   [KeyType in keyof ObjType]: ObjType[KeyType] extends object
     ? ReplaceTypenameLiteral<ObjType[KeyType]>
     : StringLiteralToString<ObjType[KeyType]>;
+};
+
+export type NonNullableProperties<ObjType extends object> = {
+  [KeyType in keyof ObjType]-?: ObjType[KeyType] extends object
+    ? NonNullableProperties<ObjType[KeyType]>
+    : NonNullable<ObjType[KeyType]>;
+};
+
+// eslint-disable-next-line @typescript-eslint/ban-types -- https://x.com/mattpocockuk/status/1653403198885904387
+export type Prettify<T extends object> = {} & {
+  [K in keyof T]: T[K];
 };
 
 // eslint-disable-next-line @typescript-eslint/ban-types -- Use `string & {}` for strings with autocomplete (src: https://stackoverflow.com/a/75265010)

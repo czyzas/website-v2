@@ -5,6 +5,7 @@ import ListTagFilter from '@/components/ListTagFilter.astro';
 import ModuleContainer from '@/components/ModuleContainer.astro';
 import Pagination from '@/components/Pagination.astro';
 import PaginationContainer from '@/components/PaginationContainer.astro';
+import { cleanArray } from '@/scripts/cleanArray';
 import { getStore } from '@/scripts/store';
 import { customersCaseStudiesStore } from '@/stores/customersCaseStudiesStore';
 import type { WithModuleMeta } from '@/types';
@@ -19,9 +20,8 @@ const {
   data,
 } = getStore(customersCaseStudiesStore);
 
-// TODO: make cleanArray function to process this
-const cases = (data?.articles?.nodes ?? []).filter(Boolean);
-const tags = (data?.filterTags?.nodes ?? []).filter(Boolean);
+const cases = cleanArray(data?.articles?.nodes);
+const tags = cleanArray(data?.filterTags?.nodes);
 const totalPages = data!.articles?.pageInfo.pagination?.totalPages ?? 1;
 const moduleId = `case-studies-${__meta__.index}`;
 ---

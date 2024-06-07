@@ -4,10 +4,10 @@ import ButtonContainer from '@/components/ButtonContainer.astro';
 import ModuleContainer from '@/components/ModuleContainer.astro';
 import WordpressButtonLink from '@/components/WordpressButtonLink.astro';
 import { fetchPostsModuleList } from '@/lib/fetchCMSData';
-import { getStore } from '@/scripts/store';
-import { languageStore } from '@/stores/languageStore';
 import type { WithModuleMeta } from '@/types';
 import ArticlesGrid from '@/components/ArticlesGrid.astro';
+import { getLanguage } from '@/scripts/utils-store-helpers';
+import { cleanArray } from '@/scripts/cleanArray';
 
 type Props = WithModuleMeta<ModulesModulesContentListOfEventsLayout>;
 
@@ -21,15 +21,14 @@ const {
 } = Astro.props;
 
 const categorySlug = categoryFilter?.nodes?.[0]?.slug;
-// TODO: create useLanguage hook to get current lang from the store automatically
-const { currentLanguage } = getStore(languageStore);
+const { currentLanguage } = getLanguage();
 
 const rawEvents = await fetchPostsModuleList('event', {
-  lang: currentLanguage.code,
+  lang: currentLanguage,
   categorySlug,
   limit: limitPosts,
 });
-const events = (rawEvents?.events?.nodes ?? []).filter(Boolean);
+const events = cleanArray(rawEvents?.events?.nodes);
 ---
 
 {

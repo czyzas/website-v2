@@ -7,6 +7,7 @@ import SwiperNavigation from '@/components/SwiperNavigation.astro';
 import Grid from '@/components/ui/Grid.astro';
 import SwiperPagination from '@/components/SwiperPagination.astro';
 import type { WithModuleMeta } from '@/types';
+import { cleanArray } from '@/scripts/cleanArray';
 
 type Props = WithModuleMeta<ModulesModulesContentQuotationsLayout>;
 
@@ -15,14 +16,14 @@ const {
   layoutName,
   backgroundColor,
   theme = 'light',
-  quotations = [],
+  quotations: rawQuotations,
 } = Astro.props;
 
-const quotationsArray = (quotations ?? []).filter(Boolean).map((quotation) => {
-  const { quote, authorImage, authorName, authorOccupation } =
-    quotation?.quotation?.selectQuotation ?? {};
-  return { quote, authorImage, authorName, authorOccupation };
-});
+const quotations = rawQuotations
+  ? cleanArray(
+      rawQuotations.map((quotation) => quotation?.quotation?.selectQuotation)
+    )
+  : [];
 ---
 
 <script>
@@ -69,7 +70,7 @@ const quotationsArray = (quotations ?? []).filter(Boolean).map((quotation) => {
 </style>
 
 {
-  quotationsArray.length > 0 && (
+  quotations.length > 0 && (
     <ModuleContainer
       meta={__meta__}
       name={layoutName!}
@@ -80,7 +81,7 @@ const quotationsArray = (quotations ?? []).filter(Boolean).map((quotation) => {
         <div class="col-span-full lg:col-start-2 lg:col-end-12">
           <div class="quotations-swiper">
             <div class="swiper-wrapper">
-              {quotationsArray.map(
+              {quotations.map(
                 ({ quote, authorName, authorImage, authorOccupation }) => (
                   <div class="swiper-slide">
                     <UIQuotation

@@ -44,6 +44,7 @@ import { overwriteWYSIWYGContent } from '@/scripts/overwriteWYSIWYGContent';
 import { initializeStore } from '@/scripts/store';
 import { cmsStore } from '@/stores/cmsStore';
 import type { ColumnSizes } from '@/types';
+import { cleanArray } from '@/scripts/cleanArray';
 
 type InsightsSingleProps = {
   postType: 'insights';
@@ -78,7 +79,7 @@ const page = data.page!;
 
 initializeStore(cmsStore, {
   primaryMenu: data.primaryMenu!,
-  themeOptions: data.themeOptions!,
+  themeOptions: data.themeOptionsByLang!,
   subpageSettings: data.page?.subpageSettings,
 });
 
@@ -116,13 +117,17 @@ if ('modified' in page && page.modified) {
   });
 }
 
-let posts: (
-  | InsightsListItemFragment
-  | NewsroomListItemFragment
-  | EventListItemFragment
-  | CaseStudyCardFragment
-)[] = (data?.articles?.nodes ?? []).filter(Boolean);
-posts = posts.filter((post) => post.uri !== data.page?.uri).slice(0, 3);
+const nodes = data?.articles?.nodes;
+const posts = cleanArray(
+  nodes as (
+    | InsightsListItemFragment
+    | NewsroomListItemFragment
+    | EventListItemFragment
+    | CaseStudyCardFragment
+  )[]
+)
+  .filter((post) => post.uri !== data.page?.uri)
+  .slice(0, 3);
 
 let postsTitle = '';
 switch (postType) {

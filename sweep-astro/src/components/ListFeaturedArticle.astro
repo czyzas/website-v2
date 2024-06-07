@@ -6,13 +6,12 @@ import type {
   NewsroomListItemFragment,
 } from '@/__generated__/cms';
 import { buildI18nPath } from '@/i18n/utils';
-import { getStore } from '@/scripts/store';
-import { languageStore } from '@/stores/languageStore';
 import type { WithAttributes } from '@/types';
 import { cn } from '@/scripts/cn';
 import { parseTags } from '@/scripts/data-parsers/parseTag';
 import EventDate from '@/components/EventDate.astro';
 import { getFeaturedArticleCtaText } from '@/scripts/postTypeOptions';
+import { getLanguage } from '@/scripts/utils-store-helpers';
 import WordpressButtonLink from './WordpressButtonLink.astro';
 import Prose from './ui/Prose.astro';
 import CardWithMergedImage from './CardWithMergedImage.astro';
@@ -39,8 +38,7 @@ const {
   ...props
 } = Astro.props;
 
-const { currentLanguage } = getStore(languageStore);
-const lang = currentLanguage.code;
+const { currentLanguage } = getLanguage();
 
 const uri = data?.uri;
 const title = data?.title;
@@ -96,7 +94,7 @@ const ContentWrapper =
         {!!uri && (
           <WordpressButtonLink
             data={{
-              url: buildI18nPath(uri, lang),
+              url: buildI18nPath(uri, currentLanguage),
               title: getFeaturedArticleCtaText(data.__typename),
             }}
             arrow

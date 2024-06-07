@@ -5,12 +5,12 @@ namespace FH_Migration;
 use DOMDocument;
 use WP_Query;
 
-class InsightBasicClass extends MigrationClass implements MigrationInterface
+class BlogBasicClass extends MigrationClass implements MigrationInterface
 {
 	public string $query_code = <<<'QUERY'
 						query ($limit: Int, $skip: Int, $locale: GraphCMS_Locale) {
 						  allGraphCmsArticle(
-						    filter: {category: {usage: {eq: Library}, stage: {eq: PUBLISHED}}, locale: {eq: $locale}}
+						    filter: {category: {usage: {eq: Blog}, stage: {eq: PUBLISHED}}, locale: {eq: $locale}}
 						    sort: {fields: remoteId}
 						    limit: $limit
 						    skip: $skip
@@ -30,12 +30,6 @@ class InsightBasicClass extends MigrationClass implements MigrationInterface
 						      locale
 						      slug
 						      publishedAt
-						      category {
-						        id
-						      }
-						      seo {
-								noIndex
-							  }
 						      coverImage {
 						        url
 						        id
@@ -122,11 +116,9 @@ class InsightBasicClass extends MigrationClass implements MigrationInterface
 							$article['locale'],
 							$sitepress->get_default_language() );
 
-						update_field('hide_from_listing', $article['seo']['noIndex'] ? 1 : 0, $article_id);
-
 						$this->addThumbnail($article['coverImage'], $article_id);
 
-						$this->addTermToPost($article['category']['id'] ?? '', $article_id);
+						$this->addTermToPost($article['category']['id'] ?? '', $article_id, $article['locale']);
 
 						foreach ($article['content']['remoteChildren'] as $child) {
 							switch ($child['remoteTypeName']) {
@@ -205,23 +197,15 @@ class InsightBasicClass extends MigrationClass implements MigrationInterface
 		], $article_id);
 	}
 
-	private function addTermToPost( mixed $category_hygraph_id, int $article_id ): void {
-		$args = array(
-			'hide_empty' => false,
-			'fields'      => 'ids',
-			'meta_query' => array(
-				array(
-					'key'       => 'hygraph_id',
-					'value'     => $category_hygraph_id,
-					'compare'   => '='
-				)
-			),
-			'taxonomy'  => 'insights-category',
-		);
-		$terms = get_terms( $args );
+	private function addTermToPost( mixed $category_hygraph_id, int $article_id, string $locale ): void {
+		$term_slug = 'blog';
+		if($locale == 'fr') {
+			$term_slug = 'blog-fr';
+		}
+		$term = get_term_by('slug', $term_slug, 'insights-category');
 
-		if (!empty($terms)) {
-			wp_set_post_terms($article_id, $terms, 'insights-category', true);
+		if (!empty($term)) {
+			wp_set_post_terms($article_id, $term->term_id, 'insights-category', true);
 		}
 	}
 

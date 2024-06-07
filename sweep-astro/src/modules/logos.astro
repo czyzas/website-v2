@@ -18,6 +18,7 @@ import { fixDoubleBr } from '@/scripts/fixDoubleBr';
 import Prose from '@/components/ui/Prose.astro';
 import type { WithModuleMeta } from '@/types';
 import type { UnparsedImageWithLink } from '@/scripts/data-parsers/parseImage';
+import { cleanArray } from '@/scripts/cleanArray';
 
 type Props = WithModuleMeta<ModulesModulesContentLogosLayout>;
 
@@ -40,7 +41,7 @@ const tabs = logosTabs.filter(Boolean).map((tab) => {
 
   if (logosSource === 'customers') {
     const logos = (
-      (tab.customersLogos?.nodes ?? []) as unknown as CustomerLogoFragment[]
+      cleanArray(tab.customersLogos?.nodes) as unknown as CustomerLogoFragment[]
     )
       .map((l) => {
         if (!l || l.__typename !== 'Customer') return undefined;
@@ -57,7 +58,7 @@ const tabs = logosTabs.filter(Boolean).map((tab) => {
   }
   if (logosSource === 'partners') {
     const logos = (
-      (tab.partnersLogos?.nodes ?? []) as unknown as PartnerLogoFragment[]
+      cleanArray(tab.partnersLogos?.nodes) as unknown as PartnerLogoFragment[]
     )
       .map((l) => {
         if (!l || l.__typename !== 'Partner') return undefined;

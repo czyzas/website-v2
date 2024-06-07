@@ -2,13 +2,12 @@ import type {
   AcfContentNodeConnection,
   CaseStudyCardFragment,
 } from '@/__generated__/cms';
+import { cleanArray } from '../cleanArray';
 
 export function parseCaseStudies(unparsed?: AcfContentNodeConnection) {
   return (
-    (unparsed?.nodes ?? []) as unknown as (CaseStudyCardFragment | undefined)[]
-  )
-    .filter(Boolean)
-    .filter((p) => p.__typename === 'CaseStudy');
+    cleanArray(unparsed?.nodes) as unknown as CaseStudyCardFragment[]
+  ).filter((p) => p.__typename === 'CaseStudy');
 }
 
 export function parseCaseStudyCustomer(caseStudy: CaseStudyCardFragment) {
