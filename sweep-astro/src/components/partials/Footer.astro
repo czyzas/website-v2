@@ -1,21 +1,16 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { getStore } from '@/scripts/store';
-import { cmsStore } from '@/stores/cmsStore';
 import { cn } from '@/scripts/cn';
 import { parseLink } from '@/scripts/data-parsers/parseLink';
+import { getOptions } from '@/scripts/utils-store-helpers';
 import Container from '../ui/Container.astro';
 import Section from '../ui/Section.astro';
 import MenuItem from '../MenuItem.astro';
 import WordpressImage from '../WordpressImage.astro';
 import Prose from '../ui/Prose.astro';
 
-const store = getStore(cmsStore);
-const {
-  menu = [],
-  logos = [],
-  legalNote = '',
-} = store.themeOptions?.themeOptionsAcf?.footer ?? {};
+const options = getOptions();
+const { menu = [], logos = [], legalNote = '' } = options.footer;
 
 const iconMap: Record<string, string> = {
   linkedin: 'linkedin',
