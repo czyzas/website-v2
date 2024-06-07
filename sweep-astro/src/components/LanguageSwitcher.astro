@@ -1,15 +1,13 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { getStore } from '@/scripts/store';
-import { languageStore } from '@/stores/languageStore';
 import { buildI18nPath } from '@/i18n/utils';
 import { cn } from '@/scripts/cn';
+import { getLanguage } from '@/scripts/utils-store-helpers';
 import MenuItem from './MenuItem.astro';
 
 const id = `dropdown-${crypto.randomUUID().substring(16)}`;
 
-const { currentLanguage, languages: rawLanguages } = getStore(languageStore);
-const languages = (rawLanguages ?? []).filter(Boolean);
+const { currentLanguage, allLanguages: languages } = getLanguage();
 
 // TODO: link to current page translation if possible
 ---
@@ -51,7 +49,7 @@ const languages = (rawLanguages ?? []).filter(Boolean);
     class="h-full text-sm sm:text-base"
   >
     <span>
-      {currentLanguage.code.toUpperCase()}
+      {currentLanguage.toUpperCase()}
     </span>
     <Icon
       name="caret-down"
@@ -74,9 +72,7 @@ const languages = (rawLanguages ?? []).filter(Boolean);
                 href={buildI18nPath('/', lang.code)}
                 set:text={lang.translated_name}
                 aria-label={lang.translated_name}
-                data-current={
-                  lang.code === currentLanguage.code ? 'true' : 'false'
-                }
+                data-current={lang.code === currentLanguage ? 'true' : 'false'}
               />
             </li>
           ))}

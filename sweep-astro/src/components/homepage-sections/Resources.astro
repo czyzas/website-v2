@@ -4,8 +4,8 @@ import { cmsStore } from '@/stores/cmsStore';
 import { getStore } from '@/scripts/store';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
 import { buildI18nPath } from '@/i18n/utils';
-import { languageStore } from '@/stores/languageStore';
 import { getDefaultTopImage } from '@/scripts/postTypeOptions';
+import { getLanguage } from '@/scripts/utils-store-helpers';
 import Container from '../ui/Container.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
 import SwiperNavigation from '../SwiperNavigation.astro';
@@ -19,8 +19,7 @@ const data = store.homepage!;
 const acf = data.homepage!.resources!;
 const insights = (store.homepageInsights?.nodes ?? []).filter(Boolean);
 
-// TODO: create useLanguage hook to get current lang from the store automatically
-const { currentLanguage } = getStore(languageStore);
+const { currentLanguage } = getLanguage();
 ---
 
 <script>
@@ -92,7 +91,7 @@ const { currentLanguage } = getStore(languageStore);
                     getDefaultTopImage(insight.__typename)
                   }
                   link={{
-                    url: buildI18nPath(insight.uri, currentLanguage.code),
+                    url: buildI18nPath(insight.uri, currentLanguage),
                   }}
                   class="size-full"
                 >

@@ -1,7 +1,6 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
-import { getStore } from '../scripts/store';
-import { languageStore } from '../stores/languageStore';
+import { getLanguage } from '@/scripts/utils-store-helpers';
 import { cn } from '../scripts/cn';
 
 interface EventDateProps extends HTMLAttributes<'div'> {
@@ -11,12 +10,13 @@ interface EventDateProps extends HTMLAttributes<'div'> {
 type Props = EventDateProps;
 
 const { class: className, date, ...props } = Astro.props;
-const { currentLanguage } = getStore(languageStore);
-const lang = currentLanguage.code;
+const { currentLanguage } = getLanguage();
 
 const parsedDate = new Date(date);
-const day = parsedDate.toLocaleDateString(lang, { day: '2-digit' });
-const month = parsedDate.toLocaleDateString(lang, { month: 'short' });
+const day = parsedDate.toLocaleDateString(currentLanguage, { day: '2-digit' });
+const month = parsedDate.toLocaleDateString(currentLanguage, {
+  month: 'short',
+});
 ---
 
 <time

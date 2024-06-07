@@ -1,9 +1,8 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { getStore } from '@/scripts/store';
-import { languageStore } from '@/stores/languageStore';
 import { buildI18nPath } from '@/i18n/utils';
 import { TRANSLATIONS } from '@/constants';
+import { getLanguage } from '@/scripts/utils-store-helpers';
 import Container from '../ui/Container.astro';
 import LanguageSwitcher from '../LanguageSwitcher.astro';
 import Button from '../ui/Button.astro';
@@ -11,7 +10,7 @@ import MenuItem from '../MenuItem.astro';
 import MenuHamburger from '../MenuHamburger.astro';
 import Menu from './Menu.astro';
 
-const { currentLanguage } = getStore(languageStore);
+const { currentLanguage } = getLanguage();
 const menuId = `main-menu-${crypto.randomUUID().substring(16)}`;
 ---
 
@@ -20,10 +19,7 @@ const menuId = `main-menu-${crypto.randomUUID().substring(16)}`;
 >
   <Container class="flex items-center justify-between gap-4 sm:gap-6">
     <div class="logo-container">
-      <a
-        href={buildI18nPath('/', currentLanguage.code)}
-        aria-label="Go to homepage"
-      >
+      <a href={buildI18nPath('/', currentLanguage)} aria-label="Go to homepage">
         <Icon
           name="logo"
           aria-label="Sweep logo"

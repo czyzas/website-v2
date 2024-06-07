@@ -1,8 +1,7 @@
 ---
 import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
 import { buildI18nPath } from '@/i18n/utils';
-import { languageStore } from '@/stores/languageStore';
-import { getStore } from '@/scripts/store';
+import { getLanguage } from '@/scripts/utils-store-helpers';
 import Button from './ui/Button.astro';
 import CustomerLogo from './CustomerLogo.astro';
 
@@ -24,8 +23,7 @@ const {
   title,
 } = Astro.props;
 
-// TODO: create useLanguage hook to get current lang from the store automatically
-const { currentLanguage } = getStore(languageStore);
+const { currentLanguage } = getLanguage();
 ---
 
 <CustomerLogo logo={customerLogo} />
@@ -48,7 +46,7 @@ const { currentLanguage } = getStore(languageStore);
       <Button
         asLink
         trailingIcon="arrow-right"
-        href={buildI18nPath(uri, currentLanguage.code)}
+        href={buildI18nPath(uri, currentLanguage)}
         variant="secondary"
         class="w-full md:w-auto"
       >
