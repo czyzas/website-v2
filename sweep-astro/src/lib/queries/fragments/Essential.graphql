@@ -8,7 +8,7 @@ fragment Essential on RootQuery {
   primaryMenu: menu(idType: LOCATION, id: "primary-menu") {
     ...Menu
   }
-  themeOptions {
+  themeOptionsByLang(lang: $LANG) {
     ...ThemeOptions
   }
 }
