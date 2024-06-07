@@ -12,6 +12,7 @@ type GatedProps = {
   guid: string;
 };
 
+const isBrowser = () => typeof window !== 'undefined';
 const Gated = ({ form, children, guid }: GatedProps) => {
   const [isGated, setGated] = useState(true);
   const [isClient, setIsClient] = useState(false);
@@ -29,12 +30,9 @@ const Gated = ({ form, children, guid }: GatedProps) => {
   }, []);
 
   const contentToShow = useMemo(() => {
-    let isGoogle = false;
-    if (isClient) {
-      isGoogle = window.navigator?.userAgent
-        .toLowerCase()
-        .includes('googlebot');
-    }
+    const isGoogle =
+      isBrowser() &&
+      window.navigator?.userAgent.toLowerCase().includes('googlebot');
 
     if (isGoogle || !isGated) return children;
   }, [isGated, children, isClient]);
