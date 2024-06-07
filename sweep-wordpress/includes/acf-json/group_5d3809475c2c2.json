@@ -17,7 +17,7 @@
                 "id": ""
             },
             "graphql_field_name": "general",
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "placement": "top",
             "endpoint": 0,
             "selected": 0
@@ -36,7 +36,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "return_format": "array",
             "show_in_graphql": 1,
             "graphql_description": "",
@@ -57,11 +57,36 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "return_format": "array",
             "show_in_graphql": 1,
             "graphql_description": "",
             "graphql_field_name": "bookDemoLink",
+            "graphql_non_null": 0
+        },
+        {
+            "key": "field_6662c4e1d030b",
+            "label": "Discourage search engines from indexing this site",
+            "name": "search_engine_visibility",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 3,
+            "message": "",
+            "default_value": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1,
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "SearchEngineVisibillity",
             "graphql_non_null": 0
         },
         {
@@ -79,7 +104,7 @@
                 "id": ""
             },
             "graphql_field_name": "postTypesRelated",
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "placement": "top",
             "endpoint": 0,
             "selected": 0
@@ -99,7 +124,7 @@
                 "id": ""
             },
             "graphql_field_name": "postTypeRelated",
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "layout": "block",
             "show_in_graphql": 1,
             "graphql_description": "",
@@ -120,7 +145,7 @@
                         "id": ""
                     },
                     "graphql_field_name": "tab",
-                    "wpml_cf_preferences": 1,
+                    "wpml_cf_preferences": 3,
                     "placement": "top",
                     "endpoint": 0,
                     "selected": 0
@@ -139,7 +164,7 @@
                         "class": "invisible-group",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 1,
+                    "wpml_cf_preferences": 3,
                     "layout": "block",
                     "show_in_graphql": 1,
                     "graphql_description": "",
@@ -161,7 +186,7 @@
                                 "id": ""
                             },
                             "graphql_field_name": "insights",
-                            "wpml_cf_preferences": 1,
+                            "wpml_cf_preferences": 3,
                             "clone": [
                                 "field_666048211bbcf",
                                 "field_666048971bbd1"
@@ -188,7 +213,7 @@
                         "id": ""
                     },
                     "graphql_field_name": "copy",
-                    "wpml_cf_preferences": 1,
+                    "wpml_cf_preferences": 3,
                     "placement": "top",
                     "endpoint": 0,
                     "selected": 0
@@ -207,7 +232,7 @@
                         "class": "invisible-group",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 1,
+                    "wpml_cf_preferences": 3,
                     "layout": "block",
                     "show_in_graphql": 1,
                     "graphql_description": "",
@@ -229,7 +254,7 @@
                                 "id": ""
                             },
                             "graphql_field_name": "newsroom",
-                            "wpml_cf_preferences": 1,
+                            "wpml_cf_preferences": 3,
                             "clone": [
                                 "field_666048211bbcf",
                                 "field_666048971bbd1"
@@ -256,7 +281,7 @@
                         "id": ""
                     },
                     "graphql_field_name": "copy",
-                    "wpml_cf_preferences": 1,
+                    "wpml_cf_preferences": 3,
                     "placement": "top",
                     "endpoint": 0,
                     "selected": 0
@@ -275,7 +300,7 @@
                         "class": "invisible-group",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 1,
+                    "wpml_cf_preferences": 3,
                     "layout": "block",
                     "show_in_graphql": 1,
                     "graphql_description": "",
@@ -297,7 +322,7 @@
                                 "id": ""
                             },
                             "graphql_field_name": "event",
-                            "wpml_cf_preferences": 1,
+                            "wpml_cf_preferences": 3,
                             "clone": [
                                 "field_666048211bbcf",
                                 "field_666048971bbd1"
@@ -324,7 +349,7 @@
                         "id": ""
                     },
                     "graphql_field_name": "copy2",
-                    "wpml_cf_preferences": 1,
+                    "wpml_cf_preferences": 3,
                     "placement": "top",
                     "endpoint": 0,
                     "selected": 0
@@ -343,7 +368,7 @@
                         "class": "invisible-group",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 1,
+                    "wpml_cf_preferences": 3,
                     "layout": "block",
                     "show_in_graphql": 1,
                     "graphql_description": "",
@@ -365,7 +390,7 @@
                                 "id": ""
                             },
                             "graphql_field_name": "caseStudy",
-                            "wpml_cf_preferences": 1,
+                            "wpml_cf_preferences": 3,
                             "clone": [
                                 "field_666048211bbcf"
                             ],
@@ -391,7 +416,7 @@
                         "id": ""
                     },
                     "graphql_field_name": "copy3",
-                    "wpml_cf_preferences": 1,
+                    "wpml_cf_preferences": 3,
                     "placement": "top",
                     "endpoint": 0,
                     "selected": 0
@@ -410,7 +435,7 @@
                         "class": "invisible-group",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 1,
+                    "wpml_cf_preferences": 3,
                     "layout": "block",
                     "show_in_graphql": 1,
                     "graphql_description": "",
@@ -432,7 +457,7 @@
                                 "id": ""
                             },
                             "graphql_field_name": "industry",
-                            "wpml_cf_preferences": 1,
+                            "wpml_cf_preferences": 3,
                             "clone": [
                                 "field_666048211bbcf"
                             ],
@@ -458,7 +483,7 @@
                         "id": ""
                     },
                     "graphql_field_name": "copy4",
-                    "wpml_cf_preferences": 1,
+                    "wpml_cf_preferences": 3,
                     "placement": "top",
                     "endpoint": 0,
                     "selected": 0
@@ -477,7 +502,7 @@
                         "class": "invisible-group",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 1,
+                    "wpml_cf_preferences": 3,
                     "layout": "block",
                     "show_in_graphql": 1,
                     "graphql_description": "",
@@ -499,7 +524,7 @@
                                 "id": ""
                             },
                             "graphql_field_name": "partner",
-                            "wpml_cf_preferences": 1,
+                            "wpml_cf_preferences": 3,
                             "clone": [
                                 "field_666048211bbcf"
                             ],
@@ -527,7 +552,7 @@
                 "id": ""
             },
             "graphql_field_name": "footer",
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "placement": "top",
             "endpoint": 0,
             "selected": 0
@@ -546,7 +571,7 @@
                 "class": "invisible-group",
                 "id": ""
             },
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "layout": "block",
             "show_in_graphql": 1,
             "graphql_description": "",
@@ -567,7 +592,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 1,
+                    "wpml_cf_preferences": 3,
                     "layout": "row",
                     "pagination": 0,
                     "min": 0,
@@ -594,7 +619,7 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "wpml_cf_preferences": 1,
+                            "wpml_cf_preferences": 3,
                             "layout": "row",
                             "min": 0,
                             "max": 0,
@@ -647,7 +672,7 @@
                                         "class": "",
                                         "id": ""
                                     },
-                                    "wpml_cf_preferences": 1,
+                                    "wpml_cf_preferences": 3,
                                     "layout": "table",
                                     "min": 0,
                                     "max": 0,
@@ -674,7 +699,7 @@
                                                 "class": "",
                                                 "id": ""
                                             },
-                                            "wpml_cf_preferences": 1,
+                                            "wpml_cf_preferences": 3,
                                             "return_format": "array",
                                             "show_in_graphql": 1,
                                             "graphql_description": "",
@@ -702,7 +727,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 1,
+                    "wpml_cf_preferences": 3,
                     "layout": "table",
                     "pagination": 0,
                     "min": 0,
@@ -729,7 +754,7 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "wpml_cf_preferences": 1,
+                            "wpml_cf_preferences": 3,
                             "return_format": "array",
                             "library": "all",
                             "min_width": "",
@@ -789,7 +814,7 @@
                 "id": ""
             },
             "graphql_field_name": "newsletterSection",
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "placement": "top",
             "endpoint": 0,
             "selected": 0
@@ -808,7 +833,7 @@
                 "class": "invisible-group",
                 "id": ""
             },
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "layout": "block",
             "show_in_graphql": 1,
             "graphql_description": "",
@@ -904,7 +929,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 1,
+                    "wpml_cf_preferences": 3,
                     "return_format": "array",
                     "library": "all",
                     "min_width": "",
@@ -936,7 +961,7 @@
                 "id": ""
             },
             "graphql_field_name": "gatedContent",
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "placement": "top",
             "endpoint": 0,
             "selected": 0
@@ -955,7 +980,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "layout": "block",
             "show_in_graphql": 1,
             "graphql_description": "",
@@ -1058,10 +1083,10 @@
     "active": true,
     "description": "",
     "show_in_rest": 1,
-    "acfml_field_group_mode": "translation",
+    "acfml_field_group_mode": "advanced",
     "show_in_graphql": 1,
     "graphql_field_name": "themeOptionsAcf",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1717589337
+    "modified": 1717750205
 }
