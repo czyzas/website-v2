@@ -20,7 +20,13 @@ query CaseStudySinglePage($URI: String!, $LANG: String!) {
       ...ModulesCollection
     }
   }
-  articles: caseStudies(first: 4, where: { status: PUBLISH, language: $LANG }) {
+  articles: caseStudies(
+    where: {
+      status: PUBLISH
+      language: $LANG
+      pagination: { postsPerPage: 4, paged: 1 }
+    }
+  ) {
     nodes {
       ...CaseStudyCard
     }

@@ -35,6 +35,7 @@ import {
   CustomersPageDocument,
   CaseStudiesPagesStaticPathsDocument,
   CaseStudySinglePageDocument,
+  Error404PageDocument,
 } from '@/__generated__/cms';
 import type {
   ComponentIndustriesListFragment,
@@ -151,6 +152,10 @@ export async function fetchTotalPages(
   return data.pages?.pageInfo.pagination?.totalPages || 1;
 }
 
+// FETCH 404 PAGE
+export function fetchError404Page() {
+  return fetchData(Error404PageDocument, undefined, [CACHE_KEYS.ERROR_404]);
+}
 // DEFAULT PAGES
 export function fetchHomepage(lang: string) {
   return fetchData(HomepageDocument, { LANG: lang }, [

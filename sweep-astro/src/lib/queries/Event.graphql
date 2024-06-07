@@ -48,8 +48,11 @@ query EventsListPage(
     }
   }
   moreArticles: insights(
-    first: 4
-    where: { status: PUBLISH, language: $LANG }
+    where: {
+      status: PUBLISH
+      language: $LANG
+      pagination: { postsPerPage: 4, paged: 1 }
+    }
   ) {
     nodes {
       ...InsightsListItem
@@ -104,13 +107,13 @@ query EventSinglePage($URI: String!, $LANG: String!) {
     }
   }
   articles: events(
-    first: 4
     where: {
       status: PUBLISH
       language: $LANG
       metaKey: "event_date"
       metaType: DATE
       orderby: { order: DESC, field: META_VALUE }
+      pagination: { postsPerPage: 4, paged: 1 }
     }
   ) {
     nodes {

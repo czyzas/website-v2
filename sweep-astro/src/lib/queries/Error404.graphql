@@ -1,0 +1,3 @@
+query Error404Page($LANG: String! = "en") {
+  ...Essential
+}

@@ -80,8 +80,11 @@ query NewsroomSinglePage($URI: String!, $LANG: String!) {
     }
   }
   articles: newsroomItems(
-    first: 4
-    where: { status: PUBLISH, language: $LANG }
+    where: {
+      status: PUBLISH
+      language: $LANG
+      pagination: { postsPerPage: 4, paged: 1 }
+    }
   ) {
     nodes {
       ...NewsroomListItem
