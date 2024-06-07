@@ -6,8 +6,9 @@ import Footer from '@/components/partials/Footer.astro';
 import Header from '@/components/partials/Header.astro';
 import { cn } from '@/scripts/cn';
 import NewsletterSection from '@/components/partials/NewsletterSection.astro';
-import { initializeStore } from '@/scripts/store';
+import { getStore, initializeStore } from '@/scripts/store';
 import { cacheStore } from '@/stores/cacheStore';
+import { cmsStore } from '@/stores/cmsStore';
 
 interface Props extends HTMLAttributes<'main'> {
   home?: boolean;
@@ -23,6 +24,9 @@ const {
   htmlClassName,
   ...props
 } = Astro.props;
+
+const store = getStore(cmsStore);
+const { searchEngineVisibility } = store.themeOptions?.themeOptionsAcf ?? {};
 
 // TODO: Update SEO
 const siteTitle = 'Sweep';
@@ -42,11 +46,11 @@ initializeStore(cacheStore, {
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
-    <meta
-      name="google-site-verification"
-      content="jwWf1NH5ok9uHdUETiQDA8kUpVYJj9SFAlOsZIGOPos"
-    />
-
+    {
+      searchEngineVisibility ? (
+        <meta name="robots" content="noindex, nofollow" />
+      ) : null
+    }
     <link
       rel="icon"
       type="image/svg+xml"
