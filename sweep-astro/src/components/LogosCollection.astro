@@ -1,16 +1,16 @@
 ---
 import 'swiper/swiper-bundle.css';
 import type { HTMLAttributes } from 'astro/types';
-import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
+import type {
+  UnparsedImage,
+  UnparsedImageWithLink,
+} from '@/scripts/data-parsers/parseImage';
 import { cn } from '@/scripts/cn';
+import { cleanArray } from '@/scripts/cleanArray';
 import WordpressImage from './WordpressImage.astro';
 
 interface LogosCollectionProps {
-  logos?:
-    | UnparsedImage[]
-    | {
-        websiteLink?: string | boolean;
-      }[];
+  logos?: UnparsedImageWithLink[];
   sizing?: 'sm' | 'md';
 }
 
@@ -22,7 +22,7 @@ const {
   sizing = 'md',
   ...props
 } = Astro.props;
-const logos = (rawLogos ?? []).filter(Boolean);
+const logos = cleanArray(rawLogos);
 ---
 
 <script>

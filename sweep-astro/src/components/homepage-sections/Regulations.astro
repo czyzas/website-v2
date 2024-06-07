@@ -2,6 +2,7 @@
 import { cmsStore } from '@/stores/cmsStore';
 import { getStore } from '@/scripts/store';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
+import { cleanArray } from '@/scripts/cleanArray';
 import Container from '../ui/Container.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
 import LogosGrid from '../LogosGrid.astro';
@@ -11,7 +12,7 @@ const store = getStore(cmsStore);
 const data = store.homepage!;
 const acf = data.homepage!.regulations!;
 
-const logos = acf.logos?.edges.filter(Boolean) ?? [];
+const logos = cleanArray(acf.logos?.edges);
 ---
 
 <Section name="regulations" bg="surface-background">

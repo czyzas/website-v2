@@ -15,6 +15,7 @@ import WordpressImage from '@/components/WordpressImage.astro';
 import LogosCollection from '@/components/LogosCollection.astro';
 import Form from '@/components/hubspot-form/Form.astro';
 import { fixDoubleBr } from '@/scripts/fixDoubleBr';
+import { cleanArray } from '@/scripts/cleanArray';
 
 export async function getStaticPaths() {
   return createSingleDefaultPageStaticPaths(
@@ -52,8 +53,8 @@ const {
   contentUnderForm,
 } = acf;
 
-const slider = (rawSlider ?? []).filter(Boolean);
-const logos = (rawLogos?.edges ?? []).filter(Boolean);
+const slider = cleanArray(rawSlider);
+const logos = cleanArray(rawLogos?.edges);
 ---
 
 <script>

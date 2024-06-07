@@ -3,6 +3,7 @@ import { languageStore } from '@/stores/languageStore';
 import { defaultLocale } from '@/i18n/config';
 import type { NonNullableProperties, OmitRecursively } from '@/types';
 import { getStore } from './store';
+import { cleanArray } from './cleanArray';
 
 export function getOptions() {
   const store = getStore(cmsStore);
@@ -25,6 +26,6 @@ export function getLanguage() {
   return {
     currentLanguage: store.currentLanguage.code,
     defaultLanguage: defaultLocale,
-    allLanguages: (store.languages ?? []).filter(Boolean),
+    allLanguages: cleanArray(store.languages),
   };
 }

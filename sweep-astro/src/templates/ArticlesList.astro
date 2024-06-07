@@ -16,13 +16,20 @@ import ListTagFilter from '@/components/ListTagFilter.astro';
 import PaginationContainer from '@/components/PaginationContainer.astro';
 import Pagination from '@/components/Pagination.astro';
 import type {
+  EventListItemFragment,
+  EventTag,
   EventsListPageQuery,
+  InsightsListItemFragment,
   InsightsListPageQuery,
+  InsightsTag,
+  NewsroomListItemFragment,
   NewsroomListPageQuery,
+  NewsroomTag,
 } from '@/__generated__/cms';
 import ListFeaturedArticle from '@/components/ListFeaturedArticle.astro';
 import ArticlesGrid from '@/components/ArticlesGrid.astro';
 import { cn } from '@/scripts/cn';
+import { cleanArray } from '@/scripts/cleanArray';
 
 type InsightsListProps = {
   postType: 'insights';
@@ -56,12 +63,20 @@ const {
 
 const totalPages = data.articles?.pageInfo.pagination?.totalPages ?? 1;
 const page = data.page!;
-const posts = (data.articles?.nodes ?? []).filter(Boolean);
+const posts = cleanArray(
+  data.articles?.nodes as (
+    | InsightsListItemFragment
+    | NewsroomListItemFragment
+    | EventListItemFragment
+  )[]
+);
 const insightsArticles =
-  postType === 'event' ? (data.moreArticles?.nodes ?? []).filter(Boolean) : [];
+  postType === 'event' ? cleanArray(data.moreArticles?.nodes) : [];
 
 // TAGS
-const tags = (data.filterTags?.nodes ?? []).filter(Boolean);
+const tags = cleanArray(
+  data.filterTags?.nodes as (InsightsTag | NewsroomTag | EventTag)[]
+);
 
 initializeStore(cmsStore, {
   primaryMenu: data.primaryMenu!,

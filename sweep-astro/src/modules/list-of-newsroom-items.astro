@@ -7,6 +7,7 @@ import { fetchPostsModuleList } from '@/lib/fetchCMSData';
 import type { WithModuleMeta } from '@/types';
 import ArticlesGrid from '@/components/ArticlesGrid.astro';
 import { getLanguage } from '@/scripts/utils-store-helpers';
+import { cleanArray } from '@/scripts/cleanArray';
 
 type Props = WithModuleMeta<ModulesModulesContentListOfNewsroomItemsLayout>;
 
@@ -26,7 +27,7 @@ const rawPosts = await fetchPostsModuleList('newsroom', {
   categorySlug,
   limit: limitPosts,
 });
-const posts = (rawPosts?.newsroomItems?.nodes ?? []).filter(Boolean);
+const posts = cleanArray(rawPosts?.newsroomItems?.nodes);
 ---
 
 {

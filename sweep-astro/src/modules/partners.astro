@@ -7,6 +7,7 @@ import ButtonContainer from '@/components/ButtonContainer.astro';
 import ModuleContainer from '@/components/ModuleContainer.astro';
 import PartnersList from '@/components/PartnersList.astro';
 import WordpressButtonLink from '@/components/WordpressButtonLink.astro';
+import { cleanArray } from '@/scripts/cleanArray';
 import { linkShouldRender } from '@/scripts/data-parsers/parseLink';
 import type { WithModuleMeta } from '@/types';
 
@@ -20,7 +21,7 @@ const {
   button,
 } = Astro.props;
 
-const partners = rawPartners?.nodes ?? [];
+const partners = cleanArray(rawPartners?.nodes);
 ---
 
 {

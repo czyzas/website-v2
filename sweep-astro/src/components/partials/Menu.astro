@@ -5,6 +5,7 @@ import { cmsStore } from '@/stores/cmsStore';
 import { buildI18nPath } from '@/i18n/utils';
 import { TRANSLATIONS } from '@/constants';
 import { getLanguage } from '@/scripts/utils-store-helpers';
+import { cleanArray } from '@/scripts/cleanArray';
 import MenuItem from '../MenuItem.astro';
 import MenuItemCard from '../MenuItemCard.astro';
 
@@ -16,7 +17,7 @@ const { id } = Astro.props;
 const { currentLanguage } = getLanguage();
 const { primaryMenu } = getStore(cmsStore);
 
-const menu = (primaryMenu?.menuItems?.nodes ?? []).filter(Boolean);
+const menu = cleanArray(primaryMenu?.menuItems?.nodes);
 ---
 
 <script>

@@ -51,8 +51,7 @@ const cta = parseLink(rawCta);
           'categories' in post
             ? post.categories?.nodes?.[0]?.name ?? ''
             : undefined;
-        const postTags =
-          'tags' in post ? parseTags(post.tags?.nodes ?? []) : [];
+        const postTags = 'tags' in post ? parseTags(post.tags?.nodes) : [];
         const eventDate =
           post.__typename === 'Event' ? post.eventAcf?.eventDate : undefined;
 

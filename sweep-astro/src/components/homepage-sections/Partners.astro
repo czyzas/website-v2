@@ -4,6 +4,7 @@ import { getStore } from '@/scripts/store';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
 import { linkShouldRender } from '@/scripts/data-parsers/parseLink';
 import type { PartnersListFragment } from '@/__generated__/cms';
+import { cleanArray } from '@/scripts/cleanArray';
 import Container from '../ui/Container.astro';
 import SectionTitle from '../partials/SectionTitle.astro';
 import ButtonContainer from '../ButtonContainer.astro';
@@ -14,7 +15,7 @@ import PartnersList from '../PartnersList.astro';
 const store = getStore(cmsStore);
 const data = store.homepage!;
 const acf = data.homepage!.partners!;
-const partners = acf.partners?.nodes ?? [];
+const partners = cleanArray(acf.partners?.nodes) as PartnersListFragment[];
 ---
 
 <Section name="partners" bg="white">
@@ -23,7 +24,7 @@ const partners = acf.partners?.nodes ?? [];
       withMargin
       {...parseSectionTitle(acf.sectionTitle?.selectSectionTitle)}
     />
-    <PartnersList partners={partners as PartnersListFragment[]} />
+    <PartnersList partners={partners} />
     {
       linkShouldRender(acf.button) && (
         <ButtonContainer>
