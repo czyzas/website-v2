@@ -61,7 +61,10 @@ const logos = (rawLogos ?? []).filter(Boolean);
 
 <style>
   .swiper-slide {
-    @apply flex h-auto w-auto self-stretch;
+    @apply flex h-auto w-32 self-stretch;
+    @media screen(md) {
+      @apply w-auto;
+    }
   }
 
   .swiper-wrapper,
@@ -86,8 +89,8 @@ const logos = (rawLogos ?? []).filter(Boolean);
           <div class="swiper-slide">
             <div
               class={cn('logo md:flex-0 flex items-center justify-center p-3', {
-                'md:basis-40': sizing === 'md',
-                'md:basis-25': sizing === 'sm',
+                'basis-40': sizing === 'md',
+                'basis-25': sizing === 'sm',
               })}
             >
               <WordpressImage

@@ -29,26 +29,25 @@ const columnClassName: Record<number, string> = {
     <Grid {...props} class={cn('logos-grid', className)}>
       {logos.map((rawLogo) => {
         const { websiteLink: uri, ...logo } = rawLogo;
+        const Tag = uri ? 'a' : 'span';
         return (
           <Card
             class={cn(
-              'customer-logo flex items-center justify-center p-6',
+              'customer-logo',
+              'p-0',
               columnClassName?.[columns] ?? 'col-span-full'
             )}
           >
-            {uri ? (
-              <a href={uri} class="contents">
-                <WordpressImage
-                  data={logo}
-                  class="max-h-20 w-fit max-w-40 object-contain"
-                />
-              </a>
-            ) : (
+            <Tag
+              href={uri || undefined}
+              target={uri ? '_blank' : undefined}
+              class="flex size-full items-center justify-center p-6"
+            >
               <WordpressImage
                 data={logo}
                 class="max-h-20 w-fit max-w-40 object-contain"
               />
-            )}
+            </Tag>
           </Card>
         );
       })}

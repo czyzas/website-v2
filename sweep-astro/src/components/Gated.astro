@@ -4,6 +4,10 @@ import { cmsStore } from '@/stores/cmsStore';
 import { getStore } from '@/scripts/store';
 import ClientGated from './Gated';
 
+type Props = {
+  formName?: string;
+};
+const { formName } = Astro.props;
 const store = getStore(cmsStore);
 const { gatedFormGuid } =
   store.themeOptions?.themeOptionsAcf?.gatedContent ?? {};
@@ -13,7 +17,12 @@ const form = gatedFormGuid ? await fetchHubspotForm(gatedFormGuid) : undefined;
 
 {
   !!gatedFormGuid && !!form && (
-    <ClientGated guid={gatedFormGuid} form={form} client:load>
+    <ClientGated
+      guid={gatedFormGuid}
+      form={form}
+      formName={formName}
+      client:load
+    >
       <slot />
     </ClientGated>
   )

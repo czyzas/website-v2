@@ -37,6 +37,7 @@ fragment ModulesCollection on Modules {
     }
     ... on ModulesModulesContentGatedLayout {
       layoutName
+      formName
     }
     ... on ModulesModulesContentBreakLayout {
       layoutName

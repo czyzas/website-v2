@@ -161,16 +161,26 @@ const listSectionId = 'list';
       <SectionTitle
         {...parseSectionTitle(acf?.listTitle?.selectSectionTitle)}
       />
-      <ListTagFilter
-        allButton
-        sectionId={listSectionId}
-        tags={tags}
-        activeTag={filterTag}
-        prefix={prefix}
-        class="my-8 md:mb-20 md:mt-12"
+
+      {
+        tags.length > 0 && (
+          <ListTagFilter
+            allButton
+            sectionId={listSectionId}
+            tags={tags}
+            activeTag={filterTag}
+            prefix={prefix}
+            class="my-8 md:mb-20 md:mt-12"
+          />
+        )
+      }
+
+      <ArticlesGrid
+        postType={postType}
+        posts={posts}
+        class={cn({ 'mt-8 md:mt-12': tags.length === 0 })}
       />
 
-      <ArticlesGrid postType={postType} posts={posts} />
       {
         totalPages > 1 && (
           <PaginationContainer>
