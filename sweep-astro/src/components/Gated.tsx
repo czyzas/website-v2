@@ -13,7 +13,6 @@ type GatedProps = {
   formName?: string;
 };
 
-const isBrowser = () => typeof window !== 'undefined';
 const Gated = ({ form, children, guid, formName }: GatedProps) => {
   const [isGated, setGated] = useState(true);
   const [isClient, setIsClient] = useState(false);
@@ -32,8 +31,8 @@ const Gated = ({ form, children, guid, formName }: GatedProps) => {
 
   const contentToShow = useMemo(() => {
     const isGoogle =
-      isBrowser() &&
-      window.navigator?.userAgent.toLowerCase().includes('googlebot');
+      typeof window !== 'undefined' &&
+      navigator?.userAgent.toLowerCase().includes('googlebot');
 
     if (isGoogle || !isGated) return children;
   }, [isGated, children, isClient]);
