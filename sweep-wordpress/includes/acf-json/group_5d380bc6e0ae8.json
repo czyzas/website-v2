@@ -4033,9 +4033,9 @@
                     "display": "block",
                     "sub_fields": [
                         {
-                            "key": "field_664f1cab2bc2d",
-                            "label": "Hubspot Form GUID",
-                            "name": "hubspot_form_guid",
+                            "key": "field_66619e5a9cdfe",
+                            "label": "Form name",
+                            "name": "form_name",
                             "aria-label": "",
                             "type": "text",
                             "instructions": "",
@@ -4046,15 +4046,15 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "wpml_cf_preferences": 2,
+                            "wpml_cf_preferences": 0,
                             "default_value": "",
                             "maxlength": "",
-                            "placeholder": "Eg. 550e8400-e29b-41d4-a716-446655440000",
+                            "placeholder": "",
                             "prepend": "",
                             "append": "",
                             "show_in_graphql": 1,
                             "graphql_description": "",
-                            "graphql_field_name": "hubspotFormGuid",
+                            "graphql_field_name": "formName",
                             "graphql_non_null": 0
                         }
                     ],
@@ -4146,5 +4146,5 @@
         "Page",
         "Post"
     ],
-    "modified": 1717504892
+    "modified": 1717673575
 }

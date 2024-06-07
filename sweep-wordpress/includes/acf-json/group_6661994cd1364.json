@@ -1,0 +1,55 @@
+{
+    "key": "group_6661994cd1364",
+    "title": "Insight",
+    "fields": [
+        {
+            "key": "field_6661994d6323a",
+            "label": "Hide from listing",
+            "name": "hide_from_listing",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 1,
+            "message": "",
+            "default_value": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1,
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "hideFromListing",
+            "graphql_non_null": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "insights"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "acfml_field_group_mode": "translation",
+    "show_in_graphql": 1,
+    "graphql_field_name": "insight",
+    "map_graphql_types_from_location_rules": 0,
+    "graphql_types": "",
+    "modified": 1717672389
+}

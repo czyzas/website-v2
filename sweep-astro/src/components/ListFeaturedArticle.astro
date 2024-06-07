@@ -68,7 +68,11 @@ const ContentWrapper =
       {...props}
       image={image}
       size={layout === 'merged' ? 'lg' : undefined}
-      class={cn('list-featured-article', className)}
+      class={cn(
+        'list-featured-article',
+        { 'bg-white': postType === 'insights' },
+        className
+      )}
       widerCard={postType === 'insights'}
     >
       <div class="flex flex-1 flex-col items-start gap-4">

@@ -27,6 +27,7 @@ for (const component of modulesComponents) {
 const ungatedComponents: ModulesCollectionFragment[] = [];
 const gatedComponents: ModulesCollectionFragment[] = [];
 let isGated = false;
+let gatedFormName = '';
 ---
 
 {
@@ -49,6 +50,8 @@ let isGated = false;
 
         if (layoutName === 'gated') {
           isGated = true;
+          gatedFormName =
+            (module as ModulesModulesContentGatedLayout).formName ?? '';
         }
         if (isGated)
           gatedComponents.push(<Component __meta__={meta} {...module} />);
@@ -57,7 +60,7 @@ let isGated = false;
         return null;
       })}
       {ungatedComponents}
-      {isGated && <Gated>{gatedComponents}</Gated>}
+      {isGated && <Gated formName={gatedFormName}>{gatedComponents}</Gated>}
     </Fragment>
   )
 }
