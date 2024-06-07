@@ -24,6 +24,11 @@ query InsightsListPage(
       language: $LANG
       tagSlug: $TAG_SLUG
       pagination: { postsPerPage: $POSTS_PER_PAGE, paged: $PAGED }
+      metaQuery: {
+        metaArray: [
+          { key: "hide_from_listing", value: "1", compare: NOT_EQUAL_TO }
+        ]
+      }
     }
   ) {
     nodes {

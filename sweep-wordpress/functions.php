@@ -19,4 +19,4 @@ require_once "includes/functions/graphql.php";
 require_once "includes/functions/admin-menu.php";
 
 // Extensions
-require_once "extensions/graphql-migration/migrate.php";
+//require_once "extensions/graphql-migration/migrate.php";
