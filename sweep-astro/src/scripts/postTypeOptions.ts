@@ -1,6 +1,4 @@
-import { cmsStore } from '@/stores/cmsStore';
 import { TRANSLATIONS } from '@/constants';
-import { getStore } from './store';
 import type { UnparsedImage } from './data-parsers/parseImage';
 import { getOptions } from './utils-store-helpers';
 
