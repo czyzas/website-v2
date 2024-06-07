@@ -27,6 +27,13 @@ const iconMap: Record<string, string> = {
 const getIconName = (title: string) => iconMap?.[title.toLowerCase()];
 ---
 
+<script>
+  const testNavigator = document.getElementById('test-navigator');
+  if (testNavigator) {
+    testNavigator.innerText = window.navigator?.userAgent;
+  }
+</script>
+<div id="test-navigator"></div>
 <footer>
   <Section bg="surface-background" class="space-y-10 md:space-y-20">
     <Container>
