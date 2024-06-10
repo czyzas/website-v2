@@ -146,6 +146,31 @@
             "graphql_description": "",
             "graphql_field_name": "registerFormGuid",
             "graphql_non_null": 0
+        },
+        {
+            "key": "field_6666b3160dab6",
+            "label": "Form name",
+            "name": "form_name",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 0,
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "formName",
+            "graphql_non_null": 0
         }
     ],
     "location": [
@@ -173,5 +198,5 @@
     "graphql_field_name": "eventAcf",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1716464697
+    "modified": 1718006563
 }
