@@ -30,16 +30,19 @@ import {
   EventsTotalPagesDocument,
   InsightsTotalPagesDocument,
   NewsroomTotalPagesDocument,
+  MediaItemsDocument,
   CaseStudiesTotalPagesDocument,
   CaseStudiesTagsStaticPathsDocument,
   CustomersPageDocument,
   CaseStudiesPagesStaticPathsDocument,
   CaseStudySinglePageDocument,
   Error404PageDocument,
+  MediaItemDocument,
 } from '@/__generated__/cms';
 import type {
   ComponentIndustriesListFragment,
   EventsModuleListQuery,
+  MimeTypeEnum,
   NewsroomModuleListQuery,
 } from '@/__generated__/cms';
 import { defaultLocale } from '@/i18n/config';
@@ -162,6 +165,15 @@ export function fetchHomepage(lang: string) {
     lang,
     CACHE_KEYS.HOMEPAGE,
   ]);
+}
+
+// MEDIA PDF FILES
+export function fetchPdfFiles() {
+  return fetchData(MediaItemsDocument, undefined, [CACHE_KEYS.PDF]);
+}
+
+export function fetchPdfFile(ID: string) {
+  return fetchData(MediaItemDocument, { FILENAME: ID }, [CACHE_KEYS.PDF, ID]);
 }
 
 export async function fetchDefaultPagesStaticPaths() {

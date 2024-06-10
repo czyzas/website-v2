@@ -51,6 +51,7 @@ export const TRANSLATIONS = {
   VIEW_CASE_STUDY: 'View Case Study',
   ALL: 'All',
   SIDEBAR: {
+    GUIDE: 'Guide to Decarbonization in Banking',
     DOWNLOAD: 'Download',
     REGISTER: 'Register',
     AUTHOR: 'Author',

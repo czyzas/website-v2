@@ -1,28 +1,28 @@
 ---
-import { template } from 'lodash-es';
 import { TRANSLATIONS } from '@/constants';
 import Button from '../ui/Button.astro';
 import SidebarCard from './SidebarCard.astro';
 
 interface AuthorProps {
-  location?: string;
+  href?: string;
 }
 
 type Props = AuthorProps;
 
-const { location } = Astro.props;
-const title = template(TRANSLATIONS.SIDEBAR.JOIN_US_LIVE, {
-  interpolate: /{([\s\S]+?)}/g,
-});
-
-// TODO: update thhis
-const SHOW = false;
+const { href } = Astro.props;
+const title = TRANSLATIONS.SIDEBAR.GUIDE;
 ---
 
 {
-  !!SHOW && (
-    <SidebarCard title={title({ location })}>
-      <Button asLink href="#register-form">
+  !!href && (
+    <SidebarCard collapsible title={title}>
+      <Button
+        asLink
+        external
+        variant="secondary"
+        leadingIcon="download"
+        href={href}
+      >
         {TRANSLATIONS.SIDEBAR.DOWNLOAD}
       </Button>
     </SidebarCard>

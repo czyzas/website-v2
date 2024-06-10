@@ -43,9 +43,12 @@ import { getDefaultTopImage } from '@/scripts/postTypeOptions';
 import { overwriteWYSIWYGContent } from '@/scripts/overwriteWYSIWYGContent';
 import { initializeStore } from '@/scripts/store';
 import { cmsStore } from '@/stores/cmsStore';
-import type { ColumnSizes, PageTranslations } from '@/types';
+import type { ColumnSizes, PageTranslations, WithShouldRender } from '@/types';
 import { cleanArray } from '@/scripts/cleanArray';
 import { languageStore } from '@/stores/languageStore';
+import SidebarFile from '@/components/sidebar/SidebarFile.astro';
+import { parseFile } from '@/scripts/data-parsers/parseFile';
+import type { ParsedFile } from '@/scripts/data-parsers/parseFile';
 
 type InsightsSingleProps = {
   postType: 'insights';
@@ -96,6 +99,7 @@ overwriteWYSIWYGContent(page.modules?.modulesContent, {
 
 const { subpageSettings } = page;
 const pageTitle = page?.title ?? '';
+// TODO: fix type
 let title = subpageSettings?.customTitle || pageTitle || '';
 const introduction = subpageSettings?.introduction || '';
 const image = subpageSettings?.image;
@@ -108,12 +112,17 @@ const tags = parseTags(page.tags?.nodes);
 const toc = buildTOC(page.modules?.modulesContent);
 let lastUpdated: string | undefined;
 let author: AuthorFragment | undefined;
+let attachment: WithShouldRender<ParsedFile> | undefined;
 
 if (
   (page.__typename === 'InsightsItem' || page.__typename === 'NewsroomItem') &&
   page.articleAcf?.author?.node.__typename === 'PostAuthor'
 ) {
   author = page.articleAcf.author.node;
+}
+
+if (page.__typename === 'InsightsItem') {
+  attachment = parseFile(page?.insightsItemAcf?.attachment?.node);
 }
 
 if ('modified' in page && page.modified) {
@@ -265,6 +274,11 @@ if (page.__typename === 'CaseStudy') {
           class="order-1 col-span-full md:order-2 md:col-start-9 md:col-end-13 lg:col-start-10"
         >
           <SidebarCardAuthor author={author} />
+          {
+            page.__typename === 'InsightsItem' &&
+              !!attachment &&
+              attachment.shouldRender && <SidebarFile href={attachment.url} />
+          }
           {
             (
               [
