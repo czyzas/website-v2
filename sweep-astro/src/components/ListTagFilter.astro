@@ -1,12 +1,11 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
 import { isNil } from 'lodash-es';
-import { cn } from '@/scripts/cn';
-import type { FilterTag } from '@/types';
+import type { FilterTag, WithAttributes } from '@/types';
 import { buildI18nPath } from '@/i18n/utils';
 import { TRANSLATIONS } from '@/constants';
 import { getLanguage } from '@/scripts/utils-store-helpers';
-import Card from './ui/Card.astro';
+import CardLinks from './CardLinks.astro';
 
 interface ListTagFilterProps extends HTMLAttributes<'div'> {
   tags?: FilterTag[];
@@ -15,7 +14,7 @@ interface ListTagFilterProps extends HTMLAttributes<'div'> {
   allButton?: boolean;
   sectionId?: string;
 }
-type Props = ListTagFilterProps;
+type Props = WithAttributes<ListTagFilterProps>;
 
 const {
   class: className,
@@ -38,34 +37,19 @@ if (allButton && tags.length > 0) {
 }
 
 const sectionId = rawSectionId ? `#${rawSectionId}` : '';
+
+const tagLinks = tags.map((tag) => ({
+  isActive: activeTag === tag.slug,
+  link: {
+    url: buildI18nPath(
+      tag.slug
+        ? [prefix, 'tag', `${tag.slug}${sectionId}`]
+        : `${prefix}${sectionId}`,
+      currentLanguage
+    ),
+    title: tag.name,
+  },
+}));
 ---
 
-{
-  tags.length > 0 && (
-    <div
-      {...props}
-      class={cn(
-        'list-tag-filter',
-        'grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-2',
-        className
-      )}
-    >
-      {tags.map((tag) => (
-        <a
-          href={buildI18nPath(
-            tag.slug
-              ? [prefix, 'tag', `${tag.slug}${sectionId}`]
-              : `${prefix}${sectionId}`,
-            currentLanguage
-          )}
-          data-active={activeTag === tag.slug ? 'true' : 'false'}
-          class="group"
-        >
-          <Card class="flex h-full items-center justify-center bg-white p-3 text-center text-base font-medium transition-colors group-hover:bg-sw-surface-subdued group-data-[active=true]:border-transparent group-data-[active=true]:bg-sw-sky-400 group-data-[active=true]:text-white">
-            {tag.name}
-          </Card>
-        </a>
-      ))}
-    </div>
-  )
-}
+<CardLinks {...props} links={tagLinks} class={className} />

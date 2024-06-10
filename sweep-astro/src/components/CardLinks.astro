@@ -1,0 +1,52 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/scripts/cn';
+import { parseLink } from '@/scripts/data-parsers/parseLink';
+import type { UnparsedLink } from '@/scripts/data-parsers/parseLink';
+import { cleanArray } from '@/scripts/cleanArray';
+import { fixDoubleBr } from '@/scripts/fixDoubleBr';
+import Card from './ui/Card.astro';
+
+interface CardLinksProps extends HTMLAttributes<'div'> {
+  links: { link?: UnparsedLink; isActive?: boolean }[];
+}
+
+type Props = CardLinksProps;
+
+const { class: className, links: rawLinks, ...props } = Astro.props;
+
+const links = cleanArray(rawLinks);
+---
+
+{
+  links.length > 0 && (
+    <div
+      {...props}
+      class={cn(
+        'card-links',
+        'grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-2',
+        className
+      )}
+    >
+      {links.map(({ link: rawLink, isActive = false }) => {
+        const link = parseLink(rawLink);
+        if (!link.shouldRender) return null;
+
+        return (
+          <a href={link.url} target={link.target} class="group">
+            <Card
+              set:html={fixDoubleBr(link.title)}
+              class={cn(
+                'flex h-full items-center justify-center bg-white p-3 text-center text-base font-medium transition-colors',
+                {
+                  'group-hover:bg-sw-surface-subdued': !isActive,
+                  'border-transparent bg-sw-sky-400 text-white': isActive,
+                }
+              )}
+            />
+          </a>
+        );
+      })}
+    </div>
+  )
+}

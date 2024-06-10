@@ -1,0 +1,30 @@
+---
+import type { ModulesModulesContentCardLinksLayout } from '@/__generated__/cms';
+import ModuleContainer from '@/components/ModuleContainer.astro';
+import UICardLinks from '@/components/CardLinks.astro';
+import { cleanArray } from '@/scripts/cleanArray';
+import type { WithModuleMeta } from '@/types';
+
+type Props = WithModuleMeta<ModulesModulesContentCardLinksLayout>;
+
+const { __meta__, layoutName, backgroundColor, cardLinks } = Astro.props;
+
+const links = cleanArray(
+  cardLinks?.map((item) => {
+    if (!item?.link) return undefined;
+
+    const title = item?.title || item?.link?.title;
+    item.link.title = title;
+
+    return { link: item.link };
+  })
+);
+---
+
+{
+  links.length > 0 && (
+    <ModuleContainer meta={__meta__} name={layoutName!} bg={backgroundColor}>
+      <UICardLinks links={links} />
+    </ModuleContainer>
+  )
+}
