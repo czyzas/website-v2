@@ -63,6 +63,13 @@ query InsightsSinglePage($URI: String!, $LANG: String!) {
     slug
     uri
     modified
+    insightsItemAcf {
+      attachment {
+        node {
+          ...File
+        }
+      }
+    }
     articleAcf {
       ...ArticlePageAcf
     }
