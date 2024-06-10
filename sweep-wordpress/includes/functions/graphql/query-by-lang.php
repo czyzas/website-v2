@@ -10,9 +10,8 @@ add_action( 'graphql_register_types', function () {
 				'description' => "Get page by lang",
 				'args'        => [
 					'lang' => [
-						'type' => [
-							'non_null' => 'String',
-						]
+						'type'        => [ 'non_null' => 'String', ],
+						'description' => 'Filter by WPML language code',
 					],
 					'uri'  => [
 						'type' => [
