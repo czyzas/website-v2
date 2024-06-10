@@ -15,6 +15,7 @@ import WhoWeWorkWith from '@/components/homepage-sections/WhoWeWorkWith.astro';
 import { languageStore } from '@/stores/languageStore';
 import Regulations from '@/components/homepage-sections/Regulations.astro';
 import type { HomepageQuery } from '@/__generated__/cms';
+import { cleanArray } from '@/scripts/cleanArray';
 
 interface Props {
   data: HomepageQuery;
@@ -23,6 +24,7 @@ interface Props {
 const { data } = Astro.props;
 
 initializeStore(cmsStore, {
+  uri: '/',
   homepage: data.page!,
   homepageInsights: data.insights!,
   primaryMenu: data.primaryMenu!,
@@ -31,6 +33,7 @@ initializeStore(cmsStore, {
 initializeStore(languageStore, {
   currentLanguage: data.page!.language!,
   languages: data.languages,
+  translations: cleanArray(data.page?.translations),
 });
 ---
 

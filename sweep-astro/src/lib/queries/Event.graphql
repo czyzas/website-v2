@@ -11,6 +11,10 @@ query EventsListPage(
     language {
       ...Languages
     }
+    translations {
+      languageCode
+      uri
+    }
     subpageSettings {
       ...SubpageSettings
     }
@@ -98,6 +102,10 @@ query EventSinglePage($URI: String!, $LANG: String!) {
     }
     language {
       ...Languages
+    }
+    translations {
+      languageCode
+      uri
     }
     subpageSettings {
       ...SubpageSettings

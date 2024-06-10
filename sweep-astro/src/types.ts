@@ -1,3 +1,5 @@
+import type { PageTranslationsFragment } from './__generated__/cms';
+
 // UTILS
 type OmitDistributive<T, K extends PropertyKey> = T extends unknown
   ? T extends object
@@ -53,3 +55,6 @@ export interface FilterTag {
   name?: string;
   slug?: string;
 }
+
+export type PageTranslations =
+  ReplaceTypenameLiteral<PageTranslationsFragment>[];

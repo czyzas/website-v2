@@ -6,6 +6,10 @@ query ContactPage($LANG: String!) {
     language {
       ...Languages
     }
+    translations {
+      languageCode
+      uri
+    }
     subpageSettings {
       ...SubpageSettings
     }

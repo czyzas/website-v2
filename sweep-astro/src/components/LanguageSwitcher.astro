@@ -1,15 +1,21 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { buildI18nPath } from '@/i18n/utils';
+import { buildI18nPath, getUrlWithoutLang } from '@/i18n/utils';
 import { cn } from '@/scripts/cn';
 import { getLanguage } from '@/scripts/utils-store-helpers';
+import { getStore } from '@/scripts/store';
+import { cmsStore } from '@/stores/cmsStore';
 import MenuItem from './MenuItem.astro';
 
 const id = `dropdown-${crypto.randomUUID().substring(16)}`;
 
-const { currentLanguage, allLanguages: languages } = getLanguage();
+const {
+  currentLanguage,
+  allLanguages: languages,
+  translations,
+} = getLanguage();
 
-// TODO: link to current page translation if possible
+const { uri: pageUri } = getStore(cmsStore);
 ---
 
 <script>
@@ -66,16 +72,29 @@ const { currentLanguage, allLanguages: languages } = getLanguage();
         )}
       >
         <ul class="list space-y-4 rounded-lg bg-white p-6 shadow-menu" id={id}>
-          {languages.map((lang) => (
-            <li class="flex flex-col">
-              <MenuItem
-                href={buildI18nPath('/', lang.code)}
-                set:text={lang.translated_name}
-                aria-label={lang.translated_name}
-                data-current={lang.code === currentLanguage ? 'true' : 'false'}
-              />
-            </li>
-          ))}
+          {languages.map((lang) => {
+            let uri = getUrlWithoutLang(pageUri || '/');
+            const translation = translations.find(
+              (t) => t.languageCode === lang.code
+            );
+
+            if (translation?.uri) {
+              uri = getUrlWithoutLang(translation.uri);
+            }
+
+            return (
+              <li class="flex flex-col">
+                <MenuItem
+                  href={buildI18nPath(uri, lang.code)}
+                  set:text={lang.translated_name}
+                  aria-label={lang.translated_name}
+                  data-current={
+                    lang.code === currentLanguage ? 'true' : 'false'
+                  }
+                />
+              </li>
+            );
+          })}
         </ul>
       </div>
     )

@@ -6,6 +6,9 @@ query DemoPage($LANG: String!) {
     language {
       ...Languages
     }
+    translations {
+      ...PageTranslations
+    }
     subpageSettings {
       ...SubpageSettings
     }

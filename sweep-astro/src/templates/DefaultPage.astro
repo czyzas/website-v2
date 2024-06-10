@@ -9,7 +9,8 @@ import type {
   DefaultPageQuery,
   IndustrySingleQuery,
 } from '@/__generated__/cms';
-import type { ColumnSizes } from '@/types';
+import type { ColumnSizes, PageTranslations } from '@/types';
+import { cleanArray } from '@/scripts/cleanArray';
 
 interface Props {
   data: DefaultPageQuery | IndustrySingleQuery;
@@ -19,6 +20,7 @@ const { data } = Astro.props;
 const page = data.page!;
 
 initializeStore(cmsStore, {
+  uri: page.uri,
   primaryMenu: data.primaryMenu!,
   themeOptions: data.themeOptionsByLang!,
   subpageSettings: data.page?.subpageSettings,
@@ -26,6 +28,7 @@ initializeStore(cmsStore, {
 initializeStore(languageStore, {
   currentLanguage: data.page!.language!,
   languages: data.languages,
+  translations: cleanArray(data.page?.translations as PageTranslations),
 });
 
 const { subpageSettings } = page;

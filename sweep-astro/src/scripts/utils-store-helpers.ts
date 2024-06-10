@@ -27,5 +27,6 @@ export function getLanguage() {
     currentLanguage: store.currentLanguage.code,
     defaultLanguage: defaultLocale,
     allLanguages: cleanArray(store.languages),
+    translations: store.translations,
   };
 }

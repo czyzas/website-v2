@@ -11,6 +11,10 @@ query CustomersPage(
     language {
       ...Languages
     }
+    translations {
+      languageCode
+      uri
+    }
     subpageSettings {
       ...SubpageSettings
     }

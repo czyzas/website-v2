@@ -43,8 +43,9 @@ import { getDefaultTopImage } from '@/scripts/postTypeOptions';
 import { overwriteWYSIWYGContent } from '@/scripts/overwriteWYSIWYGContent';
 import { initializeStore } from '@/scripts/store';
 import { cmsStore } from '@/stores/cmsStore';
-import type { ColumnSizes } from '@/types';
+import type { ColumnSizes, PageTranslations } from '@/types';
 import { cleanArray } from '@/scripts/cleanArray';
+import { languageStore } from '@/stores/languageStore';
 
 type InsightsSingleProps = {
   postType: 'insights';
@@ -78,9 +79,15 @@ const { postType, data, lang } = Astro.props;
 const page = data.page!;
 
 initializeStore(cmsStore, {
+  uri: page.uri,
   primaryMenu: data.primaryMenu!,
   themeOptions: data.themeOptionsByLang!,
   subpageSettings: data.page?.subpageSettings,
+});
+initializeStore(languageStore, {
+  currentLanguage: data.page!.language!,
+  languages: data.languages,
+  translations: cleanArray(data.page?.translations as PageTranslations),
 });
 
 overwriteWYSIWYGContent(page.modules?.modulesContent, {

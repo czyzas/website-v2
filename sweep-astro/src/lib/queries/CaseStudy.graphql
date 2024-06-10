@@ -13,6 +13,10 @@ query CaseStudySinglePage($URI: String!, $LANG: String!) {
     language {
       ...Languages
     }
+    translations {
+      languageCode
+      uri
+    }
     subpageSettings {
       ...SubpageSettings
     }

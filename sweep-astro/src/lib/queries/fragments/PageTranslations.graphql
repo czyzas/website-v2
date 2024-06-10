@@ -1,0 +1,4 @@
+fragment PageTranslations on Page {
+  languageCode
+  uri
+}

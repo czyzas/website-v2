@@ -85,7 +85,7 @@ export const buildI18nPath = (
   const language = languages.includes(lang) ? lang : defaultLocale;
   const path = castArray(pathWithoutLang).map((p) => trim(p, '/'));
 
-  if (pathWithoutLang === '/' && language !== defaultLocale) {
+  if (language !== defaultLocale) {
     path.unshift(language);
   }
 

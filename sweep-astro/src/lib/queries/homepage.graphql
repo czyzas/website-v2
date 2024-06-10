@@ -6,6 +6,10 @@ query Homepage($LANG: String!) {
     language {
       ...Languages
     }
+    translations {
+      languageCode
+      uri
+    }
     homepage {
       hero {
         title

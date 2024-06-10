@@ -38,6 +38,7 @@ const data = await fetchContactPage(lang as string);
 const page = data.page!;
 
 initializeStore(cmsStore, {
+  uri: page.uri,
   primaryMenu: data.primaryMenu!,
   themeOptions: data.themeOptionsByLang!,
   subpageSettings: data.page?.subpageSettings,
@@ -45,6 +46,7 @@ initializeStore(cmsStore, {
 initializeStore(languageStore, {
   currentLanguage: data.page!.language!,
   languages: data.languages,
+  translations: cleanArray(data.page?.translations),
 });
 
 // TODO: handle data passed to Layout and Top

@@ -79,6 +79,7 @@ const tags = cleanArray(
 );
 
 initializeStore(cmsStore, {
+  uri: page.uri,
   primaryMenu: data.primaryMenu!,
   themeOptions: data.themeOptionsByLang!,
   subpageSettings: data.page?.subpageSettings,
@@ -86,6 +87,7 @@ initializeStore(cmsStore, {
 initializeStore(languageStore, {
   currentLanguage: data.page!.language!,
   languages: data.languages,
+  translations: cleanArray(data.page?.translations),
 });
 
 const { subpageSettings, articlesListAcf: acf } = page;
