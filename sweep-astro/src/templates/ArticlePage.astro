@@ -89,7 +89,7 @@ overwriteWYSIWYGContent(page.modules?.modulesContent, {
 
 const { subpageSettings } = page;
 const pageTitle = page?.title ?? '';
-const title = subpageSettings?.customTitle || pageTitle || '';
+let title = subpageSettings?.customTitle || pageTitle || '';
 const introduction = subpageSettings?.introduction || '';
 const image = subpageSettings?.image;
 const size = (subpageSettings?.topDistribution ?? '5-7') as ColumnSizes;
@@ -156,8 +156,12 @@ let caseStudyDetails: {
 if (page.__typename === 'CaseStudy') {
   const customer = parseCaseStudyCustomer(page);
   const longerTitle = page.caseStudyAcf?.longerTitle;
+  title = longerTitle || customer?.title || '';
   caseStudyDetails = [
-    { label: 'company', value: longerTitle || customer?.title },
+    {
+      label: 'company',
+      value: subpageSettings?.customTitle || pageTitle || '',
+    },
     { label: 'size', value: customer?.customerAcf?.size },
     { label: 'industry', value: customer?.customerAcf?.category },
     { label: 'headquarters', value: customer?.customerAcf?.headquarters },
