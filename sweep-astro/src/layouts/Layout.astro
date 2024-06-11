@@ -28,7 +28,7 @@ const {
 } = Astro.props;
 
 const { currentLanguage } = getLanguage();
-const { t } = getTranslations();
+const TRANSLATIONS = getTranslations();
 const seoProps = {
   pageTitle,
   home,
@@ -52,9 +52,9 @@ initializeStore(cacheStore, {
       type="image/svg+xml"
       href={import.meta.env.PROD ? '/favicon.svg' : '/favicon-dev.svg'}
     />
-    <script define:vars={{ t }}>
+    <script define:vars={{ TRANSLATIONS }}>
       // Populate translations in client for React components
-      window.TRANSLATIONS = t;
+      window.TRANSLATIONS = TRANSLATIONS;
     </script>
   </head>
   <body class="flex min-h-screen flex-col antialiased">
