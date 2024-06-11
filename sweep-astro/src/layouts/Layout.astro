@@ -8,7 +8,8 @@ import { cn } from '@/scripts/cn';
 import NewsletterSection from '@/components/partials/NewsletterSection.astro';
 import { initializeStore } from '@/scripts/store';
 import { cacheStore } from '@/stores/cacheStore';
-import { getOptions } from '@/scripts/utils-store-helpers';
+import { getLanguage, getOptions, getSeo } from '@/scripts/utils-store-helpers';
+import { getLocale } from '@/i18n/utils';
 
 interface Props extends HTMLAttributes<'main'> {
   home?: boolean;
@@ -25,13 +26,22 @@ const {
   ...props
 } = Astro.props;
 
+const { currentLanguage } = getLanguage();
 const { searchEngineVisibility } = getOptions();
 
-// TODO: Update SEO
-const siteTitle = 'Sweep';
-const description = 'Sweep description';
-
-const title = !home && pageTitle ? `${pageTitle} - ${siteTitle}` : siteTitle;
+const {
+  title,
+  metaDesc,
+  canonical,
+  opengraphImage,
+  opengraphModifiedTime,
+  schema,
+} = getSeo();
+const pageType: string = Array.isArray(schema?.pageType)
+  ? schema.pageType.join('')
+  : schema?.pageType ?? 'Article';
+const metaTitle = !home && pageTitle ? pageTitle : title;
+const locale = getLocale(currentLanguage);
 
 // Initialize stores
 initializeStore(cacheStore, {
@@ -40,23 +50,47 @@ initializeStore(cacheStore, {
 ---
 
 <!doctype html>
-<html lang="en" class={cn(htmlClassName)}>
+<html lang={currentLanguage} class={cn(htmlClassName)}>
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={metaDesc} />
+    <meta name="generator" content={Astro.generator} />
     {
       searchEngineVisibility ? (
         <meta name="robots" content="noindex, nofollow" />
-      ) : null
+      ) : (
+        <meta
+          name="robots"
+          content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"
+        />
+      )
     }
+    <meta property="og:locale" content={locale} />
+    <meta property="og:type" content={pageType} />
+    <meta property="og:title" content={metaTitle} />
+    <meta property="og:description" content={metaDesc} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={title} />
+    <meta property="og:updated_time" content={opengraphModifiedTime} />
+    <meta property="og:image" content={opengraphImage?.mediaItemUrl} />
+    <meta
+      property="og:image:secure_url"
+      content={opengraphImage?.mediaItemUrl}
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="900" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={metaTitle} />
+    <meta name="twitter:description" content={metaDesc} />
+    <meta name="twitter:image" content={opengraphImage?.mediaItemUrl} />
     <link
       rel="icon"
       type="image/svg+xml"
       href={import.meta.env.PROD ? '/favicon.svg' : '/favicon-dev.svg'}
     />
-    <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+    <link rel="canonical" href={canonical} />
+    <title>{metaTitle}</title>
   </head>
   <body class="flex min-h-screen flex-col antialiased">
     <Header />

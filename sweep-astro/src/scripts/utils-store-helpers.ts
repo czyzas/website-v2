@@ -30,3 +30,12 @@ export function getLanguage() {
     translations: store.translations,
   };
 }
+
+export function getSeo() {
+  const store = getStore(cmsStore);
+  if (!store.seo) {
+    throw new Error("You can't access SEO");
+  }
+
+  return store.seo;
+}

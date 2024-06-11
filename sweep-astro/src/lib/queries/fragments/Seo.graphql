@@ -1,0 +1,12 @@
+fragment Seo on PostTypeSEO {
+  title
+  metaDesc
+  canonical
+  opengraphImage {
+    mediaItemUrl
+  }
+  opengraphModifiedTime
+  schema {
+    pageType
+  }
+}
