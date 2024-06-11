@@ -29,6 +29,7 @@ initializeStore(cmsStore, {
   homepageInsights: data.insights!,
   primaryMenu: data.primaryMenu!,
   themeOptions: data.themeOptionsByLang!,
+  seo: data?.page?.seo,
 });
 initializeStore(languageStore, {
   currentLanguage: data.page!.language!,

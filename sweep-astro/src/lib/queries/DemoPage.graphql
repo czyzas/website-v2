@@ -42,6 +42,9 @@ query DemoPage($LANG: String!) {
         content
       }
     }
+    seo {
+      ...Seo
+    }
   }
   ...Essential
 }

@@ -21,6 +21,9 @@ query NewsroomListPage(
     articlesListAcf {
       ...ArticlesListAcf
     }
+    seo {
+      ...Seo
+    }
   }
   articles: newsroomItems(
     where: {
@@ -85,6 +88,9 @@ query NewsroomSinglePage($URI: String!, $LANG: String!) {
     }
     modules {
       ...ModulesCollection
+    }
+    seo {
+      ...Seo
     }
   }
   articles: newsroomItems(

@@ -244,6 +244,9 @@ query Homepage($LANG: String!) {
         }
       }
     }
+    seo {
+      ...Seo
+    }
   }
   insights(
     where: { language: $LANG, status: PUBLISH, pagination: { postsPerPage: 6 } }
@@ -252,5 +255,6 @@ query Homepage($LANG: String!) {
       ...InsightsListItem
     }
   }
+
   ...Essential
 }

@@ -21,6 +21,9 @@ query EventsListPage(
     articlesListAcf {
       ...ArticlesListAcf
     }
+    seo {
+      ...Seo
+    }
   }
   articles: events(
     where: {

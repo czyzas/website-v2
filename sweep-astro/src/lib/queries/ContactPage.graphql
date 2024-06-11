@@ -71,6 +71,9 @@ query ContactPage($LANG: String!) {
         }
       }
     }
+    seo {
+      ...Seo
+    }
   }
   ...Essential
 }

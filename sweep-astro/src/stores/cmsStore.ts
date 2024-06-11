@@ -1,6 +1,7 @@
 import type {
   HomepageQuery,
   MenuFragment,
+  SeoFragment,
   SubpageSettingsFragment,
   ThemeOptionsFragment,
 } from '@/__generated__/cms';
@@ -13,6 +14,7 @@ export const cmsStore = createStore<{
   primaryMenu?: MenuFragment;
   subpageSettings?: SubpageSettingsFragment;
   themeOptions?: ThemeOptionsFragment;
+  seo?: SeoFragment;
 }>({
   uri: '',
   homepage: undefined,
@@ -20,4 +22,5 @@ export const cmsStore = createStore<{
   primaryMenu: undefined,
   subpageSettings: undefined,
   themeOptions: undefined,
+  seo: undefined,
 });

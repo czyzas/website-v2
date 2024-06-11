@@ -21,6 +21,9 @@ query InsightsListPage(
     articlesListAcf {
       ...ArticlesListAcf
     }
+    seo {
+      ...Seo
+    }
   }
   articles: insights(
     where: {
@@ -99,6 +102,9 @@ query InsightsSinglePage($URI: String!, $LANG: String!) {
     }
     modules {
       ...ModulesCollection
+    }
+    seo {
+      ...Seo
     }
   }
   articles: insights(
