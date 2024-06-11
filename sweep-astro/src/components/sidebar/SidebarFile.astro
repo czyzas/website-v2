@@ -13,9 +13,26 @@ type Props = AuthorProps;
 const { href, title } = Astro.props;
 ---
 
+<script>
+  import { $gated } from '@/scripts/client/atoms/gated';
+
+  const cards =
+    document.querySelectorAll<HTMLElement>('.file-sidebar-card') ?? [];
+
+  $gated.subscribe((value) => {
+    for (const card of cards) {
+      card.style.display = value ? 'none' : '';
+    }
+  });
+</script>
+
 {
   !!href && (
-    <SidebarCard collapsible title={title || TRANSLATIONS.SIDEBAR.GUIDE}>
+    <SidebarCard
+      collapsible
+      title={title || TRANSLATIONS.SIDEBAR.GUIDE}
+      name="file-sidebar-card"
+    >
       <Button
         asLink
         external
