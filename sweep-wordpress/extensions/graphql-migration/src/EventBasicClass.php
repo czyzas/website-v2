@@ -5,12 +5,12 @@ namespace FH_Migration;
 use DOMDocument;
 use WP_Query;
 
-class InsightBasicClass extends MigrationClass implements MigrationInterface
+class EventBasicClass extends MigrationClass implements MigrationInterface
 {
 	public string $query_code = <<<'QUERY'
 						query ($limit: Int, $skip: Int, $locale: GraphCMS_Locale, $remoteId: ID) {
-						  allGraphCmsArticle(
-						    filter: {category: {usage: {eq: Library}, stage: {eq: PUBLISHED}}, locale: {eq: $locale, ne: de}, remoteId: {eq: $remoteId}}
+						  allGraphCmsEvent(
+						    filter: {category: {stage: {eq: PUBLISHED}}, locale: {eq: $locale, ne: de}, remoteId: {eq: $remoteId}}
 						    sort: {fields: remoteId}
 						    limit: $limit
 						    skip: $skip
@@ -29,13 +29,20 @@ class InsightBasicClass extends MigrationClass implements MigrationInterface
 						      title
 						      locale
 						      slug
+						      endDate
+						      language
+						      startDate
+						      abstract
+						      formName
 						      publishedAt
 						      category {
 						        id
+						        label
 						      }
-						      seo {
-								noIndex
-							  }
+						      tags {
+						        id
+						        label
+						      }
 						      coverImage {
 						        url
 						        id
@@ -44,42 +51,38 @@ class InsightBasicClass extends MigrationClass implements MigrationInterface
 						        mimeType
 						      }
 						      content {
-						        remoteChildren {
-						          ... on GraphCMS_ContentCard {
+						        html
+						        json
+						      }
+						      hosts {
+						        person {
+						          firstName
+						          lastName
+						          role
+						          photo {
+						            alt
+						            fileName
+						            mimeType
+						            url
 						            id
-						            remoteTypeName
-						            content {
-						              html
-						              json
-						            }
 						          }
-						          ... on GraphCMS_CallOut {
-						            id
-						            remoteTypeName
-						            theme
-						            title
-						            details {
-						              html
-						            }
-						          }
-						          ... on GraphCMS_TitleCard {
-						            id
-						            remoteTypeName
-						            title
-						            headingLevel
-						          }
-						          ... on GraphCMS_FullWidthImage {
-						            id
-						            remoteTypeName
-						            asset {
+						          company {
+						            logo {
+						              alt
 						              id
-						              url
 						              fileName
 						              mimeType
-						              alt
+						              url
 						            }
 						          }
 						        }
+						      }
+						      location {
+						        city
+						        addressLine1
+						        addressLine2
+						        country
+						        postcode
 						      }
 						    }
 						  }
@@ -93,12 +96,13 @@ class InsightBasicClass extends MigrationClass implements MigrationInterface
 		}
 		do {
 			$data = $this->getData();
-			foreach ( $data['allGraphCmsArticle']['nodes'] as $article ) {
+			foreach ( $data['allGraphCmsEvent']['nodes'] as $article ) {
 
 				$hygraph_id = $article['id'];
+				$sitepress->switch_lang($article['locale']);
 				$check_post_args = array(
 					'posts_per_page'   => 1,
-					'post_type'        => 'insights',
+					'post_type'        => 'event',
 					'meta_query' => array(
 						array(
 							'key'       => 'hygraph_id',
@@ -111,7 +115,7 @@ class InsightBasicClass extends MigrationClass implements MigrationInterface
 
 				if (!$check_post->have_posts() ) {
 					$article_args = [
-						'post_type' => 'insights',
+						'post_type' => 'event',
 						'post_title' => $article['title'],
 						'post_name' => $article['slug'],
 						'post_date' => $article['publishedAt'],
@@ -125,95 +129,77 @@ class InsightBasicClass extends MigrationClass implements MigrationInterface
 							$trid = $this->getTrid($hygraph_id, 'event');
 						}
 						$sitepress->set_element_language_details( $article_id,
-							'post_insights',
+							'post_event',
 							$trid ?? false,
 							$article['locale'],
 							$sitepress->get_default_language() );
 
-						update_field('hide_from_listing', $article['seo']['noIndex'] ? 1 : 0, $article_id);
+						update_field('event_location', $article['location']['city'] ?? '', $article_id);
+						update_field('event_date', $article['startDate'], $article_id);
+						update_field('event_language', $article['language'], $article_id);
+						update_field('form_name', $article['formName'], $article_id);
+						update_field('introduction', $article['abstract'], $article_id);
 
 						$this->addThumbnail($article['coverImage'], $article_id);
+						$this->addRichTextField($article_id, $article);
+						$this->addTeamField($article_id, $article['hosts']);
+						$this->addLocation($article['location'], $article_id, $article['locale']);
 
+						foreach ($article['tags'] as $tag) {
+							$this->addTermToPost($tag['id'] ?? '', $article_id, '_tag');
+						}
 						$this->addTermToPost($article['category']['id'] ?? '', $article_id);
 
-						foreach ($article['content']['remoteChildren'] as $child) {
-							switch ($child['remoteTypeName']) {
-								case 'CallOut':
-									$this->addRichTextField( $article_id, $child, true );
-									break;
-								case 'TitleCard':
-									$this->addArticleTitleField( $article_id, $child );
-									break;
-								case 'ContentCard':
-									$this->addRichTextField($article_id, $child);
-									break;
-								case 'FullWidthImage':
-									$this->addFullWidthImageField( $article_id, $child['asset'] );
-									break;
-							}
-						}
 					}
 				}
 			}
-			$this->query_variables['skip'] = $data['allGraphCmsArticle']['pageInfo']['currentPage'] * $data['allGraphCmsArticle']['pageInfo']['itemCount'];
+			$this->query_variables['skip'] = $data['allGraphCmsEvent']['pageInfo']['currentPage'] * $data['allGraphCmsEvent']['pageInfo']['itemCount'];
 		} while (0);
-//		} while ($data['allGraphCmsArticle']['pageInfo']['pageCount'] > $data['allGraphCmsArticle']['pageInfo']['currentPage']);
+//		} while ($data['allGraphCmsEvent']['pageInfo']['pageCount'] > $data['allGraphCmsEvent']['pageInfo']['currentPage']);
 
 		return $data;
 	}
 
-	private function addRichTextField( int $article_id, mixed $child, bool $add_title = false ) {
+	private function addRichTextField( int $article_id, mixed $child ) {
 		$fields = [
 			'acf_fc_layout' => 'rich-text-content'
 		];
 
-		if ($add_title) {
-			$replaced_html = $html = $child['details']['html'];
-			$images = $this->parseHTMLForIMG($html);
-			if ($images) {
-				$replaced_html = $this->replaceImagesInHTML($html, $child['details']['json'], $images, $article_id);
-			}
-			$fields['field_664729befd0bb'] = 1;
-			$fields['field_66472a1cfd0bc'] = match($child['theme']) {
-				"LIGHT" => "gray",
-				"BLUE" => "blue",
-				"GREEN" => "green",
-				"DARK" => "purple",
-				"YELLOW" => "yellow",
-				"PINK" => "red"
-			};
-			$fields['field_664729b1fd0ba'] = '<h2>' . $child['title'] . '</h2>' . $replaced_html;
+		$replaced_html = $html = $child['content']['html'];
+		$images = $this->parseHTMLForIMG($html);
+		if ($images) {
+			$replaced_html = $this->replaceImagesInHTML($html, $child['content']['json'], $images, $article_id);
 		}
-		else {
-			$replaced_html = $html = $child['content']['html'];
-			$images = $this->parseHTMLForIMG($html);
-			if ($images) {
-				$replaced_html = $this->replaceImagesInHTML($html, $child['content']['json'], $images, $article_id);
-			}
-			$fields['field_664729b1fd0ba'] = $replaced_html;
+		$fields['field_664729b1fd0ba'] = $replaced_html;
+
+		add_row('field_5d380cd69121e', $fields, $article_id);
+	}
+	private function addTeamField( int $article_id, array $hosts ) {
+		$team = [];
+
+		foreach ($hosts as $host) {
+			$person = $host['person'];
+			$image = new PhotoClass($person['photo'], $article_id);
+			$logo = new PhotoClass($person['company']['logo'] ?? [], $article_id);
+			$team[] = [
+				'image' => $image->getId(),
+				'name' => $person['firstName'] . ' ' . $person['lastName'],
+				'position' => $person['role'],
+				'logo' => $logo->getId(),
+			];
 		}
+
+		$fields = [
+			'acf_fc_layout' => 'team',
+			'field_66505675d6543' => '3',
+			'field_6626305a57ea0' => $team
+		];
+
 		add_row('field_5d380cd69121e', $fields, $article_id);
 	}
 
-	private function addArticleTitleField( int $article_id, mixed $child ) {
-		add_row('field_5d380cd69121e', [
-			'acf_fc_layout' => 'article-title',
-			'field_665073570ecac' => in_array($child['headingLevel'],['h2', 'h3']) ? $child['headingLevel'] : 'h3',
-			'field_665073370ecab' => $child['title']
-		], $article_id);
-	}
-
-	private function addFullWidthImageField( int $article_id, mixed $asset ) {
-		$attachment = new PhotoClass($asset, $article_id);
-		$attachment_id = $attachment->getId();
-
-		add_row('field_5d380cd69121e', [
-			'acf_fc_layout' => 'rich-text-content',
-			'field_664729b1fd0ba' => wp_get_attachment_image($attachment_id, 'bootstrap-container')
-		], $article_id);
-	}
-
-	private function addTermToPost( mixed $category_hygraph_id, int $article_id ): void {
+	private function addTermToPost( mixed $category_hygraph_id, int $article_id, string $taxonomy = '-category' ): void {
+		$taxonomy = 'event' . $taxonomy;
 		$args = array(
 			'hide_empty' => false,
 			'fields'      => 'ids',
@@ -224,12 +210,12 @@ class InsightBasicClass extends MigrationClass implements MigrationInterface
 					'compare'   => '='
 				)
 			),
-			'taxonomy'  => 'insights-category',
+			'taxonomy'  => $taxonomy,
 		);
 		$terms = get_terms( $args );
 
 		if (!empty($terms)) {
-			wp_set_post_terms($article_id, $terms, 'insights-category', true);
+			wp_set_post_terms($article_id, $terms, $taxonomy, true);
 		}
 	}
 
@@ -280,5 +266,22 @@ class InsightBasicClass extends MigrationClass implements MigrationInterface
 		}
 
 		return $html;
+	}
+
+	private function addLocation( mixed $location, int $article_id, string $lang ) {
+		if ($location) {
+			add_row('field_5d380cd69121e', [
+				'acf_fc_layout' => 'article-title',
+				'field_665073570ecac' => 'h2',
+				'field_665073370ecab' => $lang == 'en' ? 'Location' : 'Emplacement'
+			], $article_id);
+
+			add_row('field_5d380cd69121e', [
+				'acf_fc_layout' => 'sourced-info',
+				'field_66506decd3192' => 'vertical',
+				'field_66506dc9d3191' => 0,
+				'field_66389fd78c126' => implode(', ', array_filter([$location['addressLine1'], $location['addressLine2'] , $location['postcode'], $location['city'], $location['country']]))
+			], $article_id);
+		}
 	}
 }

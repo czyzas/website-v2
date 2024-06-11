@@ -10,7 +10,7 @@ class NewsroomBasicClass extends MigrationClass implements MigrationInterface
 	public string $query_code = <<<'QUERY'
 						query ($limit: Int, $skip: Int, $locale: GraphCMS_Locale) {
 						  allGraphCmsArticle(
-						    filter: {category: {usage: {eq: Newsroom}, stage: {eq: PUBLISHED}}, locale: {eq: $locale}}
+						    filter: {category: {usage: {eq: Newsroom}, stage: {eq: PUBLISHED}}, locale: {eq: $locale, ne: de}}
 						    sort: {fields: remoteId}
 						    limit: $limit
 						    skip: $skip
@@ -96,8 +96,13 @@ class NewsroomBasicClass extends MigrationClass implements MigrationInterface
 				$check_post_args = array(
 					'posts_per_page'   => 1,
 					'post_type'        => 'newsroom',
-					'meta_key'         => 'hygraph_id',
-					'meta_value'       => $hygraph_id
+					'meta_query' => array(
+						array(
+							'key'       => 'hygraph_id',
+							'value'     => $hygraph_id,
+							'compare'   => '='
+						)
+					)
 				);
 				$check_post = new WP_Query( $check_post_args );
 
@@ -113,9 +118,12 @@ class NewsroomBasicClass extends MigrationClass implements MigrationInterface
 					$article_id = wp_insert_post( $article_args, true );
 					if ( !is_wp_error( $article_id ) ) {
 						add_post_meta($article_id, 'hygraph_id', $hygraph_id);
+						if ($article['locale'] != 'en') {
+							$trid = $this->getTrid($hygraph_id, 'event');
+						}
 						$sitepress->set_element_language_details( $article_id,
 							'post_newsroom',
-							false,
+							$trid ?? false,
 							$article['locale'],
 							$sitepress->get_default_language() );
 

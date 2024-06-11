@@ -21,6 +21,9 @@ class PhotoClass
 
 
 	public function getId() {
+		if(empty($this->asset)) {
+			return null;
+		}
 		$attachment = $this->checkExists();
 
 		return $attachment ?? $this->storeImage();
@@ -31,8 +34,13 @@ class PhotoClass
 			'posts_per_page' => 1,
 			'post_type' => 'attachment',
 			'post_status' => 'inherit',
-			'meta_key' => 'hygraph_id',
-			'meta_key' => $this->asset['id'],
+			'meta_query' => array(
+				array(
+					'key'       => 'hygraph_id',
+					'value'     => $this->asset['id'],
+					'compare'   => '='
+				)
+			),
 			'fields' => 'ids'
 		];
 		$attachment_check = new \WP_Query($attachment_args);
