@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react';
 import { Fragment, useEffect, useMemo, useState } from 'react';
-import { TRANSLATIONS } from '@/constants';
 import { useLocalStorageGlobalState } from '@/scripts/client/hooks/useLocalStorageState';
 import { $gated } from '@/scripts/client/atoms/gated';
 import { HubspotForm } from './hubspot-form/HubspotForm';
@@ -11,9 +10,18 @@ type GatedProps = {
   children: ReactNode;
   guid: string;
   formName?: string;
+  title?: string;
+  overline?: string;
 };
 
-const Gated = ({ form, children, guid, formName }: GatedProps) => {
+const Gated = ({
+  form,
+  children,
+  guid,
+  formName,
+  title = '',
+  overline = '',
+}: GatedProps) => {
   const [isGated, setGated] = useState(true);
   const [isClient, setIsClient] = useState(false);
 
@@ -49,11 +57,9 @@ const Gated = ({ form, children, guid, formName }: GatedProps) => {
         <div className="box-shadow relative">
           <div className="absolute bottom-full h-60 w-full bg-gradient-to-b from-white/20 to-white"></div>
           <p className="text-center font-medium text-sw-text-subdued">
-            {TRANSLATIONS.GATED_CONTENT.SUB_TITLE}
+            {overline}
           </p>
-          <h2 className="typography-h2 pb-8 pt-4 text-center">
-            {TRANSLATIONS.GATED_CONTENT.TITLE}
-          </h2>
+          <h2 className="typography-h2 pb-8 pt-4 text-center">{title}</h2>
           <HubspotForm
             form={form}
             formName={formName}

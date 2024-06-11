@@ -10,6 +10,7 @@ import { initializeStore } from '@/scripts/store';
 import { cacheStore } from '@/stores/cacheStore';
 import { getLanguage, getOptions, getSeo } from '@/scripts/utils-store-helpers';
 import { getLocale } from '@/i18n/utils';
+import { getTranslations } from '@/scripts/translations';
 
 interface Props extends HTMLAttributes<'main'> {
   home?: boolean;
@@ -28,6 +29,7 @@ const {
 
 const { currentLanguage } = getLanguage();
 const { searchEngineVisibility } = getOptions();
+const { t } = getTranslations();
 
 const {
   title,
@@ -99,5 +101,8 @@ initializeStore(cacheStore, {
       <NewsletterSection />
     </main>
     <Footer />
+    <script define:vars={{ t }}>
+      window.TRANSLATIONS = t;
+    </script>
   </body>
 </html>

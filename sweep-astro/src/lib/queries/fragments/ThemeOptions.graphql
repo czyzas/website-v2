@@ -1,5 +1,12 @@
 fragment ThemeOptions on ThemeOptions {
   themeOptionsAcf {
+    searchEngineVisibility
+    bookDemoLink {
+      ...Link
+    }
+    loginLink {
+      ...Link
+    }
     postTypeRelated {
       insights {
         featuredArticleCtaText
@@ -41,13 +48,6 @@ fragment ThemeOptions on ThemeOptions {
         }
       }
     }
-    bookDemoLink {
-      ...Link
-    }
-    loginLink {
-      ...Link
-    }
-    searchEngineVisibility
     newsletterSection {
       title
       content
@@ -76,6 +76,56 @@ fragment ThemeOptions on ThemeOptions {
     }
     gatedContent {
       gatedFormGuid
+      overline
+      title
+    }
+    translations {
+      source
+      all
+      customer
+      home
+      event
+      blog
+      pastEvent
+      readMore
+      loadMore
+      viewCaseStudy
+      header {
+        bookDemo
+        login
+      }
+      hubspotForm {
+        defaultPrivacyPolicyText
+        formMessageThankYou
+        formSubmissionFailedMessage
+        privacyLinkLabel
+        submit
+        submitting
+        termsLinkLabel
+      }
+      sidebar {
+        author
+        download
+        guide
+        joinUsLive
+        register
+        tableOfContents
+      }
+      eventInformation {
+        date
+        language
+        location
+        time
+      }
+      article {
+        moreCustomerStories
+        moreEvents
+        moreStories
+      }
+      newsletterSection {
+        formSuccessMessage
+        signUp
+      }
     }
   }
 }
