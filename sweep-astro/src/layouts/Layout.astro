@@ -38,7 +38,7 @@ const {
   opengraphImage,
   opengraphModifiedTime,
   schema,
-} = getSeo();
+} = getSeo() || {};
 const pageType: string = Array.isArray(schema?.pageType)
   ? schema.pageType.join('')
   : schema?.pageType ?? 'Article';

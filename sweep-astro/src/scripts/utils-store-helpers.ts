@@ -33,9 +33,7 @@ export function getLanguage() {
 
 export function getSeo() {
   const store = getStore(cmsStore);
-  if (!store.seo) {
-    throw new Error("You can't access SEO");
+  if (store.seo) {
+    return store.seo;
   }
-
-  return store.seo;
 }
