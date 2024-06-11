@@ -1,9 +1,12 @@
 import { cmsStore } from '@/stores/cmsStore';
 import type { ThemeOptionsAcfTranslations } from '@/__generated__/cms';
-import type { NonNullableProperties, OmitRecursively, Prettify } from '@/types';
+import type { DeepRequired, OmitRecursively } from '@/types';
 import { getStore } from './store';
 
-export type Translations = ThemeOptionsAcfTranslations;
+export type Translations = OmitRecursively<
+  DeepRequired<ThemeOptionsAcfTranslations>,
+  '__typename' | 'fieldGroupName'
+>;
 
 export function getTranslations() {
   const store = getStore(cmsStore);
@@ -11,12 +14,5 @@ export function getTranslations() {
     throw new Error("You can't access translations");
   }
 
-  const t = store.themeOptions.themeOptionsAcf.translations as Prettify<
-    OmitRecursively<
-      NonNullableProperties<typeof store.themeOptions.themeOptionsAcf>,
-      '__typename'
-    >
-  >;
-
-  return { t };
+  return store.themeOptions.themeOptionsAcf.translations as Translations;
 }

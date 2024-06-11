@@ -1,7 +1,7 @@
-import type { ThemeOptionsAcfTranslations } from './__generated__/cms';
+import type { Translations } from './scripts/translations';
 
 declare global {
   interface Window {
-    TRANSLATIONS: ThemeOptionsAcfTranslations;
+    TRANSLATIONS: Translations;
   }
 }
