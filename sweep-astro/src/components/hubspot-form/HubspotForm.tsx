@@ -3,7 +3,8 @@ import ReactHtmlParser from 'html-react-parser';
 import type { ComponentProps, ReactNode } from 'react';
 import { useCallback } from 'react';
 import { cn } from '@/scripts/cn';
-import { TRANSLATIONS } from '@/constants';
+import { getTranslations } from '@/scripts/translations';
+
 import { Button } from '../ui/Button';
 import { HubspotFormGroup } from './HubspotFormGroup';
 import type {
@@ -57,6 +58,9 @@ export const HubspotForm = ({
 }: HubSpotFormProps) => {
   // TODO: handle user consent
   const ipAddress = usePublicIp();
+
+  const TRANSLATIONS =
+    typeof window !== 'undefined' ? window.TRANSLATIONS : getTranslations();
 
   const {
     status,
@@ -119,7 +123,7 @@ export const HubspotForm = ({
         ) : (
           <div>
             {options.defaultSuccessMessage ||
-              TRANSLATIONS.HUBSPOT_FORM.FORM_MESSAGE_THANK_YOU}
+              TRANSLATIONS.hubspotForm.formMessageThankYou}
           </div>
         )}
       </div>
@@ -132,12 +136,13 @@ export const HubspotForm = ({
 
   const submitText =
     status === 'Submitting'
-      ? TRANSLATIONS.HUBSPOT_FORM.SUBMITTING
+      ? TRANSLATIONS.hubspotForm.submitting
       : formDefinition.submitText ??
         options.defaultSubmitText ??
-        TRANSLATIONS.HUBSPOT_FORM.SUBMIT;
+        TRANSLATIONS.hubspotForm.submit;
 
-  let privacyPolicyText: string = TRANSLATIONS.HUBSPOT_FORM.PRIVACY_POLICY_TEXT;
+  let privacyPolicyText: string =
+    TRANSLATIONS.hubspotForm.defaultPrivacyPolicyText;
   try {
     const legalConsentOptionsKV = formDefinition.metaData?.find(
       (meta) => meta?.name === 'legalConsentOptions'
@@ -197,11 +202,9 @@ export const HubspotForm = ({
             ) : (
               <>
                 {/* TODO: Handle links and labels */}
-                <a href="/terms">
-                  {TRANSLATIONS.HUBSPOT_FORM.TERMS_LINK_LABEL}
-                </a>
+                <a href="/terms">{TRANSLATIONS.hubspotForm.termsLinkLabel}</a>
                 <a href="/privacy">
-                  {TRANSLATIONS.HUBSPOT_FORM.PRIVCY_LINK_LABEL}
+                  {TRANSLATIONS.hubspotForm.privacyLinkLabel}
                 </a>
               </>
             )}
@@ -230,7 +233,7 @@ export const HubspotForm = ({
         <>
           {/* TODO: HANDLE ERROR */}
           <div className="flash">
-            <p>{TRANSLATIONS.HUBSPOT_FORM.FORM_SUBMISSION_FAILED_MESSAGE}</p>
+            <p>{TRANSLATIONS.hubspotForm.formSubmissionFailedMessage}</p>
           </div>
         </>
       )}

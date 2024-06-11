@@ -21,6 +21,10 @@ export type ReplaceTypenameLiteral<ObjType extends object> = {
     : StringLiteralToString<ObjType[KeyType]>;
 };
 
+export type DeepRequired<T> = {
+  [K in keyof T]-?: Required<DeepRequired<T[K]>>;
+};
+
 export type NonNullableProperties<ObjType extends object> = {
   [KeyType in keyof ObjType]-?: ObjType[KeyType] extends object
     ? NonNullableProperties<ObjType[KeyType]>

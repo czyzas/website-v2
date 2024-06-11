@@ -42,7 +42,7 @@ initializeStore(cacheStore, {
 ---
 
 <!doctype html>
-<html lang={currentLanguage} class={cn(htmlClassName)}>
+<html lang={currentLanguage} class={htmlClassName}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -52,6 +52,10 @@ initializeStore(cacheStore, {
       type="image/svg+xml"
       href={import.meta.env.PROD ? '/favicon.svg' : '/favicon-dev.svg'}
     />
+    <script define:vars={{ t }}>
+      // Populate translations in client for React components
+      window.TRANSLATIONS = t;
+    </script>
   </head>
   <body class="flex min-h-screen flex-col antialiased">
     <Header />
@@ -60,8 +64,5 @@ initializeStore(cacheStore, {
       <NewsletterSection />
     </main>
     <Footer />
-    <script define:vars={{ t }}>
-      window.TRANSLATIONS = t;
-    </script>
   </body>
 </html>
