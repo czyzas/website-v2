@@ -99,7 +99,7 @@ class EventBasicClass extends MigrationClass implements MigrationInterface
 			foreach ( $data['allGraphCmsEvent']['nodes'] as $article ) {
 
 				$hygraph_id = $article['id'];
-				$sitepress->switch_lang($article['locale']);
+				$sitepress->switch_lang($this->locale);
 				$check_post_args = array(
 					'posts_per_page'   => 1,
 					'post_type'        => 'event',
@@ -199,6 +199,7 @@ class EventBasicClass extends MigrationClass implements MigrationInterface
 	}
 
 	private function addTermToPost( mixed $category_hygraph_id, int $article_id, string $taxonomy = '-category' ): void {
+		global $sitepress;
 		$taxonomy = 'event' . $taxonomy;
 		$args = array(
 			'hide_empty' => false,
@@ -212,6 +213,7 @@ class EventBasicClass extends MigrationClass implements MigrationInterface
 			),
 			'taxonomy'  => $taxonomy,
 		);
+		$sitepress->switch_lang($this->locale);
 		$terms = get_terms( $args );
 
 		if (!empty($terms)) {

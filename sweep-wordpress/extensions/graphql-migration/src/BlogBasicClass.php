@@ -90,6 +90,7 @@ class BlogBasicClass extends MigrationClass implements MigrationInterface
 			foreach ( $data['allGraphCmsArticle']['nodes'] as $article ) {
 
 				$hygraph_id = $article['id'];
+				$sitepress->switch_lang($this->locale);
 				$check_post_args = array(
 					'posts_per_page'   => 1,
 					'post_type'        => 'insights',
@@ -116,7 +117,7 @@ class BlogBasicClass extends MigrationClass implements MigrationInterface
 					if ( !is_wp_error( $article_id ) ) {
 						add_post_meta($article_id, 'hygraph_id', $hygraph_id);
 						if ($article['locale'] != 'en') {
-							$trid = $this->getTrid($hygraph_id, 'event');
+							$trid = $this->getTrid($hygraph_id, 'insights');
 						}
 						$sitepress->set_element_language_details( $article_id,
 							'post_insights',
@@ -206,10 +207,12 @@ class BlogBasicClass extends MigrationClass implements MigrationInterface
 	}
 
 	private function addTermToPost( mixed $category_hygraph_id, int $article_id, string $locale ): void {
+		global $sitepress;
 		$term_slug = 'blog';
 		if($locale == 'fr') {
 			$term_slug = 'blog-fr';
 		}
+		$sitepress->switch_lang($this->locale);
 		$term = get_term_by('slug', $term_slug, 'insights-category');
 
 		if (!empty($term)) {

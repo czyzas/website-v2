@@ -16,14 +16,17 @@ abstract class MigrationClass
 	private string $api_address = 'http://localhost:8000/___graphql';
 
 	private Client $client;
+	protected string $locale;
 
 	public function __construct() {
 		$this->client = ClientBuilder::build($this->api_address);
 
+		$this->locale = isset($_GET['locale']) && is_string($_GET['locale']) ? (string)$_GET['locale']: 'en';
+
 		$this->query_variables = [
 			'limit' => isset($_GET['limit']) && is_numeric($_GET['limit']) ? (int)$_GET['limit']: 12,
 			'skip' => isset($_GET['skip']) && is_numeric($_GET['skip']) ? (int)$_GET['skip']: 0,
-			'locale' => isset($_GET['locale']) && is_string($_GET['locale']) ? (string)$_GET['locale']: 'en',
+			'locale' => $this->locale,
 		];
 
 		if(isset($_GET['remoteId']) && is_string($_GET['remoteId'])) {

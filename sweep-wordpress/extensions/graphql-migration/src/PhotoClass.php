@@ -30,6 +30,7 @@ class PhotoClass
 	}
 
 	private function checkExists() {
+		global $sitepress;
 		$attachment_args = [
 			'posts_per_page' => 1,
 			'post_type' => 'attachment',
@@ -43,6 +44,7 @@ class PhotoClass
 			),
 			'fields' => 'ids'
 		];
+		$sitepress->switch_lang($sitepress->get_default_language());
 		$attachment_check = new \WP_Query($attachment_args);
 
 		return $attachment_check->have_posts() ? $attachment_check->posts[0] : null;

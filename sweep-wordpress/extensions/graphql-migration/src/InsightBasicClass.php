@@ -96,6 +96,7 @@ class InsightBasicClass extends MigrationClass implements MigrationInterface
 			foreach ( $data['allGraphCmsArticle']['nodes'] as $article ) {
 
 				$hygraph_id = $article['id'];
+				$sitepress->switch_lang($this->locale);
 				$check_post_args = array(
 					'posts_per_page'   => 1,
 					'post_type'        => 'insights',
@@ -122,7 +123,7 @@ class InsightBasicClass extends MigrationClass implements MigrationInterface
 					if ( !is_wp_error( $article_id ) ) {
 						add_post_meta($article_id, 'hygraph_id', $hygraph_id);
 						if ($article['locale'] != 'en') {
-							$trid = $this->getTrid($hygraph_id, 'event');
+							$trid = $this->getTrid($hygraph_id, 'insights');
 						}
 						$sitepress->set_element_language_details( $article_id,
 							'post_insights',
@@ -134,6 +135,7 @@ class InsightBasicClass extends MigrationClass implements MigrationInterface
 
 						$this->addThumbnail($article['coverImage'], $article_id);
 
+						$sitepress->switch_lang($article['locale']);
 						$this->addTermToPost($article['category']['id'] ?? '', $article_id);
 
 						foreach ($article['content']['remoteChildren'] as $child) {
@@ -214,6 +216,7 @@ class InsightBasicClass extends MigrationClass implements MigrationInterface
 	}
 
 	private function addTermToPost( mixed $category_hygraph_id, int $article_id ): void {
+		global $sitepress;
 		$args = array(
 			'hide_empty' => false,
 			'fields'      => 'ids',
@@ -226,6 +229,7 @@ class InsightBasicClass extends MigrationClass implements MigrationInterface
 			),
 			'taxonomy'  => 'insights-category',
 		);
+		$sitepress->switch_lang($this->locale);
 		$terms = get_terms( $args );
 
 		if (!empty($terms)) {
