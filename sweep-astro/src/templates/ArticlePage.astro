@@ -277,7 +277,12 @@ if (page.__typename === 'CaseStudy') {
           {
             page.__typename === 'InsightsItem' &&
               !!attachment &&
-              attachment.shouldRender && <SidebarFile href={attachment.url} />
+              attachment.shouldRender && (
+                <SidebarFile
+                  title={page.insightsItemAcf?.attachmentSidebarTitle}
+                  href={attachment.url}
+                />
+              )
           }
           {
             (

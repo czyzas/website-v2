@@ -64,6 +64,7 @@ query InsightsSinglePage($URI: String!, $LANG: String!) {
     uri
     modified
     insightsItemAcf {
+      attachmentSidebarTitle
       attachment {
         node {
           ...File

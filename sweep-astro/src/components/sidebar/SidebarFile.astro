@@ -5,17 +5,17 @@ import SidebarCard from './SidebarCard.astro';
 
 interface AuthorProps {
   href?: string;
+  title?: string;
 }
 
 type Props = AuthorProps;
 
-const { href } = Astro.props;
-const title = TRANSLATIONS.SIDEBAR.GUIDE;
+const { href, title } = Astro.props;
 ---
 
 {
   !!href && (
-    <SidebarCard collapsible title={title}>
+    <SidebarCard collapsible title={title || TRANSLATIONS.SIDEBAR.GUIDE}>
       <Button
         asLink
         external
