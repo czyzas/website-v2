@@ -41,14 +41,12 @@ import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
 import { parseTags } from '@/scripts/data-parsers/parseTag';
 import { getDefaultTopImage } from '@/scripts/postTypeOptions';
 import { overwriteWYSIWYGContent } from '@/scripts/overwriteWYSIWYGContent';
-import { initializeStore } from '@/scripts/store';
-import { cmsStore } from '@/stores/cmsStore';
-import type { ColumnSizes, PageTranslations, WithShouldRender } from '@/types';
+import type { ColumnSizes, WithShouldRender } from '@/types';
 import { cleanArray } from '@/scripts/cleanArray';
-import { languageStore } from '@/stores/languageStore';
 import SidebarFile from '@/components/sidebar/SidebarFile.astro';
 import { parseFile } from '@/scripts/data-parsers/parseFile';
 import type { ParsedFile } from '@/scripts/data-parsers/parseFile';
+import { initializeStores } from '@/scripts/utils-store-helpers';
 
 type InsightsSingleProps = {
   postType: 'insights';
@@ -78,30 +76,16 @@ type Props = (
   ArticlePageProps;
 
 const { postType, data, lang } = Astro.props;
-
 const page = data.page!;
 
-initializeStore(cmsStore, {
-  uri: page.uri,
-  primaryMenu: data.primaryMenu!,
-  themeOptions: data.themeOptionsByLang!,
-  subpageSettings: data.page?.subpageSettings,
-  seo: page?.seo,
-});
-initializeStore(languageStore, {
-  currentLanguage: data.page!.language!,
-  languages: data.languages,
-  translations: cleanArray(data.page?.translations as PageTranslations),
-});
+initializeStores(data);
 
 overwriteWYSIWYGContent(page.modules?.modulesContent, {
   RICH_TEXT_CONTENT_HEADINGS_IDS: true,
 });
 
 const { subpageSettings } = page;
-const pageTitle = page?.title ?? '';
-// TODO: fix type
-let title = subpageSettings?.customTitle || pageTitle || '';
+let title = subpageSettings?.customTitle || page?.title || '';
 const introduction = subpageSettings?.introduction || '';
 const image = subpageSettings?.image;
 const size = (subpageSettings?.topDistribution ?? '5-7') as ColumnSizes;
@@ -177,7 +161,7 @@ if (page.__typename === 'CaseStudy') {
   caseStudyDetails = [
     {
       label: 'company',
-      value: subpageSettings?.customTitle || pageTitle || '',
+      value: subpageSettings?.customTitle || page?.title || '',
     },
     { label: 'size', value: customer?.customerAcf?.size },
     { label: 'industry', value: customer?.customerAcf?.category },
@@ -187,11 +171,7 @@ if (page.__typename === 'CaseStudy') {
 }
 ---
 
-<Layout
-  name={postType}
-  pageTitle={pageTitle}
-  htmlClassName="scroll-smooth scroll-p-24"
->
+<Layout name={postType} htmlClassName="scroll-smooth scroll-p-24">
   <Top
     overline={cn({ [TRANSLATIONS.EVENT]: page.__typename === 'Event' })}
     title={title}

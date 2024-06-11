@@ -1,7 +1,13 @@
 import { cmsStore } from '@/stores/cmsStore';
+import type { CMSStore } from '@/stores/cmsStore';
 import { languageStore } from '@/stores/languageStore';
+import type { LanguageStore } from '@/stores/languageStore';
 import { defaultLocale } from '@/i18n/config';
-import type { NonNullableProperties, OmitRecursively } from '@/types';
+import type {
+  NonNullableProperties,
+  OmitRecursively,
+  ReplaceTypenameLiteral2,
+} from '@/types';
 import type {
   EssentialFragment,
   EssentialPageFragment,
@@ -9,23 +15,33 @@ import type {
 import { getStore, initializeStore } from './store';
 import { cleanArray } from './cleanArray';
 
-type EssentialPageData = { page?: EssentialPageFragment } & EssentialFragment;
+type EssentialPageData = {
+  page?: ReplaceTypenameLiteral2<EssentialPageFragment>;
+} & EssentialFragment;
 
-export function initializeStores<T extends EssentialPageData>(data: T) {
-  const page = data.page!;
+export function initializeStores(
+  data: EssentialPageData,
+  payload?: { cmsPayload?: CMSStore; languagePayload?: LanguageStore }
+) {
+  const { cmsPayload, languagePayload } = payload ?? {};
+
+  const page = data.page! as EssentialPageFragment;
 
   initializeStore(cmsStore, {
+    pageTitle: page.title,
     uri: page.uri,
     primaryMenu: data.primaryMenu!,
     themeOptions: data.themeOptionsByLang!,
-    subpageSettings: data.page?.subpageSettings,
+    subpageSettings: page?.subpageSettings,
     seo: page?.seo,
+    ...(cmsPayload ?? {}),
   });
 
   initializeStore(languageStore, {
-    currentLanguage: data.page!.language!,
+    currentLanguage: page.language!,
     languages: data.languages,
     translations: cleanArray(data.page?.translations),
+    ...(languagePayload ?? {}),
   });
 }
 

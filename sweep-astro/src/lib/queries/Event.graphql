@@ -98,6 +98,9 @@ query EventSinglePage($URI: String!, $LANG: String!) {
     subpageSettings {
       ...SubpageSettings
     }
+    seo {
+      ...Seo
+    }
     modules {
       ...ModulesCollection
     }

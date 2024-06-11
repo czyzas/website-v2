@@ -1,5 +1,6 @@
 ---
 import Container from '@/components/ui/Container.astro';
+import { TRANSLATIONS } from '@/constants';
 import { defaultLocale } from '@/i18n/config';
 import Layout from '@/layouts/Layout.astro';
 import { fetchError404Page } from '@/lib/fetchCMSData';
@@ -9,7 +10,10 @@ import { languageStore } from '@/stores/languageStore';
 
 const data = await fetchError404Page();
 
+// TODO: Handle data from 404 page
 initializeStore(cmsStore, {
+  pageTitle: TRANSLATIONS.ERROR_404.PAGE_TITLE,
+  uri: '/404',
   primaryMenu: data.primaryMenu!,
   themeOptions: data.themeOptionsByLang!,
 });
@@ -20,6 +24,6 @@ initializeStore(languageStore, {
 });
 ---
 
-<Layout name="error-404" pageTitle="Page not found">
+<Layout name="error-404">
   <Container> Error 404 </Container>
 </Layout>

@@ -15,25 +15,12 @@ import SEO from '@/components/partials/SEO.astro';
 interface Props extends HTMLAttributes<'main'> {
   home?: boolean;
   name: string;
-  pageTitle: string;
   htmlClassName?: string;
 }
-const {
-  home,
-  name,
-  pageTitle,
-  class: className,
-  htmlClassName,
-  ...props
-} = Astro.props;
+const { home, name, class: className, htmlClassName, ...props } = Astro.props;
 
 const { currentLanguage } = getLanguage();
 const TRANSLATIONS = getTranslations();
-const seoProps = {
-  pageTitle,
-  home,
-  currentLanguage,
-};
 
 // Initialize stores
 initializeStore(cacheStore, {
@@ -46,7 +33,7 @@ initializeStore(cacheStore, {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <SEO {...seoProps} />
+    <SEO />
     <link
       rel="icon"
       type="image/svg+xml"

@@ -59,4 +59,7 @@ export const TRANSLATIONS = {
     MORE_EVENTS: 'More events',
     MORE_CUSTOMER_STORIES: 'More customers stories',
   },
+  ERROR_404: {
+    PAGE_TITLE: 'Page not found',
+  },
 } as const;

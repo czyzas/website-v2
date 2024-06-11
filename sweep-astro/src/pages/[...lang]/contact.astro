@@ -39,8 +39,7 @@ initializeStores(data);
 
 // TODO: handle data passed to Layout and Top
 const { subpageSettings } = page;
-const pageTitle = page?.title ?? '';
-const title = subpageSettings?.customTitle || pageTitle || '';
+const title = subpageSettings?.customTitle || page?.title || '';
 const content = subpageSettings?.introduction ?? '';
 const image = subpageSettings?.image;
 const size = subpageSettings?.topDistribution ?? '5-7';
@@ -56,7 +55,7 @@ const offices = page.contactAcf?.offices;
 const officesCards = cleanArray(offices?.cards);
 ---
 
-<Layout name="contact" pageTitle={pageTitle}>
+<Layout name="contact">
   <Top
     title={title}
     content={content}
