@@ -16,6 +16,9 @@ query IndustrySingle($URI: String!, $LANG: String!) {
     modules {
       ...ModulesCollection
     }
+    seo {
+      ...Seo
+    }
   }
   ...Essential
 }

@@ -23,6 +23,9 @@ query CaseStudySinglePage($URI: String!, $LANG: String!) {
     modules {
       ...ModulesCollection
     }
+    seo {
+      ...Seo
+    }
   }
   articles: caseStudies(
     where: {

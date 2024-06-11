@@ -16,6 +16,9 @@ query DefaultPage($URI: String!, $LANG: String!) {
     modules {
       ...ModulesCollection
     }
+    seo {
+      ...Seo
+    }
   }
   ...Essential
 }
