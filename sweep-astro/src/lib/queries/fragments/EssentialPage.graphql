@@ -1,0 +1,18 @@
+fragment EssentialPage on Page {
+  title
+  slug
+  uri
+  language {
+    ...Languages
+  }
+  translations {
+    languageCode
+    uri
+  }
+  subpageSettings {
+    ...SubpageSettings
+  }
+  seo {
+    ...Seo
+  }
+}

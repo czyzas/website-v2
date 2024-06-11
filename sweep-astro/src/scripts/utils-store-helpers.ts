@@ -2,8 +2,32 @@ import { cmsStore } from '@/stores/cmsStore';
 import { languageStore } from '@/stores/languageStore';
 import { defaultLocale } from '@/i18n/config';
 import type { NonNullableProperties, OmitRecursively } from '@/types';
-import { getStore } from './store';
+import type {
+  EssentialFragment,
+  EssentialPageFragment,
+} from '@/__generated__/cms';
+import { getStore, initializeStore } from './store';
 import { cleanArray } from './cleanArray';
+
+type EssentialPageData = { page?: EssentialPageFragment } & EssentialFragment;
+
+export function initializeStores<T extends EssentialPageData>(data: T) {
+  const page = data.page!;
+
+  initializeStore(cmsStore, {
+    uri: page.uri,
+    primaryMenu: data.primaryMenu!,
+    themeOptions: data.themeOptionsByLang!,
+    subpageSettings: data.page?.subpageSettings,
+    seo: page?.seo,
+  });
+
+  initializeStore(languageStore, {
+    currentLanguage: data.page!.language!,
+    languages: data.languages,
+    translations: cleanArray(data.page?.translations),
+  });
+}
 
 export function getOptions() {
   const store = getStore(cmsStore);
@@ -36,4 +60,6 @@ export function getSeo() {
   if (store.seo) {
     return store.seo;
   }
+
+  return {};
 }

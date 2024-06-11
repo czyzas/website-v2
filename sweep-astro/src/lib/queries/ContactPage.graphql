@@ -1,18 +1,6 @@
 query ContactPage($LANG: String!) {
   page: pageByLang(uri: "contact", lang: $LANG) {
-    title
-    slug
-    uri
-    language {
-      ...Languages
-    }
-    translations {
-      languageCode
-      uri
-    }
-    subpageSettings {
-      ...SubpageSettings
-    }
+    ...EssentialPage
     contactAcf {
       form {
         hubspotFormGuid
@@ -70,9 +58,6 @@ query ContactPage($LANG: String!) {
           content
         }
       }
-    }
-    seo {
-      ...Seo
     }
   }
   ...Essential

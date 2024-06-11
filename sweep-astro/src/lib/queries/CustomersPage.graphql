@@ -5,24 +5,9 @@ query CustomersPage(
   $POSTS_PER_PAGE: Int = 8
 ) {
   page: pageByLang(uri: "customers", lang: $LANG) {
-    title
-    slug
-    uri
-    language {
-      ...Languages
-    }
-    translations {
-      languageCode
-      uri
-    }
-    subpageSettings {
-      ...SubpageSettings
-    }
+    ...EssentialPage
     modules {
       ...ModulesCollection
-    }
-    seo {
-      ...Seo
     }
   }
   articles: caseStudies(

@@ -1,23 +1,8 @@
 query DefaultPage($URI: String!, $LANG: String!) {
   page: pageByLang(uri: $URI, lang: $LANG) {
-    title
-    slug
-    uri
-    language {
-      ...Languages
-    }
-    translations {
-      languageCode
-      uri
-    }
-    subpageSettings {
-      ...SubpageSettings
-    }
+    ...EssentialPage
     modules {
       ...ModulesCollection
-    }
-    seo {
-      ...Seo
     }
   }
   ...Essential
