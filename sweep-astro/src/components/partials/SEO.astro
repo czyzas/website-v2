@@ -1,0 +1,59 @@
+---
+import { getLocale } from '@/i18n/utils';
+import { getOptions, getSeo } from '@/scripts/utils-store-helpers';
+
+type Props = {
+  pageTitle: string;
+  home?: boolean;
+  currentLanguage: string;
+};
+
+const { home, pageTitle, currentLanguage } = Astro.props;
+
+// TODO: fix canonical
+const {
+  title,
+  metaDesc,
+  canonical,
+  opengraphImage,
+  opengraphModifiedTime,
+  schema,
+} = getSeo() || {};
+const pageType: string = Array.isArray(schema?.pageType)
+  ? schema.pageType.join('')
+  : schema?.pageType ?? 'Article';
+const metaTitle = !home && pageTitle ? pageTitle : title;
+const locale = getLocale(currentLanguage);
+
+const { searchEngineVisibility } = getOptions();
+---
+
+<meta name="description" content={metaDesc} />
+<meta name="generator" content={Astro.generator} />
+{
+  searchEngineVisibility ? (
+    <meta name="robots" content="noindex, nofollow" />
+  ) : (
+    <meta
+      name="robots"
+      content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"
+    />
+  )
+}
+<meta property="og:locale" content={locale} />
+<meta property="og:type" content={pageType} />
+<meta property="og:title" content={metaTitle} />
+<meta property="og:description" content={metaDesc} />
+<meta property="og:url" content={canonical} />
+<meta property="og:site_name" content={title} />
+<meta property="og:updated_time" content={opengraphModifiedTime} />
+<meta property="og:image" content={opengraphImage?.mediaItemUrl} />
+<meta property="og:image:secure_url" content={opengraphImage?.mediaItemUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="900" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={metaTitle} />
+<meta name="twitter:description" content={metaDesc} />
+<meta name="twitter:image" content={opengraphImage?.mediaItemUrl} />
+<link rel="canonical" href={canonical} />
+<title>{metaTitle}</title>
