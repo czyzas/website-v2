@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { Fragment, useEffect, useMemo, useState } from 'react';
 import { useLocalStorageGlobalState } from '@/scripts/client/hooks/useLocalStorageState';
 import { $gated } from '@/scripts/client/atoms/gated';
+import { isBrowser } from '@/scripts/client/utils';
 import { HubspotForm } from './hubspot-form/HubspotForm';
 import type { IHubspotFormDefinition } from './hubspot-form/shared';
 
@@ -39,8 +40,7 @@ const Gated = ({
 
   const contentToShow = useMemo(() => {
     const isGoogle =
-      typeof window !== 'undefined' &&
-      navigator?.userAgent.toLowerCase().includes('googlebot');
+      isBrowser() && navigator?.userAgent.toLowerCase().includes('googlebot');
 
     if (isGoogle || !isGated) return children;
   }, [isGated, children, isClient]);

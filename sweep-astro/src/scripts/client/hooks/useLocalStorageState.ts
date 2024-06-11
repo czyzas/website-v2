@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { isBrowser } from '../utils';
 
 export type UseLocalStorageStateArgs<T> = {
   key: string;
@@ -15,7 +16,7 @@ export function useLocalStorageGlobalState<T = unknown>({
   initialValue,
 }: UseLocalStorageStateArgs<T>): [T, (newValue: T) => void, () => void] {
   const [item, setItemState] = useState<unknown>(() => {
-    if (typeof window === 'undefined') {
+    if (!isBrowser()) {
       return initialValue;
     }
     const storedValue = localStorage.getItem(key);
@@ -25,7 +26,7 @@ export function useLocalStorageGlobalState<T = unknown>({
   const setItem = useCallback(
     (newValue: T) => {
       setItemState(newValue);
-      if (typeof window !== 'undefined') {
+      if (isBrowser()) {
         localStorage.setItem(key, JSON.stringify(newValue));
         const event = new CustomEvent<EventPayload<T>>(`storageChange:${key}`, {
           detail: { key, value: newValue },
@@ -38,7 +39,7 @@ export function useLocalStorageGlobalState<T = unknown>({
 
   const removeItem = useCallback(() => {
     setItemState(initialValue);
-    if (typeof window !== 'undefined') {
+    if (isBrowser()) {
       localStorage.removeItem(key);
       const event = new CustomEvent<EventPayload<T>>(`storageChange:${key}`, {
         detail: { key, value: initialValue },
@@ -57,7 +58,7 @@ export function useLocalStorageGlobalState<T = unknown>({
   );
 
   useEffect(() => {
-    if (typeof window === 'undefined') {
+    if (!isBrowser()) {
       return;
     }
     const eventKey = `storageChange:${key}`;

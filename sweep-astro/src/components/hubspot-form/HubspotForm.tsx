@@ -5,6 +5,7 @@ import { useCallback } from 'react';
 import { cn } from '@/scripts/cn';
 import { getTranslations } from '@/scripts/translations';
 
+import { isBrowser } from '@/scripts/client/utils';
 import { Button } from '../ui/Button';
 import { HubspotFormGroup } from './HubspotFormGroup';
 import type {
@@ -59,8 +60,7 @@ export const HubspotForm = ({
   // TODO: handle user consent
   const ipAddress = usePublicIp();
 
-  const TRANSLATIONS =
-    typeof window !== 'undefined' ? window.TRANSLATIONS : getTranslations();
+  const TRANSLATIONS = isBrowser() ? window.TRANSLATIONS : getTranslations();
 
   const {
     status,
