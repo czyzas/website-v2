@@ -1,4 +1,5 @@
 ---
+import { getImage } from 'astro:assets';
 import { getLocale } from '@/i18n/utils';
 import { getStore } from '@/scripts/store';
 import { getLanguage, getOptions, getSeo } from '@/scripts/utils-store-helpers';
@@ -6,28 +7,41 @@ import { cmsStore } from '@/stores/cmsStore';
 
 // TODO: fix canonical
 const {
-  title,
-  metaDesc,
+  title: seoTitle,
   canonical,
   opengraphImage,
   opengraphModifiedTime,
   schema,
+  opengraphDescription,
+  opengraphSiteName,
 } = getSeo();
 const store = getStore(cmsStore);
 const { searchEngineVisibility } = getOptions();
 const { currentLanguage } = getLanguage();
 const locale = getLocale(currentLanguage);
 
+const { generalSettingsDescription: wpDescription } = store.settings ?? {};
 const isHomepage = store?.homepage ?? false;
 const pageTitle = store.pageTitle || '';
 const pageType: string = Array.isArray(schema?.pageType)
   ? schema.pageType.join('')
   : schema?.pageType ?? 'Article';
 
-const metaTitle = !isHomepage && pageTitle ? pageTitle : title;
+const title = isHomepage ? opengraphSiteName : pageTitle || seoTitle;
+const metaTitle = pageTitle || seoTitle;
+
+const description = opengraphDescription || wpDescription;
+
+const image = opengraphImage?.mediaItemUrl
+  ? await getImage({
+      src: opengraphImage.mediaItemUrl,
+      format: 'jpg',
+      inferSize: true,
+    })
+  : undefined;
 ---
 
-<meta name="description" content={metaDesc} />
+<meta name="description" content={description} />
 <meta name="generator" content={Astro.generator} />
 {
   searchEngineVisibility ? (
@@ -42,17 +56,17 @@ const metaTitle = !isHomepage && pageTitle ? pageTitle : title;
 <meta property="og:locale" content={locale} />
 <meta property="og:type" content={pageType} />
 <meta property="og:title" content={metaTitle} />
-<meta property="og:description" content={metaDesc} />
+<meta property="og:description" content={description} />
 <meta property="og:url" content={canonical} />
 <meta property="og:site_name" content={title} />
 <meta property="og:updated_time" content={opengraphModifiedTime} />
-<meta property="og:image" content={opengraphImage?.mediaItemUrl} />
-<meta property="og:image:secure_url" content={opengraphImage?.mediaItemUrl} />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="900" />
+<meta property="og:image" content={image?.src} />
+<meta property="og:image:secure_url" content={image?.src} />
+<meta property="og:image:width" content={String(image?.options.width)} />
+<meta property="og:image:height" content={String(image?.options.height)} />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={metaTitle} />
-<meta name="twitter:description" content={metaDesc} />
-<meta name="twitter:image" content={opengraphImage?.mediaItemUrl} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={image?.src} />
 <link rel="canonical" href={canonical} />
-<title>{metaTitle}</title>
+<title>{title}</title>

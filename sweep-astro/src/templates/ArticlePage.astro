@@ -32,7 +32,6 @@ import Section from '@/components/ui/Section.astro';
 import { buildI18nPath, getLocale } from '@/i18n/utils';
 import Layout from '@/layouts/Layout.astro';
 import { buildTOC } from '@/scripts/buildTOC';
-import { cn } from '@/scripts/cn';
 import { parseCaseStudyCustomer } from '@/scripts/data-parsers/parseCaseStudies';
 import { parseLink } from '@/scripts/data-parsers/parseLink';
 import type { UnparsedLink } from '@/scripts/data-parsers/parseLink';
@@ -173,7 +172,7 @@ if (page.__typename === 'CaseStudy') {
 
 <Layout name={postType} htmlClassName="scroll-smooth scroll-p-24">
   <Top
-    overline={cn({ [TRANSLATIONS.event]: page.__typename === 'Event' })}
+    overline={page.__typename === 'Event' ? TRANSLATIONS.event : undefined}
     title={title}
     titleSize="h2"
     content={introduction}

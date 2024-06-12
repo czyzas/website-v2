@@ -2,6 +2,7 @@ import type {
   HomepageQuery,
   MenuFragment,
   SeoFragment,
+  SettingsFragment,
   SubpageSettingsFragment,
   ThemeOptionsFragment,
 } from '@/__generated__/cms';
@@ -12,6 +13,7 @@ export type CMSStore = {
   homepageInsights?: HomepageQuery['insights'];
   pageTitle?: string;
   uri?: string;
+  settings?: SettingsFragment;
   primaryMenu?: MenuFragment;
   subpageSettings?: SubpageSettingsFragment;
   themeOptions?: ThemeOptionsFragment;
@@ -21,6 +23,7 @@ export type CMSStore = {
 export const cmsStore = createStore<CMSStore>({
   pageTitle: '',
   uri: '',
+  settings: undefined,
   homepage: undefined,
   homepageInsights: undefined,
   primaryMenu: undefined,

@@ -42,7 +42,6 @@ import {
 import type {
   ComponentIndustriesListFragment,
   EventsModuleListQuery,
-  MimeTypeEnum,
   NewsroomModuleListQuery,
 } from '@/__generated__/cms';
 import { defaultLocale } from '@/i18n/config';
@@ -477,8 +476,8 @@ export function fetchCaseStudiesListPage(
     },
     paginateCacheKey(
       tag
-        ? [lang, CACHE_KEYS.MODULE_CASE_STUDY_LIST, CACHE_KEYS.TAG, tag]
-        : [lang, CACHE_KEYS.MODULE_CASE_STUDY_LIST],
+        ? [lang, CACHE_KEYS.CUSTOMERS, CACHE_KEYS.TAG, tag]
+        : [lang, CACHE_KEYS.CUSTOMERS],
       paged
     )
   );
