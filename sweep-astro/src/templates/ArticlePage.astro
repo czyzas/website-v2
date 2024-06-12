@@ -29,7 +29,6 @@ import Container from '@/components/ui/Container.astro';
 import Grid from '@/components/ui/Grid.astro';
 import Link from '@/components/ui/Link.astro';
 import Section from '@/components/ui/Section.astro';
-import { TRANSLATIONS } from '@/constants';
 import { buildI18nPath, getLocale } from '@/i18n/utils';
 import Layout from '@/layouts/Layout.astro';
 import { buildTOC } from '@/scripts/buildTOC';
@@ -47,6 +46,7 @@ import SidebarFile from '@/components/sidebar/SidebarFile.astro';
 import { parseFile } from '@/scripts/data-parsers/parseFile';
 import type { ParsedFile } from '@/scripts/data-parsers/parseFile';
 import { initializeStores } from '@/scripts/utils-store-helpers';
+import { getTranslations } from '@/scripts/translations';
 
 type InsightsSingleProps = {
   postType: 'insights';
@@ -83,7 +83,7 @@ initializeStores(data);
 overwriteWYSIWYGContent(page.modules?.modulesContent, {
   RICH_TEXT_CONTENT_HEADINGS_IDS: true,
 });
-
+const TRANSLATIONS = getTranslations();
 const { subpageSettings } = page;
 let title = subpageSettings?.customTitle || page?.title || '';
 const introduction = subpageSettings?.introduction || '';
@@ -91,7 +91,7 @@ const image = subpageSettings?.image;
 const size = (subpageSettings?.topDistribution ?? '5-7') as ColumnSizes;
 const category =
   page.__typename === 'CaseStudy'
-    ? TRANSLATIONS.CUSTOMER
+    ? TRANSLATIONS.customer
     : page.categories?.nodes?.[0]?.name;
 const tags = parseTags(page.tags?.nodes);
 const toc = buildTOC(page.modules?.modulesContent);
@@ -133,15 +133,15 @@ const posts = cleanArray(
 let postsTitle = '';
 switch (postType) {
   case 'event':
-    postsTitle = TRANSLATIONS.ARTICLE.MORE_EVENTS;
+    postsTitle = TRANSLATIONS.article.moreEvents;
     break;
   case 'case-study':
-    postsTitle = TRANSLATIONS.ARTICLE.MORE_CUSTOMER_STORIES;
+    postsTitle = TRANSLATIONS.article.moreCustomerStories;
     break;
   case 'insights':
   case 'newsroom':
   default:
-    postsTitle = TRANSLATIONS.ARTICLE.MORE_STORIES;
+    postsTitle = TRANSLATIONS.article.moreStories;
     break;
 }
 
@@ -173,7 +173,7 @@ if (page.__typename === 'CaseStudy') {
 
 <Layout name={postType} htmlClassName="scroll-smooth scroll-p-24">
   <Top
-    overline={cn({ [TRANSLATIONS.EVENT]: page.__typename === 'Event' })}
+    overline={cn({ [TRANSLATIONS.event]: page.__typename === 'Event' })}
     title={title}
     titleSize="h2"
     content={introduction}
@@ -309,7 +309,7 @@ if (page.__typename === 'CaseStudy') {
               page.__typename === 'CaseStudy'
                 ? {
                     url: buildI18nPath('/customers', lang),
-                    title: TRANSLATIONS.LOAD_MORE,
+                    title: TRANSLATIONS.loadMore,
                   }
                 : undefined
             }

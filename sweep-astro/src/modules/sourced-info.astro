@@ -6,9 +6,9 @@ import Card from '@/components/ui/Card.astro';
 import Grid from '@/components/ui/Grid.astro';
 import Link from '@/components/ui/Link.astro';
 import Prose from '@/components/ui/Prose.astro';
-import { TRANSLATIONS } from '@/constants';
 import { cn } from '@/scripts/cn';
 import { parseLink } from '@/scripts/data-parsers/parseLink';
+import { getTranslations } from '@/scripts/translations';
 import type { WithModuleMeta } from '@/types';
 
 type Props = WithModuleMeta<ModulesModulesContentSourcedInfoLayout>;
@@ -24,6 +24,7 @@ const {
   sourceLink: rawSourceLink,
 } = Astro.props;
 
+const TRANSLATIONS = getTranslations();
 const sourceLink = parseLink(rawSourceLink);
 const layout = (rawLayout ?? 'horizontal') as 'vertical' | 'horizontal';
 const showSourcePrefix =
@@ -57,7 +58,7 @@ const showSourcePrefix =
         {
           sourceLink.shouldRender && (
             <div class="mt-auto pt-4 text-sw-text-subdued sm:typography-body">
-              {showSourcePrefix && `${TRANSLATIONS.SOURCE}: `}
+              {showSourcePrefix && `${TRANSLATIONS.source}: `}
               <Link
                 to={sourceLink.url}
                 target={sourceLink?.target}

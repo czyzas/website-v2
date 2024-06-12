@@ -1,8 +1,8 @@
 ---
 import { Icon } from 'astro-icon/components';
 import { buildI18nPath } from '@/i18n/utils';
-import { TRANSLATIONS } from '@/constants';
 import { getLanguage } from '@/scripts/utils-store-helpers';
+import { getTranslations } from '@/scripts/translations';
 import Container from '../ui/Container.astro';
 import LanguageSwitcher from '../LanguageSwitcher.astro';
 import Button from '../ui/Button.astro';
@@ -10,6 +10,7 @@ import MenuItem from '../MenuItem.astro';
 import MenuHamburger from '../MenuHamburger.astro';
 import Menu from './Menu.astro';
 
+const TRANSLATIONS = getTranslations();
 const { currentLanguage } = getLanguage();
 const menuId = `main-menu-${crypto.randomUUID().substring(16)}`;
 ---
@@ -36,13 +37,13 @@ const menuId = `main-menu-${crypto.randomUUID().substring(16)}`;
         external
         href="https://flyhigh.pro"
         class="w-auto text-sm sm:w-full sm:text-base"
-        set:html={TRANSLATIONS.HEADER.LOGIN}
+        set:html={TRANSLATIONS.header.login}
       />
       <Button
         asLink
         href="/demo"
         class="hidden text-sm xs:block sm:text-base"
-        set:html={TRANSLATIONS.HEADER.BOOK_DEMO}
+        set:html={TRANSLATIONS.header.bookDemo}
       />
       <MenuHamburger menuId={menuId} />
     </div>

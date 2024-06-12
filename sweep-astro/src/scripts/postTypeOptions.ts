@@ -1,5 +1,5 @@
-import { TRANSLATIONS } from '@/constants';
 import type { UnparsedImage } from './data-parsers/parseImage';
+import { getTranslations } from './translations';
 import { getOptions } from './utils-store-helpers';
 
 export type ContentTypeWithFront =
@@ -40,6 +40,7 @@ export function getFeaturedArticleCtaText(
     'InsightsItem' | 'NewsroomItem' | 'Event'
   >
 ) {
+  const TRANSLATIONS = getTranslations();
   const options = getOptions();
   const postTypes = options.postTypeRelated;
 
@@ -59,5 +60,5 @@ export function getFeaturedArticleCtaText(
       break;
   }
 
-  return text || TRANSLATIONS.READ_MORE;
+  return text || TRANSLATIONS.readMore;
 }
