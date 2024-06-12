@@ -1,6 +1,7 @@
 fragment ThemeOptions on ThemeOptions {
   themeOptionsAcf {
     searchEngineVisibility
+    websiteUrl
     bookDemoLink {
       ...Link
     }
