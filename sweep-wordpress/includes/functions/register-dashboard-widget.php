@@ -113,7 +113,7 @@ function check_deploy_status( $deployment_id ) {
 	if ( !$deployment_id ) return $status;
 
 	$i = 0;
-	while ( $i < 48 ) {
+	while ( $i < 240 ) {
 		$response = call_wp_remote_get( "https://api.vercel.com/v13/deployments/$deployment_id" );
 
 		$data = wp_remote_retrieve_body( $response );
@@ -127,7 +127,7 @@ function check_deploy_status( $deployment_id ) {
 		} else {
 			break;
 		}
-		sleep( 5 );
+		sleep( 10 );
 		$i++;
 	}
 
