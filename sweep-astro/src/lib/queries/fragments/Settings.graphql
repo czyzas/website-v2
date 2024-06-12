@@ -1,0 +1,5 @@
+fragment Settings on Settings {
+  generalSettingsDescription
+  generalSettingsTitle
+  generalSettingsUrl
+}

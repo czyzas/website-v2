@@ -18,7 +18,6 @@ interface Props {
   data: HomepageQuery;
 }
 const { data } = Astro.props;
-
 initializeStores(data, {
   cmsPayload: {
     uri: '/',

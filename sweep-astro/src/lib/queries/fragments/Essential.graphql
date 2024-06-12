@@ -1,4 +1,7 @@
 fragment Essential on RootQuery {
+  allSettings {
+    ...Settings
+  }
   defaultLanguage {
     ...Languages
   }

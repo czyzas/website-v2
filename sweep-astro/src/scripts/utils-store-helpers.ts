@@ -34,6 +34,7 @@ export function initializeStores(
     themeOptions: data.themeOptionsByLang!,
     subpageSettings: page?.subpageSettings,
     seo: page?.seo,
+    settings: data.allSettings,
     ...(cmsPayload ?? {}),
   });
 

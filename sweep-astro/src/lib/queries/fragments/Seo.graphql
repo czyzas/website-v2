@@ -1,11 +1,16 @@
 fragment Seo on PostTypeSEO {
   title
-  metaDesc
   canonical
+  opengraphModifiedTime
+  opengraphSiteName
+  opengraphDescription
   opengraphImage {
     mediaItemUrl
+    mediaDetails {
+      height
+      width
+    }
   }
-  opengraphModifiedTime
   schema {
     pageType
   }
