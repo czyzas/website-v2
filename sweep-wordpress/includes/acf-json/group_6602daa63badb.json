@@ -68,7 +68,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 1,
+                    "wpml_cf_preferences": 3,
                     "choices": {
                         "primary": "Primary",
                         "secondary": "Secondary"
@@ -96,7 +96,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 1,
+                    "wpml_cf_preferences": 3,
                     "message": "",
                     "default_value": 0,
                     "ui_on_text": "",
@@ -121,7 +121,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 1,
+                    "wpml_cf_preferences": 3,
                     "return_format": "array",
                     "show_in_graphql": 1,
                     "graphql_description": "",
@@ -377,7 +377,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 2,
+                    "wpml_cf_preferences": 3,
                     "default_value": "",
                     "tabs": "all",
                     "toolbar": "full",
@@ -402,7 +402,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 1,
+                    "wpml_cf_preferences": 3,
                     "return_format": "array",
                     "library": "all",
                     "min_width": "",
@@ -431,7 +431,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 2,
+                    "wpml_cf_preferences": 3,
                     "default_value": "",
                     "maxlength": "",
                     "placeholder": "",
@@ -456,7 +456,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 2,
+                    "wpml_cf_preferences": 3,
                     "default_value": "",
                     "maxlength": "",
                     "placeholder": "",
@@ -505,5 +505,5 @@
         "Partner",
         "Post"
     ],
-    "modified": 1718184520
+    "modified": 1718185277
 }
