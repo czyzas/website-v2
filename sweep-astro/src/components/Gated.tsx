@@ -36,11 +36,13 @@ const Gated = ({
     setIsClient(true);
     setGated(storedGated);
     $gated.set(storedGated);
-  }, []);
+  }, [storedGated]);
 
   const contentToShow = useMemo(() => {
     const isGoogle =
-      isBrowser() && navigator?.userAgent.toLowerCase().includes('googlebot');
+      isClient &&
+      isBrowser() &&
+      navigator?.userAgent.toLowerCase().includes('googlebot');
 
     if (isGoogle || !isGated) return children;
   }, [isGated, children, isClient]);

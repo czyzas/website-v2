@@ -402,79 +402,6 @@
                     "graphql_non_null": 0
                 },
                 {
-                    "key": "field_66681ffd13422",
-                    "label": "Header",
-                    "name": "header",
-                    "aria-label": "",
-                    "type": "group",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "wpml_cf_preferences": 3,
-                    "layout": "block",
-                    "show_in_graphql": 1,
-                    "graphql_description": "",
-                    "graphql_field_name": "header",
-                    "graphql_non_null": 0,
-                    "sub_fields": [
-                        {
-                            "key": "field_6668203813423",
-                            "label": "Login",
-                            "name": "login",
-                            "aria-label": "",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "wpml_cf_preferences": 3,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "login",
-                            "graphql_non_null": 0
-                        },
-                        {
-                            "key": "field_6668204813424",
-                            "label": "Book a demo",
-                            "name": "book_demo",
-                            "aria-label": "",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "wpml_cf_preferences": 3,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "bookDemo",
-                            "graphql_non_null": 0
-                        }
-                    ]
-                },
-                {
                     "key": "field_6668207b13425",
                     "label": "Hubspot Form",
                     "name": "hubspot_form",
@@ -1638,6 +1565,278 @@
             ]
         },
         {
+            "key": "field_66698a0c14e51",
+            "label": "Main menu",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "graphql_field_name": "mainMenu",
+            "wpml_cf_preferences": 3,
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_66698a2414e52",
+            "label": "Main menu",
+            "name": "primary_menu",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 3,
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "Add menu item",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "primaryMenu",
+            "graphql_non_null": 0,
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_66698a4c14e53",
+                    "label": "Has submenu",
+                    "name": "has_children",
+                    "aria-label": "",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 3,
+                    "message": "",
+                    "default_value": 0,
+                    "ui_on_text": "",
+                    "ui_off_text": "",
+                    "ui": 1,
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "hasChildren",
+                    "graphql_non_null": 0,
+                    "parent_repeater": "field_66698a2414e52"
+                },
+                {
+                    "key": "field_66698aa714e55",
+                    "label": "Dropdown label",
+                    "name": "dropdown_label",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_66698a4c14e53",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "75",
+                        "class": "",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 3,
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "dropdownLabel",
+                    "graphql_non_null": 0,
+                    "parent_repeater": "field_66698a2414e52"
+                },
+                {
+                    "key": "field_66698a7f14e54",
+                    "label": "Menu item link",
+                    "name": "menu_item",
+                    "aria-label": "",
+                    "type": "link",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_66698a4c14e53",
+                                "operator": "!=",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "75",
+                        "class": "",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 3,
+                    "return_format": "array",
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "menuItem",
+                    "graphql_non_null": 0,
+                    "parent_repeater": "field_66698a2414e52"
+                },
+                {
+                    "key": "field_66698ac814e56",
+                    "label": "Children",
+                    "name": "children",
+                    "aria-label": "",
+                    "type": "repeater",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_66698a4c14e53",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 3,
+                    "layout": "table",
+                    "min": 0,
+                    "max": 0,
+                    "collapsed": "",
+                    "button_label": "Add menu item",
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "children",
+                    "graphql_non_null": 0,
+                    "rows_per_page": 20,
+                    "sub_fields": [
+                        {
+                            "key": "field_66698aec14e57",
+                            "label": "Menu item",
+                            "name": "menu_item",
+                            "aria-label": "",
+                            "type": "link",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 3,
+                            "return_format": "array",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "menuItem",
+                            "graphql_non_null": 0,
+                            "parent_repeater": "field_66698ac814e56"
+                        }
+                    ],
+                    "parent_repeater": "field_66698a2414e52"
+                },
+                {
+                    "key": "field_66698b6114e59",
+                    "label": "Related post title",
+                    "name": "related_post_title",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_66698a4c14e53",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 0,
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "relatedPostTitle",
+                    "graphql_non_null": 0,
+                    "parent_repeater": "field_66698a2414e52"
+                },
+                {
+                    "key": "field_66698b4314e58",
+                    "label": "Related post",
+                    "name": "related_post",
+                    "aria-label": "",
+                    "type": "post_object",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_66698a4c14e53",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 3,
+                    "post_type": [
+                        "insights"
+                    ],
+                    "post_status": "",
+                    "taxonomy": "",
+                    "return_format": "object",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "bidirectional": 0,
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "relatedPost",
+                    "graphql_connection_type": "one_to_one",
+                    "ui": 1,
+                    "bidirectional_target": [],
+                    "parent_repeater": "field_66698a2414e52"
+                }
+            ]
+        },
+        {
             "key": "field_650d8bcfe51c5",
             "label": "Footer",
             "name": "",
@@ -2188,5 +2387,5 @@
     "graphql_field_name": "themeOptionsAcf",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1718181884
+    "modified": 1718203060
 }

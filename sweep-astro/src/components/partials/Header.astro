@@ -1,17 +1,19 @@
 ---
 import { Icon } from 'astro-icon/components';
 import { buildI18nPath } from '@/i18n/utils';
-import { getLanguage } from '@/scripts/utils-store-helpers';
-import { getTranslations } from '@/scripts/translations';
+import { getLanguage, getOptions } from '@/scripts/utils-store-helpers';
 import Container from '../ui/Container.astro';
 import LanguageSwitcher from '../LanguageSwitcher.astro';
-import Button from '../ui/Button.astro';
 import MenuItem from '../MenuItem.astro';
 import MenuHamburger from '../MenuHamburger.astro';
 import Menu from './Menu.astro';
+import { parseLink } from '@/scripts/data-parsers/parseLink';
+import WordpressButtonLink from '../WordpressButtonLink.astro';
 
-const TRANSLATIONS = getTranslations();
 const { currentLanguage } = getLanguage();
+const { loginLink: rawLogin, bookDemoLink: rawBookDemo } = getOptions();
+const login = parseLink(rawLogin);
+const bookDemo = parseLink(rawBookDemo);
 const menuId = `main-menu-${crypto.randomUUID().substring(16)}`;
 ---
 
@@ -33,18 +35,24 @@ const menuId = `main-menu-${crypto.randomUUID().substring(16)}`;
       class="controls-container flex h-full items-center gap-2 sm:gap-4 md:gap-8"
     >
       <LanguageSwitcher class="text-sm sm:text-base" />
-      <MenuItem
-        external
-        href="https://flyhigh.pro"
-        class="w-auto text-sm sm:w-full sm:text-base"
-        set:html={TRANSLATIONS.header.login}
-      />
-      <Button
-        asLink
-        href="/demo"
-        class="hidden text-sm xs:block sm:text-base"
-        set:html={TRANSLATIONS.header.bookDemo}
-      />
+      {
+        login.shouldRender && (
+          <MenuItem
+            href={login.url}
+            external={login.target === '_blank'}
+            class="w-auto text-sm sm:w-full sm:text-base"
+            set:html={login.title}
+          />
+        )
+      }
+      {
+        bookDemo.shouldRender && (
+          <WordpressButtonLink
+            data={bookDemo}
+            class="hidden text-sm xs:block sm:text-base"
+          />
+        )
+      }
       <MenuHamburger menuId={menuId} />
     </div>
   </Container>

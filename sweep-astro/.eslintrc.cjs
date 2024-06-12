@@ -3,16 +3,50 @@ module.exports = {
   env: {
     browser: true,
     es2022: true,
+    node: true,
   },
   extends: [
-    '@tysian/typescript',
+    'eslint:recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
     'plugin:@typescript-eslint/recommended',
     'plugin:astro/recommended',
     'plugin:astro/jsx-a11y-recommended',
     'prettier',
   ],
   parser: '@typescript-eslint/parser',
-  ignorePatterns: ['**/__generated__/*'],
+  ignorePatterns: [
+    '**/__generated__/*',
+
+    '**/node_modules',
+    '**/dist',
+    '**/package-lock.json',
+    '**/yarn.lock',
+    '**/pnpm-lock.yaml',
+    '**/bun.lockb',
+
+    '**/dist',
+    '**/build',
+    '**/output',
+    '**/coverage',
+    '**/temp',
+    '**/.vitepress/cache',
+    '**/.nuxt',
+    '**/.next',
+    '**/.vercel',
+    '**/.changeset',
+    '**/.idea',
+    '**/.cache',
+    '**/.output',
+    '**/.vite-inspect',
+
+    '**/CHANGELOG*.md',
+    '**/*.min.*',
+    '**/LICENSE*',
+    '**/__snapshots__',
+    '**/auto-import?(s).d.ts',
+    '**/components.d.ts',
+  ],
   globals: {
     NodeJS: true,
     astroHTML: true,
@@ -22,10 +56,18 @@ module.exports = {
     '@typescript-eslint/no-non-null-assertion': 'off',
     'no-underscore-dangle': ['error', { allow: ['__typename'] }],
     'import/no-extraneous-dependencies': ['error', { packageDir: '.' }],
+    'import/namespace': 'off',
     'no-param-reassign': ['error', { props: false }],
+    'no-empty': ['error', { allowEmptyCatch: true }],
   },
   settings: {
     'import/core-modules': ['astro:assets', 'astro:content'],
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx', '.astro'],
+      },
+      typescript: {},
+    },
   },
   overrides: [
     {
@@ -42,9 +84,11 @@ module.exports = {
       files: ['*.{jsx,tsx}'],
       extends: [
         'plugin:react/recommended',
-        'plugin:react/jsx-runtime',
+        'plugin:react-hooks/recommended',
+        'plugin:@typescript-eslint/recommended',
         'plugin:jsx-a11y/recommended',
       ],
+      plugins: ['react-refresh', 'jsx-a11y'],
       settings: {
         react: {
           version: 'detect',
@@ -52,6 +96,7 @@ module.exports = {
       },
       rules: {
         'react/prop-types': 'off',
+        'react/react-in-jsx-scope': 'off',
       },
     },
     {

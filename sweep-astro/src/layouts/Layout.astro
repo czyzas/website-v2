@@ -39,7 +39,7 @@ initializeStore(cacheStore, {
       type="image/svg+xml"
       href={import.meta.env.PROD ? '/favicon.svg' : '/favicon-dev.svg'}
     />
-    <script define:vars={{ TRANSLATIONS }}>
+    <script define:vars={{ TRANSLATIONS }} is:inline>
       // Populate translations in client for React components
       window.TRANSLATIONS = TRANSLATIONS;
     </script>

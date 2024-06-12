@@ -3,11 +3,7 @@ import type { CMSStore } from '@/stores/cmsStore';
 import { languageStore } from '@/stores/languageStore';
 import type { LanguageStore } from '@/stores/languageStore';
 import { defaultLocale } from '@/i18n/config';
-import type {
-  NonNullableProperties,
-  OmitRecursively,
-  ReplaceTypenameLiteral2,
-} from '@/types';
+import type { NonNullableProperties, ReplaceTypenameLiteral2 } from '@/types';
 import type {
   EssentialFragment,
   EssentialPageFragment,
@@ -30,7 +26,6 @@ export function initializeStores(
   initializeStore(cmsStore, {
     pageTitle: page.title,
     uri: page.uri,
-    primaryMenu: data.primaryMenu!,
     themeOptions: data.themeOptionsByLang!,
     subpageSettings: page?.subpageSettings,
     seo: page?.seo,
@@ -52,9 +47,8 @@ export function getOptions() {
     throw new Error("You can't access theme options");
   }
 
-  return store.themeOptions.themeOptionsAcf as OmitRecursively<
-    NonNullableProperties<typeof store.themeOptions.themeOptionsAcf>,
-    '__typename'
+  return store.themeOptions.themeOptionsAcf as NonNullableProperties<
+    typeof store.themeOptions.themeOptionsAcf
   >;
 }
 

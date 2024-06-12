@@ -91,10 +91,6 @@ fragment ThemeOptions on ThemeOptions {
       readMore
       loadMore
       viewCaseStudy
-      header {
-        bookDemo
-        login
-      }
       hubspotForm {
         defaultPrivacyPolicyText
         formMessageThankYou
@@ -129,6 +125,41 @@ fragment ThemeOptions on ThemeOptions {
       }
       error404 {
         pageTitle
+      }
+    }
+    primaryMenu {
+      hasChildren
+      dropdownLabel
+      menuItem {
+        ...Link
+      }
+      children {
+        menuItem {
+          ...Link
+        }
+      }
+      relatedPostTitle
+      relatedPost {
+        node {
+          __typename
+          ... on InsightsItem {
+            title
+            uri
+            subpageSettings {
+              image {
+                ...Image
+              }
+            }
+            tags: insightsTags {
+              nodes {
+                name
+                tagTaxonomyAcf {
+                  tagColor
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
