@@ -13,7 +13,7 @@ const { id, class: className, isActive = false } = Astro.props;
 <div
   id={id}
   role="tabpanel"
-  aria-labelledby={`${id}-tab-list-item`}
+  aria-labelledby={`tab-list-item-${id}`}
   class={cn(['tab-pane fade', { show: isActive, active: isActive }, className])}
 >
   <slot />
