@@ -5,24 +5,9 @@ query InsightsListPage(
   $POSTS_PER_PAGE: Int = 6
 ) {
   page: pageByLang(uri: "insights", lang: $LANG) {
-    title
-    slug
-    uri
-    language {
-      ...Languages
-    }
-    translations {
-      languageCode
-      uri
-    }
-    subpageSettings {
-      ...SubpageSettings
-    }
+    ...EssentialPage
     articlesListAcf {
       ...ArticlesListAcf
-    }
-    seo {
-      ...Seo
     }
   }
   articles: insights(

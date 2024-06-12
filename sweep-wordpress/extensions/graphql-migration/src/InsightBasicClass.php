@@ -8,9 +8,9 @@ use WP_Query;
 class InsightBasicClass extends MigrationClass implements MigrationInterface
 {
 	public string $query_code = <<<'QUERY'
-						query ($limit: Int, $skip: Int, $locale: GraphCMS_Locale) {
+						query ($limit: Int, $skip: Int, $locale: GraphCMS_Locale, $remoteId: ID) {
 						  allGraphCmsArticle(
-						    filter: {category: {usage: {eq: Library}, stage: {eq: PUBLISHED}}, locale: {eq: $locale}}
+						    filter: {category: {usage: {eq: Library}, stage: {eq: PUBLISHED}}, locale: {eq: $locale, ne: de}, remoteId: {eq: $remoteId}}
 						    sort: {fields: remoteId}
 						    limit: $limit
 						    skip: $skip
@@ -96,11 +96,17 @@ class InsightBasicClass extends MigrationClass implements MigrationInterface
 			foreach ( $data['allGraphCmsArticle']['nodes'] as $article ) {
 
 				$hygraph_id = $article['id'];
+				$sitepress->switch_lang($this->locale);
 				$check_post_args = array(
 					'posts_per_page'   => 1,
 					'post_type'        => 'insights',
-					'meta_key'         => 'hygraph_id',
-					'meta_value'       => $hygraph_id
+					'meta_query' => array(
+						array(
+							'key'       => 'hygraph_id',
+							'value'     => $hygraph_id,
+							'compare'   => '='
+						)
+					)
 				);
 				$check_post = new WP_Query( $check_post_args );
 
@@ -116,9 +122,12 @@ class InsightBasicClass extends MigrationClass implements MigrationInterface
 					$article_id = wp_insert_post( $article_args, true );
 					if ( !is_wp_error( $article_id ) ) {
 						add_post_meta($article_id, 'hygraph_id', $hygraph_id);
+						if ($article['locale'] != 'en') {
+							$trid = $this->getTrid($hygraph_id, 'insights');
+						}
 						$sitepress->set_element_language_details( $article_id,
 							'post_insights',
-							false,
+							$trid ?? false,
 							$article['locale'],
 							$sitepress->get_default_language() );
 
@@ -126,6 +135,7 @@ class InsightBasicClass extends MigrationClass implements MigrationInterface
 
 						$this->addThumbnail($article['coverImage'], $article_id);
 
+						$sitepress->switch_lang($article['locale']);
 						$this->addTermToPost($article['category']['id'] ?? '', $article_id);
 
 						foreach ($article['content']['remoteChildren'] as $child) {
@@ -206,6 +216,7 @@ class InsightBasicClass extends MigrationClass implements MigrationInterface
 	}
 
 	private function addTermToPost( mixed $category_hygraph_id, int $article_id ): void {
+		global $sitepress;
 		$args = array(
 			'hide_empty' => false,
 			'fields'      => 'ids',
@@ -218,6 +229,7 @@ class InsightBasicClass extends MigrationClass implements MigrationInterface
 			),
 			'taxonomy'  => 'insights-category',
 		);
+		$sitepress->switch_lang($this->locale);
 		$terms = get_terms( $args );
 
 		if (!empty($terms)) {

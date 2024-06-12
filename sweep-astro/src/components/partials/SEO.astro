@@ -1,14 +1,8 @@
 ---
 import { getLocale } from '@/i18n/utils';
-import { getOptions, getSeo } from '@/scripts/utils-store-helpers';
-
-type Props = {
-  pageTitle: string;
-  home?: boolean;
-  currentLanguage: string;
-};
-
-const { home, pageTitle, currentLanguage } = Astro.props;
+import { getStore } from '@/scripts/store';
+import { getLanguage, getOptions, getSeo } from '@/scripts/utils-store-helpers';
+import { cmsStore } from '@/stores/cmsStore';
 
 // TODO: fix canonical
 const {
@@ -18,14 +12,19 @@ const {
   opengraphImage,
   opengraphModifiedTime,
   schema,
-} = getSeo() || {};
+} = getSeo();
+const store = getStore(cmsStore);
+const { searchEngineVisibility } = getOptions();
+const { currentLanguage } = getLanguage();
+const locale = getLocale(currentLanguage);
+
+const isHomepage = store?.homepage ?? false;
+const pageTitle = store.pageTitle || '';
 const pageType: string = Array.isArray(schema?.pageType)
   ? schema.pageType.join('')
   : schema?.pageType ?? 'Article';
-const metaTitle = !home && pageTitle ? pageTitle : title;
-const locale = getLocale(currentLanguage);
 
-const { searchEngineVisibility } = getOptions();
+const metaTitle = !isHomepage && pageTitle ? pageTitle : title;
 ---
 
 <meta name="description" content={metaDesc} />

@@ -21,20 +21,30 @@ class PhotoClass
 
 
 	public function getId() {
+		if(empty($this->asset)) {
+			return null;
+		}
 		$attachment = $this->checkExists();
 
 		return $attachment ?? $this->storeImage();
 	}
 
 	private function checkExists() {
+		global $sitepress;
 		$attachment_args = [
 			'posts_per_page' => 1,
 			'post_type' => 'attachment',
 			'post_status' => 'inherit',
-			'meta_key' => 'hygraph_id',
-			'meta_key' => $this->asset['id'],
+			'meta_query' => array(
+				array(
+					'key'       => 'hygraph_id',
+					'value'     => $this->asset['id'],
+					'compare'   => '='
+				)
+			),
 			'fields' => 'ids'
 		];
+		$sitepress->switch_lang($sitepress->get_default_language());
 		$attachment_check = new \WP_Query($attachment_args);
 
 		return $attachment_check->have_posts() ? $attachment_check->posts[0] : null;

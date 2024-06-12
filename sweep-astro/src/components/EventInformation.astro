@@ -4,8 +4,8 @@ import { Icon } from 'astro-icon/components';
 import { cn } from '@/scripts/cn';
 import type { WithAttributes } from '@/types';
 import { getLocale } from '@/i18n/utils';
-import { TRANSLATIONS } from '@/constants';
 import { getLanguage } from '@/scripts/utils-store-helpers';
+import { getTranslations } from '@/scripts/translations';
 import Card from './ui/Card.astro';
 
 interface EventInformationProps extends HTMLAttributes<'div'> {
@@ -23,6 +23,7 @@ const {
   language: eventLanguage,
   ...props
 } = Astro.props;
+const TRANSLATIONS = getTranslations();
 const { currentLanguage } = getLanguage();
 const locale = getLocale(currentLanguage);
 
@@ -85,7 +86,7 @@ const rows: Array<{
       <div class="grid grid-cols-[auto,auto,1fr]">
         {rows.map((row, index) => {
           if (!row.value) return null;
-          const label = TRANSLATIONS.EVENT_INFORMATION[row.type];
+          const label = TRANSLATIONS.eventInformation[row.type];
           const rowStyles = cn('flex shrink-0 items-center py-2', {
             'border-b border-b-sw-border': index !== rows.length - 1,
           });

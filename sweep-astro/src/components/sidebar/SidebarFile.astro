@@ -1,5 +1,5 @@
 ---
-import { TRANSLATIONS } from '@/constants';
+import { getTranslations } from '@/scripts/translations';
 import Button from '../ui/Button.astro';
 import SidebarCard from './SidebarCard.astro';
 
@@ -11,6 +11,7 @@ interface AuthorProps {
 type Props = AuthorProps;
 
 const { href, title } = Astro.props;
+const TRANSLATIONS = getTranslations();
 ---
 
 <script>
@@ -30,7 +31,7 @@ const { href, title } = Astro.props;
   !!href && (
     <SidebarCard
       collapsible
-      title={title || TRANSLATIONS.SIDEBAR.GUIDE}
+      title={title || TRANSLATIONS.sidebar.guide}
       name="file-sidebar-card"
     >
       <Button
@@ -40,7 +41,7 @@ const { href, title } = Astro.props;
         leadingIcon="download"
         href={href}
       >
-        {TRANSLATIONS.SIDEBAR.DOWNLOAD}
+        {TRANSLATIONS.sidebar.download}
       </Button>
     </SidebarCard>
   )

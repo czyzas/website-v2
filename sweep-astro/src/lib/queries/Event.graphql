@@ -5,24 +5,9 @@ query EventsListPage(
   $POSTS_PER_PAGE: Int = 6
 ) {
   page: pageByLang(uri: "events", lang: $LANG) {
-    title
-    slug
-    uri
-    language {
-      ...Languages
-    }
-    translations {
-      languageCode
-      uri
-    }
-    subpageSettings {
-      ...SubpageSettings
-    }
+    ...EssentialPage
     articlesListAcf {
       ...ArticlesListAcf
-    }
-    seo {
-      ...Seo
     }
   }
   articles: events(
@@ -112,6 +97,9 @@ query EventSinglePage($URI: String!, $LANG: String!) {
     }
     subpageSettings {
       ...SubpageSettings
+    }
+    seo {
+      ...Seo
     }
     modules {
       ...ModulesCollection

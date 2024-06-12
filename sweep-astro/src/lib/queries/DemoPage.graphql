@@ -1,17 +1,6 @@
 query DemoPage($LANG: String!) {
   page: pageByLang(uri: "demo", lang: $LANG) {
-    title
-    slug
-    uri
-    language {
-      ...Languages
-    }
-    translations {
-      ...PageTranslations
-    }
-    subpageSettings {
-      ...SubpageSettings
-    }
+    ...EssentialPage
     demoPageAcf {
       slider {
         contentType
@@ -41,9 +30,6 @@ query DemoPage($LANG: String!) {
         title
         content
       }
-    }
-    seo {
-      ...Seo
     }
   }
   ...Essential

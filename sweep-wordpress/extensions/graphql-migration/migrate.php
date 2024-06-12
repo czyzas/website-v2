@@ -1,6 +1,9 @@
 <?php
 
 use FH_Migration\BlogBasicClass;
+use FH_Migration\EventBasicClass;
+use FH_Migration\EventsCategoriesClass;
+use FH_Migration\EventsTagsClass;
 use FH_Migration\InsightBasicClass;
 use FH_Migration\InsightsCategoriesClass;
 use FH_Migration\LibraryBasicClass;
@@ -22,11 +25,14 @@ add_action( 'rest_api_init', function () {
 			$migration = match ($type) {
 				'insights-categories' => new InsightsCategoriesClass(),
 				'newsroom-categories' => new NewsroomCategoriesClass(),
+				'events-categories' => new EventsCategoriesClass(),
+				'events-tags' => new EventsTagsClass(),
 //				'tags' => new TagsClass(),
 //				'photos' => new PhotosClass(),
 //				'library-basic' => new LibraryBasicClass(),
 				'newsroom-basic' => new NewsroomBasicClass(),
 				'insight-basic' => new InsightBasicClass(),
+				'event-basic' => new EventBasicClass(),
 				'blog-basic' => new BlogBasicClass(),
 //				'library-photo-sync' => new LibraryPhotoSyncClass(),
 				default => throw new Exception('Wrong migration type')

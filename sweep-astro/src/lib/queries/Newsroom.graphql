@@ -5,24 +5,9 @@ query NewsroomListPage(
   $POSTS_PER_PAGE: Int = 6
 ) {
   page: pageByLang(uri: "newsroom", lang: $LANG) {
-    title
-    slug
-    uri
-    language {
-      ...Languages
-    }
-    translations {
-      languageCode
-      uri
-    }
-    subpageSettings {
-      ...SubpageSettings
-    }
+    ...EssentialPage
     articlesListAcf {
       ...ArticlesListAcf
-    }
-    seo {
-      ...Seo
     }
   }
   articles: newsroomItems(

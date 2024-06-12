@@ -126,6 +126,9 @@ fragment ThemeOptions on ThemeOptions {
         formSuccessMessage
         signUp
       }
+      error404 {
+        pageTitle
+      }
     }
   }
 }

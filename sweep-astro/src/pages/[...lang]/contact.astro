@@ -5,9 +5,6 @@ import {
   fetchContactPage,
   fetchSinglePageStaticPaths,
 } from '@/lib/fetchCMSData';
-import { initializeStore } from '@/scripts/store';
-import { cmsStore } from '@/stores/cmsStore';
-import { languageStore } from '@/stores/languageStore';
 import Section from '@/components/ui/Section.astro';
 import Demo from '@/components/Demo.astro';
 import Container from '@/components/ui/Container.astro';
@@ -25,6 +22,7 @@ import { createSingleDefaultPageStaticPaths } from '@/scripts/utils-static-paths
 import type { ColumnSizes } from '@/types';
 import FormContainer from '@/components/hubspot-form/FormContainer.astro';
 import { cleanArray } from '@/scripts/cleanArray';
+import { initializeStores } from '@/scripts/utils-store-helpers';
 
 export async function getStaticPaths() {
   return createSingleDefaultPageStaticPaths(
@@ -37,23 +35,11 @@ const { lang = defaultLocale } = Astro.params;
 const data = await fetchContactPage(lang as string);
 const page = data.page!;
 
-initializeStore(cmsStore, {
-  uri: page.uri,
-  primaryMenu: data.primaryMenu!,
-  themeOptions: data.themeOptionsByLang!,
-  subpageSettings: data.page?.subpageSettings,
-  seo: page?.seo,
-});
-initializeStore(languageStore, {
-  currentLanguage: data.page!.language!,
-  languages: data.languages,
-  translations: cleanArray(data.page?.translations),
-});
+initializeStores(data);
 
 // TODO: handle data passed to Layout and Top
 const { subpageSettings } = page;
-const pageTitle = page?.title ?? '';
-const title = subpageSettings?.customTitle || pageTitle || '';
+const title = subpageSettings?.customTitle || page?.title || '';
 const content = subpageSettings?.introduction ?? '';
 const image = subpageSettings?.image;
 const size = subpageSettings?.topDistribution ?? '5-7';
@@ -69,7 +55,7 @@ const offices = page.contactAcf?.offices;
 const officesCards = cleanArray(offices?.cards);
 ---
 
-<Layout name="contact" pageTitle={pageTitle}>
+<Layout name="contact">
   <Top
     title={title}
     content={content}

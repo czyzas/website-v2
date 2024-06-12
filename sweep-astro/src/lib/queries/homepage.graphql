@@ -10,6 +10,9 @@ query Homepage($LANG: String!) {
       languageCode
       uri
     }
+    seo {
+      ...Seo
+    }
     homepage {
       hero {
         title
@@ -243,9 +246,6 @@ query Homepage($LANG: String!) {
           ...Image
         }
       }
-    }
-    seo {
-      ...Seo
     }
   }
   insights(
