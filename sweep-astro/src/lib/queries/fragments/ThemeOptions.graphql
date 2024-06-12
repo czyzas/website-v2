@@ -131,5 +131,40 @@ fragment ThemeOptions on ThemeOptions {
         pageTitle
       }
     }
+    primaryMenu {
+      hasChildren
+      dropdownLabel
+      menuItem {
+        ...Link
+      }
+      children {
+        menuItem {
+          ...Link
+        }
+      }
+      relatedPostTitle
+      relatedPost {
+        node {
+          __typename
+          ... on InsightsItem {
+            title
+            uri
+            subpageSettings {
+              image {
+                ...Image
+              }
+            }
+            tags: insightsTags {
+              nodes {
+                name
+                tagTaxonomyAcf {
+                  tagColor
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }

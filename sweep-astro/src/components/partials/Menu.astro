@@ -1,11 +1,10 @@
 ---
 import { cn } from '@/scripts/cn';
-import { getStore } from '@/scripts/store';
-import { cmsStore } from '@/stores/cmsStore';
 import { buildI18nPath } from '@/i18n/utils';
-import { getLanguage } from '@/scripts/utils-store-helpers';
+import { getLanguage, getOptions } from '@/scripts/utils-store-helpers';
 import { cleanArray } from '@/scripts/cleanArray';
 import { getTranslations } from '@/scripts/translations';
+import { parseLink } from '@/scripts/data-parsers/parseLink';
 import MenuItem from '../MenuItem.astro';
 import MenuItemCard from '../MenuItemCard.astro';
 
@@ -16,9 +15,8 @@ const { id } = Astro.props;
 
 const { currentLanguage } = getLanguage();
 const TRANSLATIONS = getTranslations();
-const { primaryMenu } = getStore(cmsStore);
-
-const menu = cleanArray(primaryMenu?.menuItems?.nodes);
+const { primaryMenu: rawPrimaryMenu } = getOptions();
+const menu = cleanArray(rawPrimaryMenu);
 ---
 
 <script>
@@ -137,41 +135,51 @@ const menu = cleanArray(primaryMenu?.menuItems?.nodes);
           )}
         >
           {menu.map((item) => {
-            if (item.parentDatabaseId !== 0) return null;
-            const children = menu.filter(
-              (child) => child.parentDatabaseId === item.databaseId
+            const submenuItemId = `submenu-item-${crypto.randomUUID().substring(16)}`;
+            const isDropdown = !!item.hasChildren;
+            const menuItem = parseLink(item.menuItem);
+            const label = isDropdown ? item.dropdownLabel : menuItem.title;
+            const href = !isDropdown ? menuItem.url : undefined;
+            const external = !isDropdown && menuItem.target === '_blank';
+            const children = cleanArray(
+              item.children?.map((child) =>
+                child?.menuItem ? parseLink(child?.menuItem) : undefined
+              )
             );
 
             const relatedPost =
-              item.menuItemAcf?.relatedPost?.node.__typename === 'InsightsItem'
-                ? item.menuItemAcf?.relatedPost?.node
-                : null;
-            const relatedPostTitle = item.menuItemAcf?.relatedPostTitle ?? '';
+              item.relatedPost?.node.__typename === 'InsightsItem'
+                ? item.relatedPost?.node
+                : undefined;
+            const relatedPostTitle = item.relatedPostTitle ?? '';
 
-            const submenuItem = `submenu-item-${crypto.randomUUID().substring(16)}`;
+            if (
+              (!isDropdown && !menuItem.shouldRender) ||
+              (isDropdown && !item.dropdownLabel)
+            ) {
+              return null;
+            }
 
-            const isDropdown = item.uri === '#';
             return (
               <li class="group lg:flex lg:h-full lg:items-center">
                 <MenuItem
                   asButton={isDropdown}
                   type={isDropdown ? 'button' : undefined}
-                  href={!isDropdown ? item.uri : undefined}
-                  target={!isDropdown ? item.target : undefined}
-                  data-menu-item-id={item.databaseId}
-                  data-parent-item-id={item.parentDatabaseId}
+                  href={href}
+                  external={external}
                   class={cn('main-menu-item justify-start lg:text-center', {
                     'menu-item-has-children': children.length > 0,
                   })}
                   dropdown={children.length > 0}
-                  aria-controls={children.length > 0 ? submenuItem : undefined}
+                  aria-controls={
+                    children.length > 0 ? submenuItemId : undefined
+                  }
                 >
-                  {item.label}
+                  {label}
                 </MenuItem>
                 {children.length > 0 && (
                   <div
-                    id={submenuItem}
-                    data-parent-id={item.databaseId}
+                    id={submenuItemId}
                     class={cn(
                       'submenu-wrapper-wrapper',
                       'lg:invisible lg:opacity-0 lg:transition-all lg:duration-100 lg:group-hover:visible lg:group-hover:translate-y-1 lg:group-hover:opacity-100',
@@ -179,11 +187,7 @@ const menu = cleanArray(primaryMenu?.menuItems?.nodes);
                       'aria-hidden:hidden'
                     )}
                   >
-                    <div
-                      class={cn(
-                        'submenu-wrapper flex flex-col items-start gap-4 pl-4 pt-2 lg:flex-row lg:gap-0 lg:overflow-hidden lg:rounded-lg lg:bg-white lg:p-6 lg:shadow-menu'
-                      )}
-                    >
+                    <div class="submenu-wrapper flex flex-col items-start gap-4 pl-4 pt-2 lg:flex-row lg:gap-0 lg:overflow-hidden lg:rounded-lg lg:bg-white lg:p-6 lg:shadow-menu">
                       <ul
                         data-state="inactive"
                         style={{ '--rows': Math.min(children.length, 5) }}
@@ -193,19 +197,20 @@ const menu = cleanArray(primaryMenu?.menuItems?.nodes);
                           { 'lg:bg-menu-split': children.length > 5 }
                         )}
                       >
-                        {children.map((child) => (
-                          <li>
-                            <a
-                              href={child.uri}
-                              target={child.target}
-                              class={cn(
-                                'inline-flex items-center justify-center gap-2 text-base font-medium hover:text-sw-sky-400'
-                              )}
-                            >
-                              {child.label}
-                            </a>
-                          </li>
-                        ))}
+                        {children.map((child) => {
+                          if (!child.shouldRender) return null;
+                          return (
+                            <li>
+                              <a
+                                href={child.url}
+                                target={child.target}
+                                class="inline-flex items-center justify-center gap-2 text-base font-medium hover:text-sw-sky-400"
+                              >
+                                {child.title}
+                              </a>
+                            </li>
+                          );
+                        })}
                       </ul>
                       {!!relatedPost && (
                         <MenuItemCard
