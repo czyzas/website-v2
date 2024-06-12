@@ -16,7 +16,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "return_format": "array",
             "library": "all",
             "min_width": "",
@@ -52,7 +52,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "choices": {
                 "5-7": "5-7",
                 "6-6": "6-6",
@@ -81,7 +81,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 2,
+            "wpml_cf_preferences": 3,
             "default_value": "",
             "maxlength": "",
             "rows": 4,
@@ -106,7 +106,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 2,
+            "wpml_cf_preferences": 3,
             "default_value": "",
             "maxlength": "",
             "rows": "",
@@ -131,7 +131,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "return_format": "array",
             "show_in_graphql": 1,
             "graphql_description": "",
@@ -152,7 +152,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "message": "",
             "default_value": 0,
             "ui_on_text": "",
@@ -245,7 +245,7 @@
     "active": true,
     "description": "",
     "show_in_rest": 1,
-    "acfml_field_group_mode": "translation",
+    "acfml_field_group_mode": "advanced",
     "show_in_graphql": 1,
     "graphql_field_name": "subpageSettings",
     "map_graphql_types_from_location_rules": 1,
@@ -255,11 +255,10 @@
         "Event",
         "Industry",
         "InsightsItem",
-        "LibraryItem",
         "NewsroomItem",
         "Page",
         "Partner",
         "Post"
     ],
-    "modified": 1716278521
+    "modified": 1718180186
 }

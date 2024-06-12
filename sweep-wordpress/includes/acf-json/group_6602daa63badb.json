@@ -16,7 +16,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "choices": {
                 "white": "<span class=\"color-box\" style=\"--box-color: #FFFFFF;\" title=\"#FFFFFF\"><\/span> White",
                 "surface-subdued": "<span class=\"color-box\" style=\"--box-color: #F9F9F9;\" title=\"#F9F9F9\"><\/span> Surface subdued",
@@ -47,7 +47,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "layout": "block",
             "show_in_graphql": 1,
             "graphql_description": "",
@@ -144,7 +144,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "layout": "block",
             "show_in_graphql": 1,
             "graphql_description": "",
@@ -356,7 +356,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "layout": "block",
             "show_in_graphql": 1,
             "graphql_description": "",
@@ -493,7 +493,7 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "acfml_field_group_mode": "translation",
+    "acfml_field_group_mode": "advanced",
     "show_in_graphql": 1,
     "graphql_field_name": "reusableFields",
     "map_graphql_types_from_location_rules": 1,
@@ -501,10 +501,9 @@
         "CaseStudy",
         "Customer",
         "Industry",
-        "LibraryItem",
         "Page",
         "Partner",
         "Post"
     ],
-    "modified": 1717502267
+    "modified": 1718177966
 }

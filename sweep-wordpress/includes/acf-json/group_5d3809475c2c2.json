@@ -90,6 +90,28 @@
             "graphql_non_null": 0
         },
         {
+            "key": "field_66695fcf21b5d",
+            "label": "Website URL",
+            "name": "website_url",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 3,
+            "default_value": "",
+            "placeholder": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "websiteUrl",
+            "graphql_non_null": 0
+        },
+        {
             "key": "field_66681f6fc37b9",
             "label": "Translations",
             "name": "",
@@ -2166,5 +2188,5 @@
     "graphql_field_name": "themeOptionsAcf",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1718114348
+    "modified": 1718181884
 }
