@@ -91,10 +91,6 @@ fragment ThemeOptions on ThemeOptions {
       readMore
       loadMore
       viewCaseStudy
-      header {
-        bookDemo
-        login
-      }
       hubspotForm {
         defaultPrivacyPolicyText
         formMessageThankYou
