@@ -4,11 +4,11 @@ import { getLocale } from '@/i18n/utils';
 import { getStore } from '@/scripts/store';
 import { getLanguage, getOptions, getSeo } from '@/scripts/utils-store-helpers';
 import { cmsStore } from '@/stores/cmsStore';
+import { buildCanonicalUrl } from '@/scripts/buildCanonicalUrl';
 
 // TODO: fix canonical
 const {
   title: seoTitle,
-  canonical,
   opengraphImage,
   opengraphModifiedTime,
   schema,
@@ -39,6 +39,8 @@ const image = opengraphImage?.mediaItemUrl
       inferSize: true,
     })
   : undefined;
+
+const canonical = buildCanonicalUrl();
 ---
 
 <meta name="description" content={description} />
