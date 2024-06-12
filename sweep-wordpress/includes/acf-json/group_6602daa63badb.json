@@ -165,7 +165,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 1,
+                    "wpml_cf_preferences": 3,
                     "choices": {
                         "h1": "H1",
                         "h2": "H2",
@@ -195,7 +195,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 1,
+                    "wpml_cf_preferences": 3,
                     "message": "",
                     "default_value": 0,
                     "ui_on_text": "",
@@ -228,7 +228,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 1,
+                    "wpml_cf_preferences": 3,
                     "choices": {
                         "h1": "H1",
                         "h2": "H2",
@@ -279,7 +279,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 2,
+                    "wpml_cf_preferences": 3,
                     "default_value": "",
                     "maxlength": "",
                     "placeholder": "",
@@ -304,7 +304,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 2,
+                    "wpml_cf_preferences": 3,
                     "default_value": "",
                     "maxlength": "",
                     "rows": 2,
@@ -329,7 +329,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 2,
+                    "wpml_cf_preferences": 3,
                     "default_value": "",
                     "tabs": "all",
                     "toolbar": "basic",
@@ -505,5 +505,5 @@
         "Partner",
         "Post"
     ],
-    "modified": 1718177966
+    "modified": 1718184520
 }

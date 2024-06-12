@@ -16,7 +16,7 @@
                 "class": "tag-radio-list",
                 "id": ""
             },
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "choices": {
                 "gray": "<span class=\"tag-radio-item\" data-color=\"gray\">GRAY<\/span>",
                 "gray-outline": "<span class=\"tag-radio-item\" data-color=\"gray-outline\">GRAY OUTLINE<\/span>",
@@ -88,10 +88,10 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "acfml_field_group_mode": "translation",
+    "acfml_field_group_mode": "advanced",
     "show_in_graphql": 1,
     "graphql_field_name": "tagTaxonomyAcf",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1717419160
+    "modified": 1718184451
 }

@@ -16,7 +16,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 2,
+            "wpml_cf_preferences": 3,
             "default_value": "",
             "maxlength": "",
             "placeholder": "",
@@ -41,7 +41,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "choices": {
                 "insights": "Insights",
                 "newsroom": "Newsroom",
@@ -80,7 +80,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "post_type": [
                 "insights"
             ],
@@ -119,7 +119,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "post_type": [
                 "newsroom"
             ],
@@ -158,7 +158,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "post_type": [
                 "event"
             ],
@@ -189,7 +189,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "layout": "block",
             "show_in_graphql": 1,
             "graphql_description": "",
@@ -243,12 +243,12 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "acfml_field_group_mode": "translation",
+    "acfml_field_group_mode": "advanced",
     "show_in_graphql": 1,
     "graphql_field_name": "articlesListAcf",
     "map_graphql_types_from_location_rules": 1,
     "graphql_types": [
         "Page"
     ],
-    "modified": 1716800347
+    "modified": 1718184852
 }
