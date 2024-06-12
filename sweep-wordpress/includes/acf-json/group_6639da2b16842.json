@@ -16,7 +16,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "display_format": "d-m-Y H:i",
             "return_format": "YmdHis",
             "first_day": 1,
@@ -39,7 +39,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 2,
+            "wpml_cf_preferences": 3,
             "default_value": "",
             "maxlength": "",
             "placeholder": "",
@@ -64,7 +64,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 2,
+            "wpml_cf_preferences": 3,
             "default_value": "",
             "maxlength": "",
             "placeholder": "",
@@ -89,7 +89,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "layout": "block",
             "show_in_graphql": 1,
             "graphql_description": "",
@@ -136,7 +136,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 2,
+            "wpml_cf_preferences": 3,
             "default_value": "",
             "maxlength": "",
             "placeholder": "Eg. 550e8400-e29b-41d4-a716-446655440000",
@@ -145,6 +145,31 @@
             "show_in_graphql": 1,
             "graphql_description": "",
             "graphql_field_name": "registerFormGuid",
+            "graphql_non_null": 0
+        },
+        {
+            "key": "field_6666b3160dab6",
+            "label": "Form name",
+            "name": "form_name",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 3,
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "formName",
             "graphql_non_null": 0
         }
     ],
@@ -168,10 +193,10 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "acfml_field_group_mode": "translation",
+    "acfml_field_group_mode": "advanced",
     "show_in_graphql": 1,
     "graphql_field_name": "eventAcf",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1716464697
+    "modified": 1718180013
 }

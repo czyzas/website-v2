@@ -1,3 +1,5 @@
+import type { PageTranslationsFragment } from './__generated__/cms';
+
 // UTILS
 type OmitDistributive<T, K extends PropertyKey> = T extends unknown
   ? T extends object
@@ -17,6 +19,14 @@ export type ReplaceTypenameLiteral<ObjType extends object> = {
   [KeyType in keyof ObjType]: ObjType[KeyType] extends object
     ? ReplaceTypenameLiteral<ObjType[KeyType]>
     : StringLiteralToString<ObjType[KeyType]>;
+};
+
+export type ReplaceTypenameLiteral2<T> = {
+  [K in keyof T]: StringLiteralToString<ReplaceTypenameLiteral2<T[K]>>;
+};
+
+export type DeepRequired<T> = {
+  [K in keyof T]-?: Required<DeepRequired<T[K]>>;
 };
 
 export type NonNullableProperties<ObjType extends object> = {
@@ -53,3 +63,6 @@ export interface FilterTag {
   name?: string;
   slug?: string;
 }
+
+export type PageTranslations =
+  ReplaceTypenameLiteral<PageTranslationsFragment>[];

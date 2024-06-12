@@ -1,13 +1,14 @@
 ---
-import { TRANSLATIONS } from '@/constants';
 import type { ITableOfContentsEntry } from '@/types';
 import { cn } from '@/scripts/cn';
+import { getTranslations } from '@/scripts/translations';
 import SidebarCard from './SidebarCard.astro';
 
 type Props = {
   toc?: ITableOfContentsEntry[];
 };
 const { toc } = Astro.props;
+const TRANSLATIONS = getTranslations();
 ---
 
 <script>
@@ -28,7 +29,7 @@ const { toc } = Astro.props;
   !!toc && toc.length > 0 && (
     <SidebarCard
       collapsible
-      title={TRANSLATIONS.SIDEBAR.TOC}
+      title={TRANSLATIONS.sidebar.tableOfContents}
       name="table-of-contents-sidebar-card"
     >
       <ul>

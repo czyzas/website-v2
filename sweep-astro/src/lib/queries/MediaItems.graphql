@@ -1,0 +1,13 @@
+query MediaItems {
+  mediaItems(where: { mimeType: APPLICATION_PDF }) {
+    nodes {
+      slug
+    }
+  }
+}
+
+query MediaItem($FILENAME: ID!) {
+  mediaItem(id: $FILENAME, idType: SLUG) {
+    mediaItemUrl
+  }
+}

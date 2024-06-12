@@ -3,9 +3,9 @@ import { cn } from '@/scripts/cn';
 import { getStore } from '@/scripts/store';
 import { cmsStore } from '@/stores/cmsStore';
 import { buildI18nPath } from '@/i18n/utils';
-import { TRANSLATIONS } from '@/constants';
 import { getLanguage } from '@/scripts/utils-store-helpers';
 import { cleanArray } from '@/scripts/cleanArray';
+import { getTranslations } from '@/scripts/translations';
 import MenuItem from '../MenuItem.astro';
 import MenuItemCard from '../MenuItemCard.astro';
 
@@ -15,6 +15,7 @@ type Props = {
 const { id } = Astro.props;
 
 const { currentLanguage } = getLanguage();
+const TRANSLATIONS = getTranslations();
 const { primaryMenu } = getStore(cmsStore);
 
 const menu = cleanArray(primaryMenu?.menuItems?.nodes);
@@ -215,7 +216,7 @@ const menu = cleanArray(primaryMenu?.menuItems?.nodes);
                             url: relatedPost.uri
                               ? buildI18nPath(relatedPost.uri, currentLanguage)
                               : undefined,
-                            title: TRANSLATIONS.READ_MORE,
+                            title: TRANSLATIONS.readMore,
                           }}
                           tags={relatedPost.tags?.nodes}
                           image={relatedPost.subpageSettings?.image}

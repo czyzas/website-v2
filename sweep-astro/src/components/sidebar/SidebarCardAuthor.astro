@@ -1,6 +1,6 @@
 ---
 import type { AuthorFragment } from '@/__generated__/cms';
-import { TRANSLATIONS } from '@/constants';
+import { getTranslations } from '@/scripts/translations';
 import WordpressImage from '../WordpressImage.astro';
 import SidebarCard from './SidebarCard.astro';
 
@@ -11,11 +11,12 @@ interface SidebarCardAuthorProps {
 type Props = SidebarCardAuthorProps;
 
 const { author } = Astro.props;
+const TRANSLATIONS = getTranslations();
 ---
 
 {
   !!author && (
-    <SidebarCard title={TRANSLATIONS.SIDEBAR.AUTHOR}>
+    <SidebarCard title={TRANSLATIONS.sidebar.author}>
       <div class="flex items-center gap-3.5">
         <WordpressImage
           data={author.authorAcf?.image}

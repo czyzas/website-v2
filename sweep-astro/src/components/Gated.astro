@@ -8,7 +8,7 @@ type Props = {
 };
 const { formName } = Astro.props;
 const options = getOptions();
-const { gatedFormGuid } = options.gatedContent;
+const { gatedFormGuid, title, overline } = options.gatedContent;
 const form = gatedFormGuid ? await fetchHubspotForm(gatedFormGuid) : undefined;
 ---
 
@@ -18,6 +18,8 @@ const form = gatedFormGuid ? await fetchHubspotForm(gatedFormGuid) : undefined;
       guid={gatedFormGuid}
       form={form}
       formName={formName}
+      title={title}
+      overline={overline}
       client:load
     >
       <slot />

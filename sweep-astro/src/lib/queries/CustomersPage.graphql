@@ -5,15 +5,7 @@ query CustomersPage(
   $POSTS_PER_PAGE: Int = 8
 ) {
   page: pageByLang(uri: "customers", lang: $LANG) {
-    title
-    slug
-    uri
-    language {
-      ...Languages
-    }
-    subpageSettings {
-      ...SubpageSettings
-    }
+    ...EssentialPage
     modules {
       ...ModulesCollection
     }

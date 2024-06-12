@@ -23,6 +23,7 @@ export const CACHE_KEYS = {
   COMPONENT_INDUSTRIES_LIST: 'component/industries-list',
   MODULE_LIST_OF_EVENTS: 'module/list-of-events',
   MODULE_LIST_OF_NEWSROOM: 'module/list-of-newsroom',
+  PDF: 'pdf',
 } as const;
 
 export type CachePayload = string | string[];

@@ -6,16 +6,14 @@ import Prose from '@/components/ui/Prose.astro';
 import { defaultLocale } from '@/i18n/config';
 import Layout from '@/layouts/Layout.astro';
 import { fetchDemoPage, fetchSinglePageStaticPaths } from '@/lib/fetchCMSData';
-import { initializeStore } from '@/scripts/store';
 import { createSingleDefaultPageStaticPaths } from '@/scripts/utils-static-paths';
-import { cmsStore } from '@/stores/cmsStore';
-import { languageStore } from '@/stores/languageStore';
 import Quotation from '@/components/Quotation.astro';
 import WordpressImage from '@/components/WordpressImage.astro';
 import LogosCollection from '@/components/LogosCollection.astro';
 import Form from '@/components/hubspot-form/Form.astro';
 import { fixDoubleBr } from '@/scripts/fixDoubleBr';
 import { cleanArray } from '@/scripts/cleanArray';
+import { initializeStores } from '@/scripts/utils-store-helpers';
 
 export async function getStaticPaths() {
   return createSingleDefaultPageStaticPaths(
@@ -28,20 +26,11 @@ const { lang = defaultLocale } = Astro.params;
 const data = await fetchDemoPage(lang as string);
 const page = data.page!;
 
-initializeStore(cmsStore, {
-  primaryMenu: data.primaryMenu!,
-  themeOptions: data.themeOptionsByLang!,
-  subpageSettings: data.page?.subpageSettings,
-});
-initializeStore(languageStore, {
-  currentLanguage: data.page!.language!,
-  languages: data.languages,
-});
+initializeStores(data);
 
 // TODO: handle data passed to Layout and Top
 const { subpageSettings, demoPageAcf: acf = {} } = page;
-const pageTitle = page?.title ?? '';
-const title = subpageSettings?.customTitle || pageTitle || '';
+const title = subpageSettings?.customTitle || page?.title || '';
 const introduction = subpageSettings?.introduction ?? '';
 
 const {
@@ -92,7 +81,6 @@ const logos = cleanArray(rawLogos?.edges);
 
 <Layout
   name="demo"
-  pageTitle={pageTitle}
   class="bg-gradient-to-b from-sw-surface-subdued to-transparent py-8 md:py-18"
 >
   <Container>

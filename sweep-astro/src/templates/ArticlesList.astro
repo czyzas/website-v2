@@ -4,13 +4,9 @@ import Top from '@/components/partials/Top.astro';
 import Container from '@/components/ui/Container.astro';
 import Grid from '@/components/ui/Grid.astro';
 import Section from '@/components/ui/Section.astro';
-import { TRANSLATIONS } from '@/constants';
 import { buildI18nPath } from '@/i18n/utils';
 import Layout from '@/layouts/Layout.astro';
 import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
-import { initializeStore } from '@/scripts/store';
-import { cmsStore } from '@/stores/cmsStore';
-import { languageStore } from '@/stores/languageStore';
 import type { ColumnSizes } from '@/types';
 import ListTagFilter from '@/components/ListTagFilter.astro';
 import PaginationContainer from '@/components/PaginationContainer.astro';
@@ -30,6 +26,8 @@ import ListFeaturedArticle from '@/components/ListFeaturedArticle.astro';
 import ArticlesGrid from '@/components/ArticlesGrid.astro';
 import { cn } from '@/scripts/cn';
 import { cleanArray } from '@/scripts/cleanArray';
+import { initializeStores } from '@/scripts/utils-store-helpers';
+import { getTranslations } from '@/scripts/translations';
 
 type InsightsListProps = {
   postType: 'insights';
@@ -78,20 +76,11 @@ const tags = cleanArray(
   data.filterTags?.nodes as (InsightsTag | NewsroomTag | EventTag)[]
 );
 
-initializeStore(cmsStore, {
-  primaryMenu: data.primaryMenu!,
-  themeOptions: data.themeOptionsByLang!,
-  subpageSettings: data.page?.subpageSettings,
-});
-initializeStore(languageStore, {
-  currentLanguage: data.page!.language!,
-  languages: data.languages,
-});
+initializeStores(data);
 
 const { subpageSettings, articlesListAcf: acf } = page;
 // TODO: handle data passed to Layout and Top
-const pageTitle = page?.title ?? '';
-const title = subpageSettings?.customTitle || pageTitle || '';
+const title = subpageSettings?.customTitle || page?.title || '';
 const content = subpageSettings?.introduction ?? '';
 const image = subpageSettings?.image;
 const size = subpageSettings?.topDistribution ?? '5-7';
@@ -125,11 +114,11 @@ if (!rawFeaturedPost && posts?.[0] && !filterTag) {
 }
 
 const listSectionId = 'list';
+const TRANSLATIONS = getTranslations();
 ---
 
 <Layout
   name="insights"
-  pageTitle={pageTitle}
   class="bg-gradient-to-b from-sw-surface-subdued to-transparent py-8 md:py-18"
 >
   <Top
@@ -139,10 +128,10 @@ const listSectionId = 'list';
     size={size as ColumnSizes}
     breadcrumbs={[
       {
-        title: TRANSLATIONS.HOME,
+        title: TRANSLATIONS.home,
         url: buildI18nPath('/', lang),
       },
-      pageTitle,
+      page.title ?? '',
     ]}
     class="pb-12 md:pb-20"
   >
@@ -215,7 +204,7 @@ const listSectionId = 'list';
         {insightsArticles.length > 0 && (
           <Section bg="surface-subdued">
             <Container>
-              <SectionTitle withMargin headline={TRANSLATIONS.BLOG} />
+              <SectionTitle withMargin headline={TRANSLATIONS.blog} />
               <ArticlesGrid
                 postType="insights"
                 posts={insightsArticles}

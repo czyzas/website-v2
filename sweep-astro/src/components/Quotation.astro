@@ -58,7 +58,7 @@ const hasAuthor = !!authorImage || !!authorName || !!authorOccupation;
         <WordpressImage
           preferredWidth={1240}
           data={image}
-          class="aspect-auto object-cover object-top md:aspect-video"
+          class="aspect-auto w-full object-cover object-top md:aspect-video"
         />
         <slot name="image-details" />
       </div>

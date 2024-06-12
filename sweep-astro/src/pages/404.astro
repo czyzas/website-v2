@@ -8,17 +8,23 @@ import { cmsStore } from '@/stores/cmsStore';
 import { languageStore } from '@/stores/languageStore';
 
 const data = await fetchError404Page();
+const TRANSLATIONS =
+  data.themeOptionsByLang?.themeOptionsAcf?.translations || {};
 
+// TODO: Handle data from 404 page
 initializeStore(cmsStore, {
+  pageTitle: TRANSLATIONS?.error404?.pageTitle || '',
+  uri: '/404',
   primaryMenu: data.primaryMenu!,
   themeOptions: data.themeOptionsByLang!,
 });
 initializeStore(languageStore, {
   currentLanguage: { code: defaultLocale, language_code: defaultLocale },
   languages: data.languages,
+  translations: [],
 });
 ---
 
-<Layout name="error-404" pageTitle="Page not found">
+<Layout name="error-404">
   <Container> Error 404 </Container>
 </Layout>

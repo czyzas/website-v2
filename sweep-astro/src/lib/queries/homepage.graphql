@@ -6,6 +6,13 @@ query Homepage($LANG: String!) {
     language {
       ...Languages
     }
+    translations {
+      languageCode
+      uri
+    }
+    seo {
+      ...Seo
+    }
     homepage {
       hero {
         title
@@ -248,5 +255,6 @@ query Homepage($LANG: String!) {
       ...InsightsListItem
     }
   }
+
   ...Essential
 }

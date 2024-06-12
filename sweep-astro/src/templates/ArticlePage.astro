@@ -29,11 +29,9 @@ import Container from '@/components/ui/Container.astro';
 import Grid from '@/components/ui/Grid.astro';
 import Link from '@/components/ui/Link.astro';
 import Section from '@/components/ui/Section.astro';
-import { TRANSLATIONS } from '@/constants';
 import { buildI18nPath, getLocale } from '@/i18n/utils';
 import Layout from '@/layouts/Layout.astro';
 import { buildTOC } from '@/scripts/buildTOC';
-import { cn } from '@/scripts/cn';
 import { parseCaseStudyCustomer } from '@/scripts/data-parsers/parseCaseStudies';
 import { parseLink } from '@/scripts/data-parsers/parseLink';
 import type { UnparsedLink } from '@/scripts/data-parsers/parseLink';
@@ -41,10 +39,13 @@ import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
 import { parseTags } from '@/scripts/data-parsers/parseTag';
 import { getDefaultTopImage } from '@/scripts/postTypeOptions';
 import { overwriteWYSIWYGContent } from '@/scripts/overwriteWYSIWYGContent';
-import { initializeStore } from '@/scripts/store';
-import { cmsStore } from '@/stores/cmsStore';
-import type { ColumnSizes } from '@/types';
+import type { ColumnSizes, WithShouldRender } from '@/types';
 import { cleanArray } from '@/scripts/cleanArray';
+import SidebarFile from '@/components/sidebar/SidebarFile.astro';
+import { parseFile } from '@/scripts/data-parsers/parseFile';
+import type { ParsedFile } from '@/scripts/data-parsers/parseFile';
+import { initializeStores } from '@/scripts/utils-store-helpers';
+import { getTranslations } from '@/scripts/translations';
 
 type InsightsSingleProps = {
   postType: 'insights';
@@ -74,39 +75,38 @@ type Props = (
   ArticlePageProps;
 
 const { postType, data, lang } = Astro.props;
-
 const page = data.page!;
 
-initializeStore(cmsStore, {
-  primaryMenu: data.primaryMenu!,
-  themeOptions: data.themeOptionsByLang!,
-  subpageSettings: data.page?.subpageSettings,
-});
+initializeStores(data);
 
 overwriteWYSIWYGContent(page.modules?.modulesContent, {
   RICH_TEXT_CONTENT_HEADINGS_IDS: true,
 });
-
+const TRANSLATIONS = getTranslations();
 const { subpageSettings } = page;
-const pageTitle = page?.title ?? '';
-const title = subpageSettings?.customTitle || pageTitle || '';
+let title = subpageSettings?.customTitle || page?.title || '';
 const introduction = subpageSettings?.introduction || '';
 const image = subpageSettings?.image;
 const size = (subpageSettings?.topDistribution ?? '5-7') as ColumnSizes;
 const category =
   page.__typename === 'CaseStudy'
-    ? TRANSLATIONS.CUSTOMER
+    ? TRANSLATIONS.customer
     : page.categories?.nodes?.[0]?.name;
 const tags = parseTags(page.tags?.nodes);
 const toc = buildTOC(page.modules?.modulesContent);
 let lastUpdated: string | undefined;
 let author: AuthorFragment | undefined;
+let attachment: WithShouldRender<ParsedFile> | undefined;
 
 if (
   (page.__typename === 'InsightsItem' || page.__typename === 'NewsroomItem') &&
   page.articleAcf?.author?.node.__typename === 'PostAuthor'
 ) {
   author = page.articleAcf.author.node;
+}
+
+if (page.__typename === 'InsightsItem') {
+  attachment = parseFile(page?.insightsItemAcf?.attachment?.node);
 }
 
 if ('modified' in page && page.modified) {
@@ -132,15 +132,15 @@ const posts = cleanArray(
 let postsTitle = '';
 switch (postType) {
   case 'event':
-    postsTitle = TRANSLATIONS.ARTICLE.MORE_EVENTS;
+    postsTitle = TRANSLATIONS.article.moreEvents;
     break;
   case 'case-study':
-    postsTitle = TRANSLATIONS.ARTICLE.MORE_CUSTOMER_STORIES;
+    postsTitle = TRANSLATIONS.article.moreCustomerStories;
     break;
   case 'insights':
   case 'newsroom':
   default:
-    postsTitle = TRANSLATIONS.ARTICLE.MORE_STORIES;
+    postsTitle = TRANSLATIONS.article.moreStories;
     break;
 }
 
@@ -156,8 +156,12 @@ let caseStudyDetails: {
 if (page.__typename === 'CaseStudy') {
   const customer = parseCaseStudyCustomer(page);
   const longerTitle = page.caseStudyAcf?.longerTitle;
+  title = longerTitle || customer?.title || '';
   caseStudyDetails = [
-    { label: 'company', value: longerTitle || customer?.title },
+    {
+      label: 'company',
+      value: subpageSettings?.customTitle || page?.title || '',
+    },
     { label: 'size', value: customer?.customerAcf?.size },
     { label: 'industry', value: customer?.customerAcf?.category },
     { label: 'headquarters', value: customer?.customerAcf?.headquarters },
@@ -166,13 +170,9 @@ if (page.__typename === 'CaseStudy') {
 }
 ---
 
-<Layout
-  name={postType}
-  pageTitle={pageTitle}
-  htmlClassName="scroll-smooth scroll-p-24"
->
+<Layout name={postType} htmlClassName="scroll-smooth scroll-p-24">
   <Top
-    overline={cn({ [TRANSLATIONS.EVENT]: page.__typename === 'Event' })}
+    overline={page.__typename === 'Event' ? TRANSLATIONS.event : undefined}
     title={title}
     titleSize="h2"
     content={introduction}
@@ -255,6 +255,16 @@ if (page.__typename === 'CaseStudy') {
         >
           <SidebarCardAuthor author={author} />
           {
+            page.__typename === 'InsightsItem' &&
+              !!attachment &&
+              attachment.shouldRender && (
+                <SidebarFile
+                  title={page.insightsItemAcf?.attachmentSidebarTitle}
+                  href={attachment.url}
+                />
+              )
+          }
+          {
             (
               [
                 'InsightsItem',
@@ -298,7 +308,7 @@ if (page.__typename === 'CaseStudy') {
               page.__typename === 'CaseStudy'
                 ? {
                     url: buildI18nPath('/customers', lang),
-                    title: TRANSLATIONS.LOAD_MORE,
+                    title: TRANSLATIONS.loadMore,
                   }
                 : undefined
             }

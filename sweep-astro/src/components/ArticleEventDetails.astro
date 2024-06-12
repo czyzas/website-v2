@@ -2,8 +2,8 @@
 import type { HTMLAttributes } from 'astro/types';
 import { Icon } from 'astro-icon/components';
 import { cn } from '@/scripts/cn';
-import { TRANSLATIONS } from '@/constants';
 import EventDate from '@/components/EventDate.astro';
+import { getTranslations } from '@/scripts/translations';
 import ArticleTag from './ArticleTag.astro';
 
 interface ArticleEventDetailsProps extends HTMLAttributes<'div'> {
@@ -13,6 +13,7 @@ interface ArticleEventDetailsProps extends HTMLAttributes<'div'> {
 type Props = ArticleEventDetailsProps;
 
 const { class: className, date, ...props } = Astro.props;
+const TRANSLATIONS = getTranslations();
 ---
 
 <script>
@@ -43,7 +44,7 @@ const { class: className, date, ...props } = Astro.props;
     class="article-card-past-event-label absolute right-4 top-4 flex items-center gap-0.5 aria-hidden:invisible sm:right-5 sm:top-5"
   >
     <Icon name="clock-countdown" class="text-lg text-sw-fire-500" />
-    {TRANSLATIONS.PAST_EVENT}
+    {TRANSLATIONS.pastEvent}
   </ArticleTag>
   <EventDate
     date={date}

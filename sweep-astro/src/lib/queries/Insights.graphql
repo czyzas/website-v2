@@ -5,15 +5,7 @@ query InsightsListPage(
   $POSTS_PER_PAGE: Int = 6
 ) {
   page: pageByLang(uri: "insights", lang: $LANG) {
-    title
-    slug
-    uri
-    language {
-      ...Languages
-    }
-    subpageSettings {
-      ...SubpageSettings
-    }
+    ...EssentialPage
     articlesListAcf {
       ...ArticlesListAcf
     }
@@ -59,6 +51,14 @@ query InsightsSinglePage($URI: String!, $LANG: String!) {
     slug
     uri
     modified
+    insightsItemAcf {
+      attachmentSidebarTitle
+      attachment {
+        node {
+          ...File
+        }
+      }
+    }
     articleAcf {
       ...ArticlePageAcf
     }
@@ -78,11 +78,18 @@ query InsightsSinglePage($URI: String!, $LANG: String!) {
     language {
       ...Languages
     }
+    translations {
+      languageCode
+      uri
+    }
     subpageSettings {
       ...SubpageSettings
     }
     modules {
       ...ModulesCollection
+    }
+    seo {
+      ...Seo
     }
   }
   articles: insights(

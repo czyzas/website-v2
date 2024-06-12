@@ -133,6 +133,18 @@ fragment ModulesCollection on Modules {
         content
       }
     }
+    ... on ModulesModulesContentCardLinksLayout {
+      layoutName
+      backgroundColor {
+        selectBackgroundColor
+      }
+      cardLinks {
+        title
+        link {
+          ...Link
+        }
+      }
+    }
     ... on ModulesModulesContentPartnersLayout {
       layoutName
       backgroundColor {

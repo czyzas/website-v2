@@ -235,8 +235,8 @@ function hide_selected_modules( array $hidden_modules ): void {
 add_action( 'admin_footer', function () {
 	global $post;
 	if ( !$post || !$post->post_type ) return;
-	
-	$article_post_types = [ 'newsroom', 'insights', 'event' ];
+
+	$article_post_types = [ 'newsroom', 'insights', 'event', 'case-study' ];
 	$is_article = in_array( $post->post_type, $article_post_types );
 	$is_customers_page = $post->post_type === 'page' && $post->post_name === 'customers';
 
@@ -254,7 +254,7 @@ add_action( 'admin_footer', function () {
 	} else { // hide article modules on other pages
 		hide_selected_modules(
 			array_filter( [
-				'rich-text-content',
+//				'rich-text-content',
 				'article-title',
 				'gated',
 				// hide case studies list on non-customers pages

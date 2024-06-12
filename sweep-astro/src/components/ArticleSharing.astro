@@ -2,6 +2,7 @@
 import { Icon } from 'astro-icon/components';
 import type { HTMLAttributes } from 'astro/types';
 import { cn } from '@/scripts/cn';
+import { buildCanonicalUrl } from '@/scripts/buildCanonicalUrl';
 
 type SharingProps = {
   sharer: string;
@@ -13,34 +14,34 @@ type SharingProps = {
 type Props = HTMLAttributes<'div'>;
 
 const { class: className, ...props } = Astro.props;
+const canonical = buildCanonicalUrl();
 
-// TODO: replace example.com with current url
 const sharingLinks: SharingProps = [
   {
     sharer: 'twitter',
     title: 'Twitter',
-    url: 'https://example.com',
+    url: canonical,
   },
   {
     sharer: 'whatsapp',
     title: 'WhatsApp',
-    url: 'https://example.com',
+    url: canonical,
   },
   {
     sharer: 'linkedin',
     title: 'Linkedin',
-    url: 'https://example.com',
+    url: canonical,
   },
   {
     sharer: 'files',
     title: 'Email',
-    url: 'https://example.com',
+    url: canonical,
     itemClass: 'copy-link',
   },
   {
     sharer: 'email',
     title: 'Email',
-    url: 'https://example.com',
+    url: canonical,
   },
 ];
 ---

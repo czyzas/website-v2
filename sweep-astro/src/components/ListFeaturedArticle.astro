@@ -5,13 +5,11 @@ import type {
   InsightsListItemFragment,
   NewsroomListItemFragment,
 } from '@/__generated__/cms';
-import { buildI18nPath } from '@/i18n/utils';
 import type { WithAttributes } from '@/types';
 import { cn } from '@/scripts/cn';
 import { parseTags } from '@/scripts/data-parsers/parseTag';
 import EventDate from '@/components/EventDate.astro';
 import { getFeaturedArticleCtaText } from '@/scripts/postTypeOptions';
-import { getLanguage } from '@/scripts/utils-store-helpers';
 import WordpressButtonLink from './WordpressButtonLink.astro';
 import Prose from './ui/Prose.astro';
 import CardWithMergedImage from './CardWithMergedImage.astro';
@@ -37,8 +35,6 @@ const {
   postType,
   ...props
 } = Astro.props;
-
-const { currentLanguage } = getLanguage();
 
 const uri = data?.uri;
 const title = data?.title;
@@ -68,7 +64,7 @@ const ContentWrapper =
       size={layout === 'merged' ? 'lg' : undefined}
       class={cn(
         'list-featured-article',
-        { 'bg-white': postType === 'insights' },
+        { 'bg-white': postType === 'newsroom' },
         className
       )}
       widerCard={postType === 'insights'}
@@ -94,7 +90,7 @@ const ContentWrapper =
         {!!uri && (
           <WordpressButtonLink
             data={{
-              url: buildI18nPath(uri, currentLanguage),
+              url: uri,
               title: getFeaturedArticleCtaText(data.__typename),
             }}
             arrow

@@ -1,7 +1,5 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import { cmsStore } from '@/stores/cmsStore';
-import { initializeStore } from '@/scripts/store';
 import Hero from '@/components/homepage-sections/Hero.astro';
 import CaseStudies from '@/components/homepage-sections/CaseStudies.astro';
 import Customers from '@/components/homepage-sections/Customers.astro';
@@ -12,29 +10,24 @@ import Partners from '@/components/homepage-sections/Partners.astro';
 import Platform from '@/components/homepage-sections/Platform.astro';
 import Resources from '@/components/homepage-sections/Resources.astro';
 import WhoWeWorkWith from '@/components/homepage-sections/WhoWeWorkWith.astro';
-import { languageStore } from '@/stores/languageStore';
 import Regulations from '@/components/homepage-sections/Regulations.astro';
 import type { HomepageQuery } from '@/__generated__/cms';
+import { initializeStores } from '@/scripts/utils-store-helpers';
 
 interface Props {
   data: HomepageQuery;
 }
-
 const { data } = Astro.props;
-
-initializeStore(cmsStore, {
-  homepage: data.page!,
-  homepageInsights: data.insights!,
-  primaryMenu: data.primaryMenu!,
-  themeOptions: data.themeOptionsByLang!,
-});
-initializeStore(languageStore, {
-  currentLanguage: data.page!.language!,
-  languages: data.languages,
+initializeStores(data, {
+  cmsPayload: {
+    uri: '/',
+    homepage: data.page!,
+    homepageInsights: data.insights!,
+  },
 });
 ---
 
-<Layout home name="homepage" pageTitle={data.page?.title ?? ''}>
+<Layout home name="homepage">
   <Hero />
   <Goals />
   <Customers type={1} />

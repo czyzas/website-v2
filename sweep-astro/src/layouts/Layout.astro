@@ -8,30 +8,19 @@ import { cn } from '@/scripts/cn';
 import NewsletterSection from '@/components/partials/NewsletterSection.astro';
 import { initializeStore } from '@/scripts/store';
 import { cacheStore } from '@/stores/cacheStore';
-import { getOptions } from '@/scripts/utils-store-helpers';
+import { getLanguage } from '@/scripts/utils-store-helpers';
+import { getTranslations } from '@/scripts/translations';
+import SEO from '@/components/partials/SEO.astro';
 
 interface Props extends HTMLAttributes<'main'> {
   home?: boolean;
   name: string;
-  pageTitle: string;
   htmlClassName?: string;
 }
-const {
-  home,
-  name,
-  pageTitle,
-  class: className,
-  htmlClassName,
-  ...props
-} = Astro.props;
+const { home, name, class: className, htmlClassName, ...props } = Astro.props;
 
-const { searchEngineVisibility } = getOptions();
-
-// TODO: Update SEO
-const siteTitle = 'Sweep';
-const description = 'Sweep description';
-
-const title = !home && pageTitle ? `${pageTitle} - ${siteTitle}` : siteTitle;
+const { currentLanguage } = getLanguage();
+const TRANSLATIONS = getTranslations();
 
 // Initialize stores
 initializeStore(cacheStore, {
@@ -40,23 +29,20 @@ initializeStore(cacheStore, {
 ---
 
 <!doctype html>
-<html lang="en" class={cn(htmlClassName)}>
+<html lang={currentLanguage} class={htmlClassName}>
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
-    {
-      searchEngineVisibility ? (
-        <meta name="robots" content="noindex, nofollow" />
-      ) : null
-    }
+    <SEO />
     <link
       rel="icon"
       type="image/svg+xml"
       href={import.meta.env.PROD ? '/favicon.svg' : '/favicon-dev.svg'}
     />
-    <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+    <script define:vars={{ TRANSLATIONS }}>
+      // Populate translations in client for React components
+      window.TRANSLATIONS = TRANSLATIONS;
+    </script>
   </head>
   <body class="flex min-h-screen flex-col antialiased">
     <Header />

@@ -16,7 +16,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "layout": "block",
             "pagination": 0,
             "min": 0,
@@ -43,7 +43,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 1,
+                    "wpml_cf_preferences": 3,
                     "choices": {
                         "quotation": "Quotation",
                         "image": "Image"
@@ -80,7 +80,7 @@
                         "class": "invisible-group",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 1,
+                    "wpml_cf_preferences": 3,
                     "layout": "block",
                     "show_in_graphql": 1,
                     "graphql_description": "",
@@ -136,7 +136,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 1,
+                    "wpml_cf_preferences": 3,
                     "return_format": "array",
                     "library": "all",
                     "min_width": "",
@@ -168,7 +168,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 2,
+            "wpml_cf_preferences": 3,
             "default_value": "",
             "maxlength": "",
             "placeholder": "",
@@ -193,7 +193,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "return_format": "array",
             "library": "all",
             "min": "",
@@ -225,7 +225,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 2,
+            "wpml_cf_preferences": 3,
             "default_value": "",
             "maxlength": "",
             "placeholder": "",
@@ -250,7 +250,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 2,
+            "wpml_cf_preferences": 3,
             "default_value": "",
             "maxlength": "",
             "placeholder": "Eg. 550e8400-e29b-41d4-a716-446655440000",
@@ -275,7 +275,7 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 1,
+            "wpml_cf_preferences": 3,
             "layout": "block",
             "show_in_graphql": 1,
             "graphql_description": "",
@@ -296,7 +296,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 2,
+                    "wpml_cf_preferences": 3,
                     "default_value": "",
                     "maxlength": "",
                     "rows": 2,
@@ -321,7 +321,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "wpml_cf_preferences": 2,
+                    "wpml_cf_preferences": 3,
                     "default_value": "",
                     "tabs": "all",
                     "toolbar": "full",
@@ -355,12 +355,12 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "acfml_field_group_mode": "translation",
+    "acfml_field_group_mode": "advanced",
     "show_in_graphql": 1,
     "graphql_field_name": "demoPageAcf",
     "map_graphql_types_from_location_rules": 1,
     "graphql_types": [
         "Page"
     ],
-    "modified": 1714116288
+    "modified": 1718185194
 }

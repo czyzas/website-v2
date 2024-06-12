@@ -3,9 +3,9 @@ import type { HTMLAttributes } from 'astro/types';
 import { cn } from '@/scripts/cn';
 import type { CaseStudyCardFragment } from '@/__generated__/cms';
 import type { WithAttributes } from '@/types';
-import { TRANSLATIONS } from '@/constants';
 import { getDefaultTopImage } from '@/scripts/postTypeOptions';
 import { parseCaseStudyCustomer } from '@/scripts/data-parsers/parseCaseStudies';
+import { getTranslations } from '@/scripts/translations';
 import Grid from './ui/Grid.astro';
 import CaseStudyContent from './CaseStudyContent.astro';
 import CardWithMergedImage from './CardWithMergedImage.astro';
@@ -18,13 +18,13 @@ interface CaseStudiesGridProps extends HTMLAttributes<'div'> {
 }
 
 type Props = WithAttributes<CaseStudiesGridProps>;
-
+const TRANSLATIONS = getTranslations();
 const {
   class: className,
   cases,
   hasFeatured = true,
   hasLongerTitle = false,
-  buttonLabel = TRANSLATIONS.VIEW_CASE_STUDY,
+  buttonLabel = TRANSLATIONS.viewCaseStudy,
   ...props
 } = Astro.props;
 ---

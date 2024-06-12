@@ -1,8 +1,7 @@
 // TODO: rename to defaultLanguage
 export const defaultLocale = 'en';
-export const languages = ['en', 'fr', 'de'] as const;
+export const languages = ['en', 'fr'] as const;
 export const locales: Record<string, string> = {
-  en: 'en-UK',
+  en: 'en-US',
   fr: 'fr-FR',
-  de: 'de-DE',
 } as const;

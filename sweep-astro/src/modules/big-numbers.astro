@@ -5,11 +5,11 @@ import { fixDoubleBr } from '@/scripts/fixDoubleBr';
 import { cn } from '@/scripts/cn';
 import Grid from '@/components/ui/Grid.astro';
 import Card from '@/components/ui/Card.astro';
-import { TRANSLATIONS } from '@/constants';
 import Link from '@/components/ui/Link.astro';
 import { parseLink } from '@/scripts/data-parsers/parseLink';
 import CountNumber from '@/components/CountNumber.astro';
 import type { WithModuleMeta } from '@/types';
+import { getTranslations } from '@/scripts/translations';
 
 type Props = WithModuleMeta<ModulesModulesContentBigNumbersLayout>;
 
@@ -21,8 +21,8 @@ const {
   numbers: rawNumbers,
 } = Astro.props;
 
+const TRANSLATIONS = getTranslations();
 const numbers = rawNumbers ? rawNumbers.filter(Boolean) : [];
-
 const columnClassName: Record<number, string> = {
   1: cn('col-span-full'),
   2: cn('col-span-full sm:col-span-6'),
@@ -57,7 +57,7 @@ const columnClassName: Record<number, string> = {
             {link.shouldRender && (
               <div class="typography-body text-sw-text-subdued">
                 <span>
-                  {TRANSLATIONS.SOURCE}:{' '}
+                  {TRANSLATIONS.source}:{' '}
                   <Link
                     to={link.url}
                     target={link?.target}
