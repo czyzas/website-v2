@@ -402,6 +402,131 @@
                     "graphql_non_null": 0
                 },
                 {
+                    "key": "field_666adb6787b06",
+                    "label": "Size",
+                    "name": "size",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 3,
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "size",
+                    "graphql_non_null": 0
+                },
+                {
+                    "key": "field_666adb8287b07",
+                    "label": "Industry",
+                    "name": "industry",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 3,
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "industry",
+                    "graphql_non_null": 0
+                },
+                {
+                    "key": "field_666adb9087b08",
+                    "label": "Headquarters",
+                    "name": "headquarters",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 3,
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "headquarters",
+                    "graphql_non_null": 0
+                },
+                {
+                    "key": "field_666adb9d87b09",
+                    "label": "Website",
+                    "name": "website",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 3,
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "website",
+                    "graphql_non_null": 0
+                },
+                {
+                    "key": "field_666adba587b0a",
+                    "label": "Last updated",
+                    "name": "last_updated",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 3,
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "lastUpdated",
+                    "graphql_non_null": 0
+                },
+                {
                     "key": "field_6668207b13425",
                     "label": "Hubspot Form",
                     "name": "hubspot_form",
@@ -595,6 +720,56 @@
                             "show_in_graphql": 1,
                             "graphql_description": "",
                             "graphql_field_name": "privacyLinkLabel",
+                            "graphql_non_null": 0
+                        },
+                        {
+                            "key": "field_666adb4e87b05",
+                            "label": "Skip this step",
+                            "name": "skip_this_step",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 3,
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "skipThisStep",
+                            "graphql_non_null": 0
+                        },
+                        {
+                            "key": "field_666adbf287b0b",
+                            "label": "Select date and time",
+                            "name": "select_date_and_time",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "wpml_cf_preferences": 3,
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "show_in_graphql": 1,
+                            "graphql_description": "",
+                            "graphql_field_name": "selectDateAndTime",
                             "graphql_non_null": 0
                         }
                     ]
@@ -2387,5 +2562,5 @@
     "graphql_field_name": "themeOptionsAcf",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1718203060
+    "modified": 1718279178
 }
