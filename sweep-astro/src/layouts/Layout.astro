@@ -11,6 +11,7 @@ import { cacheStore } from '@/stores/cacheStore';
 import { getLanguage } from '@/scripts/utils-store-helpers';
 import { getTranslations } from '@/scripts/translations';
 import SEO from '@/components/partials/SEO.astro';
+import TrackingCodes from '@/components/partials/TrackingCodes.astro';
 
 interface Props extends HTMLAttributes<'main'> {
   home?: boolean;
@@ -31,6 +32,7 @@ initializeStore(cacheStore, {
 <!doctype html>
 <html lang={currentLanguage} class={htmlClassName}>
   <head>
+    <TrackingCodes name="head" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <SEO />
@@ -45,6 +47,7 @@ initializeStore(cacheStore, {
     </script>
   </head>
   <body class="flex min-h-screen flex-col antialiased">
+    <TrackingCodes name="body" />
     <Header />
     <main {...props} class={cn({ subpage: !home }, name, 'flex-1', className)}>
       <slot />
