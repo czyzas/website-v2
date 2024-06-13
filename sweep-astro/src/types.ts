@@ -1,4 +1,5 @@
 import type { PageTranslationsFragment } from './__generated__/cms';
+import type { UnparsedLink } from './scripts/data-parsers/parseLink';
 
 // UTILS
 type OmitDistributive<T, K extends PropertyKey> = T extends unknown
@@ -66,3 +67,5 @@ export interface FilterTag {
 
 export type PageTranslations =
   ReplaceTypenameLiteral<PageTranslationsFragment>[];
+
+export type BreadcrumbsType = [...UnparsedLink[], string];

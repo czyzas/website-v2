@@ -4,12 +4,15 @@ import { parseLink } from '@/scripts/data-parsers/parseLink';
 import type { UnparsedLink } from '@/scripts/data-parsers/parseLink';
 import { cn } from '@/scripts/cn';
 import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
-import type { ColumnSizes } from '@/types';
+import type { BreadcrumbsType, ColumnSizes } from '@/types';
 import Container from '../ui/Container.astro';
 import Button from '../ui/Button.astro';
 import WordpressImage from '../WordpressImage.astro';
 import Grid from '../ui/Grid.astro';
 import Breadcrumbs from '../Breadcrumbs.astro';
+import { getStore } from '@/scripts/store';
+import { cmsStore } from '@/stores/cmsStore';
+import { isBoolean } from 'lodash-es';
 
 interface TopProps {
   title?: string;
@@ -17,10 +20,12 @@ interface TopProps {
   titleSize?: 'h1' | 'h2';
   content?: string;
   link?: UnparsedLink;
+  /** @default true */
+  hasImage?: boolean;
   image?: UnparsedImage;
-  size?: ColumnSizes;
+  columnsDistribution?: ColumnSizes;
   overline?: string;
-  breadcrumbs?: [...UnparsedLink[], string];
+  breadcrumbs?: BreadcrumbsType;
 }
 
 type Props = HTMLAttributes<'section'> & TopProps;
@@ -31,27 +36,41 @@ const {
   content,
   link: unparsedLink,
   image,
-  size = '5-7',
+  hasImage = true,
+  columnsDistribution = '5-7',
   breadcrumbs,
   overline,
   class: className,
   ...props
 } = Astro.props;
 
-const link = parseLink(unparsedLink);
-const sizes: Record<ColumnSizes, [string, string]> = {
+const columnsSizes: Record<ColumnSizes, [string, string]> = {
   '5-7': ['md:col-span-5', 'md:col-span-7'],
   '6-6': ['md:col-span-6', 'md:col-span-6'],
   '7-5': ['md:col-span-7', 'md:col-span-5'],
-};
+} as const;
+
 const titleSizes = {
-  h1: 'typography-h1 md:typography-h1',
+  h1: 'typography-h2 md:typography-h1',
   h2: 'typography-h2',
 } as const;
 
-const hasImage = image || Astro.slots.has('image');
-const [contentColumnSize, imageColumnSize] = hasImage
-  ? sizes?.[size] ?? sizes['5-7']
+const store = getStore(cmsStore);
+const { pageTitle, subpageSettings } = store;
+const finalTitle = title ?? (subpageSettings?.customTitle || pageTitle || '');
+const finalContent = content ?? (subpageSettings?.introduction || '');
+const finalUnparsedLink = unparsedLink ?? subpageSettings?.topButtonLink;
+const finalImage =
+  isBoolean(image) && !image ? undefined : image ?? subpageSettings?.image;
+const finalColumnsDistribution =
+  columnsDistribution ?? (subpageSettings?.topDistribution || '5-7');
+
+const titleSizeClass = titleSizes?.[titleSize] ?? titleSizes.h1;
+
+const finalHasImage = hasImage && (finalImage || Astro.slots.has('image'));
+const link = parseLink(finalUnparsedLink);
+const [contentColumnSize, imageColumnSize] = finalHasImage
+  ? columnsSizes?.[finalColumnsDistribution] ?? columnsSizes['5-7']
   : [];
 ---
 
@@ -84,15 +103,12 @@ const [contentColumnSize, imageColumnSize] = hasImage
             </span>
           )
         }
-        <h1
-          class={titleSizes?.[titleSize] ?? titleSizes.h1}
-          set:html={title ?? ''}
-        />
+        <h1 class={titleSizeClass} set:html={finalTitle} />
         {
-          !!content && (
+          !!finalContent && (
             <div
               class="typography-body md:max-w-[22.125rem]"
-              set:html={content ?? ''}
+              set:html={finalContent}
             />
           )
         }
@@ -111,7 +127,7 @@ const [contentColumnSize, imageColumnSize] = hasImage
         }
       </div>
       {
-        hasImage && (
+        finalHasImage && (
           <div
             class={cn(
               'col-span-full',
@@ -120,7 +136,11 @@ const [contentColumnSize, imageColumnSize] = hasImage
             )}
           >
             <slot name="image">
-              <WordpressImage data={image} loading="eager" class="rounded-lg" />
+              <WordpressImage
+                data={finalImage}
+                loading="eager"
+                class="rounded-lg"
+              />
             </slot>
           </div>
         )
