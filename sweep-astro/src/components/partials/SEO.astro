@@ -6,7 +6,6 @@ import { getLanguage, getOptions, getSeo } from '@/scripts/utils-store-helpers';
 import { cmsStore } from '@/stores/cmsStore';
 import { buildCanonicalUrl } from '@/scripts/buildCanonicalUrl';
 
-// TODO: fix canonical
 const {
   title: seoTitle,
   opengraphImage,
@@ -43,6 +42,8 @@ const image = opengraphImage?.mediaItemUrl
 const canonical = buildCanonicalUrl();
 ---
 
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
 <meta name="description" content={description} />
 <meta name="generator" content={Astro.generator} />
 {
@@ -72,3 +73,9 @@ const canonical = buildCanonicalUrl();
 <meta name="twitter:image" content={image?.src} />
 <link rel="canonical" href={canonical} />
 <title>{title}</title>
+
+<link
+  rel="icon"
+  type="image/svg+xml"
+  href={import.meta.env.PROD ? '/favicon.svg' : '/favicon-dev.svg'}
+/>
