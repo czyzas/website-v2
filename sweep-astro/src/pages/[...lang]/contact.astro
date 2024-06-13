@@ -19,7 +19,6 @@ import ArticleCard from '@/components/ArticleCard.astro';
 import Prose from '@/components/ui/Prose.astro';
 import { defaultLocale } from '@/i18n/config';
 import { createSingleDefaultPageStaticPaths } from '@/scripts/utils-static-paths';
-import type { ColumnSizes } from '@/types';
 import FormContainer from '@/components/hubspot-form/FormContainer.astro';
 import { cleanArray } from '@/scripts/cleanArray';
 import { initializeStores } from '@/scripts/utils-store-helpers';
@@ -37,13 +36,6 @@ const page = data.page!;
 
 initializeStores(data);
 
-// TODO: handle data passed to Layout and Top
-const { subpageSettings } = page;
-const title = subpageSettings?.customTitle || page?.title || '';
-const content = subpageSettings?.introduction ?? '';
-const image = subpageSettings?.image;
-const size = subpageSettings?.topDistribution ?? '5-7';
-
 const form = page.contactAcf?.form;
 const formGuid = form?.hubspotFormGuid ?? '';
 
@@ -56,13 +48,7 @@ const officesCards = cleanArray(offices?.cards);
 ---
 
 <Layout name="contact">
-  <Top
-    title={title}
-    content={content}
-    image={image}
-    size={size as ColumnSizes}
-    class="py-25"
-  />
+  <Top class="py-25" />
   {
     formGuid ? (
       <Section bg="surface-subdued" class="md:py-15">

@@ -39,7 +39,7 @@ import { parseSectionTitle } from '@/scripts/data-parsers/parseSectionTitle';
 import { parseTags } from '@/scripts/data-parsers/parseTag';
 import { getDefaultTopImage } from '@/scripts/postTypeOptions';
 import { overwriteWYSIWYGContent } from '@/scripts/overwriteWYSIWYGContent';
-import type { ColumnSizes, WithShouldRender } from '@/types';
+import type { WithShouldRender } from '@/types';
 import { cleanArray } from '@/scripts/cleanArray';
 import SidebarFile from '@/components/sidebar/SidebarFile.astro';
 import { parseFile } from '@/scripts/data-parsers/parseFile';
@@ -85,9 +85,7 @@ overwriteWYSIWYGContent(page.modules?.modulesContent, {
 const TRANSLATIONS = getTranslations();
 const { subpageSettings } = page;
 let title = subpageSettings?.customTitle || page?.title || '';
-const introduction = subpageSettings?.introduction || '';
 const image = subpageSettings?.image;
-const size = (subpageSettings?.topDistribution ?? '5-7') as ColumnSizes;
 const category =
   page.__typename === 'CaseStudy'
     ? TRANSLATIONS.customer
@@ -159,13 +157,20 @@ if (page.__typename === 'CaseStudy') {
   title = longerTitle || customer?.title || '';
   caseStudyDetails = [
     {
-      label: 'company',
-      value: subpageSettings?.customTitle || page?.title || '',
+      label: TRANSLATIONS.company,
+      value:
+        customer?.customerAcf?.company ||
+        subpageSettings?.customTitle ||
+        page?.title ||
+        '',
     },
-    { label: 'size', value: customer?.customerAcf?.size },
-    { label: 'industry', value: customer?.customerAcf?.category },
-    { label: 'headquarters', value: customer?.customerAcf?.headquarters },
-    { label: 'website', value: customer?.customerAcf?.websiteLink },
+    { label: TRANSLATIONS.size, value: customer?.customerAcf?.size },
+    { label: TRANSLATIONS.industry, value: customer?.customerAcf?.category },
+    {
+      label: TRANSLATIONS.headquarters,
+      value: customer?.customerAcf?.headquarters,
+    },
+    { label: TRANSLATIONS.website, value: customer?.customerAcf?.websiteLink },
   ].filter((entry) => entry.value);
 }
 ---
@@ -175,9 +180,7 @@ if (page.__typename === 'CaseStudy') {
     overline={page.__typename === 'Event' ? TRANSLATIONS.event : undefined}
     title={title}
     titleSize="h2"
-    content={introduction}
-    image={page.__typename !== 'CaseStudy' ? image : undefined}
-    size={size}
+    hasImage={page.__typename !== 'CaseStudy'}
     class="py-8 md:pb-14 md:pt-18"
   >
     {
@@ -233,8 +236,8 @@ if (page.__typename === 'CaseStudy') {
     }
     <ArticleBar
       details={{
-        Category: category,
-        'Last updated': lastUpdated,
+        [TRANSLATIONS.category]: category,
+        [TRANSLATIONS.lastUpdated]: lastUpdated,
       }}
       tags={tags}
       sharing

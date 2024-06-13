@@ -91,14 +91,21 @@ fragment ThemeOptions on ThemeOptions {
       readMore
       loadMore
       viewCaseStudy
+      size
+      industry
+      headquarters
+      website
+      category
+      company
+      lastUpdated
       hubspotForm {
         defaultPrivacyPolicyText
         formMessageThankYou
         formSubmissionFailedMessage
-        privacyLinkLabel
         submit
         submitting
-        termsLinkLabel
+        skipThisStep
+        selectDateAndTime
       }
       sidebar {
         author

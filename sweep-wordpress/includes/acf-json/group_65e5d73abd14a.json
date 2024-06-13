@@ -126,6 +126,31 @@
             "graphql_description": "",
             "graphql_field_name": "headquarters",
             "graphql_non_null": 0
+        },
+        {
+            "key": "field_666ae61f70dc1",
+            "label": "Company",
+            "name": "company",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 3,
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "company",
+            "graphql_non_null": 0
         }
     ],
     "location": [
@@ -151,5 +176,5 @@
     "graphql_field_name": "customerAcf",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1718183976
+    "modified": 1718281772
 }

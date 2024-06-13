@@ -10,10 +10,10 @@ import { createSingleDefaultPageStaticPaths } from '@/scripts/utils-static-paths
 import Quotation from '@/components/Quotation.astro';
 import WordpressImage from '@/components/WordpressImage.astro';
 import LogosCollection from '@/components/LogosCollection.astro';
-import Form from '@/components/hubspot-form/Form.astro';
 import { fixDoubleBr } from '@/scripts/fixDoubleBr';
 import { cleanArray } from '@/scripts/cleanArray';
 import { initializeStores } from '@/scripts/utils-store-helpers';
+import DemoForm from '@/components/hubspot-form/forms/DemoForm.astro';
 
 export async function getStaticPaths() {
   return createSingleDefaultPageStaticPaths(
@@ -151,7 +151,7 @@ const logos = cleanArray(rawLogos?.edges);
         {
           !!hubspotFormGuid && (
             <div class="mb-8 mt-4 md:mb-12 lg:mb-24">
-              <Form formGuid={hubspotFormGuid} />
+              <DemoForm formGuid={hubspotFormGuid} />
             </div>
           )
         }
