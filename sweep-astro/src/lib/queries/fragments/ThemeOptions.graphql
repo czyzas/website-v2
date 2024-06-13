@@ -102,10 +102,10 @@ fragment ThemeOptions on ThemeOptions {
         defaultPrivacyPolicyText
         formMessageThankYou
         formSubmissionFailedMessage
-        privacyLinkLabel
         submit
         submitting
-        termsLinkLabel
+        skipThisStep
+        selectDateAndTime
       }
       sidebar {
         author

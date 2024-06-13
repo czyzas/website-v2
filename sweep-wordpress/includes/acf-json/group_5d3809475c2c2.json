@@ -723,56 +723,6 @@
                             "graphql_non_null": 0
                         },
                         {
-                            "key": "field_666820f81342b",
-                            "label": "Terms link label",
-                            "name": "terms_link_label",
-                            "aria-label": "",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "wpml_cf_preferences": 3,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "termsLinkLabel",
-                            "graphql_non_null": 0
-                        },
-                        {
-                            "key": "field_6668210e1342c",
-                            "label": "Privacy link label",
-                            "name": "privacy_link_label",
-                            "aria-label": "",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "wpml_cf_preferences": 3,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "privacyLinkLabel",
-                            "graphql_non_null": 0
-                        },
-                        {
                             "key": "field_666adb4e87b05",
                             "label": "Skip this step",
                             "name": "skip_this_step",
@@ -2612,5 +2562,5 @@
     "graphql_field_name": "themeOptionsAcf",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1718281548
+    "modified": 1718282385
 }

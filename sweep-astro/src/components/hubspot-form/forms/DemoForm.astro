@@ -1,0 +1,20 @@
+---
+import { fetchHubspotForm } from '@/lib/fetchHubspotForm';
+import ClientDemoForm from './DemoForm';
+
+type Props = {
+  formGuid: string;
+};
+
+const { formGuid } = Astro.props;
+const form = await fetchHubspotForm(formGuid);
+---
+
+{form ? <ClientDemoForm client:visible form={form} /> : null}
+{
+  !form && import.meta.env.DEV && (
+    <div>
+      There was no form with id: <code>{formGuid}</code>
+    </div>
+  )
+}
