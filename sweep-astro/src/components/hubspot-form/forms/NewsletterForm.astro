@@ -1,6 +1,6 @@
 ---
 import { fetchHubspotForm } from '@/lib/fetchHubspotForm';
-import SubscribeNewsletter from './SubscribeNewsletter';
+import ClientNewsletterForm from './NewsletterForm';
 
 type Props = {
   formGuid: string;
@@ -10,7 +10,7 @@ const { formGuid } = Astro.props;
 const form = await fetchHubspotForm(formGuid);
 ---
 
-{form ? <SubscribeNewsletter client:visible form={form} /> : null}
+{form ? <ClientNewsletterForm client:visible form={form} /> : null}
 {
   !form && import.meta.env.DEV && (
     <div>

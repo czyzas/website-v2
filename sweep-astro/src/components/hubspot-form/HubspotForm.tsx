@@ -197,17 +197,7 @@ export const HubspotForm = ({
       {!options.hideSubmitButton && (
         <div className="submit-button-container flex w-full flex-col items-start justify-start gap-3">
           <div className="typography-body-2 text-sw-text-subdued [&>a:focus]:text-sw-sky-400 [&>a:hover]:text-sw-sky-400 [&>a]:underline">
-            {privacyPolicyText ? (
-              ReactHtmlParser(privacyPolicyText)
-            ) : (
-              <>
-                {/* TODO: Handle links and labels */}
-                <a href="/terms">{TRANSLATIONS.hubspotForm.termsLinkLabel}</a>
-                <a href="/privacy">
-                  {TRANSLATIONS.hubspotForm.privacyLinkLabel}
-                </a>
-              </>
-            )}
+            {privacyPolicyText ? ReactHtmlParser(privacyPolicyText) : null}
           </div>
           <div className="flex w-full">
             {submitRender ? (
@@ -219,6 +209,7 @@ export const HubspotForm = ({
                   className={options.submitClassName}
                   id={`Submit ${name}`}
                   variant="secondary"
+                  loading={isLoading}
                 >
                   {options.renderSubmitButton
                     ? options.renderSubmitButton(submitText)

@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { cn } from '@/scripts/cn';
 import { isBrowser } from '@/scripts/client/utils';
 import { getTranslations } from '@/scripts/translations';
-import { Button } from '../ui/Button';
-import { HubspotForm } from './HubspotForm';
-import type { IHubspotFormDefinition } from './shared';
+import { Button } from '../../ui/Button';
+import { HubspotForm } from '../HubspotForm';
+import type { IHubspotFormDefinition } from '../shared';
 
-const SubscribeNewsletter = ({ form }: { form: IHubspotFormDefinition }) => {
+const NewsletterForm = ({ form }: { form: IHubspotFormDefinition }) => {
   const [isSubmitSuccessful, setIsSubmitSuccessful] = useState(false);
   const TRANSLATIONS = isBrowser() ? window.TRANSLATIONS : getTranslations();
 
@@ -37,4 +37,4 @@ const SubscribeNewsletter = ({ form }: { form: IHubspotFormDefinition }) => {
   );
 };
 
-export default SubscribeNewsletter;
+export default NewsletterForm;

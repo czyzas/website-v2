@@ -1,0 +1,12 @@
+---
+import GTM from './GTM.astro';
+import GTMNoscript from './GTMNoscript.astro';
+type Props = {
+  name?: 'gtm' | 'gtm-noscript';
+};
+
+const { name } = Astro.props;
+---
+
+{name === 'gtm' && <GTM />}
+{name === 'gtm-noscript' && <GTMNoscript />}

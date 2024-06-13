@@ -5,3 +5,5 @@ export const DEFAULT_POSTS_PER_PAGE = import.meta.env.DEV ? 3 : 9;
 export const PAGINATION_PREFIX = 'page';
 
 export const HUBSPOT_FORM_ENDPOINT = 'https://api.hubapi.com/forms/v2/forms';
+
+export const GTM_CODE = 'GTM-MKL4GSS';
