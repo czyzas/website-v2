@@ -91,6 +91,13 @@ fragment ThemeOptions on ThemeOptions {
       readMore
       loadMore
       viewCaseStudy
+      size
+      industry
+      headquarters
+      website
+      category
+      company
+      lastUpdated
       hubspotForm {
         defaultPrivacyPolicyText
         formMessageThankYou

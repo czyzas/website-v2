@@ -14,6 +14,7 @@ fragment CaseStudyCard on CaseStudy {
             category
             headquarters
             size
+            company
             websiteLink {
               ...Link
             }

@@ -157,13 +157,20 @@ if (page.__typename === 'CaseStudy') {
   title = longerTitle || customer?.title || '';
   caseStudyDetails = [
     {
-      label: 'company',
-      value: subpageSettings?.customTitle || page?.title || '',
+      label: TRANSLATIONS.company,
+      value:
+        customer?.customerAcf?.company ||
+        subpageSettings?.customTitle ||
+        page?.title ||
+        '',
     },
-    { label: 'size', value: customer?.customerAcf?.size },
-    { label: 'industry', value: customer?.customerAcf?.category },
-    { label: 'headquarters', value: customer?.customerAcf?.headquarters },
-    { label: 'website', value: customer?.customerAcf?.websiteLink },
+    { label: TRANSLATIONS.size, value: customer?.customerAcf?.size },
+    { label: TRANSLATIONS.industry, value: customer?.customerAcf?.category },
+    {
+      label: TRANSLATIONS.headquarters,
+      value: customer?.customerAcf?.headquarters,
+    },
+    { label: TRANSLATIONS.website, value: customer?.customerAcf?.websiteLink },
   ].filter((entry) => entry.value);
 }
 ---
@@ -229,8 +236,8 @@ if (page.__typename === 'CaseStudy') {
     }
     <ArticleBar
       details={{
-        Category: category,
-        'Last updated': lastUpdated,
+        [TRANSLATIONS.category]: category,
+        [TRANSLATIONS.lastUpdated]: lastUpdated,
       }}
       tags={tags}
       sharing
