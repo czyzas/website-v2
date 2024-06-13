@@ -14,7 +14,8 @@
     "wpackagist-plugin/wordpress-seo": ">=21.0",
     "wpackagist-plugin/tinymce-advanced": "^5.9",
     "wpackagist-plugin/safe-svg": "^2.2.2",
-    "wpml/wpml-multilingual-cms": "^4.6"
+    "wpml/wpml-multilingual-cms": "^4.6",
+    "wpackagist-plugin/simple-custom-post-order":"2.5.7"
   },
   "scripts": {
     "require-bedrock": [
