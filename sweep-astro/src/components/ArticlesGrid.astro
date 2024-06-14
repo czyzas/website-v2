@@ -71,7 +71,7 @@ const cta = parseLink(rawCta);
             postType={post.__typename}
             class={cn('col-span-full', {
               'sm:col-span-6 lg:col-span-4': columns === 3,
-              'sm:col-span-6 lg:col-span-4 xl:col-span-3': columns === 4,
+              'sm:col-span-6 xl:col-span-3': columns === 4,
             })}
           >
             {post.__typename === 'Event' && !!eventDate && (

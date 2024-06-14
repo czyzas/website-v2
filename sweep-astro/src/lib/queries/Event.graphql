@@ -73,7 +73,9 @@ query EventSinglePage($URI: String!, $LANG: String!) {
           textUnder
         }
       }
+      enableRegistration
       registerFormGuid
+      formName
     }
     categories: eventCategories(first: 1) {
       nodes {

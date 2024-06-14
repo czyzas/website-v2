@@ -6,7 +6,6 @@ import { getLanguage, getOptions, getSeo } from '@/scripts/utils-store-helpers';
 import { cmsStore } from '@/stores/cmsStore';
 import { buildCanonicalUrl } from '@/scripts/buildCanonicalUrl';
 
-// TODO: fix canonical
 const {
   title: seoTitle,
   opengraphImage,
@@ -21,14 +20,12 @@ const { currentLanguage } = getLanguage();
 const locale = getLocale(currentLanguage);
 
 const { generalSettingsDescription: wpDescription } = store.settings ?? {};
-const isHomepage = store?.homepage ?? false;
 const pageTitle = store.pageTitle || '';
 const pageType: string = Array.isArray(schema?.pageType)
   ? schema.pageType.join('')
   : schema?.pageType ?? 'Article';
 
-const title = isHomepage ? opengraphSiteName : pageTitle || seoTitle;
-const metaTitle = pageTitle || seoTitle;
+const metaTitle = seoTitle || pageTitle;
 
 const description = opengraphDescription || wpDescription;
 
@@ -43,6 +40,8 @@ const image = opengraphImage?.mediaItemUrl
 const canonical = buildCanonicalUrl();
 ---
 
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
 <meta name="description" content={description} />
 <meta name="generator" content={Astro.generator} />
 {
@@ -60,7 +59,7 @@ const canonical = buildCanonicalUrl();
 <meta property="og:title" content={metaTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonical} />
-<meta property="og:site_name" content={title} />
+<meta property="og:site_name" content={opengraphSiteName} />
 <meta property="og:updated_time" content={opengraphModifiedTime} />
 <meta property="og:image" content={image?.src} />
 <meta property="og:image:secure_url" content={image?.src} />
@@ -71,4 +70,4 @@ const canonical = buildCanonicalUrl();
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={image?.src} />
 <link rel="canonical" href={canonical} />
-<title>{title}</title>
+<title>{metaTitle}</title>

@@ -43,7 +43,15 @@ const Tag = asLink ? 'a' : 'button';
   target={external ? '_blank' : target}
   class={cn(buttonVariants({ variant }), className)}
 >
-  {!!leadingIcon && <Icon name={leadingIcon} class="size-[1.125em]" />}
+  {
+    !!leadingIcon && (
+      <Icon name={leadingIcon} aria-hidden="true" class="size-[1.125em]" />
+    )
+  }
   <slot />
-  {!!trailingIcon && <Icon name={trailingIcon} class="size-[1.125em]" />}
+  {
+    !!trailingIcon && (
+      <Icon name={trailingIcon} aria-hidden="true" class="size-[1.125em]" />
+    )
+  }
 </Tag>

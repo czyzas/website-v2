@@ -30,7 +30,7 @@ const partners = cleanArray(rawPartners?.nodes);
       <PartnersList partners={partners as unknown as PartnersListFragment[]} />
       {linkShouldRender(button) && (
         <ButtonContainer>
-          <WordpressButtonLink data={button} />
+          <WordpressButtonLink arrow data={button} />
         </ButtonContainer>
       )}
     </ModuleContainer>

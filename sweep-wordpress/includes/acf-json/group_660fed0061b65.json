@@ -19,7 +19,8 @@
             "graphql_field_name": "copy",
             "wpml_cf_preferences": 3,
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_661cdbb78781e",
@@ -86,7 +87,8 @@
             "graphql_field_name": "demo",
             "wpml_cf_preferences": 3,
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_660fed4b854cf",
@@ -203,7 +205,8 @@
             "graphql_field_name": "updates",
             "wpml_cf_preferences": 3,
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_660fedc3854d4",
@@ -274,139 +277,6 @@
                     ]
                 },
                 {
-                    "key": "field_660fedf5854d7",
-                    "label": "Cards",
-                    "name": "cards",
-                    "aria-label": "",
-                    "type": "repeater",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "wpml_cf_preferences": 3,
-                    "layout": "block",
-                    "pagination": 0,
-                    "min": 0,
-                    "max": 0,
-                    "collapsed": "field_660ffda1854da",
-                    "button_label": "Add Row",
-                    "show_in_graphql": 1,
-                    "graphql_description": "",
-                    "graphql_field_name": "cards",
-                    "graphql_non_null": 0,
-                    "rows_per_page": 20,
-                    "sub_fields": [
-                        {
-                            "key": "field_660ffdae854db",
-                            "label": "Link",
-                            "name": "link",
-                            "aria-label": "",
-                            "type": "link",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "wpml_cf_preferences": 3,
-                            "return_format": "",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "link",
-                            "graphql_non_null": 0,
-                            "parent_repeater": "field_660fedf5854d7"
-                        },
-                        {
-                            "key": "field_660fee02854d8",
-                            "label": "Image",
-                            "name": "image",
-                            "aria-label": "",
-                            "type": "image",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "wpml_cf_preferences": 3,
-                            "return_format": "",
-                            "library": "",
-                            "min_width": "",
-                            "min_height": "",
-                            "min_size": "",
-                            "max_width": "",
-                            "max_height": "",
-                            "max_size": "",
-                            "mime_types": "",
-                            "preview_size": "medium",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "image",
-                            "parent_repeater": "field_660fedf5854d7"
-                        },
-                        {
-                            "key": "field_660ffd98854d9",
-                            "label": "Overline",
-                            "name": "overline",
-                            "aria-label": "",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "wpml_cf_preferences": 3,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "overline",
-                            "graphql_non_null": 0,
-                            "parent_repeater": "field_660fedf5854d7"
-                        },
-                        {
-                            "key": "field_660ffda1854da",
-                            "label": "Title",
-                            "name": "title",
-                            "aria-label": "",
-                            "type": "textarea",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "wpml_cf_preferences": 3,
-                            "default_value": "",
-                            "maxlength": "",
-                            "rows": 4,
-                            "placeholder": "",
-                            "new_lines": "br",
-                            "show_in_graphql": 1,
-                            "graphql_description": "",
-                            "graphql_field_name": "title",
-                            "graphql_non_null": 0,
-                            "parent_repeater": "field_660fedf5854d7"
-                        }
-                    ]
-                },
-                {
                     "key": "field_660ffdbd854dc",
                     "label": "Button",
                     "name": "button",
@@ -446,7 +316,8 @@
             "graphql_field_name": "offices",
             "wpml_cf_preferences": 3,
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_660ffdf1854df",
@@ -657,5 +528,5 @@
     "graphql_types": [
         "Page"
     ],
-    "modified": 1718184758
+    "modified": 1718364335
 }

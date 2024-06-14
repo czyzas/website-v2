@@ -5,11 +5,13 @@ export function buildCanonicalUrl() {
   const { websiteUrl = '' } = getOptions();
 
   if (seoCanonical && websiteUrl) {
-    const seoCanonicalURL = new URL(seoCanonical);
-    const prodURL = new URL(websiteUrl);
-    prodURL.pathname = seoCanonicalURL.pathname;
+    const seoCanonicalURL = new URL(seoCanonical, websiteUrl);
+    const url = new URL(
+      seoCanonicalURL.pathname + seoCanonicalURL.search,
+      websiteUrl
+    );
 
-    return prodURL.toString();
+    return url.toString();
   }
 
   return '';

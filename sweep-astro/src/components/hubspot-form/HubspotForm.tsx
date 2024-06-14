@@ -196,7 +196,7 @@ export const HubspotForm = ({
       ))}
       {!options.hideSubmitButton && (
         <div className="submit-button-container flex w-full flex-col items-start justify-start gap-3">
-          <div className="typography-body-2 text-sw-text-subdued [&>a:focus]:text-sw-sky-400 [&>a:hover]:text-sw-sky-400 [&>a]:underline">
+          <div className="typography-body-2 text-sw-text-subdued [&_a:focus]:text-sw-sky-400 [&_a:hover]:text-sw-sky-400 [&_a]:underline">
             {privacyPolicyText ? ReactHtmlParser(privacyPolicyText) : null}
           </div>
           <div className="flex w-full">

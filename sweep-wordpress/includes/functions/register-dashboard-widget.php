@@ -1,10 +1,11 @@
 <?php
-
 /**
  * Add a widget to the dashboard.
  *
  * This function is hooked into the 'wp_dashboard_setup' action below.
  */
+
+use function Env\env;
 
 add_action( 'wp_dashboard_setup', function () {
 	wp_add_dashboard_widget(
@@ -136,7 +137,8 @@ function check_deploy_status( $deployment_id ) {
 
 function deploy_by_hook() {
 	$cache = '?buildCache=true';
-	$url = "https://api.vercel.com/v1/integrations/deploy/prj_aYdxE68FQViKIajOyeHvioXtgNPF/UD2ZpNTmV5$cache";
+	$vercel_deploy_hook = env( 'VERCEL_DEPLOY_HOOK' );
+	$url = $vercel_deploy_hook . $cache;
 	$response = wp_remote_get( $url );
 
 	if ( is_wp_error( $response ) ) {
@@ -149,8 +151,8 @@ function deploy_by_hook() {
 }
 
 function get_deployments_list_by_timestamp( $deploy_timestamp ) {
-	$team_id = 'team_k6tXwaKmg3RTdWylb80jkASu';
-	$project_id = 'prj_aYdxE68FQViKIajOyeHvioXtgNPF';
+	$team_id = env( 'VERCEL_TEAM_ID' );
+	$project_id = env( 'VERCEL_PROJECT_ID' );
 	$url = "https://api.vercel.com/v6/deployments?teamId=$team_id&projectId=$project_id&since=$deploy_timestamp";
 	$response = call_wp_remote_get( $url );
 	if ( is_wp_error( $response ) ) {
@@ -163,7 +165,7 @@ function get_deployments_list_by_timestamp( $deploy_timestamp ) {
 }
 
 function call_wp_remote_get( $url ): WP_Error|array {
-	$token = "DXCyBCVERTwxk843WJm0aGqC";
+	$token = env( 'VERCEL_TOKEN' );
 	$headers = array(
 		'Content-Type'  => 'application/json',
 		'Authorization' => "Bearer $token"

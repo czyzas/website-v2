@@ -44,7 +44,7 @@ import { cleanArray } from '@/scripts/cleanArray';
 import SidebarFile from '@/components/sidebar/SidebarFile.astro';
 import { parseFile } from '@/scripts/data-parsers/parseFile';
 import type { ParsedFile } from '@/scripts/data-parsers/parseFile';
-import { initializeStores } from '@/scripts/utils-store-helpers';
+import { getOptions, initializeStores } from '@/scripts/utils-store-helpers';
 import { getTranslations } from '@/scripts/translations';
 
 type InsightsSingleProps = {
@@ -83,6 +83,7 @@ overwriteWYSIWYGContent(page.modules?.modulesContent, {
   RICH_TEXT_CONTENT_HEADINGS_IDS: true,
 });
 const TRANSLATIONS = getTranslations();
+const OPTIONS = getOptions();
 const { subpageSettings } = page;
 let title = subpageSettings?.customTitle || page?.title || '';
 const image = subpageSettings?.image;
@@ -143,8 +144,12 @@ switch (postType) {
 }
 
 let registerFormTitle;
+let registerFormGuid;
+let registerFormName;
 if (page.__typename === 'Event') {
   registerFormTitle = page.eventAcf?.registerFormTitle?.selectSectionTitle;
+  registerFormGuid = page.eventAcf?.enableRegistration ? page.eventAcf?.registerFormGuid || OPTIONS.postTypeRelated.event?.formGuid : undefined;
+  registerFormName = page.eventAcf?.formName ?? undefined;
 }
 
 let caseStudyDetails: {
@@ -288,12 +293,12 @@ if (page.__typename === 'CaseStudy') {
     </Container>
   </Section>
   {
-    page.__typename === 'Event' && page.eventAcf?.registerFormGuid && (
+    page.__typename === 'Event' && registerFormGuid && (
       <Section bg="surface-subdued">
         <Container>
           <SectionTitle withMargin {...parseSectionTitle(registerFormTitle)} />
           <FormContainer>
-            <Form formGuid={page.eventAcf?.registerFormGuid} />
+            <Form formGuid={registerFormGuid} formName={registerFormName}/>
           </FormContainer>
         </Container>
       </Section>

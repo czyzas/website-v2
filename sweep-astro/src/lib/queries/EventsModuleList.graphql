@@ -1,12 +1,12 @@
 query EventsModuleList($LIMIT: Int, $CATEGORY_SLUG: [String], $LANG: String!) {
   events(
-    first: $LIMIT
     where: {
       language: $LANG
       categorySlug: $CATEGORY_SLUG
       metaKey: "event_date"
       metaType: DATE
       orderby: { order: DESC, field: META_VALUE }
+      pagination: { postsPerPage: $LIMIT, paged: 1 }
     }
   ) {
     nodes {

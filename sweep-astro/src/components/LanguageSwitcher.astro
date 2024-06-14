@@ -1,11 +1,11 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { buildI18nPath, getUrlWithoutLang } from '@/i18n/utils';
 import { cn } from '@/scripts/cn';
 import { getLanguage } from '@/scripts/utils-store-helpers';
 import { getStore } from '@/scripts/store';
 import { cmsStore } from '@/stores/cmsStore';
 import MenuItem from './MenuItem.astro';
+import { cleanArray } from '@/scripts/cleanArray';
 
 const id = `dropdown-${crypto.randomUUID().substring(16)}`;
 
@@ -16,6 +16,27 @@ const {
 } = getLanguage();
 
 const { uri: pageUri } = getStore(cmsStore);
+
+const links = cleanArray(
+  languages.map((lang) => {
+    const translation = translations.find((t) => t.languageCode === lang.code);
+
+    let uri;
+    if (translation?.uri) {
+      uri = translation.uri;
+    } else if (lang.code === currentLanguage) {
+      uri = pageUri;
+    } else {
+      return undefined;
+    }
+
+    return {
+      uri,
+      languageName: lang.translated_name,
+      isCurrent: lang.code === currentLanguage,
+    };
+  })
+);
 ---
 
 <script>
@@ -45,58 +66,48 @@ const { uri: pageUri } = getStore(cmsStore);
   }
 </script>
 
-<div class="language-switcher-container group relative self-stretch">
-  <MenuItem
-    asButton
-    type="button"
-    data-action="toggle-language-switcher"
-    aria-controls={id}
-    aria-pressed="false"
-    class="h-full text-sm sm:text-base"
-  >
-    <span>
-      {currentLanguage.toUpperCase()}
-    </span>
-    <Icon
-      name="caret-down"
-      class="-translate-y-0.5 transform sm:-translate-y-0"
-    />
-  </MenuItem>
-  {
-    languages && (
-      <div
-        class={cn(
-          'pt-4 lg:pt-8',
-          'invisible absolute z-10 opacity-0 transition-all duration-100',
-          '-translate-y-1 transform group-hover:visible group-hover:translate-y-0 group-hover:opacity-100'
-        )}
-      >
-        <ul class="list space-y-4 rounded-lg bg-white p-6 shadow-menu" id={id}>
-          {languages.map((lang) => {
-            let uri = getUrlWithoutLang(pageUri || '/');
-            const translation = translations.find(
-              (t) => t.languageCode === lang.code
-            );
-
-            if (translation?.uri) {
-              uri = getUrlWithoutLang(translation.uri);
-            }
-
-            return (
+{
+  links.length > 1 && (
+    <Fragment>
+      <div class="language-switcher-container group relative self-stretch">
+        <MenuItem
+          asButton
+          type="button"
+          data-action="toggle-language-switcher"
+          aria-controls={id}
+          aria-pressed="false"
+          class="h-full text-sm sm:text-base"
+        >
+          <span>{currentLanguage.toUpperCase()}</span>
+          <Icon
+            name="caret-down"
+            class="-translate-y-0.5 transform sm:-translate-y-0"
+          />
+        </MenuItem>
+        <div
+          class={cn(
+            'pt-4 lg:pt-8',
+            'invisible absolute z-10 opacity-0 transition-all duration-100',
+            '-translate-y-1 transform group-hover:visible group-hover:translate-y-0 group-hover:opacity-100'
+          )}
+        >
+          <ul
+            class="list space-y-4 rounded-lg bg-white p-6 shadow-menu"
+            id={id}
+          >
+            {links.map((link) => (
               <li class="flex flex-col">
                 <MenuItem
-                  href={buildI18nPath(uri, lang.code)}
-                  set:text={lang.translated_name}
-                  aria-label={lang.translated_name}
-                  data-current={
-                    lang.code === currentLanguage ? 'true' : 'false'
-                  }
+                  href={link.uri}
+                  set:text={link.languageName}
+                  aria-label={link.languageName}
+                  data-current={link.isCurrent ? 'true' : 'false'}
                 />
               </li>
-            );
-          })}
-        </ul>
+            ))}
+          </ul>
+        </div>
       </div>
-    )
-  }
-</div>
+    </Fragment>
+  )
+}
