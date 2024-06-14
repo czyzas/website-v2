@@ -24,7 +24,7 @@ const cases = cleanArray(acf.caseStudies?.nodes) as CaseStudyCardFragment[];
       withMargin
       {...parseSectionTitle(acf.sectionTitle?.selectSectionTitle)}
     />
-    <CaseStudiesGrid cases={cases} buttonLabel={acf.caseStudyButtonLabel} />
+    <CaseStudiesGrid cases={cases} hasLongerTitle buttonLabel={acf.caseStudyButtonLabel} />
     {
       linkShouldRender(acf.button) && (
         <ButtonContainer>
