@@ -1,0 +1,65 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/app",
+      "destination": "https://app.sweep.net/",
+      "statusCode": 301
+    },
+    {
+      "source": "/measure/:path(.*)",
+      "destination": "https://app.sweep.net/measure/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/communicate/:path(.*)",
+      "destination": "https://app.sweep.net/communicate/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/organise/:path(.*)",
+      "destination": "https://app.sweep.net/organise/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/api/:path((?!functions).*)",
+      "destination": "https://app.sweep.net/api/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/app/:path(.*)",
+      "destination": "https://app.sweep.net/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/connect/:path(.*)",
+      "destination": "https://app.sweep.net/connect/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/auth/:path(.*)",
+      "destination": "https://app.sweep.net/auth/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/library",
+      "destination": "/insights",
+      "permanent": false
+    },
+    {
+      "source": "/library/:path(.*)",
+      "destination": "/insights/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/blog",
+      "destination": "/insights",
+      "permanent": false
+    },
+    {
+      "source": "/blog/:path(.*)",
+      "destination": "/insights/:path*",
+      "permanent": false
+    }
+  ]
+}
