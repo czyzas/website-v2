@@ -4,13 +4,14 @@ import { HubspotForm } from './HubspotForm';
 
 type Props = {
   formGuid: string;
+  formName?: string;
 };
 
-const { formGuid } = Astro.props;
+const { formGuid, formName } = Astro.props;
 const form = await fetchHubspotForm(formGuid);
 ---
 
-{form ? <HubspotForm client:visible form={form} /> : null}
+{form ? <HubspotForm client:visible form={form} formName={formName} /> : null}
 {
   !form && import.meta.env.DEV && (
     <div>

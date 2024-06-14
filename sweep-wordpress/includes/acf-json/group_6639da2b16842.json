@@ -123,6 +123,31 @@
             ]
         },
         {
+            "key": "field_666bf4c9dc3f2",
+            "label": "Enable registration",
+            "name": "enable_registration",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 0,
+            "message": "",
+            "default_value": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1,
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "enableRegistration",
+            "graphql_non_null": 0
+        },
+        {
             "key": "field_664f20e9b8a99",
             "label": "Register form GUID",
             "name": "register_form_guid",
@@ -198,5 +223,5 @@
     "graphql_field_name": "eventAcf",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1718180013
+    "modified": 1718351079
 }
