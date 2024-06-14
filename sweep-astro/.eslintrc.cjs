@@ -59,6 +59,9 @@ module.exports = {
     'import/namespace': 'off',
     'no-param-reassign': ['error', { props: false }],
     'no-empty': ['error', { allowEmptyCatch: true }],
+    'prefer-const': 'error',
+    'no-var': 'error',
+    'no-nested-ternary': 'error',
   },
   settings: {
     'import/core-modules': ['astro:assets', 'astro:content'],
@@ -72,7 +75,6 @@ module.exports = {
   overrides: [
     {
       files: ['*.{js,jsx,ts,tsx}'],
-      extends: [],
       settings: {
         'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
         'import/parsers': {

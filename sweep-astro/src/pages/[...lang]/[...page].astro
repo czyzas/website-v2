@@ -1,6 +1,6 @@
 ---
 import type { InferGetStaticParamsType } from 'astro';
-import { fixLangParams } from '@/i18n/utils';
+import { fixLangParams, getUrlWithoutLang } from '@/i18n/utils';
 import {
   fetchDefaultPage,
   fetchDefaultPagesStaticPaths,
@@ -45,7 +45,7 @@ if (isHomepage) {
     throw new Error(`Page with uri '${paramUri}' does not exists`);
   }
 
-  data = await fetchDefaultPage(uri, lang);
+  data = await fetchDefaultPage(getUrlWithoutLang(uri), lang);
 
   if (!compareURI(uri, data.page?.uri)) {
     if (import.meta.env.SSR) {

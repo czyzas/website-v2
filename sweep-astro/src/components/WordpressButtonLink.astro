@@ -34,7 +34,7 @@ const { shouldRender, title, url, target } = parseLink(data);
     <Button
       asLink
       href={url}
-      target={target}
+      external={target === '_blank'}
       variant={secondary ? 'secondary' : 'primary'}
       trailingIcon={arrow ? 'arrow-right' : undefined}
       {...props}

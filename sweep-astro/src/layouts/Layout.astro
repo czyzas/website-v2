@@ -12,6 +12,7 @@ import { getLanguage } from '@/scripts/utils-store-helpers';
 import { getTranslations } from '@/scripts/translations';
 import SEO from '@/components/partials/SEO.astro';
 import TrackingCodes from '@/components/tracking-codes/TrackingCodes.astro';
+import Favicon from '@/components/Favicon.astro';
 
 interface Props extends HTMLAttributes<'main'> {
   home?: boolean;
@@ -33,14 +34,8 @@ initializeStore(cacheStore, {
 <html lang={currentLanguage} class={htmlClassName}>
   <head>
     <TrackingCodes name="gtm" />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
     <SEO />
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href={import.meta.env.PROD ? '/favicon.svg' : '/favicon-dev.svg'}
-    />
+    <Favicon />
     <script define:vars={{ TRANSLATIONS }} is:inline>
       // Populate translations in client for React components
       window.TRANSLATIONS = TRANSLATIONS;
