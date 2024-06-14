@@ -1,7 +1,5 @@
 ---
 import type { UnparsedImage } from '@/scripts/data-parsers/parseImage';
-import { buildI18nPath } from '@/i18n/utils';
-import { getLanguage } from '@/scripts/utils-store-helpers';
 import Button from './ui/Button.astro';
 import CustomerLogo from './CustomerLogo.astro';
 
@@ -22,8 +20,6 @@ const {
   customerLogo,
   title,
 } = Astro.props;
-
-const { currentLanguage } = getLanguage();
 ---
 
 <CustomerLogo logo={customerLogo} />
@@ -46,7 +42,7 @@ const { currentLanguage } = getLanguage();
       <Button
         asLink
         trailingIcon="arrow-right"
-        href={buildI18nPath(uri, currentLanguage)}
+        href={uri}
         variant="secondary"
         class="w-full md:w-auto"
       >

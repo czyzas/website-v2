@@ -10,4 +10,3 @@ include_once 'graphql/pagination.php';
 include_once 'graphql/limit-posts.php';
 include_once 'graphql/meta-query.php';
 include_once 'graphql/options-translate.php';
-//include_once 'graphql/menu-translate.php';
