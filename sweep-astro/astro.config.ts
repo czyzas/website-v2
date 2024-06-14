@@ -20,9 +20,6 @@ const { CMS_ASSETS_DOMAIN } = loadEnv(
 export default defineConfig({
   output: appMode === 'ssr' ? 'server' : 'static',
   adapter: appMode === 'ssr' ? vercel() : undefined,
-  redirects: {
-    '/app': 'https://app.sweep.net/',
-  },
   i18n: {
     defaultLocale,
     locales: [...languages],

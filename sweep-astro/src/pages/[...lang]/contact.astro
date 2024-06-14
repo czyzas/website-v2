@@ -22,6 +22,7 @@ import { createSingleDefaultPageStaticPaths } from '@/scripts/utils-static-paths
 import FormContainer from '@/components/hubspot-form/FormContainer.astro';
 import { cleanArray } from '@/scripts/cleanArray';
 import { initializeStores } from '@/scripts/utils-store-helpers';
+import ArticlesGrid from '@/components/ArticlesGrid.astro';
 
 export async function getStaticPaths() {
   return createSingleDefaultPageStaticPaths(
@@ -41,7 +42,7 @@ const formGuid = form?.hubspotFormGuid ?? '';
 
 const demo = page.contactAcf?.demo;
 const updates = page.contactAcf?.updates;
-const updatesCards = cleanArray(updates?.cards);
+const newsroomArticles = cleanArray(data.articles?.nodes);
 
 const offices = page.contactAcf?.offices;
 const officesCards = cleanArray(offices?.cards);
@@ -72,25 +73,12 @@ const officesCards = cleanArray(offices?.cards);
         {...parseSectionTitle(updates?.sectionTitle?.selectSectionTitle)}
       />
       {
-        updatesCards.length ? (
-          <Grid>
-            {updatesCards.map((card) => (
-              <ArticleCard
-                link={card?.link}
-                image={card?.image}
-                class="col-span-full md:col-span-6 lg:col-span-3"
-              >
-                <p
-                  class="typography-card-title text-sw-text-subdued"
-                  set:html={card?.overline}
-                />
-                <h3
-                  class="typography-cards-bold-large"
-                  set:html={card?.title}
-                />
-              </ArticleCard>
-            ))}
-          </Grid>
+        newsroomArticles.length ? (
+          <ArticlesGrid
+            columns={4}
+            postType="newsroom"
+            posts={newsroomArticles}
+          />
         ) : null
       }
       {

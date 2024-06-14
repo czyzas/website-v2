@@ -12,6 +12,7 @@ import { getLanguage } from '@/scripts/utils-store-helpers';
 import { getTranslations } from '@/scripts/translations';
 import SEO from '@/components/partials/SEO.astro';
 import TrackingCodes from '@/components/tracking-codes/TrackingCodes.astro';
+import Favicon from '@/components/Favicon.astro';
 
 interface Props extends HTMLAttributes<'main'> {
   home?: boolean;
@@ -34,6 +35,7 @@ initializeStore(cacheStore, {
   <head>
     <TrackingCodes name="gtm" />
     <SEO />
+    <Favicon />
     <script define:vars={{ TRANSLATIONS }} is:inline>
       // Populate translations in client for React components
       window.TRANSLATIONS = TRANSLATIONS;

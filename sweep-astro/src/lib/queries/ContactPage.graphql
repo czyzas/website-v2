@@ -25,16 +25,6 @@ query ContactPage($LANG: String!) {
             textUnder
           }
         }
-        cards {
-          title
-          overline
-          link {
-            ...Link
-          }
-          image {
-            ...Image
-          }
-        }
         button {
           ...Link
         }
@@ -58,6 +48,13 @@ query ContactPage($LANG: String!) {
           content
         }
       }
+    }
+  }
+  articles: newsroomItems(
+    where: { status: PUBLISH, pagination: { postsPerPage: 4, paged: 1 } }
+  ) {
+    nodes {
+      ...NewsroomListItem
     }
   }
   ...Essential
