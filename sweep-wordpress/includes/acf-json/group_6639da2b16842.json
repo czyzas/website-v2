@@ -153,7 +153,7 @@
             "name": "register_form_guid",
             "aria-label": "",
             "type": "text",
-            "instructions": "",
+            "instructions": "Overwrite default form GUID defined in theme options.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -223,5 +223,5 @@
     "graphql_field_name": "eventAcf",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1718351079
+    "modified": 1718358393
 }
