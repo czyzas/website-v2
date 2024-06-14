@@ -52,6 +52,16 @@
       "permanent": false
     },
     {
+      "source": "/business/:path(.*)",
+      "destination": "/industry/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/finance/:path(.*)",
+      "destination": "/industry/:path*",
+      "permanent": false
+    },
+    {
       "source": "/blog",
       "destination": "/insights",
       "permanent": false
