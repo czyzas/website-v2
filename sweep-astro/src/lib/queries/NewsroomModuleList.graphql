@@ -4,8 +4,11 @@ query NewsroomModuleList(
   $LANG: String!
 ) {
   newsroomItems(
-    first: $LIMIT
-    where: { language: $LANG, categorySlug: $CATEGORY_SLUG }
+    where: {
+      language: $LANG
+      categorySlug: $CATEGORY_SLUG
+      pagination: { postsPerPage: $LIMIT, paged: 1 }
+    }
   ) {
     nodes {
       ...NewsroomListItem
