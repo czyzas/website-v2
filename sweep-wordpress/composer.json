@@ -15,7 +15,9 @@
     "wpackagist-plugin/tinymce-advanced": "^5.9",
     "wpackagist-plugin/safe-svg": "^2.2.2",
     "wpml/wpml-multilingual-cms": "^4.6",
-    "wpackagist-plugin/simple-custom-post-order":"2.5.7"
+    "wpackagist-plugin/simple-custom-post-order":"2.5.7",
+    "wpackagist-plugin/blogvault-real-time-backup":"^5.65",
+    "wpackagist-plugin/simple-history":"^4.16.0"
   },
   "scripts": {
     "require-bedrock": [
